@@ -1,6 +1,6 @@
 package net.ivorius.psychedelicraft.items;
 
-import net.ivorius.psychedelicraft.Psychedelicraft;
+import net.ivorius.psychedelicraft.blocks.ModBlocks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -22,7 +22,7 @@ public class ItemWineGrapes extends ItemFood
         }
         else
         {
-            if (par3World.getBlock(par4, par5, par6) == Psychedelicraft.blockWineGrapeLattice && (par3World.getBlockMetadata(par4, par5, par6) >> 1) == 0)
+            if (par3World.getBlock(par4, par5, par6) == ModBlocks.blockWineGrapeLattice && (par3World.getBlockMetadata(par4, par5, par6) >> 1) == 0)
             {
                 int m = par3World.getBlockMetadata(par4, par5, par6);
                 par3World.setBlockMetadataWithNotify(par4, par5, par6, m | 1 << 1, 3);

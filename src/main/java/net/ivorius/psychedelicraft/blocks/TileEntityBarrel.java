@@ -98,7 +98,7 @@ public class TileEntityBarrel extends TileEntity
 
     public BlockBarrel.BarrelEntry getBarrelType()
     {
-        return ((BlockBarrel) Psychedelicraft.blockBarrel).entries[barrelType];
+        return ((BlockBarrel) ModBlocks.blockBarrel).entries[barrelType];
     }
 
     @Override

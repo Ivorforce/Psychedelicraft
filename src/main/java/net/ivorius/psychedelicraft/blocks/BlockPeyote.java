@@ -1,6 +1,7 @@
 package net.ivorius.psychedelicraft.blocks;
 
-import net.ivorius.psychedelicraft.Psychedelicraft;
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -8,8 +9,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-
-import java.util.Random;
 
 public class BlockPeyote extends BlockContainer implements IvBonemealCompatibleBlock
 {
@@ -111,7 +110,7 @@ public class BlockPeyote extends BlockContainer implements IvBonemealCompatibleB
 
             for (int i = 0; i < meta + 1; i++)
             {
-                this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(Psychedelicraft.blockPeyote, 1, 0));
+                this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(ModBlocks.blockPeyote, 1, 0));
             }
         }
     }

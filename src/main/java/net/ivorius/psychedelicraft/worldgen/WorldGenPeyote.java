@@ -1,10 +1,10 @@
 package net.ivorius.psychedelicraft.worldgen;
 
-import net.ivorius.psychedelicraft.Psychedelicraft;
+import java.util.Random;
+
+import net.ivorius.psychedelicraft.blocks.ModBlocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
-
-import java.util.Random;
 
 public class WorldGenPeyote extends WorldGenerator
 {
@@ -20,9 +20,9 @@ public class WorldGenPeyote extends WorldGenerator
         {
             int meta = par2Random.nextInt(4);
 
-            if (Psychedelicraft.blockPeyote.canBlockStay(par1World, par3, par4, par5))
+            if (ModBlocks.blockPeyote.canBlockStay(par1World, par3, par4, par5))
             {
-                setBlockAndNotifyAdequately(par1World, par3, par4, par5, Psychedelicraft.blockPeyote, meta);
+                setBlockAndNotifyAdequately(par1World, par3, par4, par5, ModBlocks.blockPeyote, meta);
             }
         }
 

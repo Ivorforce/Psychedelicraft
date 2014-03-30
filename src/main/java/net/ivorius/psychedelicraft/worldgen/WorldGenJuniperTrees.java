@@ -1,14 +1,15 @@
 package net.ivorius.psychedelicraft.worldgen;
 
+import java.util.Random;
+
 import net.ivorius.psychedelicraft.Psychedelicraft;
+import net.ivorius.psychedelicraft.blocks.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraftforge.common.util.ForgeDirection;
-
-import java.util.Random;
 
 public class WorldGenJuniperTrees extends WorldGenAbstractTree
 {
@@ -99,7 +100,7 @@ public class WorldGenJuniperTrees extends WorldGenAbstractTree
 
                         if (block3.isAir(par1World, x, par4 + k2, z) || block3.isLeaves(par1World, x, par4 + k2, z))
                         {
-                            this.setBlockAndNotifyAdequately(par1World, x, par4 + k2, z, Psychedelicraft.blockPsycheLog, 0);
+                            this.setBlockAndNotifyAdequately(par1World, x, par4 + k2, z, ModBlocks.blockPsycheLog, 0);
                         }
 
                         if (par2Random.nextBoolean())
@@ -134,7 +135,7 @@ public class WorldGenJuniperTrees extends WorldGenAbstractTree
 
                                     if (block1.isAir(par1World, x, k2, z) || block1.isLeaves(par1World, x, k2, z))
                                     {
-                                        this.setBlockAndNotifyAdequately(par1World, x, k2, z, Psychedelicraft.blockPsycheLeaves, 0);
+                                        this.setBlockAndNotifyAdequately(par1World, x, k2, z, ModBlocks.blockPsycheLeaves, 0);
                                     }
                                 }
                             }
