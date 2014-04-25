@@ -109,7 +109,7 @@ public class EffectLensFlare implements Iv2DScreenEffect
                 GL11.glDisable(GL11.GL_DEPTH_TEST);
                 GL11.glDepthMask(false);
                 GL11.glEnable(GL11.GL_BLEND);
-                OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE, 1, 0);
+                OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE, GL11.GL_ZERO);
                 GL11.glDisable(GL11.GL_ALPHA_TEST);
                 Tessellator var3 = Tessellator.instance;
 
@@ -151,7 +151,7 @@ public class EffectLensFlare implements Iv2DScreenEffect
 
                     GL11.glColor4f((float) color.xCoord - 0.1f, (float) color.yCoord - 0.1f, (float) color.zCoord - 0.1f, blendAlpha * actualSunAlpha);
                     GL11.glEnable(GL11.GL_BLEND);
-                    OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE, 1, 0);
+                    OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE, GL11.GL_ZERO);
 
                     mc.renderEngine.bindTexture(sunBlindnessTexture);
                     var3.startDrawingQuads();
@@ -171,7 +171,7 @@ public class EffectLensFlare implements Iv2DScreenEffect
 
         // Reset
         GL11.glDisable(GL11.GL_BLEND);
-        OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
+        OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
     }
 
     @Override

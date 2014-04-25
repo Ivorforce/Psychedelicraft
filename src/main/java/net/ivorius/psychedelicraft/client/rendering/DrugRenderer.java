@@ -124,7 +124,7 @@ public class DrugRenderer implements IDrugRenderer
         GL11.glDisable(GL11.GL_ALPHA_TEST);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glDepthMask(false);
-        OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
+        OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
 
         float alcohol = drugHelper.getDrugValue("Alcohol");
         if (alcohol > 0)
@@ -163,7 +163,7 @@ public class DrugRenderer implements IDrugRenderer
         {
             int lightningW = height;
 
-            OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE, 1, 0);
+            OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE, GL11.GL_ZERO);
             for (int i = 0; i < powerLightnings; i++)
             {
                 float lX = powerLR.nextInt(width + lightningW) - lightningW;
@@ -181,7 +181,7 @@ public class DrugRenderer implements IDrugRenderer
                 tessellator.addVertexWithUV(lX, 0, -90.0, 0, upsideDown ? 1 : 0);
                 tessellator.draw();
             }
-            OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
+            OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
         }
 
         if (DrugHelper.hurtOverlayEnabled)

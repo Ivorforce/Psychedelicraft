@@ -75,7 +75,7 @@ public class TileEntityRendererRiftJar extends TileEntitySpecialRenderer
         {
             GL11.glEnable(GL11.GL_BLEND);
             GL11.glDisable(GL11.GL_ALPHA_TEST);
-            OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
+            OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
             renderZeroInsides(f, ticks, Math.min(tileEntity.currentRiftFraction * 2.0f, 1.0f));
             GL11.glEnable(GL11.GL_ALPHA_TEST);
             GL11.glDisable(GL11.GL_BLEND);
@@ -94,7 +94,7 @@ public class TileEntityRendererRiftJar extends TileEntitySpecialRenderer
         {
             GL11.glEnable(GL11.GL_BLEND);
             GL11.glDisable(GL11.GL_ALPHA_TEST);
-            OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
+            OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
 
             GL11.glColor4f(1.0f, 1.0f, 1.0f, crackedVisibility);
             this.bindTexture(crackedTexture);
