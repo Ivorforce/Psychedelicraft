@@ -53,6 +53,7 @@ public class ClientProxy extends ServerProxy
         DrugHelper.waterOverlayEnabled = config.get("Visual", "waterOverlayEnabled", true).getBoolean(true);
         DrugHelper.hurtOverlayEnabled = config.get("Visual", "hurtOverlayEnabled", true).getBoolean(true);
         DrugHelper.digitalEffectPixelRescale = new float[]{(float) config.get("Visual", "digitalEffectPixelRescaleX", 0.05f).getDouble(0.05), (float) config.get("Visual", "digitalEffectPixelRescaleY", 0.05f).getDouble(0.05)};
+        DrugShaderHelper.bypassFramebuffers = config.get("Visual", "bypassFramebuffers", false).getBoolean(false);
 
         MinecraftForge.EVENT_BUS.register(this);
         FMLCommonHandler.instance().bus().register(this);

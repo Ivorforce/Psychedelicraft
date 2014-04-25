@@ -45,6 +45,7 @@ public class DrugShaderHelper
     public static boolean doShadows = false;
     public static boolean doHeatDistortion = false;
     public static boolean doWaterDistortion = false;
+    public static boolean bypassFramebuffers = false;
 
     public static float sunFlareIntensity;
     public static int shadowPixelsPerChunk = 256;
@@ -241,7 +242,8 @@ public class DrugShaderHelper
 
         setUpRealtimeCacheTexture();
         depthBuffer = new IvDepthBuffer(mc.displayWidth, mc.displayHeight, Psychedelicraft.logger);
-        depthBuffer.allocate();
+        if (!bypassFramebuffers)
+            depthBuffer.allocate();
 
         digitalTextTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "digitalText.png");
         heatDistortionNoiseTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "heatDistortionNoise.png");
@@ -259,7 +261,7 @@ public class DrugShaderHelper
 
         realtimePingPong = new IvOpenGLTexturePingPong(Psychedelicraft.logger);
         realtimePingPong.setScreenSize(Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
-        realtimePingPong.initialize();
+        realtimePingPong.initialize(!bypassFramebuffers);
     }
 
     public static void update()

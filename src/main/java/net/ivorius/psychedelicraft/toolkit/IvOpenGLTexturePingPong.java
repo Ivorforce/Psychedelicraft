@@ -30,14 +30,17 @@ public class IvOpenGLTexturePingPong
 
     private int parentFrameBuffer;
 
+    private boolean useFramebuffer;
+
     public IvOpenGLTexturePingPong(Logger logger)
     {
         this.logger = logger;
     }
 
-    public void initialize()
+    public void initialize(boolean useFramebuffer)
     {
         destroy();
+        this.useFramebuffer = useFramebuffer;
 
         boolean pingPongFailed = false;
         for (int i = 0; i < 2; i++)
@@ -51,7 +54,7 @@ public class IvOpenGLTexturePingPong
             pingPongFailed = true;
             setup = false;
         }
-        else if (GLContext.getCapabilities().GL_EXT_framebuffer_object)
+        else if (GLContext.getCapabilities().GL_EXT_framebuffer_object && useFramebuffer)
         {
             pingPongFB = glGenFramebuffersEXT();
 
@@ -104,7 +107,7 @@ public class IvOpenGLTexturePingPong
 
             if (setup)
             {
-                initialize();
+                initialize(useFramebuffer);
             }
         }
     }
