@@ -2,10 +2,7 @@ package net.ivorius.psychedelicraft.client.rendering;
 
 import net.ivorius.psychedelicraft.Psychedelicraft;
 import net.ivorius.psychedelicraft.blocks.TileEntityRiftJar;
-import net.ivorius.psychedelicraft.toolkit.IvBezierPath3D;
-import net.ivorius.psychedelicraft.toolkit.IvBezierPath3DCreator;
-import net.ivorius.psychedelicraft.toolkit.IvRenderHelper;
-import net.ivorius.psychedelicraft.toolkit.IvStringHelper;
+import net.ivorius.psychedelicraft.toolkit.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.model.ModelBase;
@@ -32,6 +29,8 @@ public class TileEntityRendererRiftJar extends TileEntitySpecialRenderer
     public IvBezierPath3D sphereBezierPath;
     public IvBezierPath3D outgoingBezierPath;
 
+    public IvBezierPath3DRendererText bezierPath3DRendererText;
+
     public TileEntityRendererRiftJar()
     {
         super();
@@ -48,6 +47,9 @@ public class TileEntityRendererRiftJar extends TileEntitySpecialRenderer
 
         sphereBezierPath = IvBezierPath3DCreator.createSpiraledSphere(3.0, 8.0, 0.2);
         outgoingBezierPath = IvBezierPath3DCreator.createSpiraledBezierPath(0.06, 6.0, 6.0, 1.0, 0.2, 0.0, false);
+
+        bezierPath3DRendererText = new IvBezierPath3DRendererText();
+        bezierPath3DRendererText.setFontRenderer(Minecraft.getMinecraft().standardGalacticFontRenderer);
     }
 
     @Override
@@ -107,7 +109,6 @@ public class TileEntityRendererRiftJar extends TileEntitySpecialRenderer
         GL11.glPopMatrix();
         GL11.glPopMatrix();
 
-        FontRenderer fontRenderer = Minecraft.getMinecraft().standardGalacticFontRenderer;
         GL11.glPushMatrix();
         GL11.glTranslatef((float) d + 0.5f, (float) d1 + 0.6f, (float) d2 + 0.5f);
         GL11.glDisable(GL11.GL_CULL_FACE);
@@ -118,30 +119,29 @@ public class TileEntityRendererRiftJar extends TileEntitySpecialRenderer
                 connection.bezierPath3D = IvBezierPath3DCreator.createSpiraledBezierPath(0.1, 0.5, 8.0, new double[]{connection.entityX - (tileEntity.xCoord + 0.5), connection.entityY - (tileEntity.yCoord + 0.6), connection.entityZ - (tileEntity.zCoord + 0.5)}, 0.2, 0.0, false);
             }
 
-            IvBezierPath3D bezierPath3D = connection.bezierPath3D;
+            bezierPath3DRendererText.setText("This is a small spiral.");
+            bezierPath3DRendererText.setSpreadToFill(true);
+            bezierPath3DRendererText.setShift((tileEntity.ticksAliveVisual + f) * -0.002);
+            bezierPath3DRendererText.setInwards(false);
+            bezierPath3DRendererText.setCapBottom(0.0);
+            bezierPath3DRendererText.setCapTop(connection.fractionUp);
 
-//            int textureChosen = MathHelper.floor_double(ticks * 0.5f);
-//            Random thisTextureMov = new Random(textureChosen);
-//            bindTexture(zeroScreenTexture[textureChosen % 8]);
-//            DrugShaderHelper.setUseScreenTexCoords(true);
-//            float pixelsX = 140.0f / 2.0f;
-//            float pixelsY = 224.0f / 2.0f;
-//            DrugShaderHelper.setPixelSize(1.0f / pixelsX, -1.0f / pixelsY);
-//            GL11.glTexCoord2f(thisTextureMov.nextInt(10) * 0.1f * pixelsX, thisTextureMov.nextInt(8) * 0.125f * pixelsY);
-//            bezierPath3D.render(0.2f, 0.05f, ticks * -0.002);
-//            DrugShaderHelper.setScreenSizeDefault();
-//            DrugShaderHelper.setUseScreenTexCoords(false);
-
-            String spiralString = "This is a small spiral.";
-            bezierPath3D.renderText(spiralString, fontRenderer, true, (tileEntity.ticksAliveVisual + f) * -0.002, false, 0.0, connection.fractionUp);
+            bezierPath3DRendererText.render(connection.bezierPath3D);
 
             if (connection.fractionUp > 0.0f)
             {
                 GL11.glPushMatrix();
                 GL11.glTranslated(connection.entityX - (tileEntity.xCoord + 0.5), connection.entityY - (tileEntity.yCoord + 0.6), connection.entityZ - (tileEntity.zCoord + 0.5));
-                String sphereStringFull = "This is a small circle.";
-                String sphereString = IvStringHelper.cheeseString(sphereStringFull, 1.0f - connection.fractionUp, 42);
-                sphereBezierPath.renderText(sphereString, fontRenderer, true, (tileEntity.ticksAliveVisual + f) * -0.002, false);
+
+                bezierPath3DRendererText.setText(IvStringHelper.cheeseString("This is a small circle.", 1.0f - connection.fractionUp, 42));
+                bezierPath3DRendererText.setSpreadToFill(true);
+                bezierPath3DRendererText.setShift((tileEntity.ticksAliveVisual + f) * -0.002);
+                bezierPath3DRendererText.setInwards(false);
+                bezierPath3DRendererText.setCapBottom(0.0);
+                bezierPath3DRendererText.setCapTop(1.0);
+
+                bezierPath3DRendererText.render(sphereBezierPath);
+
                 GL11.glPopMatrix();
             }
         }
@@ -149,8 +149,14 @@ public class TileEntityRendererRiftJar extends TileEntitySpecialRenderer
         float outgoingStrength = tileEntity.fractionHandleUp * tileEntity.fractionOpen;
         if (outgoingStrength > 0.0f)
         {
-            String spiralString = "This is a small spiral.";
-            outgoingBezierPath.renderText(spiralString, fontRenderer, true, (tileEntity.ticksAliveVisual + f) * 0.002, false, 0.0, outgoingStrength);
+            bezierPath3DRendererText.setText("This is a small spiral.");
+            bezierPath3DRendererText.setSpreadToFill(true);
+            bezierPath3DRendererText.setShift((tileEntity.ticksAliveVisual + f) * 0.002);
+            bezierPath3DRendererText.setInwards(false);
+            bezierPath3DRendererText.setCapBottom(0.0);
+            bezierPath3DRendererText.setCapTop(outgoingStrength);
+
+            bezierPath3DRendererText.render(outgoingBezierPath);
         }
 
         GL11.glEnable(GL11.GL_CULL_FACE);

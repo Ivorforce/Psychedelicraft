@@ -17,7 +17,7 @@ import net.minecraftforge.common.config.Configuration;
 public class PSEntityList
 {
     public static final int molotovCocktailID = 0;
-    public static final int realityRiftID = 0;
+    public static final int realityRiftID = 1;
 
     public static int villagerDealerProfessionID;
 
