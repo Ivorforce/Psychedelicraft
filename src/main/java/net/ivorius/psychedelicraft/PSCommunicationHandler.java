@@ -21,43 +21,43 @@ import net.minecraftforge.common.DimensionManager;
  */
 public class PSCommunicationHandler
 {
-    public void onIMCMessage(FMLInterModComms.IMCMessage message, boolean runtime)
+    public void onIMCMessage(FMLInterModComms.IMCMessage message, boolean server, boolean runtime)
     {
         try
         {
             if (isMessage("drugAddValue", message, NBTTagCompound.class))
             {
                 NBTTagCompound cmp = message.getNBTValue();
-                getDrugHelper(cmp).addToDrug(cmp.getString("drugName"), cmp.getFloat("drugValue"));
+                getDrugHelper(cmp, server).addToDrug(cmp.getString("drugName"), cmp.getFloat("drugValue"));
             }
             else if (isMessage("drugAddInfluence", message, NBTTagCompound.class))
             {
                 NBTTagCompound cmp = message.getNBTValue();
                 DrugInfluence influence = new DrugInfluence(cmp.getString("drugName"), cmp.getInteger("drugInfluenceDelay"), cmp.getDouble("drugInfluenceSpeed"), cmp.getDouble("drugInfluenceSpeedAdd"), cmp.getDouble("drugTotalEffect"));
-                getDrugHelper(cmp).addToDrug(influence);
+                getDrugHelper(cmp, server).addToDrug(influence);
             }
             else if (isMessage("drugSetValue", message, NBTTagCompound.class))
             {
                 NBTTagCompound cmp = message.getNBTValue();
-                getDrugHelper(cmp).setDrugValue(cmp.getString("drugName"), cmp.getFloat("drugValue"));
+                getDrugHelper(cmp, server).setDrugValue(cmp.getString("drugName"), cmp.getFloat("drugValue"));
             }
             else if (isMessage("drugSetLocked", message, NBTTagCompound.class))
             {
                 NBTTagCompound cmp = message.getNBTValue();
-                getDrugHelper(cmp).getDrug(cmp.getString("drugName")).setLocked(cmp.getBoolean("drugLocked"));
+                getDrugHelper(cmp, server).getDrug(cmp.getString("drugName")).setLocked(cmp.getBoolean("drugLocked"));
             }
             else if (isMessage("drugGetValue", message, NBTTagCompound.class))
             {
                 NBTTagCompound cmp = message.getNBTValue();
                 NBTTagCompound response = (NBTTagCompound) cmp.copy();
-                response.setFloat("drugValue", getDrugHelper(cmp).getDrugValue(cmp.getString("drugName")));
+                response.setFloat("drugValue", getDrugHelper(cmp, server).getDrugValue(cmp.getString("drugName")));
                 sendReply(message, response);
             }
             else if (isMessage("drugIsLocked", message, NBTTagCompound.class))
             {
                 NBTTagCompound cmp = message.getNBTValue();
                 NBTTagCompound response = (NBTTagCompound) cmp.copy();
-                response.setBoolean("drugLocked", getDrugHelper(cmp).getDrug(cmp.getString("drugName")).isLocked());
+                response.setBoolean("drugLocked", getDrugHelper(cmp, server).getDrug(cmp.getString("drugName")).isLocked());
                 sendReply(message, response);
             }
         }
@@ -83,14 +83,14 @@ public class PSCommunicationHandler
         return false;
     }
 
-    private Entity getEntity(NBTTagCompound compound)
+    private Entity getEntity(NBTTagCompound compound, boolean server)
     {
-        return getEntity(compound, "worldID", "entityID");
+        return getEntity(compound, "worldID", "entityID", server);
     }
 
-    private Entity getEntity(NBTTagCompound compound, String worldKey, String entityKey)
+    private Entity getEntity(NBTTagCompound compound, String worldKey, String entityKey, boolean server)
     {
-        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+        if (!server)
         {
             return Minecraft.getMinecraft().theWorld.getEntityByID(compound.getInteger(entityKey));
         }
@@ -100,9 +100,9 @@ public class PSCommunicationHandler
         }
     }
 
-    private DrugHelper getDrugHelper(NBTTagCompound compound)
+    private DrugHelper getDrugHelper(NBTTagCompound compound, boolean server)
     {
-        return DrugHelper.getDrugHelper(getEntity(compound));
+        return DrugHelper.getDrugHelper(getEntity(compound, server));
     }
 
     private boolean sendReply(FMLInterModComms.IMCMessage message, String value)

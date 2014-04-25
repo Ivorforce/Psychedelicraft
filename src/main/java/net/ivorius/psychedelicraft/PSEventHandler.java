@@ -33,7 +33,7 @@ public class PSEventHandler
         {
             for (FMLInterModComms.IMCMessage message : FMLInterModComms.fetchRuntimeMessages(Psychedelicraft.instance))
             {
-                Psychedelicraft.communicationHandler.onIMCMessage(message, true);
+                Psychedelicraft.communicationHandler.onIMCMessage(message, event.type == TickEvent.Type.SERVER, true);
             }
         }
 

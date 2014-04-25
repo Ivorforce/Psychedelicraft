@@ -289,9 +289,10 @@ public class Psychedelicraft
     @EventHandler
     public void onIMCEvent(FMLInterModComms.IMCEvent event)
     {
-        for (FMLInterModComms.IMCMessage message : event.getMessages())
-        {
-            communicationHandler.onIMCMessage(message, false);
-        }
+        // Could be fatal if we don't know the side
+//        for (FMLInterModComms.IMCMessage message : event.getMessages())
+//        {
+//            communicationHandler.onIMCMessage(message, false, false);
+//        }
     }
 }
