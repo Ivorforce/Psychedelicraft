@@ -8,7 +8,7 @@ import net.ivorius.psychedelicraftcore.events.WakeUpPlayerEvent;
 /**
  * Created by lukas on 04.03.14.
  */
-public class PsycheCoreHandlerCommon
+public class PSCoreHandlerCommon
 {
     public void register()
     {

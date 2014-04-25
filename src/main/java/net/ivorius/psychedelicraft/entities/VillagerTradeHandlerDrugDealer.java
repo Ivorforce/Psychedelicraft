@@ -3,7 +3,7 @@ package net.ivorius.psychedelicraft.entities;
 import java.util.Random;
 
 import net.ivorius.psychedelicraft.Psychedelicraft;
-import net.ivorius.psychedelicraft.blocks.ModBlocks;
+import net.ivorius.psychedelicraft.blocks.PSBlocks;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.item.Item;
 import net.minecraft.village.MerchantRecipeList;
@@ -34,6 +34,6 @@ public class VillagerTradeHandlerDrugDealer implements VillagerRegistry.IVillage
 
         VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, Psychedelicraft.itemDriedPeyote, 0.5f, 3, 10);
         VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, Psychedelicraft.itemPeyoteJoint, 0.5f, 1, 3);
-        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, Item.getItemFromBlock(ModBlocks.blockPeyote), 0.5f, 1, 5);
+        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, Item.getItemFromBlock(PSBlocks.blockPeyote), 0.5f, 1, 5);
     }
 }

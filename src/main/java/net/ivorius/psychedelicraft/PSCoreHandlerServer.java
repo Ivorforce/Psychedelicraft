@@ -5,7 +5,7 @@ import net.ivorius.psychedelicraftcore.PsycheCoreBusCommon;
 /**
  * Created by lukas on 04.03.14.
  */
-public class PsycheCoreHandlerServer
+public class PSCoreHandlerServer
 {
     public void register()
     {

@@ -14,7 +14,7 @@ public class ServerProxy
 {
     public void preInit(Configuration config)
     {
-        Psychedelicraft.coreHandlerServer = new PsycheCoreHandlerServer();
+        Psychedelicraft.coreHandlerServer = new PSCoreHandlerServer();
         Psychedelicraft.coreHandlerServer.register();
     }
 

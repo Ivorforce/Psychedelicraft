@@ -1,6 +1,5 @@
 package net.ivorius.psychedelicraft.blocks;
 
-import net.ivorius.psychedelicraft.Psychedelicraft;
 import net.ivorius.psychedelicraft.toolkit.IvTileEntityHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -98,7 +97,7 @@ public class TileEntityBarrel extends TileEntity
 
     public BlockBarrel.BarrelEntry getBarrelType()
     {
-        return ((BlockBarrel) ModBlocks.blockBarrel).entries[barrelType];
+        return ((BlockBarrel) PSBlocks.blockBarrel).entries[barrelType];
     }
 
     @Override

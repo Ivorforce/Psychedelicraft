@@ -19,7 +19,7 @@ import net.minecraftforge.common.DimensionManager;
  * Messages are read at Client / Server tick END Forge event.
  * If you need any more messages added, feel free to contact me about it.
  */
-public class PsycheCommunicationHandler
+public class PSCommunicationHandler
 {
     public void onIMCMessage(FMLInterModComms.IMCMessage message, boolean runtime)
     {

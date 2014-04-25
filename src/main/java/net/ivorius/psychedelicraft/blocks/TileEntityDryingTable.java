@@ -50,7 +50,7 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
                 dryingProgress = 0;
             }
 
-            this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, ModBlocks.blockDryingTable, 1, (int) (dryingProgress * 10000f));
+            this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, PSBlocks.blockDryingTable, 1, (int) (dryingProgress * 10000f));
         }
 
         if (plannedResult != null && (dryingTableItems[0] == null || (dryingTableItems[0] == plannedResult && dryingTableItems[0].getItemDamage() == plannedResult.getItemDamage() && plannedResult.isStackable() && plannedResult.stackSize + plannedResult.stackSize < plannedResult.getMaxStackSize())))
@@ -152,7 +152,7 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
 
         heatRatio = t;
 
-        this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, ModBlocks.blockDryingTable, 2, (int) (heatRatio * 10000f));
+        this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, PSBlocks.blockDryingTable, 2, (int) (heatRatio * 10000f));
     }
 
     @Override

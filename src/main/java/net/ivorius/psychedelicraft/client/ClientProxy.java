@@ -11,7 +11,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.registry.VillagerRegistry;
-import net.ivorius.psychedelicraft.PsycheCoreHandlerClient;
+import net.ivorius.psychedelicraft.PSCoreHandlerClient;
 import net.ivorius.psychedelicraft.Psychedelicraft;
 import net.ivorius.psychedelicraft.ServerProxy;
 import net.ivorius.psychedelicraft.blocks.TileEntityBarrel;
@@ -55,7 +55,7 @@ public class ClientProxy extends ServerProxy
         MinecraftForge.EVENT_BUS.register(this);
         FMLCommonHandler.instance().bus().register(this);
 
-        Psychedelicraft.coreHandlerClient = new PsycheCoreHandlerClient();
+        Psychedelicraft.coreHandlerClient = new PSCoreHandlerClient();
         Psychedelicraft.coreHandlerClient.register();
     }
 

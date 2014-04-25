@@ -1,6 +1,6 @@
 package net.ivorius.psychedelicraft.client.rendering;
 
-import net.ivorius.psychedelicraft.PsycheCoreHandlerClient;
+import net.ivorius.psychedelicraft.PSCoreHandlerClient;
 import net.ivorius.psychedelicraft.toolkit.IvMatrixHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -22,7 +22,7 @@ public class PsycheMatrixHelper
         float degToRad = (float) Math.PI / 180.0f;
 
         float farPlaneDistance = (float) (mc.gameSettings.renderDistanceChunks * 16);
-        return IvMatrixHelper.getProjectionMatrix(PsycheCoreHandlerClient.getCurrentFOV() * degToRad, (float) mc.displayWidth / (float) mc.displayHeight, 0.05f, farPlaneDistance * 2.0f);
+        return IvMatrixHelper.getProjectionMatrix(PSCoreHandlerClient.getCurrentFOV() * degToRad, (float) mc.displayWidth / (float) mc.displayHeight, 0.05f, farPlaneDistance * 2.0f);
     }
 
     public static Matrix4f getLookProjectionMatrix(Matrix4f projectionMatrix, Entity entity)

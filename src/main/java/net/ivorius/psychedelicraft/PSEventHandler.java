@@ -18,7 +18,7 @@ import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 /**
  * Created by lukas on 18.02.14.
  */
-public class PsycheEventHandler
+public class PSEventHandler
 {
     public void register()
     {

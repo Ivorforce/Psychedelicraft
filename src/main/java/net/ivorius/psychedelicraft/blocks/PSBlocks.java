@@ -2,14 +2,11 @@ package net.ivorius.psychedelicraft.blocks;
 
 import net.ivorius.psychedelicraft.Psychedelicraft;
 import net.ivorius.psychedelicraft.items.ItemBarrel;
-import net.ivorius.psychedelicraft.items.ItemGlassChalice;
-import net.ivorius.psychedelicraft.items.ItemWineGrapes;
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-public class ModBlocks
+public class PSBlocks
 {
 	public static Block blockWineGrapeLattice;
 	
@@ -97,7 +94,7 @@ public class ModBlocks
 		GameRegistry.registerBlock(block, id);
 		block.setBlockName(id);
 		block.setBlockTextureName(Psychedelicraft.textureBase + id);
-		block.setCreativeTab(Psychedelicraft.tab);
+		block.setCreativeTab(Psychedelicraft.creativeTab);
 	}
 	
 	public static void registerBlockDefault(Block block, Class<? extends ItemBlock> itemBlock, String id)
@@ -105,6 +102,6 @@ public class ModBlocks
 		GameRegistry.registerBlock(block, itemBlock, id);
 		block.setBlockName(id);
 		block.setBlockTextureName(Psychedelicraft.textureBase + id);
-		block.setCreativeTab(Psychedelicraft.tab);
+		block.setCreativeTab(Psychedelicraft.creativeTab);
 	}
 }

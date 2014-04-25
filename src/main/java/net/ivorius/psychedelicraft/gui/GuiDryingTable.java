@@ -1,7 +1,7 @@
 package net.ivorius.psychedelicraft.gui;
 
 import net.ivorius.psychedelicraft.Psychedelicraft;
-import net.ivorius.psychedelicraft.blocks.ModBlocks;
+import net.ivorius.psychedelicraft.blocks.PSBlocks;
 import net.ivorius.psychedelicraft.blocks.SlotDryingTableResult;
 import net.ivorius.psychedelicraft.blocks.TileEntityDryingTable;
 import net.minecraft.block.Block;
@@ -128,7 +128,7 @@ public class GuiDryingTable extends GuiContainer
         public boolean canInteractWith(EntityPlayer par1EntityPlayer)
         {
             Block id = this.worldObj.getBlock(tileEntityDryingTable.xCoord, tileEntityDryingTable.yCoord, tileEntityDryingTable.zCoord);
-            return id != ModBlocks.blockDryingTable ? false : par1EntityPlayer.getDistanceSq(tileEntityDryingTable.xCoord + 0.5D, tileEntityDryingTable.yCoord + 0.5D, tileEntityDryingTable.zCoord + 0.5D) <= 64.0D;
+            return id != PSBlocks.blockDryingTable ? false : par1EntityPlayer.getDistanceSq(tileEntityDryingTable.xCoord + 0.5D, tileEntityDryingTable.yCoord + 0.5D, tileEntityDryingTable.zCoord + 0.5D) <= 64.0D;
         }
 
         /**

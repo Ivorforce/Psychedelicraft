@@ -5,24 +5,8 @@
 
 package net.ivorius.psychedelicraft;
 
-import net.ivorius.psychedelicraft.blocks.BlockBarrel;
-import net.ivorius.psychedelicraft.blocks.BlockCannabisPlant;
-import net.ivorius.psychedelicraft.blocks.BlockCocaPlant;
-import net.ivorius.psychedelicraft.blocks.BlockCoffea;
-import net.ivorius.psychedelicraft.blocks.BlockDryingTable;
-import net.ivorius.psychedelicraft.blocks.BlockGlitched;
-import net.ivorius.psychedelicraft.blocks.BlockPeyote;
-import net.ivorius.psychedelicraft.blocks.BlockPsycheLeaves;
-import net.ivorius.psychedelicraft.blocks.BlockPsycheLog;
-import net.ivorius.psychedelicraft.blocks.BlockPsycheSapling;
-import net.ivorius.psychedelicraft.blocks.BlockRiftJar;
-import net.ivorius.psychedelicraft.blocks.BlockTobaccoPlant;
-import net.ivorius.psychedelicraft.blocks.BlockWineGrapeLattice;
-import net.ivorius.psychedelicraft.blocks.ModBlocks;
-import net.ivorius.psychedelicraft.blocks.TileEntityBarrel;
-import net.ivorius.psychedelicraft.blocks.TileEntityDryingTable;
-import net.ivorius.psychedelicraft.blocks.TileEntityPeyote;
-import net.ivorius.psychedelicraft.blocks.TileEntityRiftJar;
+import net.ivorius.psychedelicraft.blocks.*;
+import net.ivorius.psychedelicraft.blocks.PSBlocks;
 import net.ivorius.psychedelicraft.entities.DrugInfluence;
 import net.ivorius.psychedelicraft.entities.DrugInfluenceHarmonium;
 import net.ivorius.psychedelicraft.entities.DrugInfoPacket;
@@ -52,15 +36,12 @@ import net.ivorius.psychedelicraft.worldgen.WorldGenPeyote;
 import net.ivorius.psychedelicraft.worldgen.WorldGenTilledPatch;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemSeeds;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -99,16 +80,16 @@ public class Psychedelicraft
     public static Logger logger;
 
     public static PsycheGuiHandler guiHandler;
-    public static PsycheEventHandler eventHandler;
-    public static PsycheCommunicationHandler communicationHandler;
+    public static PSEventHandler eventHandler;
+    public static PSCommunicationHandler communicationHandler;
 
-    public static PsycheCoreHandlerClient coreHandlerClient;
-    public static PsycheCoreHandlerCommon coreHandlerCommon;
-    public static PsycheCoreHandlerServer coreHandlerServer;
+    public static PSCoreHandlerClient coreHandlerClient;
+    public static PSCoreHandlerCommon coreHandlerCommon;
+    public static PSCoreHandlerServer coreHandlerServer;
 
     public static IvPacketPipeline packetPipeline;
     
-    public static CreativeTabs tab = new CreativeTabPsyche();
+    public static CreativeTabPsyche creativeTab;
 
     public static final byte tagCompoundID = 10;
     public static final byte tagStringID = 8;
@@ -195,16 +176,17 @@ public class Psychedelicraft
 
         spawnRifts = config.get("Balancing", "spawnRifts", true).getBoolean(true);
 
+        creativeTab = new CreativeTabPsyche("psychedelicraft");
 
         guiHandler = new PsycheGuiHandler();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
 
-        eventHandler = new PsycheEventHandler();
+        eventHandler = new PSEventHandler();
         eventHandler.register();
 
-        communicationHandler = new PsycheCommunicationHandler();
+        communicationHandler = new PSCommunicationHandler();
 
-        coreHandlerCommon = new PsycheCoreHandlerCommon();
+        coreHandlerCommon = new PSCoreHandlerCommon();
         coreHandlerCommon.register();
 
         packetPipeline = new IvPacketPipeline();
@@ -212,7 +194,7 @@ public class Psychedelicraft
 
         sleepStatusDrugs = EnumHelper.addStatus("onDrugs");
         
-        ModBlocks.init();
+        PSBlocks.init();
 
         //----------------------------------------------------------Containers----------------------------------
 
@@ -256,7 +238,7 @@ public class Psychedelicraft
 
         //----------------------------------------------------------Weed----------------------------------
 
-        itemCannabisSeeds = new ItemSeeds(ModBlocks.blockCannabisPlant, Blocks.farmland).setUnlocalizedName("cannabisSeeds").setTextureName(textureBase + "cannabisSeeds");
+        itemCannabisSeeds = new ItemSeeds(PSBlocks.blockCannabisPlant, Blocks.farmland).setUnlocalizedName("cannabisSeeds").setTextureName(textureBase + "cannabisSeeds");
         GameRegistry.registerItem(itemCannabisSeeds, "cannabisSeeds", MODID);
         itemCannabisSeeds.setCreativeTab(CreativeTabs.tabMisc);
 
@@ -296,7 +278,7 @@ public class Psychedelicraft
         GameRegistry.registerItem(itemTobaccoLeaf, "tobaccoLeaf", MODID);
         itemTobaccoLeaf.setCreativeTab(CreativeTabs.tabMisc);
 
-        itemTobaccoSeeds = new ItemSeeds(ModBlocks.blockTobaccoPlant, Blocks.farmland).setUnlocalizedName("tobaccoSeeds").setTextureName(textureBase + "tobaccoSeeds");
+        itemTobaccoSeeds = new ItemSeeds(PSBlocks.blockTobaccoPlant, Blocks.farmland).setUnlocalizedName("tobaccoSeeds").setTextureName(textureBase + "tobaccoSeeds");
         GameRegistry.registerItem(itemTobaccoSeeds, "tobaccoSeeds", MODID);
         itemTobaccoSeeds.setCreativeTab(CreativeTabs.tabMisc);
 
@@ -318,7 +300,7 @@ public class Psychedelicraft
 
         //----------------------------------------------------------Cocaine----------------------------------
 
-        itemCocaSeeds = new ItemSeeds(ModBlocks.blockCocaPlant, Blocks.farmland).setUnlocalizedName("cocaSeeds").setTextureName(textureBase + "cocaSeeds");
+        itemCocaSeeds = new ItemSeeds(PSBlocks.blockCocaPlant, Blocks.farmland).setUnlocalizedName("cocaSeeds").setTextureName(textureBase + "cocaSeeds");
         GameRegistry.registerItem(itemCocaSeeds, "cocaSeeds", MODID);
         itemCocaSeeds.setCreativeTab(CreativeTabs.tabMisc);
 
@@ -338,7 +320,7 @@ public class Psychedelicraft
 
         //----------------------------------------------------------Coffee----------------------------------
 
-        itemCoffeaCherries = new ItemSeeds(ModBlocks.blockCoffea, Blocks.farmland).setUnlocalizedName("coffeaCherries").setTextureName(textureBase + "coffeaCherries");
+        itemCoffeaCherries = new ItemSeeds(PSBlocks.blockCoffea, Blocks.farmland).setUnlocalizedName("coffeaCherries").setTextureName(textureBase + "coffeaCherries");
         GameRegistry.registerItem(itemCoffeaCherries, "coffeaCherries", MODID);
         itemCoffeaCherries.setCreativeTab(CreativeTabs.tabFood);
 
@@ -390,9 +372,9 @@ public class Psychedelicraft
 
         //----------------------------------------------------------Other----------------------------------
 
-        BlockBarrel.registerBarrelEntry(0, ModBlocks.blockBarrel, new BlockBarrel.BarrelEntry(new ResourceLocation(MODID, filePathTextures + "beerBarrelTexture.png"), itemWoodenMug, 0, itemWoodenMug, 15, 1, 1), new ItemBarrel.BarrelEntry("beer", 0, textureBase + "barrelItemBeer"));
-        BlockBarrel.registerBarrelEntry(1, ModBlocks.blockBarrel, new BlockBarrel.BarrelEntry(new ResourceLocation(MODID, filePathTextures + "wineBarrelTexture.png"), itemGlassChalice, 0, itemGlassChalice, 10, 15, 1), new ItemBarrel.BarrelEntry("wine", 1, textureBase + "barrelItemWine"));
-        BlockBarrel.registerBarrelEntry(2, ModBlocks.blockBarrel, new BlockBarrel.BarrelEntry(new ResourceLocation(MODID, filePathTextures + "jeneverBarrelTexture.png"), itemWoodenMug, 0, itemWoodenMug, 15, 2, 2), new ItemBarrel.BarrelEntry("jenever", 2, textureBase + "barrelItemJenever"));
+        BlockBarrel.registerBarrelEntry(0, PSBlocks.blockBarrel, new BlockBarrel.BarrelEntry(new ResourceLocation(MODID, filePathTextures + "beerBarrelTexture.png"), itemWoodenMug, 0, itemWoodenMug, 15, 1, 1), new ItemBarrel.BarrelEntry("beer", 0, textureBase + "barrelItemBeer"));
+        BlockBarrel.registerBarrelEntry(1, PSBlocks.blockBarrel, new BlockBarrel.BarrelEntry(new ResourceLocation(MODID, filePathTextures + "wineBarrelTexture.png"), itemGlassChalice, 0, itemGlassChalice, 10, 15, 1), new ItemBarrel.BarrelEntry("wine", 1, textureBase + "barrelItemWine"));
+        BlockBarrel.registerBarrelEntry(2, PSBlocks.blockBarrel, new BlockBarrel.BarrelEntry(new ResourceLocation(MODID, filePathTextures + "jeneverBarrelTexture.png"), itemWoodenMug, 0, itemWoodenMug, 15, 2, 2), new ItemBarrel.BarrelEntry("jenever", 2, textureBase + "barrelItemJenever"));
 
         itemSyringeCocaineDamage = itemSyringe.addEffect(1, new DrugInfluence[]{new DrugInfluence("Cocaine", 0, 0.005, 0.01, 0.5f)}, 0x55ffffff, "cocaine");
         itemSyringeCaffeineDamage = itemSyringe.addEffect(2, new DrugInfluence[]{new DrugInfluence("Caffeine", 0, 0.005, 0.01, 0.85f)}, 0x552e1404, "caffeine");
@@ -408,6 +390,8 @@ public class Psychedelicraft
     public void load(FMLInitializationEvent event)
     {
         proxy.registerRenderers();
+
+        creativeTab.tabIcon = itemCannabisLeaf;
 
         DrugInfluence.registerInfluence(DrugInfluence.class, "default");
         DrugInfluence.registerInfluence(DrugInfluenceHarmonium.class, "harmonium");
@@ -493,22 +477,22 @@ public class Psychedelicraft
                 new GeneratorGeneric.EntryDefault(BiomeGenBase.taigaHills, 0.1f),
                 new GeneratorGeneric.EntryDefault(BiomeGenBase.iceMountains, 0.05f)), 10);
 
-        GameRegistry.registerWorldGenerator(new GeneratorGeneric(new WorldGenTilledPatch(false, false, ModBlocks.blockCannabisPlant),
+        GameRegistry.registerWorldGenerator(new GeneratorGeneric(new WorldGenTilledPatch(false, false, PSBlocks.blockCannabisPlant),
                 new GeneratorGeneric.EntryDefault(BiomeGenBase.plains, 0.04f),
                 new GeneratorGeneric.EntryDefault(BiomeGenBase.forest, 0.04f),
                 new GeneratorGeneric.EntryDefault(BiomeGenBase.savanna, 0.04f)), 10);
 
-        GameRegistry.registerWorldGenerator(new GeneratorGeneric(new WorldGenTilledPatch(false, false, ModBlocks.blockTobaccoPlant),
+        GameRegistry.registerWorldGenerator(new GeneratorGeneric(new WorldGenTilledPatch(false, false, PSBlocks.blockTobaccoPlant),
                 new GeneratorGeneric.EntryDefault(BiomeGenBase.plains, 0.04f),
                 new GeneratorGeneric.EntryDefault(BiomeGenBase.forest, 0.04f),
                 new GeneratorGeneric.EntryDefault(BiomeGenBase.savanna, 0.04f)), 10);
 
-        GameRegistry.registerWorldGenerator(new GeneratorGeneric(new WorldGenTilledPatch(false, false, ModBlocks.blockCoffea),
+        GameRegistry.registerWorldGenerator(new GeneratorGeneric(new WorldGenTilledPatch(false, false, PSBlocks.blockCoffea),
                 new GeneratorGeneric.EntryDefault(BiomeGenBase.plains, 0.05f),
                 new GeneratorGeneric.EntryDefault(BiomeGenBase.forest, 0.05f),
                 new GeneratorGeneric.EntryDefault(BiomeGenBase.savanna, 0.05f)), 10);
 
-        GameRegistry.registerWorldGenerator(new GeneratorGeneric(new WorldGenTilledPatch(false, true, ModBlocks.blockCocaPlant),
+        GameRegistry.registerWorldGenerator(new GeneratorGeneric(new WorldGenTilledPatch(false, true, PSBlocks.blockCocaPlant),
                 new GeneratorGeneric.EntryDefault(BiomeGenBase.plains, 0.4f, 5),
                 new GeneratorGeneric.EntryDefault(BiomeGenBase.forest, 0.4f, 5),
                 new GeneratorGeneric.EntryDefault(BiomeGenBase.river, 0.4f, 5),
