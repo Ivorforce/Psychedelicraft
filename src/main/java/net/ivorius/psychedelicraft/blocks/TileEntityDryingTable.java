@@ -1,6 +1,5 @@
 package net.ivorius.psychedelicraft.blocks;
 
-import net.ivorius.psychedelicraft.Psychedelicraft;
 import net.ivorius.psychedelicraft.toolkit.IvTileEntityHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
@@ -13,6 +12,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.common.util.Constants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -191,7 +191,7 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
     {
         super.readFromNBT(par1NBTTagCompound);
 
-        NBTTagList var2 = par1NBTTagCompound.getTagList("Items", Psychedelicraft.tagCompoundID);
+        NBTTagList var2 = par1NBTTagCompound.getTagList("Items", Constants.NBT.TAG_COMPOUND);
         this.dryingTableItems = new ItemStack[this.dryingTableItems.length];
 
         for (int var3 = 0; var3 < var2.tagCount(); ++var3)
@@ -213,18 +213,12 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
         dryingProgress = par1NBTTagCompound.getFloat("dryingProgress");
     }
 
-    /**
-     * Returns the number of slots in the inventory.
-     */
     @Override
     public int getSizeInventory()
     {
         return this.dryingTableItems.length;
     }
 
-    /**
-     * Returns the stack in slot i
-     */
     @Override
     public ItemStack getStackInSlot(int par1)
     {

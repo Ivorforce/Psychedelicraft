@@ -18,6 +18,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
+import net.minecraftforge.common.util.Constants;
 
 import java.util.*;
 
@@ -463,7 +464,7 @@ public class DrugHelper implements IExtendedEntityProperties
         }
 
         influences.clear();
-        NBTTagList influenceTagList = par1NBTTagCompound.getTagList("drugInfluences", Psychedelicraft.tagCompoundID);
+        NBTTagList influenceTagList = par1NBTTagCompound.getTagList("drugInfluences", Constants.NBT.TAG_COMPOUND);
         for (int i = 0; i < influenceTagList.tagCount(); i++)
         {
             NBTTagCompound compound = influenceTagList.getCompoundTagAt(i);

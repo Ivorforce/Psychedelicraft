@@ -91,9 +91,6 @@ public class Psychedelicraft
     
     public static CreativeTabPsyche creativeTab;
 
-    public static final byte tagCompoundID = 10;
-    public static final byte tagStringID = 8;
-
     public static String filePathTexturesFull = "psychedelicraft:textures/mod/";
     public static String filePathTextures = "textures/mod/";
     public static String filePathOther = "other/";
