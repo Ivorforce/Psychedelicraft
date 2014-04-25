@@ -116,3 +116,5 @@ entity.realityRift.name=Zero Rift
 entity.molotovCocktail.name=Molotov Cocktail
 
 tile.bed.onDrugs=The drugs in your body keep you awake
+
+itemGroup.psychedelicraft=Psychedelicraft
