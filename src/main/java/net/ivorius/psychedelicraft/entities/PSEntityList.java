@@ -17,20 +17,18 @@ import net.minecraftforge.common.config.Configuration;
 public class PSEntityList
 {
     public static final int molotovCocktailID = 0;
+    public static final int realityRiftID = 0;
+
     public static int villagerDealerProfessionID;
 
     public static void preInit(FMLPreInitializationEvent event, Psychedelicraft mod, Configuration configuration)
     {
         //----------------------------------------------------------Molotov Cocktail----------------------------------
 
-        int entityMolotovCocktailID = EntityRegistry.findGlobalUniqueEntityId();
-        EntityRegistry.registerGlobalEntityID(EntityMolotovCocktail.class, "molotovCocktail", entityMolotovCocktailID);
-        EntityRegistry.registerModEntity(EntityMolotovCocktail.class, "molotovCocktail", entityMolotovCocktailID, mod, 64, 10, true);
+        EntityRegistry.registerModEntity(EntityMolotovCocktail.class, "molotovCocktail", molotovCocktailID, mod, 64, 10, true);
 
         //----------------------------------------------------------Digital----------------------------------
 
-        int realityRiftID = EntityRegistry.findGlobalUniqueEntityId();
-        EntityRegistry.registerGlobalEntityID(EntityRealityRift.class, "realityRift", realityRiftID);
         EntityRegistry.registerModEntity(EntityRealityRift.class, "realityRift", realityRiftID, mod, 80, 3, false);
 
         //----------------------------------------------------------Villager Dealer----------------------------------
