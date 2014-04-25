@@ -1,20 +1,7 @@
-/***************************************************************************************************
- * Copyright (c) 2014, Lukas Tenbrink.
- * http://lukas.axxim.net
- *
- * You are free to:
- *
- * Share — copy and redistribute the material in any medium or format
- * Adapt — remix, transform, and build upon the material
- * The licensor cannot revoke these freedoms as long as you follow the license terms.
- *
- * Under the following terms:
- *
- * Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
- * NonCommercial — You may not use the material for commercial purposes, unless you have a permit by the creator.
- * ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
- * No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
- **************************************************************************************************/
+/*
+ *  Copyright (c) 2014, Lukas Tenbrink.
+ *  * http://lukas.axxim.net
+ */
 
 package net.ivorius.psychedelicraft.toolkit;
 
@@ -25,6 +12,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -40,8 +28,8 @@ public class IvMultiBlockHelper implements Iterable<int[]>
     private int metadata;
 
     private int direction;
-    private float[] center;
-    private float[] size;
+    private double[] center;
+    private double[] size;
 
     public IvMultiBlockHelper()
     {
@@ -87,7 +75,7 @@ public class IvMultiBlockHelper implements Iterable<int[]>
         world.setBlock(blockCoords[0], blockCoords[1], blockCoords[2], block, metadata, 3);
         TileEntity tileEntity = world.getTileEntity(blockCoords[0], blockCoords[1], blockCoords[2]);
 
-        if (tileEntity != null && tileEntity instanceof IvTileEntityMultiBlock)
+        if (tileEntity instanceof IvTileEntityMultiBlock)
         {
             IvTileEntityMultiBlock tileEntityMB = (IvTileEntityMultiBlock) tileEntity;
 
@@ -101,7 +89,7 @@ public class IvMultiBlockHelper implements Iterable<int[]>
             }
 
             tileEntityMB.direction = direction;
-            tileEntityMB.centerCoords = center;
+            tileEntityMB.centerCoords = new double[]{center[0] - blockCoords[0], center[1] - blockCoords[1], center[2] - blockCoords[2]};
             tileEntityMB.centerCoordsSize = size;
 
             return tileEntityMB;
@@ -110,26 +98,26 @@ public class IvMultiBlockHelper implements Iterable<int[]>
         return null;
     }
 
-    public static float[] getTileEntityCenter(ArrayList<int[]> positions)
+    public static double[] getTileEntityCenter(ArrayList<int[]> positions)
     {
-        float[] result = getCenter(positions);
+        double[] result = getCenter(positions);
 
-        return new float[]{result[0] + 0.5f, result[1] + 0.5f, result[2] + 0.5f};
+        return new double[]{result[0] + 0.5f, result[1] + 0.5f, result[2] + 0.5f};
     }
 
-    public static float[] getTileEntitySize(ArrayList<int[]> positions)
+    public static double[] getTileEntitySize(ArrayList<int[]> positions)
     {
         return getSize(positions);
     }
 
-    public static float[] getCenter(ArrayList<int[]> positions)
+    public static double[] getCenter(ArrayList<int[]> positions)
     {
         if (positions.size() > 0)
         {
-            int[] min = getPosition(positions, true);
-            int[] max = getPosition(positions, false);
+            int[] min = getExtremeCoords(positions, true);
+            int[] max = getExtremeCoords(positions, false);
 
-            float[] result = new float[min.length];
+            double[] result = new double[min.length];
             for (int i = 0; i < min.length; i++)
             {
                 result[i] = (min[i] + max[i]) * 0.5f;
@@ -141,14 +129,14 @@ public class IvMultiBlockHelper implements Iterable<int[]>
         return null;
     }
 
-    public static float[] getSize(ArrayList<int[]> positions)
+    public static double[] getSize(ArrayList<int[]> positions)
     {
         if (positions.size() > 0)
         {
-            int[] min = getPosition(positions, true);
-            int[] max = getPosition(positions, false);
+            int[] min = getExtremeCoords(positions, true);
+            int[] max = getExtremeCoords(positions, false);
 
-            float[] result = new float[min.length];
+            double[] result = new double[min.length];
             for (int i = 0; i < min.length; i++)
             {
                 result[i] = (float) (max[i] - min[i] + 1) * 0.5f;
@@ -160,7 +148,7 @@ public class IvMultiBlockHelper implements Iterable<int[]>
         return null;
     }
 
-    public static int[] getPosition(ArrayList<int[]> positions, boolean min)
+    public static int[] getExtremeCoords(ArrayList<int[]> positions, boolean min)
     {
         if (positions.size() > 0)
         {
@@ -184,8 +172,8 @@ public class IvMultiBlockHelper implements Iterable<int[]>
 
     public static int[] getLengths(ArrayList<int[]> positions)
     {
-        int[] min = getPosition(positions, true);
-        int[] max = getPosition(positions, false);
+        int[] min = getExtremeCoords(positions, true);
+        int[] max = getExtremeCoords(positions, false);
 
         return new int[]{max[0] - min[0], max[1] - min[1], max[2] - min[2]};
     }
@@ -214,29 +202,17 @@ public class IvMultiBlockHelper implements Iterable<int[]>
         else if (var11 != Blocks.vine && var11 != Blocks.tallgrass && var11 != Blocks.deadbush && !var11.isReplaceable(world, x, y, z))
         {
             if (blockSide == 0)
-            {
                 --y;
-            }
-            if (blockSide == 1)
-            {
+            else if (blockSide == 1)
                 ++y;
-            }
-            if (blockSide == 2)
-            {
+            else if (blockSide == 2)
                 --z;
-            }
-            if (blockSide == 3)
-            {
+            else if (blockSide == 3)
                 ++z;
-            }
-            if (blockSide == 4)
-            {
+            else if (blockSide == 4)
                 --x;
-            }
-            if (blockSide == 5)
-            {
+            else if (blockSide == 5)
                 ++x;
-            }
         }
 
         if (!player.canPlayerEdit(x, y, z, blockSide, itemStack))
@@ -250,7 +226,7 @@ public class IvMultiBlockHelper implements Iterable<int[]>
         else
         {
             int[] lengths = getLengths(positions);
-            int[] min = getPosition(positions, true);
+            int[] min = getExtremeCoords(positions, true);
 
             // Run from min+length (maximimum) being the placed x, y, z to minimum being the x, y, z
             ArrayList<ArrayList<int[]>> validPlacements = new ArrayList<ArrayList<int[]>>();
@@ -342,49 +318,49 @@ public class IvMultiBlockHelper implements Iterable<int[]>
         return returnList;
     }
 
-    public static IvRaytraceableAxisAlignedBox getRotatedBox(Object userInfo, double x, double y, double z, double width, double height, double depth, int direction, double centerX, double centerY, double centerZ)
+    public static IvRaytraceableAxisAlignedBox getRotatedBox(Object userInfo, double x, double y, double z, double width, double height, double depth, int direction, double[] centerCoords)
     {
         IvRaytraceableAxisAlignedBox box = null;
 
         if (direction == 0)
         {
-            box = new IvRaytraceableAxisAlignedBox(userInfo, centerX - x - width, centerY + y, centerZ + z, width, height, depth);
+            box = new IvRaytraceableAxisAlignedBox(userInfo, centerCoords[0] - x - width, centerCoords[1] + y, centerCoords[2] + z, width, height, depth);
         }
         if (direction == 1)
         {
-            box = new IvRaytraceableAxisAlignedBox(userInfo, centerX - z - depth, centerY + y, centerZ - x - width, depth, height, width);
+            box = new IvRaytraceableAxisAlignedBox(userInfo, centerCoords[0] - z - depth, centerCoords[1] + y, centerCoords[2] - x - width, depth, height, width);
         }
         if (direction == 2)
         {
-            box = new IvRaytraceableAxisAlignedBox(userInfo, centerX + x, centerY + y, centerZ - z - depth, width, height, depth);
+            box = new IvRaytraceableAxisAlignedBox(userInfo, centerCoords[0] + x, centerCoords[1] + y, centerCoords[2] - z - depth, width, height, depth);
         }
         if (direction == 3)
         {
-            box = new IvRaytraceableAxisAlignedBox(userInfo, centerX + z, centerY + y, centerZ + x, depth, height, width);
+            box = new IvRaytraceableAxisAlignedBox(userInfo, centerCoords[0] + z, centerCoords[1] + y, centerCoords[2] + x, depth, height, width);
         }
 
         return box;
     }
 
-    public static AxisAlignedBB getRotatedBB(double x, double y, double z, double width, double height, double depth, int direction, double centerX, double centerY, double centerZ)
+    public static AxisAlignedBB getRotatedBB(double x, double y, double z, double width, double height, double depth, int direction, double[] centerCoords)
     {
         AxisAlignedBB box = null;
 
         if (direction == 0)
         {
-            box = getBBWithLengths(centerX + x, centerY + y, centerZ + z, width, height, depth);
+            box = getBBWithLengths(centerCoords[0] + x, centerCoords[1] + y, centerCoords[2] + z, width, height, depth);
         }
         if (direction == 1)
         {
-            box = getBBWithLengths(centerX - z - depth, centerY + y, centerZ + x, depth, height, width);
+            box = getBBWithLengths(centerCoords[0] - z - depth, centerCoords[1] + y, centerCoords[2] + x, depth, height, width);
         }
         if (direction == 2)
         {
-            box = getBBWithLengths(centerX - x - width, centerY + y, centerZ - z - depth, width, height, depth);
+            box = getBBWithLengths(centerCoords[0] - x - width, centerCoords[1] + y, centerCoords[2] - z - depth, width, height, depth);
         }
         if (direction == 3)
         {
-            box = getBBWithLengths(centerX + z, centerY + y, centerZ - x - width, depth, height, width);
+            box = getBBWithLengths(centerCoords[0] + z, centerCoords[1] + y, centerCoords[2] - x - width, depth, height, width);
         }
 
         return box;
@@ -393,5 +369,30 @@ public class IvMultiBlockHelper implements Iterable<int[]>
     public static AxisAlignedBB getBBWithLengths(double x, double y, double z, double width, double height, double depth)
     {
         return AxisAlignedBB.getAABBPool().getAABB(x, y, z, x + width, y + height, z + depth);
+    }
+
+    public static int getRotation(Entity entity)
+    {
+        return MathHelper.floor_double((entity.rotationYaw * 4F) / 360F + 0.5D) & 3;
+    }
+
+    public static ArrayList<int[]> getRotatedPositions(int rotation, int width, int height, int length)
+    {
+        boolean affectsX = (rotation == 0) || (rotation == 2);
+        return getPositions(affectsX ? width : length, height, affectsX ? length : width);
+    }
+
+    public static ArrayList<int[]> getPositions(int width, int height, int length)
+    {
+        ArrayList<int[]> positions = new ArrayList<int[]>();
+
+        for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
+                for (int z = 0; z < length; z++)
+                {
+                    positions.add(new int[]{x, y, z});
+                }
+
+        return positions;
     }
 }

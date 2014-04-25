@@ -1,23 +1,11 @@
-/***************************************************************************************************
- * Copyright (c) 2014, Lukas Tenbrink.
- * http://lukas.axxim.net
- *
- * You are free to:
- *
- * Share — copy and redistribute the material in any medium or format
- * Adapt — remix, transform, and build upon the material
- * The licensor cannot revoke these freedoms as long as you follow the license terms.
- *
- * Under the following terms:
- *
- * Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
- * NonCommercial — You may not use the material for commercial purposes, unless you have a permit by the creator.
- * ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
- * No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
- **************************************************************************************************/
+/*
+ *  Copyright (c) 2014, Lukas Tenbrink.
+ *  * http://lukas.axxim.net
+ */
 
 package net.ivorius.psychedelicraft.toolkit;
 
+import net.minecraft.client.renderer.OpenGlHelper;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
@@ -71,7 +59,7 @@ public class IvRaytracer
     public static void drawStandardOutlines(ArrayList<IvRaytraceableObject> objects)
     {
         GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
         GL11.glLineWidth(2.0F);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glDepthMask(false);

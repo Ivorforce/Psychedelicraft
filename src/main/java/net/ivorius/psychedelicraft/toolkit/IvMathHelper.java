@@ -1,20 +1,7 @@
-/***************************************************************************************************
- * Copyright (c) 2014, Lukas Tenbrink.
- * http://lukas.axxim.net
- *
- * You are free to:
- *
- * Share — copy and redistribute the material in any medium or format
- * Adapt — remix, transform, and build upon the material
- * The licensor cannot revoke these freedoms as long as you follow the license terms.
- *
- * Under the following terms:
- *
- * Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
- * NonCommercial — You may not use the material for commercial purposes, unless you have a permit by the creator.
- * ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
- * No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
- **************************************************************************************************/
+/*
+ *  Copyright (c) 2014, Lukas Tenbrink.
+ *  * http://lukas.axxim.net
+ */
 
 package net.ivorius.psychedelicraft.toolkit;
 
@@ -22,14 +9,22 @@ import net.minecraft.util.MathHelper;
 
 public class IvMathHelper
 {
+    public static double length(double[] vector)
+    {
+        double max = 0.0;
+
+        for (int i = 0; i < vector.length; i++)
+            max += vector[i] * vector[i];
+
+        return MathHelper.sqrt_double(max);
+    }
+
     public static double distanceSQ(double[] pos1, double[] pos2)
     {
         double distanceSQ = 0.0;
 
         for (int i = 0; i < pos1.length; i++)
-        {
             distanceSQ += (pos1[i] - pos2[i]) * (pos1[i] - pos2[i]);
-        }
 
         return distanceSQ;
     }
@@ -90,12 +85,7 @@ public class IvMathHelper
 
     public static double[] normalize(double[] vector)
     {
-        double max = 0.0;
-
-        for (int i = 0; i < vector.length; i++)
-        {
-            max += MathHelper.sqrt_double(vector[i] * vector[i]);
-        }
+        double max = length(vector);
 
         double[] resultVector = new double[vector.length];
         for (int i = 0; i < vector.length; i++)
@@ -111,9 +101,7 @@ public class IvMathHelper
         double[] result = new double[pos1.length];
 
         for (int i = 0; i < result.length; i++)
-        {
             result[i] = pos1[i] - pos2[i];
-        }
 
         return result;
     }
@@ -231,5 +219,35 @@ public class IvMathHelper
         }
 
         return value;
+    }
+
+    /**
+     * Calculates cartesian from spherical coordinates.
+     * @param vector The spherical vector {azimuth, inclination, radius}
+     * @return The cartesian vector {x, y, z}
+     */
+    public static double[] cartesianFromSpherical(double[] vector)
+    {
+        double sinInclination = MathHelper.sin((float)vector[1]);
+
+        double x = vector[2] * sinInclination * MathHelper.cos((float)vector[0]);
+        double y = vector[2] * MathHelper.cos((float)vector[1]);
+        double z = vector[2] * sinInclination * MathHelper.sin((float)vector[0]);
+
+        return new double[]{x, y, z};
+    }
+
+    /**
+     * Calculates spherical from cartesian coordinates.
+     * @param vector The cartesian vector {x, y, z}
+     * @return The spherical vector {azimuth, inclination, radius}
+     */
+    public static double[] sphericalFromCartesian(double[] vector)
+    {
+        double r = length(vector);
+        double inclination = Math.acos(vector[1] / r);
+        double azimuth = Math.atan2(vector[2], vector[0]);
+
+        return new double[]{azimuth, inclination, r};
     }
 }

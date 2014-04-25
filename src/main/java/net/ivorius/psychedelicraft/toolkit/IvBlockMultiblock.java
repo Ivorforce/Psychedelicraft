@@ -1,20 +1,7 @@
-/***************************************************************************************************
- * Copyright (c) 2014, Lukas Tenbrink.
- * http://lukas.axxim.net
- *
- * You are free to:
- *
- * Share — copy and redistribute the material in any medium or format
- * Adapt — remix, transform, and build upon the material
- * The licensor cannot revoke these freedoms as long as you follow the license terms.
- *
- * Under the following terms:
- *
- * Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
- * NonCommercial — You may not use the material for commercial purposes, unless you have a permit by the creator.
- * ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
- * No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
- **************************************************************************************************/
+/*
+ *  Copyright (c) 2014, Lukas Tenbrink.
+ *  * http://lukas.axxim.net
+ */
 
 package net.ivorius.psychedelicraft.toolkit;
 
@@ -22,8 +9,9 @@ package net.ivorius.psychedelicraft.toolkit;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
 public abstract class IvBlockMultiblock extends BlockContainer
@@ -34,31 +22,73 @@ public abstract class IvBlockMultiblock extends BlockContainer
     }
 
     @Override
-    public void breakBlock(World par1World, int par2, int par3, int par4, Block par5, int par6)
+    public void breakBlock(World world, int x, int y, int z, Block block, int blockMeta)
     {
-        TileEntity tileEntity = par1World.getTileEntity(par2, par3, par4);
-        if (tileEntity != null && tileEntity instanceof IvTileEntityMultiBlock)
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
+
+        int[][] toDestroy = null;
+
+        if (tileEntity instanceof IvTileEntityMultiBlock)
         {
-            IvTileEntityMultiBlock parent = (IvTileEntityMultiBlock) ((IvTileEntityMultiBlock) tileEntity).getParent();
+            IvTileEntityMultiBlock tileEntityMultiBlock = (IvTileEntityMultiBlock) tileEntity;
 
-            if (parent != null)
+            if (tileEntityMultiBlock.isParent())
             {
-                par1World.setBlock(parent.xCoord, parent.yCoord, parent.zCoord, Blocks.air, 0, 3);
+                if (!world.isRemote)
+                    this.parentBlockDropItemContents(world, tileEntityMultiBlock, x, y, z, block, blockMeta);
             }
 
-            if (((IvTileEntityMultiBlock) tileEntity).isParent())
-            {
-                if (!par1World.isRemote)
-                {
-                    this.parentBlockDropItem(par1World, (IvTileEntityMultiBlock) tileEntity, par2, par3, par4, par5, par6);
-                }
-            }
+            if (!tileEntityMultiBlock.isParent())
+                toDestroy = new int[][]{tileEntityMultiBlock.getActiveParentCoords()};
         }
 
-        super.breakBlock(par1World, par2, par3, par4, par5, par6);
+        super.breakBlock(world, x, y, z, block, blockMeta);
+
+        if (toDestroy != null)
+        {
+            for (int[] coords : toDestroy)
+            {
+                if (world.getTileEntity(coords[0], coords[1], coords[2]) instanceof IvTileEntityMultiBlock)
+                    world.setBlockToAir(coords[0], coords[1], coords[2]);
+            }
+        }
     }
 
-    public abstract void parentBlockDropItem(World par1World, IvTileEntityMultiBlock tileEntity, int parentX, int parentY, int parentZ, Block block, int blockMeta);
+    @Override
+    public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z)
+    {
+        IvTileEntityMultiBlock tileEntityMultiBlock = getValidatedTotalParent(this, world, x, y, z);
+
+        if (tileEntityMultiBlock != null)
+        {
+            int blockMeta = world.getBlockMetadata(x, y, z);
+
+            if (!world.isRemote && canHarvestBlock(player, blockMeta))
+                this.parentBlockHarvestItem(world, tileEntityMultiBlock, x, y, z, this, blockMeta);
+        }
+
+        return super.removedByPlayer(world, player, x, y, z);
+    }
+
+    @Override
+    public void onBlockExploded(World world, int x, int y, int z, Explosion explosion)
+    {
+        IvTileEntityMultiBlock tileEntityMultiBlock = getValidatedTotalParent(this, world, x, y, z);
+
+        if (tileEntityMultiBlock != null)
+        {
+            int blockMeta = world.getBlockMetadata(x, y, z);
+
+            if (!world.isRemote)
+                this.parentBlockHarvestItem(world, tileEntityMultiBlock, x, y, z, this, blockMeta);
+        }
+
+        super.onBlockExploded(world, x, y, z, explosion);
+    }
+
+    public void parentBlockDropItemContents(World world, IvTileEntityMultiBlock tileEntity, int x, int y, int z, Block block, int metadata) {}
+
+    public void parentBlockHarvestItem(World world, IvTileEntityMultiBlock tileEntity, int x, int y, int z, Block block, int metadata) {}
 
     @Override
     public void dropBlockAsItemWithChance(World par1World, int par2, int par3, int par4, int par5, float par6, int par7)
@@ -71,27 +101,54 @@ public abstract class IvBlockMultiblock extends BlockContainer
     {
         super.onNeighborBlockChange(par1World, par2, par3, par4, par5);
 
-        if (!canBlockStay(par1World, par2, par3, par4))
-        {
-            par1World.setBlock(par2, par3, par4, Blocks.air, 0, 3);
-        }
+        validateMultiblock(this, par1World, par2, par3, par4);
     }
 
-    @Override
-    public boolean canBlockStay(World par1World, int par2, int par3, int par4)
+    public static boolean validateMultiblock(Block block, World world, int x, int y, int z)
     {
-        boolean isValidChild = true;
-        TileEntity tileEntity = par1World.getTileEntity(par2, par3, par4);
-        if (tileEntity != null && tileEntity instanceof IvTileEntityMultiBlock)
-        {
-            IvTileEntityMultiBlock parent = (IvTileEntityMultiBlock) ((IvTileEntityMultiBlock) tileEntity).getParent();
+        if (world.getBlock(x, y, z) != block)
+            return false;
 
-            if (!((IvTileEntityMultiBlock) tileEntity).isParent() && parent == null)
-            {
-                isValidChild = false;
-            }
+        boolean isValidChild = false;
+
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        if (tileEntity instanceof IvTileEntityMultiBlock)
+        {
+            IvTileEntityMultiBlock tileEntityMultiBlock = (IvTileEntityMultiBlock) tileEntity;
+            IvTileEntityMultiBlock parent = tileEntityMultiBlock.getParent();
+
+            isValidChild = tileEntityMultiBlock.isParent() || (parent != null && parent.isParent());
         }
 
-        return isValidChild && super.canBlockStay(par1World, par2, par3, par4);
+        if (!isValidChild)
+        {
+            world.setBlockToAir(x, y, z);
+        }
+
+        return isValidChild;
+    }
+
+    public static IvTileEntityMultiBlock getValidatedIfParent(Block block, World world, int x, int y, int z)
+    {
+        if (validateMultiblock(block, world, x, y, z))
+        {
+            IvTileEntityMultiBlock tileEntity = (IvTileEntityMultiBlock) world.getTileEntity(x, y, z);
+
+            return tileEntity.isParent() ? tileEntity : null;
+        }
+
+        return null;
+    }
+
+    public static IvTileEntityMultiBlock getValidatedTotalParent(Block block, World world, int x, int y, int z)
+    {
+        if (validateMultiblock(block, world, x, y, z))
+        {
+            IvTileEntityMultiBlock tileEntity = (IvTileEntityMultiBlock) world.getTileEntity(x, y, z);
+
+            return tileEntity.getTotalParent();
+        }
+
+        return null;
     }
 }

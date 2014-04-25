@@ -1,29 +1,13 @@
-/***************************************************************************************************
- * Copyright (c) 2014, Lukas Tenbrink.
- * http://lukas.axxim.net
- *
- * You are free to:
- *
- * Share — copy and redistribute the material in any medium or format
- * Adapt — remix, transform, and build upon the material
- * The licensor cannot revoke these freedoms as long as you follow the license terms.
- *
- * Under the following terms:
- *
- * Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
- * NonCommercial — You may not use the material for commercial purposes, unless you have a permit by the creator.
- * ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
- * No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
- **************************************************************************************************/
+/*
+ *  Copyright (c) 2014, Lukas Tenbrink.
+ *  * http://lukas.axxim.net
+ */
 
 package net.ivorius.psychedelicraft.toolkit;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.*;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Random;
@@ -101,16 +85,15 @@ public class IvRenderHelper
     {
         float width = 2.5f;
 
-        Tessellator var3 = Tessellator.instance;
+        Tessellator tessellator = Tessellator.instance;
 
-        RenderHelper.disableStandardItemLighting();
-        float var4 = ticks / 200.0F;
+        float usedTicks = ticks / 200.0F;
 
-        Random var6 = new Random(432L);
+        Random random = new Random(432L);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glShadeModel(GL11.GL_SMOOTH);
         GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+        OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE, GL11.GL_ZERO);
         GL11.glDisable(GL11.GL_ALPHA_TEST);
         GL11.glEnable(GL11.GL_CULL_FACE);
         GL11.glDepthMask(false);
@@ -130,23 +113,23 @@ public class IvRenderHelper
 
             if (lightAlpha > 0.01f)
             {
-                GL11.glRotatef(var6.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
-                GL11.glRotatef(var6.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
-                GL11.glRotatef(var6.nextFloat() * 360.0F, 0.0F, 0.0F, 1.0F);
-                GL11.glRotatef(var6.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
-                GL11.glRotatef(var6.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
-                GL11.glRotatef(var6.nextFloat() * 360.0F + var4 * 90.0F, 0.0F, 0.0F, 1.0F);
-                var3.startDrawing(6);
-                float var8 = var6.nextFloat() * 20.0F + 5.0F;
-                float var9 = var6.nextFloat() * 2.0F + 1.0F;
-                var3.setColorRGBA_I(color, (int) (255.0F * alpha * lightAlpha));
-                var3.addVertex(0.0D, 0.0D, 0.0D);
-                var3.setColorRGBA_I(color, 0);
-                var3.addVertex(-width * (double) var9, var8, (-0.5F * var9));
-                var3.addVertex(width * (double) var9, var8, (-0.5F * var9));
-                var3.addVertex(0.0D, var8, (1.0F * var9));
-                var3.addVertex(-width * (double) var9, var8, (-0.5F * var9));
-                var3.draw();
+                GL11.glRotatef(random.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
+                GL11.glRotatef(random.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
+                GL11.glRotatef(random.nextFloat() * 360.0F, 0.0F, 0.0F, 1.0F);
+                GL11.glRotatef(random.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
+                GL11.glRotatef(random.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
+                GL11.glRotatef(random.nextFloat() * 360.0F + usedTicks * 90.0F, 0.0F, 0.0F, 1.0F);
+                tessellator.startDrawing(6);
+                float var8 = random.nextFloat() * 20.0F + 5.0F;
+                float var9 = random.nextFloat() * 2.0F + 1.0F;
+                tessellator.setColorRGBA_I(color, (int) (255.0F * alpha * lightAlpha));
+                tessellator.addVertex(0.0D, 0.0D, 0.0D);
+                tessellator.setColorRGBA_I(color, 0);
+                tessellator.addVertex(-width * (double) var9, var8, (-0.5F * var9));
+                tessellator.addVertex(width * (double) var9, var8, (-0.5F * var9));
+                tessellator.addVertex(0.0D, var8, (1.0F * var9));
+                tessellator.addVertex(-width * (double) var9, var8, (-0.5F * var9));
+                tessellator.draw();
             }
         }
 
@@ -158,7 +141,6 @@ public class IvRenderHelper
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glEnable(GL11.GL_ALPHA_TEST);
-        RenderHelper.enableStandardItemLighting();
     }
 
     public static void renderParticle(Tessellator par1Tessellator, float time, float scale)
