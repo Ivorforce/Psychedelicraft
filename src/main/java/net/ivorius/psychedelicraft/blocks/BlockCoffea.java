@@ -1,6 +1,7 @@
 package net.ivorius.psychedelicraft.blocks;
 
 import net.ivorius.psychedelicraft.Psychedelicraft;
+import net.ivorius.psychedelicraft.items.PSItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -126,7 +127,7 @@ public class BlockCoffea extends Block implements IvBonemealCompatibleBlock, IvT
                 int countL = (par1World.rand.nextInt(3) + 1) * (stage - 5);
                 for (int i = 0; i < countL; i++)
                 {
-                    this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(Psychedelicraft.itemCoffeaCherries, 1, 0));
+                    this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(PSItems.itemCoffeaCherries, 1, 0));
                 }
             }
         }

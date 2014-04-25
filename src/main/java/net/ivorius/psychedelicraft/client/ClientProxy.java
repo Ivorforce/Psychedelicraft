@@ -22,6 +22,8 @@ import net.ivorius.psychedelicraft.client.rendering.*;
 import net.ivorius.psychedelicraft.entities.DrugHelper;
 import net.ivorius.psychedelicraft.entities.EntityMolotovCocktail;
 import net.ivorius.psychedelicraft.entities.EntityRealityRift;
+import net.ivorius.psychedelicraft.entities.PSEntityList;
+import net.ivorius.psychedelicraft.items.PSItems;
 import net.ivorius.psychedelicraft.toolkit.IvParticleHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
@@ -70,9 +72,9 @@ public class ClientProxy extends ServerProxy
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPeyote.class, new TileEntityRendererPeyote());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRiftJar.class, new TileEntityRendererRiftJar());
 
-        RenderingRegistry.registerEntityRenderingHandler(EntityMolotovCocktail.class, new RenderSnowball(Psychedelicraft.itemMolotovCocktail));
+        RenderingRegistry.registerEntityRenderingHandler(EntityMolotovCocktail.class, new RenderSnowball(PSItems.itemMolotovCocktail));
         RenderingRegistry.registerEntityRenderingHandler(EntityRealityRift.class, new RenderRealityRift());
-        VillagerRegistry.instance().registerVillagerSkin(Psychedelicraft.villagerDealerProfessionID, new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "villagerDealer.png"));
+        VillagerRegistry.instance().registerVillagerSkin(PSEntityList.villagerDealerProfessionID, new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "villagerDealer.png"));
 
         DrugShaderHelper.allocate();
         DrugShaderHelper.outputShaderInfo();

@@ -1,6 +1,6 @@
 package net.ivorius.psychedelicraft.entities;
 
-import net.ivorius.psychedelicraft.Psychedelicraft;
+import net.ivorius.psychedelicraft.blocks.PSBlocks;
 import net.ivorius.psychedelicraft.toolkit.IvMathHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -139,7 +139,7 @@ public class EntityRealityRift extends Entity
 
                                 if (b.getBlockHardness(worldObj, nX + x, nY + y, nZ + z) >= 0.0f && b.getMaterial() != Material.air)
                                 {
-                                    worldObj.setBlock(nX + x, nY + y, nZ + z, Psychedelicraft.blockGlitched);
+                                    worldObj.setBlock(nX + x, nY + y, nZ + z, PSBlocks.blockGlitched);
                                 }
                             }
                         }

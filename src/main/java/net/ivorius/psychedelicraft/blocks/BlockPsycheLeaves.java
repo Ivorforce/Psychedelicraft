@@ -3,6 +3,7 @@ package net.ivorius.psychedelicraft.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.ivorius.psychedelicraft.Psychedelicraft;
+import net.ivorius.psychedelicraft.items.PSItems;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -92,7 +93,7 @@ public class BlockPsycheLeaves extends BlockLeaves
         {
             if (!par1World.isRemote)
             {
-                dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(Psychedelicraft.itemJuniperBerries));
+                dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(PSItems.itemJuniperBerries));
             }
 
             par1World.setBlockMetadataWithNotify(par2, par3, par4, par1World.getBlockMetadata(par2, par3, par4) - 1, 3);

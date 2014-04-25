@@ -1,6 +1,7 @@
 package net.ivorius.psychedelicraft.blocks;
 
 import net.ivorius.psychedelicraft.Psychedelicraft;
+import net.ivorius.psychedelicraft.items.PSItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -115,7 +116,7 @@ public class BlockWineGrapeLattice extends Block implements IvBonemealCompatible
         {
             if (l >> 1 == 4)
             {
-                dropBlockAsItem(world, i, j, k, new ItemStack(Psychedelicraft.itemWineGrapes, world.rand.nextInt(3) + 1));
+                dropBlockAsItem(world, i, j, k, new ItemStack(PSItems.itemWineGrapes, world.rand.nextInt(3) + 1));
             }
 
             world.setBlock(i, j, k, this, (l & 1 | 2 << 1), 3);
