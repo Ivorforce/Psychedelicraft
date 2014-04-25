@@ -54,7 +54,7 @@ public class PSEventHandler
 
             if (!event.player.getEntityWorld().isRemote && Psychedelicraft.spawnRifts)
             {
-                if (event.player.getRNG().nextInt(20 * 60 * 20) == 0)
+                if (event.player.getRNG().nextInt(20 * 60 * 100) == 0)
                 {
                     spawnRiftAtPlayer(event.player);
                 }
