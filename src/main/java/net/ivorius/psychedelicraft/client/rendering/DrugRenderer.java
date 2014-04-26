@@ -10,6 +10,8 @@ import net.ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import net.ivorius.psychedelicraft.entities.DrugHallucination;
 import net.ivorius.psychedelicraft.entities.DrugHelper;
 import net.ivorius.psychedelicraft.ivToolkit.IvMathHelper;
+import net.ivorius.psychedelicraft.ivToolkit.IvOpenGLHelper;
+import net.ivorius.psychedelicraft.ivToolkit.IvRenderHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -76,6 +78,9 @@ public class DrugRenderer implements IDrugRenderer
             experiencedHealth = IvMathHelper.nearValue(experiencedHealth, entity.getHealth(), 0.01f, 0.01f);
         }
 
+        if (DrugShaderHelper.sunFlareIntensity > 0.0f)
+            effectLensFlare.updateLensFlares();
+
         Block bID = ActiveRenderInfo.getBlockAtEntityViewpoint(entity.worldObj, entity, 1.0F);
         wasInWater = bID.getMaterial() == Material.water;
         //wasInRain = player.worldObj.getRainStrength(1.0f) > 0.0f && player.worldObj.getPrecipitationHeight(MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY)) <= player.posY; //Client can't handle rain
@@ -134,6 +139,8 @@ public class DrugRenderer implements IDrugRenderer
 
     public void renderOverlaysBeforeShaders(float partialTicks, EntityLivingBase entity, int updateCounter, int width, int height, DrugHelper drugHelper)
     {
+        IvOpenGLHelper.setUpOpenGLStandard2D(width, height);
+
         effectLensFlare.sunFlareIntensity = DrugShaderHelper.sunFlareIntensity;
 
         if (effectLensFlare.shouldApply(updateCounter + partialTicks))
