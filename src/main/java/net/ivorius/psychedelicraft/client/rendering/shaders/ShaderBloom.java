@@ -3,7 +3,7 @@
  *  * http://lukas.axxim.net
  */
 
-package net.ivorius.psychedelicraft.client.rendering;
+package net.ivorius.psychedelicraft.client.rendering.shaders;
 
 import net.ivorius.psychedelicraft.ivToolkit.IvOpenGLTexturePingPong;
 import net.ivorius.psychedelicraft.ivToolkit.IvShaderInstance2D;
@@ -13,11 +13,11 @@ import org.apache.logging.log4j.Logger;
 /**
  * Created by lukas on 18.02.14.
  */
-public class ShaderColorBloom extends IvShaderInstance2D
+public class ShaderBloom extends IvShaderInstance2D
 {
-    public float[] coloredBloom;
+    public float bloom;
 
-    public ShaderColorBloom(Logger logger)
+    public ShaderBloom(Logger logger)
     {
         super(logger);
     }
@@ -25,7 +25,7 @@ public class ShaderColorBloom extends IvShaderInstance2D
     @Override
     public boolean shouldApply(float ticks)
     {
-        return coloredBloom[3] > 0.0f && super.shouldApply(ticks);
+        return bloom > 0.0f && super.shouldApply(ticks);
     }
 
     @Override
@@ -38,14 +38,15 @@ public class ShaderColorBloom extends IvShaderInstance2D
             setUniformInts("tex" + i, i);
         }
 
-        setUniformFloats("pixelSize", 1.0f / screenWidth, 1.0f / screenHeight);
-        setUniformFloats("bloomColor", coloredBloom[0], coloredBloom[1], coloredBloom[2]);
+        setUniformFloats("pixelSize", 1.0f / screenWidth * 2.0f, 1.0f / screenHeight * 2.0f);
+        System.out.println("screenWidth = " + screenWidth);
+        System.out.println("screenHeight = " + screenHeight);
 
-        for (int n = 0; n < MathHelper.floor_double(coloredBloom[3]) + 1; n++)
+        for (int n = 0; n < MathHelper.floor_double(bloom) + 1; n++)
         {
             for (int i = 0; i < 2; i++)
             {
-                float activeBloom = coloredBloom[3] - n;
+                float activeBloom = bloom - n;
                 if (activeBloom > 1.0f)
                 {
                     activeBloom = 1.0f;

@@ -6,6 +6,7 @@
 package net.ivorius.psychedelicraft.client.rendering;
 
 import net.ivorius.psychedelicraft.Psychedelicraft;
+import net.ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import net.ivorius.psychedelicraft.entities.EntityRealityRift;
 import net.ivorius.psychedelicraft.ivToolkit.IvRenderHelper;
 import net.minecraft.client.renderer.OpenGlHelper;

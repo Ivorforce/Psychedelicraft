@@ -5,6 +5,7 @@
 
 package net.ivorius.psychedelicraft.client.rendering;
 
+import net.ivorius.psychedelicraft.client.rendering.shaders.ShaderShadows;
 import net.ivorius.psychedelicraft.ivToolkit.IvMatrixHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;

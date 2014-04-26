@@ -9,7 +9,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
-import net.ivorius.psychedelicraft.client.rendering.DrugShaderHelper;
+import net.ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import net.ivorius.psychedelicraft.entities.DrugHelper;
 import net.ivorius.psychedelicraft.entities.EntityRealityRift;
 import net.minecraft.entity.player.EntityPlayer;

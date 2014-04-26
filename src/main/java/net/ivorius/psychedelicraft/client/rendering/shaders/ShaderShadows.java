@@ -3,9 +3,10 @@
  *  * http://lukas.axxim.net
  */
 
-package net.ivorius.psychedelicraft.client.rendering;
+package net.ivorius.psychedelicraft.client.rendering.shaders;
 
 import net.ivorius.psychedelicraft.entities.DrugHelper;
+import net.ivorius.psychedelicraft.ivToolkit.IvDepthBuffer;
 import net.ivorius.psychedelicraft.ivToolkit.IvShaderInstance3D;
 import net.minecraft.client.Minecraft;
 import org.apache.logging.log4j.Logger;
@@ -13,35 +14,52 @@ import org.apache.logging.log4j.Logger;
 /**
  * Created by lukas on 26.02.14.
  */
-public class ShaderMainDepth extends IvShaderInstance3D implements ShaderWorld
+public class ShaderShadows extends IvShaderInstance3D implements ShaderWorld
 {
-    public ShaderMainDepth(Logger logger)
+    public IvDepthBuffer depthBuffer;
+
+    public ShaderShadows(Logger logger)
     {
         super(logger);
+
+        Minecraft mc = Minecraft.getMinecraft();
+
+        int pixels = getShadowPixels();
+        depthBuffer = new IvDepthBuffer(pixels, pixels, logger);
+    }
+
+    @Override
+    public void trySettingUpShader(String vertexShaderFile, String fragmentShaderFile)
+    {
+        super.trySettingUpShader(vertexShaderFile, fragmentShaderFile);
+
+        depthBuffer.allocate();
     }
 
     @Override
     public boolean activate(float partialTicks, float ticks)
     {
-        if (useShader())
+        if (depthBuffer.isAllocated() && useShader())
         {
+            int pixels = getShadowPixels();
+            depthBuffer.setSize(pixels, pixels);
+
             Minecraft mc = Minecraft.getMinecraft();
             DrugHelper drugHelper = DrugHelper.getDrugHelper(mc.thePlayer);
 
             setUniformFloats("ticks", ticks);
             setUniformInts("worldTime", (int) mc.theWorld.getWorldTime());
 
-            setUniformFloats("playerPos", (float) mc.thePlayer.posX, (float) mc.thePlayer.posY, (float) mc.thePlayer.posZ);
-            setDepthMultiplier(1.0f);
             setTexture2DEnabled(true);
+            setUniformFloats("playerPos", (float) mc.thePlayer.posX, (float) mc.thePlayer.posY, (float) mc.thePlayer.posZ);
+            setUniformFloats("depthMultiplier", 1.0f);
+            setUniformFloats("pixelSize", 1.0f / depthBuffer.getTextureWidth(), 1.0f / depthBuffer.getTextureHeight());
+            setUniformInts("useScreenTexCoords", 0);
             setOverrideColor(null);
-            setUseScreenTexCoords(false);
-            setPixelSize(1.0f / mc.displayWidth, 1.0f / mc.displayHeight);
 
-            for (String key : drugHelper.getAllVisibleDrugNames())
-            {
-                drugHelper.getDrug(key).applyToShader(this, key, mc, drugHelper);
-            }
+            depthBuffer.setParentFB(mc.getFramebuffer() != null ? mc.getFramebuffer().framebufferObject : 0);
+            depthBuffer.bind();
+            depthBuffer.bindTextureForDestination();
 
             return true;
         }
@@ -52,6 +70,11 @@ public class ShaderMainDepth extends IvShaderInstance3D implements ShaderWorld
     @Override
     public void deactivate()
     {
+        if (isShaderActive())
+        {
+            depthBuffer.unbind();
+        }
+
         stopUsingShader();
     }
 
@@ -93,7 +116,6 @@ public class ShaderMainDepth extends IvShaderInstance3D implements ShaderWorld
     }
 
     @Override
-
     public void setGLLight(int number, float x, float y, float z, float strength, float specular)
     {
 
@@ -120,24 +142,29 @@ public class ShaderMainDepth extends IvShaderInstance3D implements ShaderWorld
     @Override
     public void setDepthMultiplier(float depthMultiplier)
     {
-        setUniformFloats("depthMultiplier", depthMultiplier);
+
     }
 
     @Override
     public void setUseScreenTexCoords(boolean enabled)
     {
-        setUniformInts("useScreenTexCoords", enabled ? 1 : 0);
+
     }
 
     @Override
     public void setPixelSize(float pixelWidth, float pixelHeight)
     {
-        setUniformFloats("pixelSize", pixelWidth, pixelHeight);
+
     }
 
     @Override
     public void setProjectShadows(boolean projectShadows)
     {
+        // Do something? :/
+    }
 
+    public static int getShadowPixels()
+    {
+        return Minecraft.getMinecraft().gameSettings.renderDistanceChunks * DrugShaderHelper.shadowPixelsPerChunk;
     }
 }

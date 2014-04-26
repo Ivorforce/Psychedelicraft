@@ -3,8 +3,10 @@
  *  * http://lukas.axxim.net
  */
 
-package net.ivorius.psychedelicraft.client.rendering;
+package net.ivorius.psychedelicraft.client.rendering.shaders;
 
+import net.ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
+import net.ivorius.psychedelicraft.client.rendering.PsycheShadowHelper;
 import net.ivorius.psychedelicraft.entities.DrugHelper;
 import net.ivorius.psychedelicraft.ivToolkit.IvDepthBuffer;
 import net.ivorius.psychedelicraft.ivToolkit.IvShaderInstance3D;

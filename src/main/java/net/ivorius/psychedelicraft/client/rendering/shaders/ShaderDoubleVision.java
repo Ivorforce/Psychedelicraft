@@ -3,7 +3,7 @@
  *  * http://lukas.axxim.net
  */
 
-package net.ivorius.psychedelicraft.client.rendering;
+package net.ivorius.psychedelicraft.client.rendering.shaders;
 
 import net.ivorius.psychedelicraft.ivToolkit.IvOpenGLTexturePingPong;
 import net.ivorius.psychedelicraft.ivToolkit.IvShaderInstance2D;
@@ -12,12 +12,12 @@ import org.apache.logging.log4j.Logger;
 /**
  * Created by lukas on 18.02.14.
  */
-public class ShaderBlurNoise extends IvShaderInstance2D
+public class ShaderDoubleVision extends IvShaderInstance2D
 {
-    public float strength;
-    public float seed;
+    public float doubleVision;
+    public float doubleVisionDistance;
 
-    public ShaderBlurNoise(Logger logger)
+    public ShaderDoubleVision(Logger logger)
     {
         super(logger);
     }
@@ -25,7 +25,7 @@ public class ShaderBlurNoise extends IvShaderInstance2D
     @Override
     public boolean shouldApply(float ticks)
     {
-        return (strength > 0.0f) && super.shouldApply(ticks);
+        return doubleVision > 0.0f && super.shouldApply(ticks);
     }
 
     @Override
@@ -38,10 +38,9 @@ public class ShaderBlurNoise extends IvShaderInstance2D
             setUniformInts("tex" + i, i);
         }
 
-        setUniformFloats("pixelSize", 1.0f / screenWidth, 1.0f / screenHeight);
-        setUniformFloats("strength", strength);
-        setUniformFloats("seed", seed);
-        setUniformFloats("totalAlpha", 1.0f);
+        setUniformFloats("totalAlpha", doubleVision);
+        setUniformFloats("distance", doubleVisionDistance);
+        setUniformFloats("stretch", 1.0f + doubleVision);
 
         drawFullScreen(screenWidth, screenHeight, pingPong);
 

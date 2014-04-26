@@ -3,7 +3,7 @@
  *  * http://lukas.axxim.net
  */
 
-package net.ivorius.psychedelicraft.client.rendering;
+package net.ivorius.psychedelicraft.client.rendering.shaders;
 
 import net.ivorius.psychedelicraft.ivToolkit.IvDepthBuffer;
 import net.ivorius.psychedelicraft.ivToolkit.IvMathHelper;

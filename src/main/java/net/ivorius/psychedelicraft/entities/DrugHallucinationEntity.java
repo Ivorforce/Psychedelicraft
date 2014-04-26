@@ -5,7 +5,7 @@
 
 package net.ivorius.psychedelicraft.entities;
 
-import net.ivorius.psychedelicraft.client.rendering.DrugShaderHelper;
+import net.ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;

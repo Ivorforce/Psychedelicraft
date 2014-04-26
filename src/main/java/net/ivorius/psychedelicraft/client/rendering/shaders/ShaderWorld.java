@@ -3,7 +3,7 @@
  *  * http://lukas.axxim.net
  */
 
-package net.ivorius.psychedelicraft.client.rendering;
+package net.ivorius.psychedelicraft.client.rendering.shaders;
 
 /**
  * Created by lukas on 03.03.14.

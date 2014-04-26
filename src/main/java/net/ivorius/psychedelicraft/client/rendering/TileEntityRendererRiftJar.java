@@ -7,6 +7,7 @@ package net.ivorius.psychedelicraft.client.rendering;
 
 import net.ivorius.psychedelicraft.Psychedelicraft;
 import net.ivorius.psychedelicraft.blocks.TileEntityRiftJar;
+import net.ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import net.ivorius.psychedelicraft.ivToolkit.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;

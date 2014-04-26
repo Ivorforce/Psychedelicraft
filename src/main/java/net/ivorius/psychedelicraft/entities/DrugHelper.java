@@ -653,14 +653,6 @@ public class DrugHelper implements IExtendedEntityProperties
         }
     }
 
-    public void renderOverlays(float par1, EntityLivingBase entity, int updateCounter, int width, int height)
-    {
-        if (drugRenderer != null)
-        {
-            drugRenderer.renderOverlays(par1, entity, updateCounter, width, height, this);
-        }
-    }
-
     public void renderAllHallucinations(float par1)
     {
         if (drugRenderer != null)

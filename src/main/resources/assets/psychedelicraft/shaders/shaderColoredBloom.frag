@@ -23,8 +23,8 @@ void main()
     vec4 newColor = gl_FragColor;
     float bloomInfluence = 0.0;
 
-    float xMul = (vertical == 0) ? (pixelSize.x * 3.0) : 0.0;
-    float yMul = (vertical == 1) ? (pixelSize.y * 3.0) : 0.0;
+    float xMul = (vertical == 0) ? (pixelSize.x * 1.0) : 0.0;
+    float yMul = (vertical == 1) ? (pixelSize.y * 1.0) : 0.0;
         
     for(float i = -1.0; i < 2.0; i += 2.0)
     {

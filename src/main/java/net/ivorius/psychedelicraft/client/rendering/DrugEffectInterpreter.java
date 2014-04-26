@@ -16,48 +16,6 @@ import java.util.Random;
  */
 public class DrugEffectInterpreter
 {
-    public static float getMotionBlur(DrugHelper drugHelper, float ticks)
-    {
-        return drugHelper.getDrugClamped("Alcohol", 0.5f, 1.0f) * 0.3f + drugHelper.getDrugValue("Power") * 0.3f;
-    }
-
-    public static float getVerticalBlur(DrugHelper drugHelper, float ticks)
-    {
-        return drugHelper.getDrugValue("Power");
-    }
-
-    public static float getHorizontalBlur(DrugHelper drugHelper, float ticks)
-    {
-        return 0.0f;
-    }
-
-    public static float getRadialBlur(DrugHelper drugHelper, float ticks)
-    {
-        return 0.0f;
-    }
-
-    public static float getBloom(DrugHelper drugHelper, float ticks)
-    {
-        return drugHelper.getDrugValue("Cocaine") * 2.5f + drugHelper.getDrugValue("Warmth") * 1.0f;
-    }
-
-    public static float[] getColoredBloom(DrugHelper drugHelper, float ticks)
-    {
-        float[] coloredBloom = ((DrugHarmonium) drugHelper.getDrug("Harmonium")).getHarmonizedColorAsPrimary(drugHelper);
-        coloredBloom[3] *= 4.0;
-        return coloredBloom;
-    }
-
-    public static float getDoubleVision(DrugHelper drugHelper, float ticks)
-    {
-        return drugHelper.getDrugClamped("Alcohol", 0.25f, 1.0f);
-    }
-
-    public static float getDoF(DrugHelper drugHelper, float ticks)
-    {
-        return 0.0f;
-    }
-
     public static float getSmoothVision(DrugHelper drugHelper)
     {
         return 1.0f / (drugHelper.getDrugValue("Cocaine") * 10.0f + drugHelper.getDrugValue("Cannabis") * 8.0f + 1.0f);
@@ -137,11 +95,6 @@ public class DrugEffectInterpreter
     public static float getHallucinationStrength(DrugHelper drugHelper, float partialTicks)
     {
         return drugHelper.getDrugValue("BrownShrooms") * 0.2f + drugHelper.getDrugValue("Peyote") * 0.2f;
-    }
-
-    public static float getBlurNoise(DrugHelper drugHelper, float partialTicks)
-    {
-        return drugHelper.getDrugValue("Power") * 0.6f;
     }
 
     public static float getDesaturation(DrugHelper drugHelper, float partialTicks)

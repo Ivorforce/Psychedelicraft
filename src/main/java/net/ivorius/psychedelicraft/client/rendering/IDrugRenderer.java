@@ -17,7 +17,8 @@ public interface IDrugRenderer
 
     public void distortScreen(float par1, EntityLivingBase entity, int rendererUpdateCount, DrugHelper drugHelper);
 
-    public void renderOverlays(float par1, EntityLivingBase entity, int updateCounter, int width, int height, DrugHelper drugHelper);
+    public void renderOverlaysAfterShaders(float par1, EntityLivingBase entity, int updateCounter, int width, int height, DrugHelper drugHelper);
+    public void renderOverlaysBeforeShaders(float par1, EntityLivingBase entity, int updateCounter, int width, int height, DrugHelper drugHelper);
 
     public void renderAllHallucinations(float par1, DrugHelper drugHelper);
 

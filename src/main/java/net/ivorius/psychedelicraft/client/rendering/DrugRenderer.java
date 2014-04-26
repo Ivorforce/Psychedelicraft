@@ -6,6 +6,7 @@
 package net.ivorius.psychedelicraft.client.rendering;
 
 import net.ivorius.psychedelicraft.Psychedelicraft;
+import net.ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import net.ivorius.psychedelicraft.entities.DrugHallucination;
 import net.ivorius.psychedelicraft.entities.DrugHelper;
 import net.ivorius.psychedelicraft.ivToolkit.IvMathHelper;
@@ -42,6 +43,8 @@ public class DrugRenderer implements IDrugRenderer
 
     public float currentHeat;
 
+    public EffectLensFlare effectLensFlare;
+
     public DrugRenderer()
     {
         hurtOverlay = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "hurtOverlay.png");
@@ -53,7 +56,16 @@ public class DrugRenderer implements IDrugRenderer
         {
             lightningTextures[i] = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "lightning" + i + ".png");
         }
-        ;
+
+        effectLensFlare = new EffectLensFlare();
+        effectLensFlare.sunFlareSizes = new float[]{0.15f, 0.24f, 0.12f, 0.036f, 0.06f, 0.048f, 0.006f, 0.012f, 0.5f, 0.09f, 0.036f, 0.09f, 0.06f, 0.05f, 0.6f};
+        effectLensFlare.sunFlareInfluences = new float[]{-1.3f, -2.0f, 0.2f, 0.4f, 0.25f, -0.25f, -0.7f, -1.0f, 1.0f, 1.4f, -1.31f, -1.2f, -1.5f, -1.55f, -3.0f};
+        effectLensFlare.sunBlindnessTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "sunBlindness.png");
+        effectLensFlare.sunFlareTextures = new ResourceLocation[effectLensFlare.sunFlareSizes.length];
+        for (int i = 0; i < effectLensFlare.sunFlareTextures.length; i++)
+        {
+            effectLensFlare.sunFlareTextures[i] = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "flare" + i + ".png");
+        }
     }
 
     @Override
@@ -120,8 +132,16 @@ public class DrugRenderer implements IDrugRenderer
         GL11.glTranslatef(shiftX, shiftY, 0.0f);
     }
 
+    public void renderOverlaysBeforeShaders(float partialTicks, EntityLivingBase entity, int updateCounter, int width, int height, DrugHelper drugHelper)
+    {
+        effectLensFlare.sunFlareIntensity = DrugShaderHelper.sunFlareIntensity;
+
+        if (effectLensFlare.shouldApply(updateCounter + partialTicks))
+            effectLensFlare.renderLensFlares(width, height, partialTicks);
+    }
+
     @Override
-    public void renderOverlays(float partialTicks, EntityLivingBase entity, int updateCounter, int width, int height, DrugHelper drugHelper)
+    public void renderOverlaysAfterShaders(float partialTicks, EntityLivingBase entity, int updateCounter, int width, int height, DrugHelper drugHelper)
     {
         Tessellator tessellator = Tessellator.instance;
 

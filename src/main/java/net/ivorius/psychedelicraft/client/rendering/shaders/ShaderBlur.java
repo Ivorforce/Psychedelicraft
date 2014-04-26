@@ -3,7 +3,7 @@
  *  * http://lukas.axxim.net
  */
 
-package net.ivorius.psychedelicraft.client.rendering;
+package net.ivorius.psychedelicraft.client.rendering.shaders;
 
 import net.ivorius.psychedelicraft.ivToolkit.IvOpenGLTexturePingPong;
 import net.ivorius.psychedelicraft.ivToolkit.IvShaderInstance2D;

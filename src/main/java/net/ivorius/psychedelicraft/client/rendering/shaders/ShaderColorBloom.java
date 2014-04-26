@@ -3,7 +3,7 @@
  *  * http://lukas.axxim.net
  */
 
-package net.ivorius.psychedelicraft.client.rendering;
+package net.ivorius.psychedelicraft.client.rendering.shaders;
 
 import net.ivorius.psychedelicraft.ivToolkit.IvOpenGLTexturePingPong;
 import net.ivorius.psychedelicraft.ivToolkit.IvShaderInstance2D;
@@ -13,11 +13,11 @@ import org.apache.logging.log4j.Logger;
 /**
  * Created by lukas on 18.02.14.
  */
-public class ShaderRadialBlur extends IvShaderInstance2D
+public class ShaderColorBloom extends IvShaderInstance2D
 {
-    public float radialBlur;
+    public float[] coloredBloom;
 
-    public ShaderRadialBlur(Logger logger)
+    public ShaderColorBloom(Logger logger)
     {
         super(logger);
     }
@@ -25,7 +25,7 @@ public class ShaderRadialBlur extends IvShaderInstance2D
     @Override
     public boolean shouldApply(float ticks)
     {
-        return radialBlur > 0.0f && super.shouldApply(ticks);
+        return coloredBloom[3] > 0.0f && super.shouldApply(ticks);
     }
 
     @Override
@@ -38,19 +38,21 @@ public class ShaderRadialBlur extends IvShaderInstance2D
             setUniformInts("tex" + i, i);
         }
 
-        setUniformFloats("pixelSize", 1.0f / screenWidth * (radialBlur * 1.5f + 1.0f), 1.0f / screenHeight * (radialBlur * 1.5f + 1.0f));
+        setUniformFloats("pixelSize", 1.0f / screenWidth, 1.0f / screenHeight);
+        setUniformFloats("bloomColor", coloredBloom[0], coloredBloom[1], coloredBloom[2]);
 
-        for (int n = 0; n < MathHelper.floor_double(radialBlur) + 1; n++)
+        for (int n = 0; n < MathHelper.floor_double(coloredBloom[3]) + 1; n++)
         {
-            float activeBlur = radialBlur - n;
-            if (activeBlur > 1.0f)
+            for (int i = 0; i < 2; i++)
             {
-                activeBlur = 1.0f;
-            }
+                float activeBloom = coloredBloom[3] - n;
+                if (activeBloom > 1.0f)
+                {
+                    activeBloom = 1.0f;
+                }
 
-            if (activeBlur > 0.0f)
-            {
-                setUniformFloats("totalAlpha", activeBlur);
+                setUniformInts("vertical", i);
+                setUniformFloats("totalAlpha", activeBloom);
 
                 drawFullScreen(screenWidth, screenHeight, pingPong);
             }

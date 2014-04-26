@@ -3,7 +3,7 @@
  *  * http://lukas.axxim.net
  */
 
-package net.ivorius.psychedelicraft.client.rendering;
+package net.ivorius.psychedelicraft.client.rendering.shaders;
 
 import net.ivorius.psychedelicraft.ivToolkit.IvOpenGLTexturePingPong;
 import net.ivorius.psychedelicraft.ivToolkit.IvShaderInstance2D;
@@ -13,11 +13,11 @@ import org.apache.logging.log4j.Logger;
 /**
  * Created by lukas on 18.02.14.
  */
-public class ShaderBloom extends IvShaderInstance2D
+public class ShaderRadialBlur extends IvShaderInstance2D
 {
-    public float bloom;
+    public float radialBlur;
 
-    public ShaderBloom(Logger logger)
+    public ShaderRadialBlur(Logger logger)
     {
         super(logger);
     }
@@ -25,7 +25,7 @@ public class ShaderBloom extends IvShaderInstance2D
     @Override
     public boolean shouldApply(float ticks)
     {
-        return bloom > 0.0f && super.shouldApply(ticks);
+        return radialBlur > 0.0f && super.shouldApply(ticks);
     }
 
     @Override
@@ -38,20 +38,19 @@ public class ShaderBloom extends IvShaderInstance2D
             setUniformInts("tex" + i, i);
         }
 
-        setUniformFloats("pixelSize", 1.0f / screenWidth, 1.0f / screenHeight);
+        setUniformFloats("pixelSize", 1.0f / screenWidth * (radialBlur * 1.5f + 1.0f), 1.0f / screenHeight * (radialBlur * 1.5f + 1.0f));
 
-        for (int n = 0; n < MathHelper.floor_double(bloom) + 1; n++)
+        for (int n = 0; n < MathHelper.floor_double(radialBlur) + 1; n++)
         {
-            for (int i = 0; i < 2; i++)
+            float activeBlur = radialBlur - n;
+            if (activeBlur > 1.0f)
             {
-                float activeBloom = bloom - n;
-                if (activeBloom > 1.0f)
-                {
-                    activeBloom = 1.0f;
-                }
+                activeBlur = 1.0f;
+            }
 
-                setUniformInts("vertical", i);
-                setUniformFloats("totalAlpha", activeBloom);
+            if (activeBlur > 0.0f)
+            {
+                setUniformFloats("totalAlpha", activeBlur);
 
                 drawFullScreen(screenWidth, screenHeight, pingPong);
             }

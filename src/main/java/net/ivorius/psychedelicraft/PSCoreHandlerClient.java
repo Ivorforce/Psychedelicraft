@@ -7,7 +7,7 @@ package net.ivorius.psychedelicraft;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
-import net.ivorius.psychedelicraft.client.rendering.DrugShaderHelper;
+import net.ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import net.ivorius.psychedelicraft.client.rendering.SmoothCameraHelper;
 import net.ivorius.psychedelicraft.entities.DrugHelper;
 import net.ivorius.psychedelicraftcore.PsycheCoreBusCommon;
@@ -70,6 +70,12 @@ public class PSCoreHandlerClient
         else if (event instanceof RenderWorldEvent.Post)
         {
             DrugShaderHelper.endRenderPass();
+
+            DrugHelper drugHelper = DrugHelper.getDrugHelper(mc.renderViewEntity);
+
+            if (drugHelper != null && drugHelper.drugRenderer != null)
+                drugHelper.drugRenderer.renderOverlaysBeforeShaders(event.partialTicks, mc.renderViewEntity, (int) mc.ingameGUI.getUpdateCounter(), mc.displayWidth, mc.displayHeight, drugHelper);
+
             DrugShaderHelper.postRender(ticks, partialTicks);
         }
     }

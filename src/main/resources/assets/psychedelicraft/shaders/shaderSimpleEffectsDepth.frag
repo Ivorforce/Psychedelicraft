@@ -41,13 +41,13 @@ void main()
 			dist *= dist;
 		float harmonizeStrength = dist * 3.0;
         
-		float disk = (sin((gl_FogFragCoord - ticks) * 0.1434234) - 0.4) * 0.8;
+		float disk = (sin((fogCoord - ticks) * 0.1434234) - 0.4) * 0.8;
 		harmonizeStrength += disk;
 
-		float disk2 = (sin((gl_FogFragCoord - ticks) * -0.12313) - 0.2) * 0.8;
+		float disk2 = (sin((fogCoord - ticks) * -0.12313) - 0.2) * 0.8;
 		harmonizeStrength += disk2;
 
-		float disk3 = sin((gl_FogFragCoord - ticks) * -0.051233) * 0.2 * sin(ticks * 0.1321334);
+		float disk3 = sin((fogCoord - ticks) * -0.051233) * 0.2 * sin(ticks * 0.1321334);
 		harmonizeStrength += disk3;
 
 		harmonizeStrength = clamp(harmonizeStrength, 0.0, 3.0);

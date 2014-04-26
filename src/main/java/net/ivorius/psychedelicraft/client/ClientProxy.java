@@ -19,6 +19,7 @@ import net.ivorius.psychedelicraft.blocks.TileEntityDryingTable;
 import net.ivorius.psychedelicraft.blocks.TileEntityPeyote;
 import net.ivorius.psychedelicraft.blocks.TileEntityRiftJar;
 import net.ivorius.psychedelicraft.client.rendering.*;
+import net.ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import net.ivorius.psychedelicraft.entities.DrugHelper;
 import net.ivorius.psychedelicraft.entities.EntityMolotovCocktail;
 import net.ivorius.psychedelicraft.entities.EntityRealityRift;
@@ -88,7 +89,10 @@ public class ClientProxy extends ServerProxy
         {
             Minecraft mc = Minecraft.getMinecraft();
             EntityPlayer player = mc.thePlayer;
-            DrugHelper.getDrugHelper(player).renderOverlays(event.partialTicks, player, (int) mc.ingameGUI.getUpdateCounter(), event.resolution.getScaledWidth(), event.resolution.getScaledHeight());
+            DrugHelper drugHelper = DrugHelper.getDrugHelper(player);
+
+            if (drugHelper != null && drugHelper.drugRenderer != null)
+                drugHelper.drugRenderer.renderOverlaysAfterShaders(event.partialTicks, player, (int) mc.ingameGUI.getUpdateCounter(), event.resolution.getScaledWidth(), event.resolution.getScaledHeight(), drugHelper);
         }
     }
 
