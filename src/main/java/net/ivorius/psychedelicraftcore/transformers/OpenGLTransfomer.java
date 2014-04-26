@@ -3,6 +3,7 @@ package net.ivorius.psychedelicraftcore.transformers;
 import net.ivorius.psychedelicraftcore.toolkit.IvClassTransformerGeneral;
 import net.ivorius.psychedelicraftcore.toolkit.IvASMHelper;
 import net.ivorius.psychedelicraftcore.toolkit.IvNodeMatcherMethodSRG;
+import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.*;
 
@@ -15,6 +16,11 @@ import static org.objectweb.asm.Opcodes.*;
  */
 public class OpenGLTransfomer extends IvClassTransformerGeneral
 {
+    public OpenGLTransfomer(Logger logger)
+    {
+        super(logger);
+    }
+
     @Override
     public boolean transformMethod(String className, MethodNode methodNode, boolean obf)
     {

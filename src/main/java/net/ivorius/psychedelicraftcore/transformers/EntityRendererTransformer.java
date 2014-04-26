@@ -2,6 +2,7 @@ package net.ivorius.psychedelicraftcore.transformers;
 
 import net.ivorius.psychedelicraftcore.toolkit.IvClassTransformerClass;
 import net.ivorius.psychedelicraftcore.toolkit.*;
+import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.*;
 
@@ -15,8 +16,10 @@ import static org.objectweb.asm.Opcodes.*;
  */
 public class EntityRendererTransformer extends IvClassTransformerClass
 {
-    public EntityRendererTransformer()
+    public EntityRendererTransformer(Logger logger)
     {
+        super(logger);
+
         registerExpectedMethod("updateCameraAndRender", "func_78480_b", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE));
         registerExpectedMethod("orientCamera", "func_78467_g", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE));
         registerExpectedMethod("renderHand", "func_78476_b", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE, Type.INT_TYPE));

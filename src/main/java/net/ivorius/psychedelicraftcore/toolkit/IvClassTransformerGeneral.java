@@ -1,5 +1,6 @@
 package net.ivorius.psychedelicraftcore.toolkit;
 
+import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 
@@ -8,6 +9,11 @@ import org.objectweb.asm.tree.MethodNode;
  */
 public abstract class IvClassTransformerGeneral extends IvClassTransformer
 {
+    protected IvClassTransformerGeneral(Logger logger)
+    {
+        super(logger);
+    }
+
     @Override
     public boolean transform(String className, ClassNode classNode, boolean obf)
     {

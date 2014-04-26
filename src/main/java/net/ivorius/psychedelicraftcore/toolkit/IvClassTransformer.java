@@ -1,20 +1,30 @@
 package net.ivorius.psychedelicraftcore.toolkit;
 
 import cpw.mods.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
-import net.ivorius.psychedelicraftcore.PsychedelicraftCoreContainer;
+import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Type;
-import org.objectweb.asm.tree.*;
+import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.FieldInsnNode;
+import org.objectweb.asm.tree.MethodInsnNode;
+import org.objectweb.asm.tree.MethodNode;
 
 /**
  * Created by lukas on 21.02.14.
  */
 public abstract class IvClassTransformer
 {
+    public Logger logger;
+
+    protected IvClassTransformer(Logger logger)
+    {
+        this.logger = logger;
+    }
+
     public void printSubMethodError(String className, String methodID, String submethodID)
     {
-        PsychedelicraftCoreContainer.logger.error("Could not patch " + className + "." + methodID + " (" + submethodID + ")!");
+        logger.error("Could not patch " + className + "." + methodID + " (" + submethodID + ")!");
     }
 
     public static String getMethodDescriptor(Object returnValue, Object... params)
@@ -54,12 +64,6 @@ public abstract class IvClassTransformer
         return FMLDeobfuscatingRemapper.INSTANCE.mapMethodDesc(signature);
     }
 
-    public static String getTypeDescriptor(Class clazz)
-    {
-        Type type = Type.getType(clazz);
-        return type.getDescriptor();
-    }
-
     public static String getSrgName(MethodInsnNode node)
     {
         return IvDevRemapper.getSRGName(FMLDeobfuscatingRemapper.INSTANCE.mapMethodName(node.owner, node.name, node.desc));
@@ -93,7 +97,7 @@ public abstract class IvClassTransformer
         }
         catch (Exception ex)
         {
-            PsychedelicraftCoreContainer.logger.error("Error patching class PRE " + actualClassName + " (" + srgClassName + ")!", ex);
+            logger.error("Error patching class PRE " + actualClassName + " (" + srgClassName + ")!", ex);
             return data;
         }
 
@@ -103,7 +107,7 @@ public abstract class IvClassTransformer
         }
         catch (Exception ex)
         {
-            PsychedelicraftCoreContainer.logger.error("Error patching class MAIN " + actualClassName + " (" + srgClassName + ")!", ex);
+            logger.error("Error patching class MAIN " + actualClassName + " (" + srgClassName + ")!", ex);
             return data;
         }
 
@@ -118,7 +122,7 @@ public abstract class IvClassTransformer
             }
             catch (Exception ex)
             {
-                PsychedelicraftCoreContainer.logger.error("Error patching class POST " + actualClassName + " (" + srgClassName + ")!", ex);
+                logger.error("Error patching class POST " + actualClassName + " (" + srgClassName + ")!", ex);
                 return data;
             }
         }

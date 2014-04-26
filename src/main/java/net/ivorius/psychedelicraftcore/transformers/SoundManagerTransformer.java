@@ -3,6 +3,7 @@ package net.ivorius.psychedelicraftcore.transformers;
 import net.ivorius.psychedelicraftcore.toolkit.IvClassTransformerClass;
 import net.ivorius.psychedelicraftcore.toolkit.IvASMHelper;
 import net.ivorius.psychedelicraftcore.toolkit.IvNodeMatcherSimple;
+import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.*;
 
@@ -13,8 +14,10 @@ import static org.objectweb.asm.Opcodes.*;
  */
 public class SoundManagerTransformer extends IvClassTransformerClass
 {
-    public SoundManagerTransformer()
+    public SoundManagerTransformer(Logger logger)
     {
+        super(logger);
+        
         registerExpectedMethod("getNormalizedVolume", "func_148594_a", getMethodDescriptor(Type.FLOAT_TYPE, "net/minecraft/client/audio/ISound", "net/minecraft/client/audio/SoundPoolEntry", "net/minecraft/client/audio/SoundCategory"));
     }
 

@@ -1,6 +1,7 @@
 package net.ivorius.psychedelicraftcore.transformers;
 
 import net.ivorius.psychedelicraftcore.toolkit.IvClassTransformerClass;
+import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.MethodInsnNode;
@@ -14,8 +15,9 @@ import static org.objectweb.asm.Opcodes.*;
  */
 public class EntityPlayerTransformer extends IvClassTransformerClass
 {
-    public EntityPlayerTransformer()
+    public EntityPlayerTransformer(Logger logger)
     {
+        super(logger);
         registerExpectedMethod("wakeUpPlayer", "func_70999_a", getMethodDescriptor(Type.VOID_TYPE, Type.BOOLEAN_TYPE, Type.BOOLEAN_TYPE, Type.BOOLEAN_TYPE));
     }
 

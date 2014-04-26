@@ -3,6 +3,7 @@ package net.ivorius.psychedelicraftcore.transformers;
 import net.ivorius.psychedelicraftcore.toolkit.IvClassTransformerClass;
 import net.ivorius.psychedelicraftcore.toolkit.IvASMHelper;
 import net.ivorius.psychedelicraftcore.toolkit.IvNodeMatcherLDC;
+import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.*;
 
@@ -13,8 +14,10 @@ import static org.objectweb.asm.Opcodes.*;
  */
 public class RenderGlobalTransformer extends IvClassTransformerClass
 {
-    public RenderGlobalTransformer()
+    public RenderGlobalTransformer(Logger logger)
     {
+        super(logger);
+
         registerExpectedMethod("renderEntities", "func_147589_a", getMethodDescriptor(Type.VOID_TYPE, "net/minecraft/entity/EntityLivingBase", "net/minecraft/client/renderer/culling/ICamera", Type.FLOAT_TYPE));
     }
 

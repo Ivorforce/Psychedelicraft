@@ -1,6 +1,6 @@
 package net.ivorius.psychedelicraftcore.toolkit;
 
-import net.ivorius.psychedelicraftcore.PsychedelicraftCoreContainer;
+import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 
@@ -13,8 +13,9 @@ public abstract class IvClassTransformerClass extends IvClassTransformer
 {
     public ArrayList<String[]> registeredMethods;
 
-    public IvClassTransformerClass()
+    public IvClassTransformerClass(Logger logger)
     {
+        super(logger);
         registeredMethods = new ArrayList<String[]>();
     }
 
@@ -54,7 +55,7 @@ public abstract class IvClassTransformerClass extends IvClassTransformer
             {
                 String[] methodInfo = registeredMethods.get(methodIndex);
 
-                PsychedelicraftCoreContainer.logger.error("Could not transform expected method in class \"" + className + "\" (Obf: " + obf + "): " + methodInfo[0] + " - " + methodInfo[1] + " - " + methodInfo[2]);
+                logger.error("Could not transform expected method in class \"" + className + "\" (Obf: " + obf + "): " + methodInfo[0] + " - " + methodInfo[1] + " - " + methodInfo[2]);
             }
             else
             {
