@@ -5,7 +5,7 @@
 
 package net.ivorius.psychedelicraftcore.transformers;
 
-import net.ivorius.psychedelicraftcore.ivToolkit.IvASMHelper;
+import net.ivorius.psychedelicraftcore.ivToolkit.IvNodeFinder;
 import net.ivorius.psychedelicraftcore.ivToolkit.IvClassTransformerClass;
 import net.ivorius.psychedelicraftcore.ivToolkit.IvNodeMatcherSimple;
 import org.apache.logging.log4j.Logger;
@@ -31,7 +31,7 @@ public class SoundManagerTransformer extends IvClassTransformerClass
     {
         if (methodID.equals("getNormalizedVolume"))
         {
-            AbstractInsnNode returnNode = IvASMHelper.findNode(new IvNodeMatcherSimple(FRETURN), methodNode);
+            AbstractInsnNode returnNode = IvNodeFinder.findNode(new IvNodeMatcherSimple(FRETURN), methodNode);
 
             if (returnNode != null)
             {

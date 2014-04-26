@@ -41,8 +41,8 @@ public class EntityRendererTransformer extends IvClassTransformerClass
     {
         if (methodID.equals("updateCameraAndRender"))
         {
-            AbstractInsnNode preNode = IvASMHelper.findNode(new IvNodeMatcherLDC("level"), methodNode);
-            AbstractInsnNode postNode = IvASMHelper.findNode(new IvNodeMatcherFieldSRG(GETSTATIC, "field_148824_g" /* shadersSupported */, "net/minecraft/client/renderer/OpenGlHelper", Type.BOOLEAN_TYPE), methodNode);
+            AbstractInsnNode preNode = IvNodeFinder.findNode(new IvNodeMatcherLDC("level"), methodNode);
+            AbstractInsnNode postNode = IvNodeFinder.findNode(new IvNodeMatcherFieldSRG(GETSTATIC, "field_148824_g" /* shadersSupported */, "net/minecraft/client/renderer/OpenGlHelper", Type.BOOLEAN_TYPE), methodNode);
 
             if (preNode == null)
             {
@@ -99,8 +99,8 @@ public class EntityRendererTransformer extends IvClassTransformerClass
         }
         else if (methodID.equals("renderHand"))
         {
-            AbstractInsnNode transformMatrixNode = IvASMHelper.findNode(new IvNodeMatcherMethodSRG(INVOKESTATIC, "glPushMatrix", "org/lwjgl/opengl/GL11", null), methodNode);
-            AbstractInsnNode skipOverlayNode = IvASMHelper.findNode(new IvNodeMatcherMethodSRG(INVOKEVIRTUAL, "func_78447_b" /* renderOverlays */, "net/minecraft/client/renderer/ItemRenderer", Type.VOID_TYPE, Type.FLOAT_TYPE), methodNode);
+            AbstractInsnNode transformMatrixNode = IvNodeFinder.findNode(new IvNodeMatcherMethodSRG(INVOKESTATIC, "glPushMatrix", "org/lwjgl/opengl/GL11", null), methodNode);
+            AbstractInsnNode skipOverlayNode = IvNodeFinder.findNode(new IvNodeMatcherMethodSRG(INVOKEVIRTUAL, "func_78447_b" /* renderOverlays */, "net/minecraft/client/renderer/ItemRenderer", Type.VOID_TYPE, Type.FLOAT_TYPE), methodNode);
 
             if (transformMatrixNode == null)
             {
@@ -137,7 +137,7 @@ public class EntityRendererTransformer extends IvClassTransformerClass
         }
         else if (methodID.equals("renderWorld"))
         {
-            AbstractInsnNode transformNode = IvASMHelper.findNode(new IvNodeMatcherMethodSRG(INVOKESPECIAL, "func_78476_b" /* renderHand */, "net/minecraft/client/renderer/EntityRenderer", Type.VOID_TYPE, Type.FLOAT_TYPE, Type.INT_TYPE), methodNode);
+            AbstractInsnNode transformNode = IvNodeFinder.findNode(new IvNodeMatcherMethodSRG(INVOKESPECIAL, "func_78476_b" /* renderHand */, "net/minecraft/client/renderer/EntityRenderer", Type.VOID_TYPE, Type.FLOAT_TYPE, Type.INT_TYPE), methodNode);
 
             if (transformNode != null)
             {
@@ -165,7 +165,7 @@ public class EntityRendererTransformer extends IvClassTransformerClass
         }
         else if (methodID.equals("setupFog"))
         {
-            List<AbstractInsnNode> glFogiNodes = IvASMHelper.findNodes(new IvNodeMatcherMethodSRG(INVOKESTATIC, "glFogi", "org/lwjgl/opengl/GL11", null), methodNode);
+            List<AbstractInsnNode> glFogiNodes = IvNodeFinder.findNodes(new IvNodeMatcherMethodSRG(INVOKESTATIC, "glFogi", "org/lwjgl/opengl/GL11", null), methodNode);
 
             for (AbstractInsnNode callListNode : glFogiNodes)
             {
@@ -179,7 +179,7 @@ public class EntityRendererTransformer extends IvClassTransformerClass
         }
         else if (methodID.equals("getFOVModifier"))
         {
-            List<AbstractInsnNode> returnNodes = IvASMHelper.findNodes(new IvNodeMatcherSimple(FRETURN), methodNode);
+            List<AbstractInsnNode> returnNodes = IvNodeFinder.findNodes(new IvNodeMatcherSimple(FRETURN), methodNode);
 
             for (AbstractInsnNode callListNode : returnNodes)
             {
@@ -209,9 +209,9 @@ public class EntityRendererTransformer extends IvClassTransformerClass
         else if (methodID.equals("renderWorldAdditions"))
         {
             List<AbstractInsnNode> valuepatchNodes = new ArrayList<AbstractInsnNode>();
-            valuepatchNodes.addAll(IvASMHelper.findNodes(new IvNodeMatcherLDC("prepareterrain"), methodNode));
-            valuepatchNodes.addAll(IvASMHelper.findNodes(new IvNodeMatcherLDC("water"), methodNode));
-            valuepatchNodes.addAll(IvASMHelper.findNodes(new IvNodeMatcherLDC("entities"), methodNode));
+            valuepatchNodes.addAll(IvNodeFinder.findNodes(new IvNodeMatcherLDC("prepareterrain"), methodNode));
+            valuepatchNodes.addAll(IvNodeFinder.findNodes(new IvNodeMatcherLDC("water"), methodNode));
+            valuepatchNodes.addAll(IvNodeFinder.findNodes(new IvNodeMatcherLDC("entities"), methodNode));
 
             for (AbstractInsnNode node : valuepatchNodes)
             {

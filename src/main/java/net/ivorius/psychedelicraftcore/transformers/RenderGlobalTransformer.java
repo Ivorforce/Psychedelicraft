@@ -5,7 +5,7 @@
 
 package net.ivorius.psychedelicraftcore.transformers;
 
-import net.ivorius.psychedelicraftcore.ivToolkit.IvASMHelper;
+import net.ivorius.psychedelicraftcore.ivToolkit.IvNodeFinder;
 import net.ivorius.psychedelicraftcore.ivToolkit.IvClassTransformerClass;
 import net.ivorius.psychedelicraftcore.ivToolkit.IvNodeMatcherLDC;
 import org.apache.logging.log4j.Logger;
@@ -32,7 +32,7 @@ public class RenderGlobalTransformer extends IvClassTransformerClass
     {
         if (methodID.equals("renderEntities"))
         {
-            AbstractInsnNode entitiesNode = IvASMHelper.findNode(new IvNodeMatcherLDC("entities"), methodNode);
+            AbstractInsnNode entitiesNode = IvNodeFinder.findNode(new IvNodeMatcherLDC("entities"), methodNode);
             entitiesNode = entitiesNode.getNext();
 
             if (entitiesNode != null)

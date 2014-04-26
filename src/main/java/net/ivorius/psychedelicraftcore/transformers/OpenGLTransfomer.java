@@ -5,7 +5,7 @@
 
 package net.ivorius.psychedelicraftcore.transformers;
 
-import net.ivorius.psychedelicraftcore.ivToolkit.IvASMHelper;
+import net.ivorius.psychedelicraftcore.ivToolkit.IvNodeFinder;
 import net.ivorius.psychedelicraftcore.ivToolkit.IvClassTransformerGeneral;
 import net.ivorius.psychedelicraftcore.ivToolkit.IvInsnHelper;
 import net.ivorius.psychedelicraftcore.ivToolkit.IvNodeMatcherMethodSRG;
@@ -41,8 +41,8 @@ public class OpenGLTransfomer extends IvClassTransformerGeneral
     {
         int caught = 0;
 
-        List<AbstractInsnNode> glEnableNodes = IvASMHelper.findNodes(new IvNodeMatcherMethodSRG(INVOKESTATIC, "glEnable", "org/lwjgl/opengl/GL11", null), methodNode);
-        List<AbstractInsnNode> glDisableNodes = IvASMHelper.findNodes(new IvNodeMatcherMethodSRG(INVOKESTATIC, "glDisable", "org/lwjgl/opengl/GL11", null), methodNode);
+        List<AbstractInsnNode> glEnableNodes = IvNodeFinder.findNodes(new IvNodeMatcherMethodSRG(INVOKESTATIC, "glEnable", "org/lwjgl/opengl/GL11", null), methodNode);
+        List<AbstractInsnNode> glDisableNodes = IvNodeFinder.findNodes(new IvNodeMatcherMethodSRG(INVOKESTATIC, "glDisable", "org/lwjgl/opengl/GL11", null), methodNode);
 
         for (AbstractInsnNode callListNode : glEnableNodes)
         {
@@ -71,9 +71,9 @@ public class OpenGLTransfomer extends IvClassTransformerGeneral
     {
         int caught = 0;
 
-        List<AbstractInsnNode> glTranslatefNodes = IvASMHelper.findNodes(new IvNodeMatcherMethodSRG(INVOKESTATIC, "glTranslatef", "org/lwjgl/opengl/GL11", null), methodNode);
-        List<AbstractInsnNode> glRotatefNodes = IvASMHelper.findNodes(new IvNodeMatcherMethodSRG(INVOKESTATIC, "glRotatef", "org/lwjgl/opengl/GL11", null), methodNode);
-        List<AbstractInsnNode> glScalefNodes = IvASMHelper.findNodes(new IvNodeMatcherMethodSRG(INVOKESTATIC, "glScalef", "org/lwjgl/opengl/GL11", null), methodNode);
+        List<AbstractInsnNode> glTranslatefNodes = IvNodeFinder.findNodes(new IvNodeMatcherMethodSRG(INVOKESTATIC, "glTranslatef", "org/lwjgl/opengl/GL11", null), methodNode);
+        List<AbstractInsnNode> glRotatefNodes = IvNodeFinder.findNodes(new IvNodeMatcherMethodSRG(INVOKESTATIC, "glRotatef", "org/lwjgl/opengl/GL11", null), methodNode);
+        List<AbstractInsnNode> glScalefNodes = IvNodeFinder.findNodes(new IvNodeMatcherMethodSRG(INVOKESTATIC, "glScalef", "org/lwjgl/opengl/GL11", null), methodNode);
 
         for (AbstractInsnNode callListNode : glTranslatefNodes)
         {

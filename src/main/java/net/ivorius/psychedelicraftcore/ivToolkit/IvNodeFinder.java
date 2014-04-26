@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * Created by lukas on 26.04.14.
  */
-public class IvASMHelper
+public class IvNodeFinder
 {
     public static AbstractInsnNode findNode(IvSingleNodeMatcher matcher, MethodNode methodNode)
     {
