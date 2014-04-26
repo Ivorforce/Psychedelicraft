@@ -1,10 +1,10 @@
 package net.ivorius.psychedelicraftcore.transformers;
 
-import net.ivorius.psychedelicraftcore.IvClassTransformerClass;
+import net.ivorius.psychedelicraftcore.toolkit.IvClassTransformerClass;
+import net.ivorius.psychedelicraftcore.toolkit.IvASMHelper;
+import net.ivorius.psychedelicraftcore.toolkit.IvNodeMatcherSimple;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.*;
-
-import java.util.Iterator;
 
 import static org.objectweb.asm.Opcodes.*;
 
@@ -23,20 +23,7 @@ public class SoundManagerTransformer extends IvClassTransformerClass
     {
         if (methodID.equals("getNormalizedVolume"))
         {
-            AbstractInsnNode currentNode;
-            AbstractInsnNode returnNode = null;
-
-            Iterator<AbstractInsnNode> methodNodeIterator = methodNode.instructions.iterator();
-
-            while (methodNodeIterator.hasNext())
-            {
-                currentNode = methodNodeIterator.next();
-
-                if (currentNode.getOpcode() == FRETURN)
-                {
-                    returnNode = currentNode;
-                }
-            }
+            AbstractInsnNode returnNode = IvASMHelper.findNode(new IvNodeMatcherSimple(FRETURN), methodNode);
 
             if (returnNode != null)
             {

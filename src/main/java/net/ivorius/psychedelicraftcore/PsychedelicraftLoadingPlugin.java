@@ -8,6 +8,7 @@ import java.util.Map;
  * Created by lukas on 21.02.14.
  */
 @IFMLLoadingPlugin.MCVersion(value = "1.7.2")
+@IFMLLoadingPlugin.TransformerExclusions(value = "net.ivorius.psychedelicraftcore.")
 public class PsychedelicraftLoadingPlugin implements IFMLLoadingPlugin
 {
     @Override
@@ -39,4 +40,6 @@ public class PsychedelicraftLoadingPlugin implements IFMLLoadingPlugin
     {
         return null;
     }
+
+
 }

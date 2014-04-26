@@ -1,15 +1,15 @@
-package net.ivorius.psychedelicraftcore.events;
+package net.ivorius.psychedelicraftcoreUtils.events;
 
 import cpw.mods.fml.common.eventhandler.Event;
 
 /**
  * Created by lukas on 13.03.14.
  */
-public class OrientCameraEvent extends Event
+public class RenderHeldItemEvent extends Event
 {
     public final float partialTicks;
 
-    public OrientCameraEvent(float partialTicks)
+    public RenderHeldItemEvent(float partialTicks)
     {
         this.partialTicks = partialTicks;
     }

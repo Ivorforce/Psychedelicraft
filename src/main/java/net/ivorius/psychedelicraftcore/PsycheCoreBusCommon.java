@@ -1,7 +1,7 @@
 package net.ivorius.psychedelicraftcore;
 
 import cpw.mods.fml.common.eventhandler.EventBus;
-import net.ivorius.psychedelicraftcore.events.WakeUpPlayerEvent;
+import net.ivorius.psychedelicraftcoreUtils.events.WakeUpPlayerEvent;
 import net.minecraft.entity.player.EntityPlayer;
 
 /**

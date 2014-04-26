@@ -1,4 +1,4 @@
-package net.ivorius.psychedelicraftcore.events;
+package net.ivorius.psychedelicraftcoreUtils.events;
 
 import cpw.mods.fml.common.eventhandler.Event;
 

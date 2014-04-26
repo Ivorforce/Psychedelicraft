@@ -1,6 +1,6 @@
 package net.ivorius.psychedelicraftcore;
 
-import net.ivorius.psychedelicraftcore.events.*;
+import net.ivorius.psychedelicraftcoreUtils.events.*;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.client.audio.SoundManager;

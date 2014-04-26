@@ -1,6 +1,6 @@
 package net.ivorius.psychedelicraftcore.transformers;
 
-import net.ivorius.psychedelicraftcore.IvClassTransformerClass;
+import net.ivorius.psychedelicraftcore.toolkit.IvClassTransformerClass;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.MethodInsnNode;

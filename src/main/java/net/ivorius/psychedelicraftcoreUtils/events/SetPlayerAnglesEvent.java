@@ -1,15 +1,15 @@
-package net.ivorius.psychedelicraftcore.events;
+package net.ivorius.psychedelicraftcoreUtils.events;
 
 import cpw.mods.fml.common.eventhandler.Event;
 
 /**
  * Created by lukas on 13.03.14.
  */
-public class RenderEntitiesEvent extends Event
+public class SetPlayerAnglesEvent extends Event
 {
     public final float partialTicks;
 
-    public RenderEntitiesEvent(float partialTicks)
+    public SetPlayerAnglesEvent(float partialTicks)
     {
         this.partialTicks = partialTicks;
     }

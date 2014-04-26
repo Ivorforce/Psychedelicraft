@@ -1,5 +1,6 @@
-package net.ivorius.psychedelicraftcore;
+package net.ivorius.psychedelicraftcore.toolkit;
 
+import net.ivorius.psychedelicraftcore.PsychedelicraftCoreContainer;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 

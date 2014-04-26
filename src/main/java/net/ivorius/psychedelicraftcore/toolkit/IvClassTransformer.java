@@ -1,6 +1,7 @@
-package net.ivorius.psychedelicraftcore;
+package net.ivorius.psychedelicraftcore.toolkit;
 
 import cpw.mods.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
+import net.ivorius.psychedelicraftcore.PsychedelicraftCoreContainer;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Type;
@@ -77,36 +78,6 @@ public abstract class IvClassTransformer
     public static String getSrgClassName(String className)
     {
         return FMLDeobfuscatingRemapper.INSTANCE.map(className);
-    }
-
-    public static boolean isMethod(AbstractInsnNode node, int opCode, String srgMethodName, String owner, String signature)
-    {
-        if (!(node instanceof MethodInsnNode))
-        {
-            return false;
-        }
-
-        MethodInsnNode mNode = (MethodInsnNode) node;
-        boolean nameEqual = srgMethodName == null || getSrgName(mNode).equals(srgMethodName);
-        boolean ownerEqual = owner == null || getSrgClassName(mNode.owner).equals(owner);
-        boolean signatureEqual = signature == null || getSRGDescriptor(mNode.desc).equals(signature);
-
-        return opCode == mNode.getOpcode() && nameEqual && ownerEqual && signatureEqual;
-    }
-
-    public static boolean isField(AbstractInsnNode node, int opCode, String srgFieldName, String owner, Type type)
-    {
-        if (!(node instanceof FieldInsnNode))
-        {
-            return false;
-        }
-
-        FieldInsnNode fNode = (FieldInsnNode) node;
-        boolean nameEqual = srgFieldName == null || getSrgName(fNode).equals(srgFieldName);
-        boolean ownerEqual = owner == null || getSrgClassName(fNode.owner).equals(owner);
-        boolean signatureEqual = type == null || type.equals(Type.getType(fNode.desc));
-
-        return opCode == fNode.getOpcode() && nameEqual && ownerEqual && signatureEqual;
     }
 
     public byte[] transform(String actualClassName, String srgClassName, byte[] data, boolean obf)

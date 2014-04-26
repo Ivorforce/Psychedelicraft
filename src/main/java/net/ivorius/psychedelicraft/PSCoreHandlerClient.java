@@ -6,7 +6,7 @@ import net.ivorius.psychedelicraft.client.rendering.DrugShaderHelper;
 import net.ivorius.psychedelicraft.client.rendering.SmoothCameraHelper;
 import net.ivorius.psychedelicraft.entities.DrugHelper;
 import net.ivorius.psychedelicraftcore.PsycheCoreBusCommon;
-import net.ivorius.psychedelicraftcore.events.*;
+import net.ivorius.psychedelicraftcoreUtils.events.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.player.EntityPlayer;

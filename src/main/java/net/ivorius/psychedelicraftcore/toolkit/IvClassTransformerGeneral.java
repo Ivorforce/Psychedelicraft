@@ -1,4 +1,4 @@
-package net.ivorius.psychedelicraftcore;
+package net.ivorius.psychedelicraftcore.toolkit;
 
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;

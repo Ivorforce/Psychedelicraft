@@ -1,24 +1,17 @@
 package net.ivorius.psychedelicraftcore;
 
+import net.ivorius.psychedelicraftcore.toolkit.IvClassTransformerManager;
+import net.ivorius.psychedelicraftcore.toolkit.IvDevRemapper;
 import net.ivorius.psychedelicraftcore.transformers.*;
-import net.minecraft.launchwrapper.IClassTransformer;
-
-import java.util.ArrayList;
-import java.util.Hashtable;
 
 /**
  * Created by lukas on 21.02.14.
  */
-public class PsychedelicraftClassTransformer implements IClassTransformer
+public class PsychedelicraftClassTransformer extends IvClassTransformerManager
 {
-    private Hashtable<String, IvClassTransformer> transformers;
-    private ArrayList<IvClassTransformer> generalTransformers;
-
     public PsychedelicraftClassTransformer()
     {
-        IvDevRemapper.setUp();
-        transformers = new Hashtable<String, IvClassTransformer>();
-        generalTransformers = new ArrayList<IvClassTransformer>();
+        PsycheDevRemapper.setUp();
 
         registerTransformer("net.minecraft.client.renderer.EntityRenderer", new EntityRendererTransformer());
         registerTransformer("net.minecraft.client.renderer.RenderGlobal", new RenderGlobalTransformer());
@@ -28,49 +21,5 @@ public class PsychedelicraftClassTransformer implements IClassTransformer
         registerTransformer("net.minecraft.client.audio.SoundManager", new SoundManagerTransformer());
 
         registerTransformer(new OpenGLTransfomer());
-    }
-
-    private void registerTransformer(String clazz, IvClassTransformer transformer)
-    {
-        transformers.put(clazz, transformer);
-    }
-
-    private void registerTransformer(IvClassTransformer transformer)
-    {
-        generalTransformers.add(transformer);
-    }
-
-    @Override
-    public byte[] transform(String arg0, String arg1, byte[] arg2)
-    {
-        if (arg2 != null)
-        {
-            byte[] result = arg2;
-
-            IvClassTransformer transformer = transformers.get(arg1);
-            if (transformer != null)
-            {
-                byte[] data = transformer.transform(arg0, arg1, result, arg0.equals(arg1));
-
-                if (data != null)
-                {
-                    result = data;
-                }
-            }
-
-            for (IvClassTransformer generalTransformer : generalTransformers)
-            {
-                byte[] data = generalTransformer.transform(arg0, arg1, result, arg0.equals(arg1));
-
-                if (data != null)
-                {
-                    result = data;
-                }
-            }
-
-            return result;
-        }
-
-        return arg2;
     }
 }

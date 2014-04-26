@@ -1,11 +1,12 @@
 package net.ivorius.psychedelicraftcore.transformers;
 
-import net.ivorius.psychedelicraftcore.IvClassTransformerClass;
+import net.ivorius.psychedelicraftcore.toolkit.IvClassTransformerClass;
+import net.ivorius.psychedelicraftcore.toolkit.*;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.*;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
 
 import static org.objectweb.asm.Opcodes.*;
 
@@ -33,26 +34,8 @@ public class EntityRendererTransformer extends IvClassTransformerClass
     {
         if (methodID.equals("updateCameraAndRender"))
         {
-            AbstractInsnNode currentNode;
-            AbstractInsnNode preNode = null;
-            AbstractInsnNode postNode = null;
-
-            Iterator<AbstractInsnNode> methodNodeIterator = methodNode.instructions.iterator();
-
-            while (methodNodeIterator.hasNext())
-            {
-                currentNode = methodNodeIterator.next();
-
-                if (currentNode.getOpcode() == LDC && ((LdcInsnNode) currentNode).cst.equals("level"))
-                {
-                    preNode = currentNode.getNext();
-                }
-
-                if (isField(currentNode, GETSTATIC, "field_148824_g" /* shadersSupported */, "net/minecraft/client/renderer/OpenGlHelper", Type.BOOLEAN_TYPE))
-                {
-                    postNode = currentNode;
-                }
-            }
+            AbstractInsnNode preNode = IvASMHelper.findNode(new IvNodeMatcherLDC("level"), methodNode);
+            AbstractInsnNode postNode = IvASMHelper.findNode(new IvNodeMatcherFieldSRG(GETSTATIC, "field_148824_g" /* shadersSupported */, "net/minecraft/client/renderer/OpenGlHelper", Type.BOOLEAN_TYPE), methodNode);
 
             if (preNode == null)
             {
@@ -109,26 +92,8 @@ public class EntityRendererTransformer extends IvClassTransformerClass
         }
         else if (methodID.equals("renderHand"))
         {
-            AbstractInsnNode currentNode;
-            AbstractInsnNode transformMatrixNode = null;
-            AbstractInsnNode skipOverlayNode = null;
-
-            Iterator<AbstractInsnNode> methodNodeIterator = methodNode.instructions.iterator();
-
-            while (methodNodeIterator.hasNext())
-            {
-                currentNode = methodNodeIterator.next();
-
-                if (isMethod(currentNode, INVOKESTATIC, "glPushMatrix", "org/lwjgl/opengl/GL11", null))
-                {
-                    transformMatrixNode = currentNode;
-                }
-
-                if (isMethod(currentNode, INVOKEVIRTUAL, "func_78447_b" /* renderOverlays */, "net/minecraft/client/renderer/ItemRenderer", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE)))
-                {
-                    skipOverlayNode = currentNode;
-                }
-            }
+            AbstractInsnNode transformMatrixNode = IvASMHelper.findNode(new IvNodeMatcherMethodSRG(INVOKESTATIC, "glPushMatrix", "org/lwjgl/opengl/GL11", null), methodNode);
+            AbstractInsnNode skipOverlayNode = IvASMHelper.findNode(new IvNodeMatcherMethodSRG(INVOKEVIRTUAL, "func_78447_b" /* renderOverlays */, "net/minecraft/client/renderer/ItemRenderer", Type.VOID_TYPE, Type.FLOAT_TYPE), methodNode);
 
             if (transformMatrixNode == null)
             {
@@ -165,20 +130,7 @@ public class EntityRendererTransformer extends IvClassTransformerClass
         }
         else if (methodID.equals("renderWorld"))
         {
-            AbstractInsnNode currentNode;
-            AbstractInsnNode transformNode = null;
-
-            Iterator<AbstractInsnNode> methodNodeIterator = methodNode.instructions.iterator();
-
-            while (methodNodeIterator.hasNext())
-            {
-                currentNode = methodNodeIterator.next();
-
-                if (isMethod(currentNode, INVOKESPECIAL, "func_78476_b" /* renderHand */, "net/minecraft/client/renderer/EntityRenderer", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE, Type.INT_TYPE)))
-                {
-                    transformNode = currentNode;
-                }
-            }
+            AbstractInsnNode transformNode = IvASMHelper.findNode(new IvNodeMatcherMethodSRG(INVOKESPECIAL, "func_78476_b" /* renderHand */, "net/minecraft/client/renderer/EntityRenderer", Type.VOID_TYPE, Type.FLOAT_TYPE, Type.INT_TYPE), methodNode);
 
             if (transformNode != null)
             {
@@ -206,20 +158,7 @@ public class EntityRendererTransformer extends IvClassTransformerClass
         }
         else if (methodID.equals("setupFog"))
         {
-            AbstractInsnNode currentNode;
-            ArrayList<AbstractInsnNode> glFogiNodes = new ArrayList<AbstractInsnNode>();
-
-            Iterator<AbstractInsnNode> methodNodeIterator = methodNode.instructions.iterator();
-
-            while (methodNodeIterator.hasNext())
-            {
-                currentNode = methodNodeIterator.next();
-
-                if (currentNode.getOpcode() == INVOKESTATIC && ((MethodInsnNode) currentNode).name.equals("glFogi") && ((MethodInsnNode) currentNode).owner.equals("org/lwjgl/opengl/GL11"))
-                {
-                    glFogiNodes.add(currentNode);
-                }
-            }
+            List<AbstractInsnNode> glFogiNodes = IvASMHelper.findNodes(new IvNodeMatcherMethodSRG(INVOKESTATIC, "glFogi", "org/lwjgl/opengl/GL11", null), methodNode);
 
             for (AbstractInsnNode callListNode : glFogiNodes)
             {
@@ -233,20 +172,7 @@ public class EntityRendererTransformer extends IvClassTransformerClass
         }
         else if (methodID.equals("getFOVModifier"))
         {
-            AbstractInsnNode currentNode;
-            ArrayList<AbstractInsnNode> returnNodes = new ArrayList<AbstractInsnNode>();
-
-            Iterator<AbstractInsnNode> methodNodeIterator = methodNode.instructions.iterator();
-
-            while (methodNodeIterator.hasNext())
-            {
-                currentNode = methodNodeIterator.next();
-
-                if (currentNode.getOpcode() == FRETURN)
-                {
-                    returnNodes.add(currentNode);
-                }
-            }
+            List<AbstractInsnNode> returnNodes = IvASMHelper.findNodes(new IvNodeMatcherSimple(FRETURN), methodNode);
 
             for (AbstractInsnNode callListNode : returnNodes)
             {
@@ -275,30 +201,10 @@ public class EntityRendererTransformer extends IvClassTransformerClass
         }
         else if (methodID.equals("renderWorldAdditions"))
         {
-            AbstractInsnNode currentNode;
-            ArrayList<AbstractInsnNode> valuepatchNodes = new ArrayList<AbstractInsnNode>();
-
-            Iterator<AbstractInsnNode> methodNodeIterator = methodNode.instructions.iterator();
-
-            while (methodNodeIterator.hasNext())
-            {
-                currentNode = methodNodeIterator.next();
-
-                if (currentNode.getOpcode() == LDC && ((LdcInsnNode) currentNode).cst.equals("prepareterrain"))
-                {
-                    valuepatchNodes.add(currentNode.getNext());
-                }
-
-                if (currentNode.getOpcode() == LDC && ((LdcInsnNode) currentNode).cst.equals("water"))
-                {
-                    valuepatchNodes.add(currentNode.getNext());
-                }
-
-                if (currentNode.getOpcode() == LDC && ((LdcInsnNode) currentNode).cst.equals("entities"))
-                {
-                    valuepatchNodes.add(currentNode.getNext());
-                }
-            }
+            List<AbstractInsnNode> valuepatchNodes = new ArrayList<AbstractInsnNode>();
+            valuepatchNodes.addAll(IvASMHelper.findNodes(new IvNodeMatcherLDC("prepareterrain"), methodNode));
+            valuepatchNodes.addAll(IvASMHelper.findNodes(new IvNodeMatcherLDC("water"), methodNode));
+            valuepatchNodes.addAll(IvASMHelper.findNodes(new IvNodeMatcherLDC("entities"), methodNode));
 
             for (AbstractInsnNode node : valuepatchNodes)
             {

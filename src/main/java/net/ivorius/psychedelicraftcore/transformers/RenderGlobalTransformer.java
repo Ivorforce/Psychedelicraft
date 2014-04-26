@@ -1,10 +1,10 @@
 package net.ivorius.psychedelicraftcore.transformers;
 
-import net.ivorius.psychedelicraftcore.IvClassTransformerClass;
+import net.ivorius.psychedelicraftcore.toolkit.IvClassTransformerClass;
+import net.ivorius.psychedelicraftcore.toolkit.IvASMHelper;
+import net.ivorius.psychedelicraftcore.toolkit.IvNodeMatcherLDC;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.*;
-
-import java.util.Iterator;
 
 import static org.objectweb.asm.Opcodes.*;
 
@@ -23,20 +23,8 @@ public class RenderGlobalTransformer extends IvClassTransformerClass
     {
         if (methodID.equals("renderEntities"))
         {
-            AbstractInsnNode currentNode;
-            AbstractInsnNode entitiesNode = null;
-
-            Iterator<AbstractInsnNode> methodNodeIterator = methodNode.instructions.iterator();
-
-            while (methodNodeIterator.hasNext())
-            {
-                currentNode = methodNodeIterator.next();
-
-                if (currentNode.getOpcode() == LDC && ((LdcInsnNode) currentNode).cst.equals("entities"))
-                {
-                    entitiesNode = currentNode.getNext();
-                }
-            }
+            AbstractInsnNode entitiesNode = IvASMHelper.findNode(new IvNodeMatcherLDC("entities"), methodNode);
+            entitiesNode = entitiesNode.getNext();
 
             if (entitiesNode != null)
             {
