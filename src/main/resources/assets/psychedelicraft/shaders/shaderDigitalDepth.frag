@@ -11,41 +11,6 @@ uniform float maxColors;
 uniform float saturation;
 uniform float totalAlpha;
 
-float randomFromSeed(float aSeed)
-{
-	return fract(mod(aSeed * 12374.12381, 18034.80591));
-}
-
-float randomFromVec(vec2 aVec)
-{
-	return fract(sin(dot(aVec.xy, vec2(12.9898, 78.233))) * 43758.54535);
-}
-
-float getBrightness(vec3 color)
-{
-    float cR = 0.3086;
-    float cG = 0.6084;
-    float cB = 0.0820;
-
-    return (color.r * cR + color.g * cG + color.b * cB);
-}
-
-vec3 getDesaturatedColor(vec3 color)
-{
-    return vec3(getBrightness(color));
-}
-
-vec2 pixelate(vec2 uv, vec2 newRes)
-{
-    vec2 coord = vec2(ceil(uv.x * newRes.x) / newRes.x, ceil(uv.y * newRes.y) / newRes.y );
-    return coord;
-}
-
-vec4 reduce_palette(vec4 color, float maxCol)
-{
-    return ceil(color * maxCol - 0.5) / maxCol;
-}
-
 float getPixelDensity(vec2 newUV, vec4 newColor)
 {
     float textureDepth = texture2D(tex3, newUV).r;
@@ -76,7 +41,7 @@ void main()
 
     if (maxColors >= 0.0)
     {
-        newColor = reduce_palette(newColor, maxColors);        
+        newColor = reducePalette(newColor, maxColors);        
     }
     
     if (textProgress > 0.0f)

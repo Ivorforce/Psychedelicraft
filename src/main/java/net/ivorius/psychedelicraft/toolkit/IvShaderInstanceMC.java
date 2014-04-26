@@ -18,7 +18,7 @@ import java.io.IOException;
  */
 public class IvShaderInstanceMC
 {
-    public static void trySettingUpShader(IvShaderInstance shaderInstance, ResourceLocation vertexShader, ResourceLocation fragmentShader)
+    public static void trySettingUpShader(IvShaderInstance shaderInstance, ResourceLocation vertexShader, ResourceLocation fragmentShader, String utils)
     {
         String vShader = null;
         String fShader = null;
@@ -50,8 +50,25 @@ public class IvShaderInstanceMC
 
             if (vShader != null && fShader != null)
             {
+                if (utils != null)
+                {
+                    vShader = addUtils(vShader, utils);
+                    fShader = addUtils(fShader, utils);
+                }
+
                 shaderInstance.trySettingUpShader(vShader, fShader);
             }
         }
+    }
+
+    public static String addUtils(String shader, String utils)
+    {
+        int indexVersion = shader.indexOf("#version");
+        if (indexVersion < 0)
+            indexVersion = 0;
+
+        int indexVersionNL = shader.indexOf("\n", indexVersion);
+
+        return shader.substring(0, indexVersionNL + 1) + utils + shader.substring(indexVersionNL + 1);
     }
 }

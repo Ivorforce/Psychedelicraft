@@ -1,13 +1,16 @@
 package net.ivorius.psychedelicraft.client.rendering;
 
+import com.google.common.base.Charsets;
 import net.ivorius.psychedelicraft.Psychedelicraft;
 import net.ivorius.psychedelicraft.entities.DrugHelper;
 import net.ivorius.psychedelicraft.toolkit.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.client.resources.IResource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import org.apache.commons.io.IOUtils;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
@@ -183,50 +186,62 @@ public class DrugShaderHelper
         Minecraft mc = Minecraft.getMinecraft();
         deleteShaders();
 
+        String utils = null;
+
+        try
+        {
+            IResource utilsResource = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathShaders + "shaderUtils.frag"));
+            utils = IOUtils.toString(utilsResource.getInputStream(), Charsets.UTF_8);
+        }
+        catch (Exception ex)
+        {
+            Psychedelicraft.logger.error("Could not load shader utils!", utils);
+        }
+
         shaderInstance = new ShaderMain(Psychedelicraft.logger);
-        IvShaderInstanceMC.trySettingUpShader(shaderInstance, new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathShaders + "shader3D.vert"), new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathShaders + "shader3D.frag"));
+        setUpShader(shaderInstance, "shader3D.vert", "shader3D.frag", utils);
         worldShaders.add(shaderInstance);
 
         shaderInstanceDepth = new ShaderMainDepth(Psychedelicraft.logger);
-        IvShaderInstanceMC.trySettingUpShader(shaderInstanceDepth, new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathShaders + "shader3D.vert"), new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathShaders + "shader3DDepth.frag"));
+        setUpShader(shaderInstanceDepth, "shader3D.vert", "shader3DDepth.frag", utils);
         worldShaders.add(shaderInstanceDepth);
 
         shaderInstanceShadows = new ShaderShadows(Psychedelicraft.logger);
-        IvShaderInstanceMC.trySettingUpShader(shaderInstanceShadows, new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathShaders + "shader3D.vert"), new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathShaders + "shader3DDepth.frag"));
+        setUpShader(shaderInstanceShadows, "shader3D.vert", "shader3DDepth.frag", utils);
         worldShaders.add(shaderInstanceShadows);
 
         blurShaderInstance = new ShaderBlur(Psychedelicraft.logger);
-        setUpShader(blurShaderInstance, "shaderBasic.vert", "shaderBlur.frag");
+        setUpShader(blurShaderInstance, "shaderBasic.vert", "shaderBlur.frag", utils);
 
         radialBlurShaderInstance = new ShaderRadialBlur(Psychedelicraft.logger);
-        setUpShader(radialBlurShaderInstance, "shaderBasic.vert", "shaderRadialBlur.frag");
+        setUpShader(radialBlurShaderInstance, "shaderBasic.vert", "shaderRadialBlur.frag", utils);
 
         dofShaderInstance = new ShaderDoF(Psychedelicraft.logger);
-        setUpShader(dofShaderInstance, "shaderBasic.vert", "shaderDof.frag");
+        setUpShader(dofShaderInstance, "shaderBasic.vert", "shaderDof.frag", utils);
 
         doubleVisionShaderInstance = new ShaderDoubleVision(Psychedelicraft.logger);
-        setUpShader(doubleVisionShaderInstance, "shaderBasic.vert", "shaderDoubleVision.frag");
+        setUpShader(doubleVisionShaderInstance, "shaderBasic.vert", "shaderDoubleVision.frag", utils);
 
         bloomShaderInstance = new ShaderBloom(Psychedelicraft.logger);
-        setUpShader(bloomShaderInstance, "shaderBasic.vert", "shaderBloom.frag");
+        setUpShader(bloomShaderInstance, "shaderBasic.vert", "shaderBloom.frag", utils);
 
         colorBloomShaderInstance = new ShaderColorBloom(Psychedelicraft.logger);
-        setUpShader(colorBloomShaderInstance, "shaderBasic.vert", "shaderColoredBloom.frag");
+        setUpShader(colorBloomShaderInstance, "shaderBasic.vert", "shaderColoredBloom.frag", utils);
 
         digitalShaderInstance = new ShaderDigital(Psychedelicraft.logger);
-        setUpShader(digitalShaderInstance, "shaderBasic.vert", "shaderDigital.frag");
+        setUpShader(digitalShaderInstance, "shaderBasic.vert", "shaderDigital.frag", utils);
 
         digitalDepthShaderInstance = new ShaderDigitalDepth(Psychedelicraft.logger);
-        setUpShader(digitalDepthShaderInstance, "shaderBasic.vert", "shaderDigitalDepth.frag");
+        setUpShader(digitalDepthShaderInstance, "shaderBasic.vert", "shaderDigitalDepth.frag", utils);
 
         blurNoiseShaderInstance = new ShaderBlurNoise(Psychedelicraft.logger);
-        setUpShader(blurNoiseShaderInstance, "shaderBasic.vert", "shaderBlurNoise.frag");
+        setUpShader(blurNoiseShaderInstance, "shaderBasic.vert", "shaderBlurNoise.frag", utils);
 
         heatDistortionShaderInstance = new ShaderHeatDistortions(Psychedelicraft.logger);
-        setUpShader(heatDistortionShaderInstance, "shaderBasic.vert", "shaderHeatDistortion.frag");
+        setUpShader(heatDistortionShaderInstance, "shaderBasic.vert", "shaderHeatDistortion.frag", utils);
 
         distortionMapShaderInstance = new ShaderDistortionMap(Psychedelicraft.logger);
-        setUpShader(distortionMapShaderInstance, "shaderBasic.vert", "shaderDistortionMap.frag");
+        setUpShader(distortionMapShaderInstance, "shaderBasic.vert", "shaderDistortionMap.frag", utils);
 
         motionBlurEffect = new EffectMotionBlur();
 
@@ -250,9 +265,9 @@ public class DrugShaderHelper
         waterDropletsDistortionTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "waterDistortion.png");
     }
 
-    private static void setUpShader(IvShaderInstance2D shader, String vertexFile, String fragmentFile)
+    public static void setUpShader(IvShaderInstance shader, String vertexFile, String fragmentFile, String utils)
     {
-        IvShaderInstanceMC.trySettingUpShader(shader, new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathShaders + vertexFile), new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathShaders + fragmentFile));
+        IvShaderInstanceMC.trySettingUpShader(shader, new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathShaders + vertexFile), new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathShaders + fragmentFile), utils);
     }
 
     public static void setUpRealtimeCacheTexture()

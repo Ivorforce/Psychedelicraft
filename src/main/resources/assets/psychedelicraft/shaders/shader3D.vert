@@ -34,9 +34,8 @@ void main()
 
     normalVector = gl_Normal.xyz;
     if (normalVector.x == 0.0 && normalVector.y == 0.0 && normalVector.z == 0.0)
-    {
         normalVector = vec3(0.0, 1.0, 0.0);
-    }
+    normalVector = gl_NormalMatrix * normalVector;
 
     gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;
     

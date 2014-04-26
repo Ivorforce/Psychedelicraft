@@ -8,16 +8,6 @@ uniform vec2 pixelSize;
 uniform float seed;
 uniform float strength;
 
-float randomFromSeed(float aSeed)
-{
-	return fract(mod(aSeed * 12374.123814, 18034.805912));
-}
-
-float randomFromVec(vec2 aVec)
-{
-    return fract(sin(dot(aVec.xy, vec2(12.9898,78.233))) * 43758.5453);
-}
-
 void main()
 {
 	vec2 newTexCoords = floor((gl_TexCoord[0].st) / pixelSize) * pixelSize;
