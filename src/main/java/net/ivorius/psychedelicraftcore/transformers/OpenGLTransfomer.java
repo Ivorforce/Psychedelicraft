@@ -7,6 +7,7 @@ package net.ivorius.psychedelicraftcore.transformers;
 
 import net.ivorius.psychedelicraftcore.ivToolkit.IvASMHelper;
 import net.ivorius.psychedelicraftcore.ivToolkit.IvClassTransformerGeneral;
+import net.ivorius.psychedelicraftcore.ivToolkit.IvInsnHelper;
 import net.ivorius.psychedelicraftcore.ivToolkit.IvNodeMatcherMethodSRG;
 import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.Type;
@@ -77,7 +78,7 @@ public class OpenGLTransfomer extends IvClassTransformerGeneral
         for (AbstractInsnNode callListNode : glTranslatefNodes)
         {
             InsnList listBefore = new InsnList();
-            insertDUP3(listBefore);
+            IvInsnHelper.insertDUP3(listBefore);
             listBefore.add(new MethodInsnNode(INVOKESTATIC, "net/ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLTranslatef", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE, Type.FLOAT_TYPE, Type.FLOAT_TYPE)));
             methodNode.instructions.insertBefore(callListNode, listBefore);
 
@@ -87,7 +88,7 @@ public class OpenGLTransfomer extends IvClassTransformerGeneral
         for (AbstractInsnNode callListNode : glRotatefNodes)
         {
             InsnList listBefore = new InsnList();
-            insertDUP4(listBefore);
+            IvInsnHelper.insertDUP4(listBefore);
             listBefore.add(new MethodInsnNode(INVOKESTATIC, "net/ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLRotatef", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE, Type.FLOAT_TYPE, Type.FLOAT_TYPE, Type.FLOAT_TYPE)));
             methodNode.instructions.insertBefore(callListNode, listBefore);
 
@@ -97,7 +98,7 @@ public class OpenGLTransfomer extends IvClassTransformerGeneral
         for (AbstractInsnNode callListNode : glScalefNodes)
         {
             InsnList listBefore = new InsnList();
-            insertDUP3(listBefore);
+            IvInsnHelper.insertDUP3(listBefore);
             listBefore.add(new MethodInsnNode(INVOKESTATIC, "net/ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLScalef", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE, Type.FLOAT_TYPE, Type.FLOAT_TYPE)));
             methodNode.instructions.insertBefore(callListNode, listBefore);
 
@@ -105,25 +106,5 @@ public class OpenGLTransfomer extends IvClassTransformerGeneral
         }
 
         return caught;
-    }
-
-    public static void insertDUP3(InsnList list)
-    {
-        list.add(new InsnNode(DUP2_X1));    // 1 2 3 1 2
-        list.add(new InsnNode(POP2));       // 3 1 2
-        list.add(new InsnNode(DUP_X2));     // 3 1 2 3
-        list.add(new InsnNode(DUP_X2));     // 3 1 2 3 3
-        list.add(new InsnNode(POP));        // 1 2 3 3
-        list.add(new InsnNode(DUP2_X1));    // 1 2 3 1 2 3
-    }
-
-    public static void insertDUP4(InsnList list)
-    {
-        list.add(new InsnNode(DUP2_X2));    // 1 2 3 4 1 2
-        list.add(new InsnNode(POP2));       // 3 4 1 2
-        list.add(new InsnNode(DUP2_X2));    // 3 4 1 2 3 4
-        list.add(new InsnNode(DUP2_X2));    // 3 4 1 2 3 4 3 4
-        list.add(new InsnNode(POP2));       // 1 2 3 4 3 4
-        list.add(new InsnNode(DUP2_X2));    // 1 2 3 4 1 2 3 4
     }
 }
