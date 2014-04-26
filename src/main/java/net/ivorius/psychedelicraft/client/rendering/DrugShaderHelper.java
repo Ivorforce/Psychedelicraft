@@ -1,3 +1,8 @@
+/*
+ *  Copyright (c) 2014, Lukas Tenbrink.
+ *  * http://lukas.axxim.net
+ */
+
 package net.ivorius.psychedelicraft.client.rendering;
 
 import com.google.common.base.Charsets;
@@ -258,7 +263,9 @@ public class DrugShaderHelper
         setUpRealtimeCacheTexture();
         depthBuffer = new IvDepthBuffer(mc.displayWidth, mc.displayHeight, Psychedelicraft.logger);
         if (!bypassFramebuffers)
+        {
             depthBuffer.allocate();
+        }
 
         digitalTextTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "digitalText.png");
         heatDistortionNoiseTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "heatDistortionNoise.png");

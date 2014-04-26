@@ -1,3 +1,8 @@
+/*
+ *  Copyright (c) 2014, Lukas Tenbrink.
+ *  * http://lukas.axxim.net
+ */
+
 package net.ivorius.psychedelicraft.items;
 
 import net.ivorius.psychedelicraft.entities.EntityMolotovCocktail;

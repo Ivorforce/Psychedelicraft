@@ -1,3 +1,8 @@
+/*
+ *  Copyright (c) 2014, Lukas Tenbrink.
+ *  * http://lukas.axxim.net
+ */
+
 package net.ivorius.psychedelicraft.blocks;
 
 import net.ivorius.psychedelicraft.items.ItemRiftJar;
@@ -75,9 +80,13 @@ public class BlockRiftJar extends BlockContainer
             TileEntityRiftJar tileEntityRiftJar = (TileEntityRiftJar) tileEntity;
 
             if (par5EntityPlayer.isSneaking())
+            {
                 tileEntityRiftJar.toggleSuckingRifts();
+            }
             else
+            {
                 tileEntityRiftJar.toggleRiftJarOpen();
+            }
 
             return true;
         }

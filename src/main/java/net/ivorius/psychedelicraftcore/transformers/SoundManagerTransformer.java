@@ -1,7 +1,12 @@
+/*
+ *  Copyright (c) 2014, Lukas Tenbrink.
+ *  * http://lukas.axxim.net
+ */
+
 package net.ivorius.psychedelicraftcore.transformers;
 
-import net.ivorius.psychedelicraftcore.ivToolkit.IvClassTransformerClass;
 import net.ivorius.psychedelicraftcore.ivToolkit.IvASMHelper;
+import net.ivorius.psychedelicraftcore.ivToolkit.IvClassTransformerClass;
 import net.ivorius.psychedelicraftcore.ivToolkit.IvNodeMatcherSimple;
 import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.Type;

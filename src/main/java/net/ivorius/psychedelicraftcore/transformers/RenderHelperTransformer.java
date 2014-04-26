@@ -1,3 +1,8 @@
+/*
+ *  Copyright (c) 2014, Lukas Tenbrink.
+ *  * http://lukas.axxim.net
+ */
+
 package net.ivorius.psychedelicraftcore.transformers;
 
 import net.ivorius.psychedelicraftcore.ivToolkit.IvClassTransformerClass;

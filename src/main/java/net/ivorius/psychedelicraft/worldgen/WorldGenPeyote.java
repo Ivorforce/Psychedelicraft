@@ -1,10 +1,15 @@
-package net.ivorius.psychedelicraft.worldgen;
+/*
+ *  Copyright (c) 2014, Lukas Tenbrink.
+ *  * http://lukas.axxim.net
+ */
 
-import java.util.Random;
+package net.ivorius.psychedelicraft.worldgen;
 
 import net.ivorius.psychedelicraft.blocks.PSBlocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
+import java.util.Random;
 
 public class WorldGenPeyote extends WorldGenerator
 {

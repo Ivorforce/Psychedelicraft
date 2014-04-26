@@ -1,13 +1,18 @@
+/*
+ *  Copyright (c) 2014, Lukas Tenbrink.
+ *  * http://lukas.axxim.net
+ */
+
 package net.ivorius.psychedelicraft.entities;
 
-import java.util.Random;
-
+import cpw.mods.fml.common.registry.VillagerRegistry;
 import net.ivorius.psychedelicraft.blocks.PSBlocks;
 import net.ivorius.psychedelicraft.items.PSItems;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.item.Item;
 import net.minecraft.village.MerchantRecipeList;
-import cpw.mods.fml.common.registry.VillagerRegistry;
+
+import java.util.Random;
 
 /**
  * Created by lukas on 23.02.14.

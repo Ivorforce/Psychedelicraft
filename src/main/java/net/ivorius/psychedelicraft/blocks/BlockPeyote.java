@@ -1,6 +1,9 @@
-package net.ivorius.psychedelicraft.blocks;
+/*
+ *  Copyright (c) 2014, Lukas Tenbrink.
+ *  * http://lukas.axxim.net
+ */
 
-import java.util.Random;
+package net.ivorius.psychedelicraft.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -9,6 +12,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class BlockPeyote extends BlockContainer implements IvBonemealCompatibleBlock
 {

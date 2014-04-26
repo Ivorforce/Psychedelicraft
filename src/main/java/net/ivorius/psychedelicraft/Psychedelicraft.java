@@ -1,32 +1,29 @@
-/***************************************************************************************************
- * Copyright (c) 2014, Lukas Tenbrink.
- * http://lukas.axxim.net
- **************************************************************************************************/
+/*
+ *  Copyright (c) 2014, Lukas Tenbrink.
+ *  * http://lukas.axxim.net
+ */
 
 package net.ivorius.psychedelicraft;
-
-import net.ivorius.psychedelicraft.blocks.PSBlocks;
-import net.ivorius.psychedelicraft.entities.*;
-import net.ivorius.psychedelicraft.gui.PsycheGuiHandler;
-import net.ivorius.psychedelicraft.items.*;
-import net.ivorius.psychedelicraft.ivToolkit.IvPacketPipeline;
-import net.ivorius.psychedelicraft.worldgen.*;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.util.EnumHelper;
-
-import org.apache.logging.log4j.Logger;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLInterModComms;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import net.ivorius.psychedelicraft.blocks.PSBlocks;
+import net.ivorius.psychedelicraft.entities.DrugInfluence;
+import net.ivorius.psychedelicraft.entities.DrugInfluenceHarmonium;
+import net.ivorius.psychedelicraft.entities.DrugInfoPacket;
+import net.ivorius.psychedelicraft.entities.PSEntityList;
+import net.ivorius.psychedelicraft.gui.PsycheGuiHandler;
+import net.ivorius.psychedelicraft.items.PSItems;
+import net.ivorius.psychedelicraft.ivToolkit.IvPacketPipeline;
+import net.ivorius.psychedelicraft.worldgen.PSWorldGen;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.util.EnumHelper;
+import org.apache.logging.log4j.Logger;
 
 @Mod(modid = Psychedelicraft.MODID, version = Psychedelicraft.VERSION)
 public class Psychedelicraft
@@ -51,7 +48,7 @@ public class Psychedelicraft
     public static PSCoreHandlerServer coreHandlerServer;
 
     public static IvPacketPipeline packetPipeline;
-    
+
     public static CreativeTabPsyche creativeTab;
 
     public static String filePathTexturesFull = "psychedelicraft:textures/mod/";
