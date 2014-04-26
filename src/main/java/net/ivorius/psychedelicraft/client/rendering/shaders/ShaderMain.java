@@ -13,6 +13,7 @@ import net.ivorius.psychedelicraft.ivToolkit.IvShaderInstance3D;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IIcon;
 import org.apache.logging.log4j.Logger;
@@ -39,7 +40,9 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
         if (useShader())
         {
             Minecraft mc = Minecraft.getMinecraft();
-            DrugHelper drugHelper = DrugHelper.getDrugHelper(mc.thePlayer);
+
+            EntityLivingBase renderEntity = mc.renderViewEntity;
+            DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
 
             if (DrugEffectInterpreter.shouldRegisterFractalTextures(drugHelper))
             {
@@ -54,7 +57,7 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
             setUniformFloats("ticks", ticks);
             setUniformInts("worldTime", (int) mc.theWorld.getWorldTime());
 
-            setUniformFloats("playerPos", (float) mc.thePlayer.posX, (float) mc.thePlayer.posY, (float) mc.thePlayer.posZ);
+            setUniformFloats("playerPos", (float) renderEntity.posX, (float) renderEntity.posY, (float) renderEntity.posZ);
 
             setTexture2DEnabled(true);
             setLightmapEnabled(true);

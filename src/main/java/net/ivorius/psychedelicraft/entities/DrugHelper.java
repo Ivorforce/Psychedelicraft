@@ -75,7 +75,10 @@ public class DrugHelper implements IExtendedEntityProperties
 
     public static DrugHelper getDrugHelper(Entity entity)
     {
-        return (DrugHelper) entity.getExtendedProperties("DrugHelper");
+        if (entity != null)
+            return (DrugHelper) entity.getExtendedProperties("DrugHelper");
+
+        return null;
     }
 
     public static void initInEntity(Entity entity)
@@ -643,22 +646,6 @@ public class DrugHelper implements IExtendedEntityProperties
         modifier *= 1.0F + getDrugValue("Caffeine") * 0.20F;
 
         return modifier;
-    }
-
-    public void distortScreen(float par1, EntityLivingBase entity, int rendererUpdateCount)
-    {
-        if (drugRenderer != null)
-        {
-            drugRenderer.distortScreen(par1, entity, rendererUpdateCount, this);
-        }
-    }
-
-    public void renderAllHallucinations(float par1)
-    {
-        if (drugRenderer != null)
-        {
-            drugRenderer.renderAllHallucinations(par1, this);
-        }
     }
 
     public EntityPlayer.EnumStatus getDrugSleepStatus()

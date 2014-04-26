@@ -31,6 +31,7 @@ import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.particle.EntitySmokeFX;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ResourceLocation;
@@ -88,11 +89,11 @@ public class ClientProxy extends ServerProxy
         if (event.type == RenderGameOverlayEvent.ElementType.PORTAL)
         {
             Minecraft mc = Minecraft.getMinecraft();
-            EntityPlayer player = mc.thePlayer;
-            DrugHelper drugHelper = DrugHelper.getDrugHelper(player);
+            EntityLivingBase renderEntity = mc.renderViewEntity;
+            DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
 
             if (drugHelper != null && drugHelper.drugRenderer != null)
-                drugHelper.drugRenderer.renderOverlaysAfterShaders(event.partialTicks, player, (int) mc.ingameGUI.getUpdateCounter(), event.resolution.getScaledWidth(), event.resolution.getScaledHeight(), drugHelper);
+                drugHelper.drugRenderer.renderOverlaysAfterShaders(event.partialTicks, renderEntity, renderEntity.ticksExisted, event.resolution.getScaledWidth(), event.resolution.getScaledHeight(), drugHelper);
         }
     }
 
@@ -103,14 +104,14 @@ public class ClientProxy extends ServerProxy
         {
             ChatComponentText text = (ChatComponentText) event.message;
 
-            EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-            DrugHelper drugHelper = DrugHelper.getDrugHelper(player);
+            EntityLivingBase renderEntity = Minecraft.getMinecraft().renderViewEntity;
+            DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
 
             if (drugHelper != null)
             {
                 String message = text.getUnformattedTextForChat();
-                drugHelper.receiveChatMessage(player, message);
-                String modified = drugHelper.distortIncomingMessage(player, message);
+                drugHelper.receiveChatMessage(renderEntity, message);
+                String modified = drugHelper.distortIncomingMessage(renderEntity, message);
 
                 event.message = new ChatComponentText(modified);
             }
@@ -126,11 +127,11 @@ public class ClientProxy extends ServerProxy
 
             if (mc != null && !mc.isGamePaused())
             {
-                EntityPlayer player = mc.thePlayer;
+                DrugHelper drugHelper = DrugHelper.getDrugHelper(mc.renderViewEntity);
 
-                if (player != null)
+                if (drugHelper != null)
                 {
-                    SmoothCameraHelper.instance.update(mc.gameSettings.mouseSensitivity, DrugEffectInterpreter.getSmoothVision(DrugHelper.getDrugHelper(player)));
+                    SmoothCameraHelper.instance.update(mc.gameSettings.mouseSensitivity, DrugEffectInterpreter.getSmoothVision(drugHelper));
                 }
             }
         }

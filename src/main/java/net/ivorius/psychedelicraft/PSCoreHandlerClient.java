@@ -14,6 +14,7 @@ import net.ivorius.psychedelicraftcore.PsycheCoreBusCommon;
 import net.ivorius.psychedelicraftcoreUtils.events.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
@@ -84,11 +85,12 @@ public class PSCoreHandlerClient
     public void orientCamera(OrientCameraEvent event)
     {
         Minecraft mc = Minecraft.getMinecraft();
-        EntityPlayer player = mc.thePlayer;
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(player);
-        int rendererUpdateCount = mc.ingameGUI.getUpdateCounter();
+        EntityLivingBase renderEntity = mc.renderViewEntity;
+        DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
+        int rendererUpdateCount = renderEntity.ticksExisted;
 
-        drugHelper.distortScreen(event.partialTicks, player, rendererUpdateCount);
+        if (drugHelper != null && drugHelper.drugRenderer != null)
+            drugHelper.drugRenderer.distortScreen(event.partialTicks, renderEntity, rendererUpdateCount, drugHelper);
     }
 
     @SubscribeEvent
@@ -184,9 +186,11 @@ public class PSCoreHandlerClient
         if (pass == 1)
         {
             Minecraft mc = Minecraft.getMinecraft();
-            EntityPlayer player = mc.thePlayer;
+            EntityLivingBase renderEntity = mc.renderViewEntity;
+            DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
 
-            DrugHelper.getDrugHelper(player).renderAllHallucinations(event.partialTicks);
+            if (drugHelper != null && drugHelper.drugRenderer != null)
+                drugHelper.drugRenderer.renderAllHallucinations(event.partialTicks, drugHelper);
         }
     }
 
@@ -216,8 +220,8 @@ public class PSCoreHandlerClient
         float partialTicks = event.partialTicks;
 
         Minecraft mc = Minecraft.getMinecraft();
-        EntityPlayer player = mc.thePlayer;
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(player);
+        EntityLivingBase renderEntity = mc.renderViewEntity;
+        DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
 
         float smoothness = DrugEffectInterpreter.getSmoothVision(drugHelper);
         if (smoothness < 1.0f && mc.inGameHasFocus)
@@ -230,11 +234,11 @@ public class PSCoreHandlerClient
             if (!mc.gameSettings.smoothCamera)
             {
                 float[] originalAngles = SmoothCameraHelper.instance.getOriginalAngles(mc.gameSettings.mouseSensitivity, partialTicks, deltaX, deltaY, mc.gameSettings.invertMouse);
-                player.setAngles(angles[0] - originalAngles[0], angles[1] - originalAngles[1]);
+                renderEntity.setAngles(angles[0] - originalAngles[0], angles[1] - originalAngles[1]);
             }
             else
             {
-                player.setAngles(angles[0], angles[1]);
+                renderEntity.setAngles(angles[0], angles[1]);
             }
         }
     }
@@ -271,16 +275,11 @@ public class PSCoreHandlerClient
     public void getSoundVolume(GetSoundVolumeEvent event)
     {
         Minecraft mc = Minecraft.getMinecraft();
-        EntityPlayer player = mc.thePlayer;
+        DrugHelper drugHelper = DrugHelper.getDrugHelper(mc.renderViewEntity);
 
-        if (player != null)
+        if (drugHelper != null)
         {
-            DrugHelper drugHelper = DrugHelper.getDrugHelper(player);
-
-            if (drugHelper != null)
-            {
-                event.volume = MathHelper.clamp_float(event.volume * drugHelper.getSoundMultiplier(), 0.0f, 1.0f);
-            }
+            event.volume = MathHelper.clamp_float(event.volume * drugHelper.getSoundMultiplier(), 0.0f, 1.0f);
         }
     }
 

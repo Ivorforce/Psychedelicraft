@@ -8,6 +8,7 @@ package net.ivorius.psychedelicraft.client.rendering.shaders;
 import net.ivorius.psychedelicraft.entities.DrugHelper;
 import net.ivorius.psychedelicraft.ivToolkit.IvShaderInstance3D;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.EntityLivingBase;
 import org.apache.logging.log4j.Logger;
 
 /**
@@ -26,12 +27,14 @@ public class ShaderMainDepth extends IvShaderInstance3D implements ShaderWorld
         if (useShader())
         {
             Minecraft mc = Minecraft.getMinecraft();
-            DrugHelper drugHelper = DrugHelper.getDrugHelper(mc.thePlayer);
+
+            EntityLivingBase renderEntity = mc.renderViewEntity;
+            DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
 
             setUniformFloats("ticks", ticks);
             setUniformInts("worldTime", (int) mc.theWorld.getWorldTime());
 
-            setUniformFloats("playerPos", (float) mc.thePlayer.posX, (float) mc.thePlayer.posY, (float) mc.thePlayer.posZ);
+            setUniformFloats("playerPos", (float) renderEntity.posX, (float) renderEntity.posY, (float) renderEntity.posZ);
             setDepthMultiplier(1.0f);
             setTexture2DEnabled(true);
             setOverrideColor(null);

@@ -9,6 +9,7 @@ import net.ivorius.psychedelicraft.entities.DrugHelper;
 import net.ivorius.psychedelicraft.ivToolkit.IvDepthBuffer;
 import net.ivorius.psychedelicraft.ivToolkit.IvShaderInstance3D;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.EntityLivingBase;
 import org.apache.logging.log4j.Logger;
 
 /**
@@ -45,13 +46,15 @@ public class ShaderShadows extends IvShaderInstance3D implements ShaderWorld
             depthBuffer.setSize(pixels, pixels);
 
             Minecraft mc = Minecraft.getMinecraft();
-            DrugHelper drugHelper = DrugHelper.getDrugHelper(mc.thePlayer);
+
+            EntityLivingBase renderEntity = mc.renderViewEntity;
+            DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
 
             setUniformFloats("ticks", ticks);
             setUniformInts("worldTime", (int) mc.theWorld.getWorldTime());
 
             setTexture2DEnabled(true);
-            setUniformFloats("playerPos", (float) mc.thePlayer.posX, (float) mc.thePlayer.posY, (float) mc.thePlayer.posZ);
+            setUniformFloats("playerPos", (float) renderEntity.posX, (float) renderEntity.posY, (float) renderEntity.posZ);
             setUniformFloats("depthMultiplier", 1.0f);
             setUniformFloats("pixelSize", 1.0f / depthBuffer.getTextureWidth(), 1.0f / depthBuffer.getTextureHeight());
             setUniformInts("useScreenTexCoords", 0);

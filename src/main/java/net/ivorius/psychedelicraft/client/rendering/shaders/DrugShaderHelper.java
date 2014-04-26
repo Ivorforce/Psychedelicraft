@@ -61,7 +61,6 @@ public class DrugShaderHelper
     public static ArrayList<String> getRenderPasses(float partialTicks, float ticks)
     {
         Minecraft mc = Minecraft.getMinecraft();
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(mc.thePlayer);
 
         ArrayList<String> passes = new ArrayList<String>();
 
