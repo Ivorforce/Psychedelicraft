@@ -5,9 +5,9 @@
 
 package net.ivorius.psychedelicraftcore.transformers;
 
-import net.ivorius.psychedelicraftcore.ivToolkit.IvNodeFinder;
 import net.ivorius.psychedelicraftcore.ivToolkit.IvClassTransformerGeneral;
 import net.ivorius.psychedelicraftcore.ivToolkit.IvInsnHelper;
+import net.ivorius.psychedelicraftcore.ivToolkit.IvNodeFinder;
 import net.ivorius.psychedelicraftcore.ivToolkit.IvNodeMatcherMethodSRG;
 import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.Type;
@@ -15,7 +15,8 @@ import org.objectweb.asm.tree.*;
 
 import java.util.List;
 
-import static org.objectweb.asm.Opcodes.*;
+import static org.objectweb.asm.Opcodes.DUP;
+import static org.objectweb.asm.Opcodes.INVOKESTATIC;
 
 /**
  * Created by lukas on 12.03.14.

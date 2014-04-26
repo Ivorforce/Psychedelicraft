@@ -76,7 +76,9 @@ public class DrugHelper implements IExtendedEntityProperties
     public static DrugHelper getDrugHelper(Entity entity)
     {
         if (entity != null)
+        {
             return (DrugHelper) entity.getExtendedProperties("DrugHelper");
+        }
 
         return null;
     }

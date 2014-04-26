@@ -6,13 +6,10 @@
 package net.ivorius.psychedelicraft.client.rendering.effectWrappers;
 
 import net.ivorius.psychedelicraft.Psychedelicraft;
-import net.ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
-import net.ivorius.psychedelicraft.client.rendering.shaders.ShaderBloom;
 import net.ivorius.psychedelicraft.client.rendering.shaders.ShaderColorBloom;
 import net.ivorius.psychedelicraft.entities.DrugHarmonium;
 import net.ivorius.psychedelicraft.entities.DrugHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
 
 /**
  * Created by lukas on 26.04.14.

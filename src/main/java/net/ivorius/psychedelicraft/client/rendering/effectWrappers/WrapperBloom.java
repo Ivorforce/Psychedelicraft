@@ -6,13 +6,9 @@
 package net.ivorius.psychedelicraft.client.rendering.effectWrappers;
 
 import net.ivorius.psychedelicraft.Psychedelicraft;
-import net.ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
 import net.ivorius.psychedelicraft.client.rendering.shaders.ShaderBloom;
-import net.ivorius.psychedelicraft.client.rendering.shaders.ShaderBlur;
-import net.ivorius.psychedelicraft.client.rendering.shaders.ShaderRadialBlur;
 import net.ivorius.psychedelicraft.entities.DrugHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
 
 /**
  * Created by lukas on 26.04.14.
@@ -36,7 +32,9 @@ public class WrapperBloom extends ShaderWrapper<ShaderBloom>
             shaderInstance.bloom = drugHelper.getDrugValue("Cocaine") * 2.5f + drugHelper.getDrugValue("Warmth") * 1.0f;
         }
         else
+        {
             shaderInstance.bloom = 0.0f;
+        }
     }
 
     @Override

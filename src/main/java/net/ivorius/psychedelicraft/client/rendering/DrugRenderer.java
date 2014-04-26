@@ -137,7 +137,9 @@ public class DrugRenderer implements IDrugRenderer
         effectLensFlare.sunFlareIntensity = DrugShaderHelper.sunFlareIntensity;
 
         if (effectLensFlare.shouldApply(updateCounter + partialTicks))
+        {
             effectLensFlare.renderLensFlares(width, height, partialTicks);
+        }
     }
 
     @Override

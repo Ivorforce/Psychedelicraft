@@ -32,7 +32,6 @@ import net.minecraft.client.particle.EntitySmokeFX;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
@@ -51,6 +50,8 @@ public class ClientProxy extends ServerProxy
         DrugShaderHelper.sunFlareIntensity = (float) config.get("Visual", "sunFlareIntensity", 0.25f).getDouble(0.25);
         DrugShaderHelper.doHeatDistortion = config.get("Visual", "biomeHeatDistortion", true).getBoolean(true);
         DrugShaderHelper.doWaterDistortion = config.get("Visual", "waterDistortion", true).getBoolean(true);
+//        DrugShaderHelper.doShadows = config.get("Visual", "doShadows", true).getBoolean(true);
+        DrugShaderHelper.doShadows = false;
 
         DrugHelper.waterOverlayEnabled = config.get("Visual", "waterOverlayEnabled", true).getBoolean(true);
         DrugHelper.hurtOverlayEnabled = config.get("Visual", "hurtOverlayEnabled", true).getBoolean(true);
@@ -93,7 +94,9 @@ public class ClientProxy extends ServerProxy
             DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
 
             if (drugHelper != null && drugHelper.drugRenderer != null)
+            {
                 drugHelper.drugRenderer.renderOverlaysAfterShaders(event.partialTicks, renderEntity, renderEntity.ticksExisted, event.resolution.getScaledWidth(), event.resolution.getScaledHeight(), drugHelper);
+            }
         }
     }
 

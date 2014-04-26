@@ -42,7 +42,9 @@ public abstract class ShaderWrapper<ShaderInstance extends IvShaderInstance2D> i
     public void alloc()
     {
         if (DrugShaderHelper.shader2DEnabled)
+        {
             IvShaderInstanceMC.trySettingUpShader(shaderInstance, vertexShaderFile, fragmentShaderFile, utils);
+        }
     }
 
     @Override
@@ -62,7 +64,9 @@ public abstract class ShaderWrapper<ShaderInstance extends IvShaderInstance2D> i
             setShaderValues(partialTicks, ticks);
 
             if (shaderInstance.shouldApply(ticks + partialTicks))
+            {
                 shaderInstance.apply(mc.displayWidth, mc.displayHeight, ticks + partialTicks, pingPong);
+            }
         }
     }
 

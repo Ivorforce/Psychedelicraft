@@ -42,7 +42,9 @@ public abstract class ScreenEffectWrapper<ScreenEffect extends Iv2DScreenEffect>
         setScreenEffectValues(partialTicks, ticks);
 
         if (screenEffect.shouldApply(ticks + partialTicks))
+        {
             screenEffect.apply(mc.displayWidth, mc.displayHeight, ticks + partialTicks, pingPong);
+        }
     }
 
     public abstract void setScreenEffectValues(float partialTicks, int ticks);

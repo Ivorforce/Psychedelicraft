@@ -7,9 +7,9 @@ package net.ivorius.psychedelicraft.client.rendering.shaders;
 
 import com.google.common.base.Charsets;
 import net.ivorius.psychedelicraft.Psychedelicraft;
-import net.ivorius.psychedelicraft.client.rendering.*;
+import net.ivorius.psychedelicraft.client.rendering.EntityFakeSun;
+import net.ivorius.psychedelicraft.client.rendering.PsycheShadowHelper;
 import net.ivorius.psychedelicraft.client.rendering.effectWrappers.*;
-import net.ivorius.psychedelicraft.entities.DrugHelper;
 import net.ivorius.psychedelicraft.ivToolkit.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.ITextureObject;
@@ -36,12 +36,12 @@ public class DrugShaderHelper
 
     public static IvDepthBuffer depthBuffer;
 
+    public static boolean bypassFramebuffers = false;
     public static boolean shaderEnabled = true;
     public static boolean shader2DEnabled = true;
     public static boolean doShadows = false;
     public static boolean doHeatDistortion = false;
     public static boolean doWaterDistortion = false;
-    public static boolean bypassFramebuffers = false;
 
     public static float sunFlareIntensity;
     public static int shadowPixelsPerChunk = 256;
@@ -73,11 +73,15 @@ public class DrugShaderHelper
             for (IEffectWrapper wrapper : effectWrappers)
             {
                 if (wrapper.wantsDepthBuffer())
+                {
                     addDepth = true;
+                }
             }
 
             if (addDepth)
+            {
                 passes.add("Depth");
+            }
         }
 
         if (shaderInstanceShadows.depthBuffer.isAllocated() && shaderInstanceShadows.getShaderID() > 0 && doShadows)
@@ -222,7 +226,9 @@ public class DrugShaderHelper
         effectWrappers.add(new WrapperDigital(utils));
 
         for (IEffectWrapper effectWrapper : effectWrappers)
+        {
             effectWrapper.alloc();
+        }
 
         setUpRealtimeCacheTexture();
         depthBuffer = new IvDepthBuffer(mc.displayWidth, mc.displayHeight, Psychedelicraft.logger);
@@ -249,7 +255,9 @@ public class DrugShaderHelper
     public static void update()
     {
         for (IEffectWrapper effectWrapper : effectWrappers)
+        {
             effectWrapper.update();
+        }
     }
 
     public static boolean useShader(float partialTicks, float ticks, ShaderWorld shader)
@@ -471,11 +479,15 @@ public class DrugShaderHelper
         deleteRealtimeCacheTexture();
 
         for (IEffectWrapper effectWrapper : effectWrappers)
+        {
             effectWrapper.dealloc();
+        }
         effectWrappers.clear();
 
         if (depthBuffer != null)
+        {
             depthBuffer.deallocate();
+        }
         depthBuffer = null;
 
         worldShaders.clear();

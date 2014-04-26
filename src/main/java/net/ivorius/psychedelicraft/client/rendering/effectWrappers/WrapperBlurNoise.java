@@ -6,13 +6,9 @@
 package net.ivorius.psychedelicraft.client.rendering.effectWrappers;
 
 import net.ivorius.psychedelicraft.Psychedelicraft;
-import net.ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
 import net.ivorius.psychedelicraft.client.rendering.shaders.ShaderBlurNoise;
-import net.ivorius.psychedelicraft.client.rendering.shaders.ShaderDoubleVision;
 import net.ivorius.psychedelicraft.entities.DrugHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
 
 import java.util.Random;
 

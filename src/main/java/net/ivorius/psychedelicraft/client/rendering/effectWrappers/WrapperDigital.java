@@ -7,7 +7,6 @@ package net.ivorius.psychedelicraft.client.rendering.effectWrappers;
 
 import net.ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import net.ivorius.psychedelicraft.ivToolkit.IvOpenGLTexturePingPong;
-import org.apache.logging.log4j.Logger;
 
 /**
  * Created by lukas on 26.04.14.
@@ -48,9 +47,13 @@ public class WrapperDigital implements IEffectWrapper
     public void apply(float partialTicks, IvOpenGLTexturePingPong pingPong)
     {
         if (DrugShaderHelper.depthBuffer.isAllocated())
+        {
             digitalPD.apply(partialTicks, pingPong);
+        }
         else
+        {
             digitalMD.apply(partialTicks, pingPong);
+        }
     }
 
     @Override

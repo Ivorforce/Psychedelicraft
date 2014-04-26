@@ -7,8 +7,8 @@ package net.ivorius.psychedelicraft;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
-import net.ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import net.ivorius.psychedelicraft.client.rendering.SmoothCameraHelper;
+import net.ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import net.ivorius.psychedelicraft.entities.DrugHelper;
 import net.ivorius.psychedelicraftcore.PsycheCoreBusCommon;
 import net.ivorius.psychedelicraftcoreUtils.events.*;
@@ -75,7 +75,9 @@ public class PSCoreHandlerClient
             DrugHelper drugHelper = DrugHelper.getDrugHelper(mc.renderViewEntity);
 
             if (drugHelper != null && drugHelper.drugRenderer != null)
+            {
                 drugHelper.drugRenderer.renderOverlaysBeforeShaders(event.partialTicks, mc.renderViewEntity, (int) mc.ingameGUI.getUpdateCounter(), mc.displayWidth, mc.displayHeight, drugHelper);
+            }
 
             DrugShaderHelper.postRender(ticks, partialTicks);
         }
@@ -90,7 +92,9 @@ public class PSCoreHandlerClient
         int rendererUpdateCount = renderEntity.ticksExisted;
 
         if (drugHelper != null && drugHelper.drugRenderer != null)
+        {
             drugHelper.drugRenderer.distortScreen(event.partialTicks, renderEntity, rendererUpdateCount, drugHelper);
+        }
     }
 
     @SubscribeEvent
@@ -190,7 +194,9 @@ public class PSCoreHandlerClient
             DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
 
             if (drugHelper != null && drugHelper.drugRenderer != null)
+            {
                 drugHelper.drugRenderer.renderAllHallucinations(event.partialTicks, drugHelper);
+            }
         }
     }
 

@@ -6,8 +6,8 @@
 package net.ivorius.psychedelicraft.entities;
 
 import net.ivorius.psychedelicraft.Psychedelicraft;
-import net.ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import net.ivorius.psychedelicraft.client.rendering.ModelRastaHead;
+import net.ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderManager;

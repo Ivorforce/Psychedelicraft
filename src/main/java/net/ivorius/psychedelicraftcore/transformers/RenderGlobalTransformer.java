@@ -5,8 +5,8 @@
 
 package net.ivorius.psychedelicraftcore.transformers;
 
-import net.ivorius.psychedelicraftcore.ivToolkit.IvNodeFinder;
 import net.ivorius.psychedelicraftcore.ivToolkit.IvClassTransformerClass;
+import net.ivorius.psychedelicraftcore.ivToolkit.IvNodeFinder;
 import net.ivorius.psychedelicraftcore.ivToolkit.IvNodeMatcherLDC;
 import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.Type;

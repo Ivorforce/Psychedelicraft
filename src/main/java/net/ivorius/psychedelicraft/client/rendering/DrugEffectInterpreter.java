@@ -5,7 +5,6 @@
 
 package net.ivorius.psychedelicraft.client.rendering;
 
-import net.ivorius.psychedelicraft.entities.DrugHarmonium;
 import net.ivorius.psychedelicraft.entities.DrugHelper;
 import net.minecraft.util.MathHelper;
 
