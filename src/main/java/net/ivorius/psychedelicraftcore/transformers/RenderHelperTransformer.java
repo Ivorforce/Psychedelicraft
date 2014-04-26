@@ -1,6 +1,6 @@
 package net.ivorius.psychedelicraftcore.transformers;
 
-import net.ivorius.psychedelicraftcore.toolkit.IvClassTransformerClass;
+import net.ivorius.psychedelicraftcore.ivToolkit.IvClassTransformerClass;
 import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.InsnList;
@@ -17,7 +17,7 @@ public class RenderHelperTransformer extends IvClassTransformerClass
     public RenderHelperTransformer(Logger logger)
     {
         super(logger);
-        
+
         registerExpectedMethod("enableStandardItemLighting", "func_74519_b", getMethodDescriptor(Type.VOID_TYPE));
         registerExpectedMethod("disableStandardItemLighting", "func_74518_a", getMethodDescriptor(Type.VOID_TYPE));
     }

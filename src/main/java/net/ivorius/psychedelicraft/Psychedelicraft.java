@@ -9,12 +9,9 @@ import net.ivorius.psychedelicraft.blocks.PSBlocks;
 import net.ivorius.psychedelicraft.entities.*;
 import net.ivorius.psychedelicraft.gui.PsycheGuiHandler;
 import net.ivorius.psychedelicraft.items.*;
-import net.ivorius.psychedelicraft.toolkit.IvPacketPipeline;
+import net.ivorius.psychedelicraft.ivToolkit.IvPacketPipeline;
 import net.ivorius.psychedelicraft.worldgen.*;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.WeightedRandomChestContent;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 
@@ -30,9 +27,6 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.VillagerRegistry;
 
 @Mod(modid = Psychedelicraft.MODID, version = Psychedelicraft.VERSION)
 public class Psychedelicraft

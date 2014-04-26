@@ -3,7 +3,7 @@ package net.ivorius.psychedelicraft.client.rendering;
 import net.ivorius.psychedelicraft.Psychedelicraft;
 import net.ivorius.psychedelicraft.entities.DrugHallucination;
 import net.ivorius.psychedelicraft.entities.DrugHelper;
-import net.ivorius.psychedelicraft.toolkit.IvMathHelper;
+import net.ivorius.psychedelicraft.ivToolkit.IvMathHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;

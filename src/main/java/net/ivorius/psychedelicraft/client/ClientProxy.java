@@ -24,7 +24,7 @@ import net.ivorius.psychedelicraft.entities.EntityMolotovCocktail;
 import net.ivorius.psychedelicraft.entities.EntityRealityRift;
 import net.ivorius.psychedelicraft.entities.PSEntityList;
 import net.ivorius.psychedelicraft.items.PSItems;
-import net.ivorius.psychedelicraft.toolkit.IvParticleHelper;
+import net.ivorius.psychedelicraft.ivToolkit.IvParticleHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.particle.EntitySmokeFX;

@@ -1,6 +1,6 @@
 package net.ivorius.psychedelicraft.blocks;
 
-import net.ivorius.psychedelicraft.toolkit.IvTileEntityHelper;
+import net.ivorius.psychedelicraft.ivToolkit.IvTileEntityHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;

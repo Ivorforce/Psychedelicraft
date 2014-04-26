@@ -1,9 +1,9 @@
 package net.ivorius.psychedelicraft.client.rendering;
 
-import net.ivorius.psychedelicraft.toolkit.Iv2DScreenEffect;
-import net.ivorius.psychedelicraft.toolkit.IvMathHelper;
-import net.ivorius.psychedelicraft.toolkit.IvOpenGLTexturePingPong;
-import net.ivorius.psychedelicraft.toolkit.IvRenderHelper;
+import net.ivorius.psychedelicraft.ivToolkit.Iv2DScreenEffect;
+import net.ivorius.psychedelicraft.ivToolkit.IvMathHelper;
+import net.ivorius.psychedelicraft.ivToolkit.IvOpenGLTexturePingPong;
+import net.ivorius.psychedelicraft.ivToolkit.IvRenderHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;

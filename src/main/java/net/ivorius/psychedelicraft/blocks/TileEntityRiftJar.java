@@ -2,9 +2,9 @@ package net.ivorius.psychedelicraft.blocks;
 
 import net.ivorius.psychedelicraft.entities.DrugHelper;
 import net.ivorius.psychedelicraft.entities.EntityRealityRift;
-import net.ivorius.psychedelicraft.toolkit.IvBezierPath3D;
-import net.ivorius.psychedelicraft.toolkit.IvMathHelper;
-import net.ivorius.psychedelicraft.toolkit.IvTileEntityHelper;
+import net.ivorius.psychedelicraft.ivToolkit.IvBezierPath3D;
+import net.ivorius.psychedelicraft.ivToolkit.IvMathHelper;
+import net.ivorius.psychedelicraft.ivToolkit.IvTileEntityHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,7 +13,6 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.MathHelper;
 
 import java.util.ArrayList;
 import java.util.Iterator;

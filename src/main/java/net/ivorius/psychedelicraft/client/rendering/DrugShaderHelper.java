@@ -3,7 +3,7 @@ package net.ivorius.psychedelicraft.client.rendering;
 import com.google.common.base.Charsets;
 import net.ivorius.psychedelicraft.Psychedelicraft;
 import net.ivorius.psychedelicraft.entities.DrugHelper;
-import net.ivorius.psychedelicraft.toolkit.*;
+import net.ivorius.psychedelicraft.ivToolkit.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureManager;

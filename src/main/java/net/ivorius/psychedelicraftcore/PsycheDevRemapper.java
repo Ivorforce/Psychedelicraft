@@ -5,7 +5,7 @@
 
 package net.ivorius.psychedelicraftcore;
 
-import net.ivorius.psychedelicraftcore.toolkit.IvDevRemapper;
+import net.ivorius.psychedelicraftcore.ivToolkit.IvDevRemapper;
 
 /**
  * Created by lukas on 25.02.14.

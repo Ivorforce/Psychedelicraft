@@ -1,6 +1,6 @@
 package net.ivorius.psychedelicraft.entities;
 
-import net.ivorius.psychedelicraft.toolkit.IvChatBot;
+import net.ivorius.psychedelicraft.ivToolkit.IvChatBot;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;

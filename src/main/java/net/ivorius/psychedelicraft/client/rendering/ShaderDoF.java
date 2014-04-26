@@ -1,8 +1,8 @@
 package net.ivorius.psychedelicraft.client.rendering;
 
-import net.ivorius.psychedelicraft.toolkit.IvDepthBuffer;
-import net.ivorius.psychedelicraft.toolkit.IvOpenGLTexturePingPong;
-import net.ivorius.psychedelicraft.toolkit.IvShaderInstance2D;
+import net.ivorius.psychedelicraft.ivToolkit.IvDepthBuffer;
+import net.ivorius.psychedelicraft.ivToolkit.IvOpenGLTexturePingPong;
+import net.ivorius.psychedelicraft.ivToolkit.IvShaderInstance2D;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.util.MathHelper;
 import org.apache.logging.log4j.Logger;

@@ -1,0 +1,81 @@
+/*
+ *  Copyright (c) 2014, Lukas Tenbrink.
+ *  * http://lukas.axxim.net
+ */
+
+package net.ivorius.psychedelicraft.ivToolkit;
+
+import cpw.mods.fml.common.network.ByteBufUtils;
+import cpw.mods.fml.common.network.internal.FMLProxyPacket;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.WorldServer;
+
+/**
+ * Created by lukas on 13.04.14.
+ */
+@ChannelHandler.Sharable
+public class ChannelHandlerTileEntityData extends SimpleChannelInboundHandler<FMLProxyPacket>
+{
+    public static String packetChannel;
+
+    /**
+     * Sends an update packet for the entity to every watching player's client, if the current active side is the server.
+     * Only use this method for complex updates; if you have a primitive to sync, use the entity's data watcher instead.
+     *
+     * @param tileEntity  The tile entity, both extending TileEntity and implementing IEntityUpdateData.
+     * @param context The update context for the packet. Will be passed in writeUpdateData and readUpdateData. Keep in mind you can also add your own additional context information to the buffer.
+     */
+    public static <UpdatableTE extends TileEntity & ITileEntityUpdateData> void sendUpdatePacketSafe(UpdatableTE tileEntity, String context)
+    {
+        if (!tileEntity.getWorldObj().isRemote && tileEntity.getWorldObj() instanceof WorldServer)
+        {
+            sendUpdatePacket(tileEntity, context);
+        }
+    }
+
+    /**
+     * Sends an update packet for the tile entity to every watching player's client.
+     * Do not invoke this method directly, always use {@link #sendUpdatePacketSafe(net.minecraft.tileentity.TileEntity, String)} instead.
+     *
+     * @param tileEntity  The tile entity, both extending TileEntity and implementing IEntityUpdateData.
+     * @param context The update context for the packet. Will be passed in writeUpdateData and readUpdateData. Keep in mind you can also add your own additional context information to the buffer.
+     */
+    public static <UpdatableTE extends TileEntity & ITileEntityUpdateData> void sendUpdatePacket(UpdatableTE tileEntity, String context)
+    {
+        ByteBuf buffer = Unpooled.buffer();
+        buffer.writeInt(tileEntity.xCoord);
+        buffer.writeInt(tileEntity.yCoord);
+        buffer.writeInt(tileEntity.zCoord);
+        ByteBufUtils.writeUTF8String(buffer, Block.blockRegistry.getNameForObject(tileEntity.getBlockType()));
+        ByteBufUtils.writeUTF8String(buffer, context);
+        tileEntity.writeUpdateData(buffer, context);
+
+        FMLProxyPacket packet = new FMLProxyPacket(buffer, packetChannel);
+        IvTileEntityHelper.sendToPlayersWatchingChunk(tileEntity.getWorldObj(), tileEntity.xCoord >> 4, tileEntity.zCoord >> 4, packet);
+    }
+
+    @Override
+    protected void channelRead0(ChannelHandlerContext ctx, FMLProxyPacket msg) throws Exception
+    {
+        ByteBuf buffer = msg.payload();
+        int xCoord = buffer.readInt();
+        int yCoord = buffer.readInt();
+        int zCoord = buffer.readInt();
+        Block blockType = Block.getBlockFromName(ByteBufUtils.readUTF8String(buffer));
+        String context = ByteBufUtils.readUTF8String(buffer);
+
+        TileEntity entity = Minecraft.getMinecraft().theWorld.getTileEntity(xCoord, yCoord, zCoord);
+
+        if (entity instanceof ITileEntityUpdateData && entity.getBlockType() == blockType)
+        {
+            ((ITileEntityUpdateData) entity).readUpdateData(buffer, context);
+        }
+    }
+}

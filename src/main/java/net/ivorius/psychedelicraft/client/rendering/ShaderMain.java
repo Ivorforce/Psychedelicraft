@@ -1,8 +1,8 @@
 package net.ivorius.psychedelicraft.client.rendering;
 
 import net.ivorius.psychedelicraft.entities.DrugHelper;
-import net.ivorius.psychedelicraft.toolkit.IvDepthBuffer;
-import net.ivorius.psychedelicraft.toolkit.IvShaderInstance3D;
+import net.ivorius.psychedelicraft.ivToolkit.IvDepthBuffer;
+import net.ivorius.psychedelicraft.ivToolkit.IvShaderInstance3D;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.texture.TextureMap;

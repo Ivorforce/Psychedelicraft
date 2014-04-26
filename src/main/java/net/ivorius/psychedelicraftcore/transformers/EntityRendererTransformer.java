@@ -1,7 +1,7 @@
 package net.ivorius.psychedelicraftcore.transformers;
 
-import net.ivorius.psychedelicraftcore.toolkit.IvClassTransformerClass;
-import net.ivorius.psychedelicraftcore.toolkit.*;
+import net.ivorius.psychedelicraftcore.ivToolkit.IvClassTransformerClass;
+import net.ivorius.psychedelicraftcore.ivToolkit.*;
 import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.*;

@@ -1,7 +1,6 @@
 package net.ivorius.psychedelicraftcore;
 
-import net.ivorius.psychedelicraftcore.toolkit.IvClassTransformerManager;
-import net.ivorius.psychedelicraftcore.toolkit.IvDevRemapper;
+import net.ivorius.psychedelicraftcore.ivToolkit.IvClassTransformerManager;
 import net.ivorius.psychedelicraftcore.transformers.*;
 import org.apache.logging.log4j.Logger;
 

@@ -1,7 +1,7 @@
 package net.ivorius.psychedelicraft.entities;
 
 import net.ivorius.psychedelicraft.blocks.PSBlocks;
-import net.ivorius.psychedelicraft.toolkit.IvMathHelper;
+import net.ivorius.psychedelicraft.ivToolkit.IvMathHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;

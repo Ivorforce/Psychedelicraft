@@ -1,7 +1,7 @@
 package net.ivorius.psychedelicraft.entities;
 
 import net.ivorius.psychedelicraft.Psychedelicraft;
-import net.ivorius.psychedelicraft.toolkit.IvNBTPacket;
+import net.ivorius.psychedelicraft.ivToolkit.IvNBTPacket;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;

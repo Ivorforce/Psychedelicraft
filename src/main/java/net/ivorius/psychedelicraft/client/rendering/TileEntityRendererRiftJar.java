@@ -2,9 +2,8 @@ package net.ivorius.psychedelicraft.client.rendering;
 
 import net.ivorius.psychedelicraft.Psychedelicraft;
 import net.ivorius.psychedelicraft.blocks.TileEntityRiftJar;
-import net.ivorius.psychedelicraft.toolkit.*;
+import net.ivorius.psychedelicraft.ivToolkit.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;

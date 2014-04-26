@@ -1,6 +1,6 @@
 package net.ivorius.psychedelicraft.entities;
 
-import net.ivorius.psychedelicraft.toolkit.IvChatBot;
+import net.ivorius.psychedelicraft.ivToolkit.IvChatBot;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.Random;
