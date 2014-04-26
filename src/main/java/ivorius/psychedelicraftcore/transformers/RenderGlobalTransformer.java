@@ -1,0 +1,51 @@
+/*
+ *  Copyright (c) 2014, Lukas Tenbrink.
+ *  * http://lukas.axxim.net
+ */
+
+package ivorius.psychedelicraftcore.transformers;
+
+import ivorius.psychedelicraftcore.ivToolkit.IvClassTransformerClass;
+import ivorius.psychedelicraftcore.ivToolkit.IvNodeFinder;
+import ivorius.psychedelicraftcore.ivToolkit.IvNodeMatcherLDC;
+import org.apache.logging.log4j.Logger;
+import org.objectweb.asm.Type;
+import org.objectweb.asm.tree.*;
+
+import static org.objectweb.asm.Opcodes.FLOAD;
+import static org.objectweb.asm.Opcodes.INVOKESTATIC;
+
+/**
+ * Created by lukas on 21.02.14.
+ */
+public class RenderGlobalTransformer extends IvClassTransformerClass
+{
+    public RenderGlobalTransformer(Logger logger)
+    {
+        super(logger);
+
+        registerExpectedMethod("renderEntities", "func_147589_a", getMethodDescriptor(Type.VOID_TYPE, "net/minecraft/entity/EntityLivingBase", "net/minecraft/client/renderer/culling/ICamera", Type.FLOAT_TYPE));
+    }
+
+    @Override
+    public boolean transformMethod(String className, String methodID, MethodNode methodNode, boolean obf)
+    {
+        if (methodID.equals("renderEntities"))
+        {
+            AbstractInsnNode entitiesNode = IvNodeFinder.findNode(new IvNodeMatcherLDC("entities"), methodNode);
+            entitiesNode = entitiesNode.getNext();
+
+            if (entitiesNode != null)
+            {
+                InsnList list = new InsnList();
+                list.add(new VarInsnNode(FLOAD, 3));
+                list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "renderEntities", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE)));
+                methodNode.instructions.insert(entitiesNode, list);
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
