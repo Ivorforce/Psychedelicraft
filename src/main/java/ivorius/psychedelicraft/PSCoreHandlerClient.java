@@ -314,6 +314,7 @@ public class PSCoreHandlerClient
         DrugShaderHelper.setTexture2DEnabled(true);
     }
 
+    @SubscribeEvent
     public void lightmapSwitched(LightmapSwitchEvent event)
     {
         if (event instanceof LightmapSwitchEvent.Enable)
