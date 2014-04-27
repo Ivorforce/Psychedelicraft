@@ -1,5 +1,7 @@
 #version 120
 
+#define MAX_LIGHTS 3
+
 uniform sampler2D texture;
 uniform sampler2D lightmapTex;
 
@@ -32,6 +34,7 @@ uniform float colorIntensification;
 
 uniform vec3 playerPos;
 
+varying vec3 relativeVertex;
 varying vec3 normalVector;
 varying vec4 projGLPos;
 
@@ -98,19 +101,18 @@ void main()
     
     if (glLightEnabled == 1)
     {
-        float glLightColor = glLightAmbient;
+        vec3 finalLightColor = vec3(glLightAmbient);
         
-        float angle0 = acos((normalVector.x * glLightPos0.x + normalVector.y * glLightPos0.y + normalVector.z * glLightPos0.z) / (length(normalVector) * length(glLightPos0)));
-        if (angle0 < 0.0) angle0 = -angle0;
-        if (angle0 > 3.1415926) angle0 = 3.1415926;
-        glLightColor = glLightColor + (3.1415926 - angle0) * glLightStrength1[0];
+        for (int i = 0; i < MAX_LIGHTS; i++)
+        {
+            float glLightColor = glLightAmbient;
+            vec3 lightVec = normalize(gl_LightSource[0].position.xyz - relativeVertex);
+            vec4 lightDiff = gl_FrontLightProduct[0].diffuse * max(dot(normalVector, lightVec), 0.0);
+            
+            finalLightColor += lightDiff.rgb;
+        }
 
-        float angle1 = acos((normalVector.x * glLightPos1.x + normalVector.y * glLightPos1.y + normalVector.z * glLightPos1.z) / (length(normalVector) * length(glLightPos1)));
-        if (angle1 < 0.0) angle1 = -angle1;
-        if (angle1 > 3.1415926) angle1 = 3.1415926;
-        glLightColor = glLightColor + (3.1415926 - angle1) * glLightStrength1[1];
-        
-        gl_FragColor.rgb = gl_FragColor.rgb * clamp(glLightColor, glLightAmbient, 1.0);
+        gl_FragColor.rgb = gl_FragColor.rgb * clamp(finalLightColor, 0.0, 1.0);
     }
     
     gl_FragColor = clamp(gl_FragColor, 0.0, 1.0);
