@@ -1,7 +1,7 @@
 #version 120
 
-uniform sampler2D tex0;
-uniform sampler2D tex1;
+uniform sampler2D texture;
+uniform sampler2D lightmapTex;
 
 uniform sampler2D texFractal0;
 varying vec2 texFractal0Coords;
@@ -56,9 +56,9 @@ void main()
     if (texture2DEnabled == 1)
     {
         if (useScreenTexCoords == 1)
-            gl_FragColor = texture2D(tex0, (gl_FragCoord.xy + gl_TexCoord[0].st) * pixelSize);
+            gl_FragColor = texture2D(texture, (gl_FragCoord.xy + gl_TexCoord[0].st) * pixelSize);
         else
-            gl_FragColor = texture2D(tex0, gl_TexCoord[0].st);
+            gl_FragColor = texture2D(texture, gl_TexCoord[0].st);
     }
     else
     {
@@ -92,13 +92,7 @@ void main()
             }
         }
 
-        vec2 lMCoords = gl_TexCoord[1].st;
-        lMCoords += 8.0;
-        lMCoords /= 256.0;
-        
-        lMCoords = clamp(lMCoords, 0.0, 1.0);
-        
-        vec4 lighting = texture2D(tex1, lMCoords);
+        vec4 lighting = texture2D(lightmapTex, gl_TexCoord[1].st);
         gl_FragColor.rgb *= min(lighting.rgb, vec3(projectedVisibility));
     }
     

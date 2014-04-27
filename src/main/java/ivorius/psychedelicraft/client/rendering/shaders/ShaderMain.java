@@ -49,10 +49,8 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
                 registerFractals();
             }
 
-            for (int i = 0; i < 2; i++)
-            {
-                setUniformInts("tex" + i, i);
-            }
+            setUniformInts("texture", 0);
+            setUniformInts("lightmapTex", 1);
 
             setUniformFloats("ticks", ticks);
             setUniformInts("worldTime", (int) mc.theWorld.getWorldTime());
