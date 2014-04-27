@@ -56,6 +56,7 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
 
             setUniformFloats("ticks", ticks);
             setUniformInts("worldTime", (int) mc.theWorld.getWorldTime());
+            setUniformInts("uses2DShaders", DrugShaderHelper.shader2DEnabled ? 1 : 0);
 
             setUniformFloats("playerPos", (float) renderEntity.posX, (float) renderEntity.posY, (float) renderEntity.posZ);
 

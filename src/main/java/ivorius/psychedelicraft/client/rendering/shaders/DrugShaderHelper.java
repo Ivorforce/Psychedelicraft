@@ -212,10 +212,11 @@ public class DrugShaderHelper
         worldShaders.add(shaderInstanceShadows);
 
         // Add order = Application order!
-        effectWrappers.add(new WrapperMotionBlur());
         effectWrappers.add(new WrapperHeatDistortion(utils));
         effectWrappers.add(new WrapperUnderwaterDistortion(utils));
         effectWrappers.add(new WrapperWaterOverlay(utils));
+        effectWrappers.add(new WrapperSimpleEffects(utils));
+        effectWrappers.add(new WrapperMotionBlur());
         effectWrappers.add(new WrapperBlur(utils));
         effectWrappers.add(new WrapperDoF(utils));
         effectWrappers.add(new WrapperRadialBlur(utils));

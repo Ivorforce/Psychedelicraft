@@ -726,6 +726,7 @@ public class DrugHelper implements IExtendedEntityProperties, IExtendedEntityPro
             NBTTagCompound compound = new NBTTagCompound();
             writeToNBT(compound);
             ByteBufUtils.writeTag(buffer, compound);
+            System.out.println("WRITE");
         }
     }
 
@@ -735,6 +736,7 @@ public class DrugHelper implements IExtendedEntityProperties, IExtendedEntityPro
         if ("DrugData".equals(context))
         {
             readFromNBT(ByteBufUtils.readTag(buffer), true);
+            System.out.println("READ");
         }
     }
 }

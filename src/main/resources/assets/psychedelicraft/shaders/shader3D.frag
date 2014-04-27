@@ -9,6 +9,7 @@ varying vec2 texFractal0Coords;
 const int GL_LINEAR = 9729;
 const int GL_EXP = 2048;
 
+uniform int uses2DShaders;
 uniform float ticks;
 uniform int worldTime;
 uniform vec2 pixelSize;
@@ -150,16 +151,20 @@ void main()
     {
         gl_FragColor.rgb = mix(gl_FragColor.rgb, getRotatedColor(gl_FragColor.rgb, mod(ticks + gl_FogFragCoord, 50.0) / 50.0), clamp(redshrooms * 1.5, 0.0, 1.0));
     }
-    if(brownshrooms > 0.0)
+
+    if (uses2DShaders == 0)
     {
-        gl_FragColor.rgb = mix(gl_FragColor.rgb, getRotatedColor(gl_FragColor.rgb, mod(ticks, 300.0) / 300.0), brownshrooms / 2.0);
+        if(brownshrooms > 0.0)
+        {
+            gl_FragColor.rgb = mix(gl_FragColor.rgb, getRotatedColor(gl_FragColor.rgb, mod(ticks, 300.0) / 300.0), brownshrooms / 2.0);
+        }
+
+        if (colorIntensification != 0.0)
+            gl_FragColor.rgb = mix(gl_FragColor.rgb, getIntensifiedColor(gl_FragColor.rgb), colorIntensification);
+
+        if (desaturation != 0.0)
+            gl_FragColor.rgb = mix(gl_FragColor.rgb, getDesaturatedColor(gl_FragColor.rgb), desaturation);    
     }
-
-    if (colorIntensification != 0.0)
-        gl_FragColor.rgb = mix(gl_FragColor.rgb, getIntensifiedColor(gl_FragColor.rgb), colorIntensification);
-
-    if (desaturation != 0.0)
-        gl_FragColor.rgb = mix(gl_FragColor.rgb, getDesaturatedColor(gl_FragColor.rgb), desaturation);
 
     if(harmoniumColor.a > 0.0)
     {
