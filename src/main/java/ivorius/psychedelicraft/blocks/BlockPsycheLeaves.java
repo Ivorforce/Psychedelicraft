@@ -13,7 +13,6 @@ import net.minecraft.block.BlockLeaves;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -76,6 +75,20 @@ public class BlockPsycheLeaves extends BlockLeaves
 
     // ----------------
 
+    @Override
+    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    {
+        return Item.getItemFromBlock(PSBlocks.blockPsycheSapling);
+    }
+
+    @Override
+    public int damageDropped(int meta)
+    {
+        if ((meta & 3) == 1) // Juniper Berries
+            return 0;
+
+        return super.damageDropped(meta);
+    }
 
     @Override
     public void updateTick(World par1World, int par2, int par3, int par4, Random p_149674_5_)
