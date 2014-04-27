@@ -157,6 +157,7 @@ public class DrugShaderHelper
             currentShader = null;
         }
 
+        IvOpenGLHelper.checkGLError(Psychedelicraft.logger, "Post render pass '" + currentRenderPass + "'");
         currentRenderPass = null;
     }
 
@@ -237,6 +238,8 @@ public class DrugShaderHelper
         {
             depthBuffer.allocate();
         }
+
+        IvOpenGLHelper.checkGLError(Psychedelicraft.logger, "Allocation");
     }
 
     public static void setUpShader(IvShaderInstance shader, String vertexFile, String fragmentFile, String utils)
@@ -429,6 +432,8 @@ public class DrugShaderHelper
         }
 
         realtimePingPong.postTick();
+
+        IvOpenGLHelper.checkGLError(Psychedelicraft.logger, "2D Shaders");
     }
 
     public static int getTextureIndex(ResourceLocation loc)

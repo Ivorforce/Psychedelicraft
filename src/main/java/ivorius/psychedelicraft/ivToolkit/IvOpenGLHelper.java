@@ -18,6 +18,10 @@
 
 package ivorius.psychedelicraft.ivToolkit;
 
+import org.apache.logging.log4j.Logger;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.glu.GLU;
+
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL12.GL_CLAMP_TO_EDGE;
 
@@ -45,5 +49,18 @@ public class IvOpenGLHelper
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
         glTranslatef(0.0F, 0.0F, -2000.0F);
+    }
+
+    public static void checkGLError(Logger logger, String par1Str)
+    {
+        int i = GL11.glGetError();
+
+        if (i != 0)
+        {
+            String s1 = GLU.gluErrorString(i);
+            logger.error("########## GL ERROR ##########");
+            logger.error("@ " + par1Str);
+            logger.error(i + ": " + s1);
+        }
     }
 }
