@@ -39,8 +39,6 @@ public class ShaderBloom extends IvShaderInstance2D
         }
 
         setUniformFloats("pixelSize", 1.0f / screenWidth * 2.0f, 1.0f / screenHeight * 2.0f);
-        System.out.println("screenWidth = " + screenWidth);
-        System.out.println("screenHeight = " + screenHeight);
 
         for (int n = 0; n < MathHelper.floor_double(bloom) + 1; n++)
         {

@@ -32,10 +32,6 @@ public class TileEntityRendererBarrel extends TileEntitySpecialRenderer
 
     public void renderTileEntityStatueAt(TileEntityBarrel tileEntity, double d, double d1, double d2, float f)
     {
-        Tessellator tessellator = Tessellator.instance;
-
-        this.bindTexture(tileEntity.getBarrelType().barrelTexture);
-
         GL11.glPushMatrix();
         GL11.glTranslatef((float) d + 0.5F, (float) d1 + 1.5f, (float) d2 + 0.5F);
         GL11.glRotatef(-90.0f * tileEntity.getBlockRotation() + 180.0f, 0.0f, 1.0f, 0.0f);
@@ -45,6 +41,7 @@ public class TileEntityRendererBarrel extends TileEntitySpecialRenderer
         Entity emptyEntity = new EntityArrow(tileEntity.getWorldObj());
         emptyEntity.ticksExisted = (int) (tileEntity.getTapRotation() * 100.0f);
 
+        this.bindTexture(tileEntity.getBarrelType().barrelTexture);
         barrelModel.render(emptyEntity, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 
         GL11.glPopMatrix();

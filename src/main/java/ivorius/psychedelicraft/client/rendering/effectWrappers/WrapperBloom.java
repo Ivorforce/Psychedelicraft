@@ -18,8 +18,6 @@ public class WrapperBloom extends ShaderWrapper<ShaderBloom>
     public WrapperBloom(String utils)
     {
         super(new ShaderBloom(Psychedelicraft.logger), getRL("shaderBasic.vert"), getRL("shaderBloom.frag"), utils);
-
-        System.out.println("shaderInstance = " + shaderInstance);
     }
 
     @Override

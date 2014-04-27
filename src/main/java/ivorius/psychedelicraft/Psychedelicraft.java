@@ -14,10 +14,10 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import ivorius.psychedelicraft.blocks.PSBlocks;
 import ivorius.psychedelicraft.entities.DrugInfluence;
 import ivorius.psychedelicraft.entities.DrugInfluenceHarmonium;
-import ivorius.psychedelicraft.entities.DrugInfoPacket;
 import ivorius.psychedelicraft.entities.PSEntityList;
 import ivorius.psychedelicraft.gui.PsycheGuiHandler;
 import ivorius.psychedelicraft.items.PSItems;
+import ivorius.psychedelicraft.ivToolkit.ChannelHandlerExtendedEntityPropertiesData;
 import ivorius.psychedelicraft.ivToolkit.IvPacketPipeline;
 import ivorius.psychedelicraft.worldgen.PSWorldGen;
 import net.minecraft.entity.player.EntityPlayer;
@@ -46,8 +46,6 @@ public class Psychedelicraft
     public static PSCoreHandlerClient coreHandlerClient;
     public static PSCoreHandlerCommon coreHandlerCommon;
     public static PSCoreHandlerServer coreHandlerServer;
-
-    public static IvPacketPipeline packetPipeline;
 
     public static CreativeTabPsyche creativeTab;
 
@@ -86,6 +84,9 @@ public class Psychedelicraft
         guiHandler = new PsycheGuiHandler();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
 
+        ChannelHandlerExtendedEntityPropertiesData.packetChannel = "PDC|EEPData";
+        NetworkRegistry.INSTANCE.newChannel(ChannelHandlerExtendedEntityPropertiesData.packetChannel, new ChannelHandlerExtendedEntityPropertiesData());
+
         eventHandler = new PSEventHandler();
         eventHandler.register();
 
@@ -93,9 +94,6 @@ public class Psychedelicraft
 
         coreHandlerCommon = new PSCoreHandlerCommon();
         coreHandlerCommon.register();
-
-        packetPipeline = new IvPacketPipeline();
-        packetPipeline.registerPacket(DrugInfoPacket.class);
 
         sleepStatusDrugs = EnumHelper.addStatus("onDrugs");
 
@@ -197,18 +195,6 @@ public class Psychedelicraft
     {
         evt.registerServerCommand(new CommandDrug());
         evt.registerServerCommand(new CommandPsyche());
-    }
-
-    @EventHandler
-    public void initialise(FMLInitializationEvent evt)
-    {
-        packetPipeline.initialise();
-    }
-
-    @EventHandler
-    public void postInitialise(FMLPostInitializationEvent evt)
-    {
-        packetPipeline.postInitialise();
     }
 
     @EventHandler

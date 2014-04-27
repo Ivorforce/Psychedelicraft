@@ -27,45 +27,54 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.IExtendedEntityProperties;
 
 /**
  * Created by lukas on 13.04.14.
  */
 @ChannelHandler.Sharable
-public class ChannelHandlerEntityData extends SimpleChannelInboundHandler<FMLProxyPacket>
+public class ChannelHandlerExtendedEntityPropertiesData extends SimpleChannelInboundHandler<FMLProxyPacket>
 {
     public static String packetChannel;
 
     /**
-     * Sends an update packet for the entity to every watching player's client, if the current active side is the server.
-     * Only use this method for complex updates; if you have a primitive to sync, use the entity's data watcher instead.
+     * Sends an update packet for the entity properties to every watching player's client, if the current active side is the server.
      *
-     * @param entity  The entity, both extending Entity and implementing IEntityUpdateData.
+     * @param entity  The owning entity.
+     * @param eepIdentifier The identifier for the extended entity properties. Must implement IExtendedEntityPropertiesUpdateData.
      * @param context The update context for the packet. Will be passed in writeUpdateData and readUpdateData. Keep in mind you can also add your own additional context information to the buffer.
      */
-    public static <UpdatableEntity extends Entity & IEntityUpdateData> void sendUpdatePacketSafe(UpdatableEntity entity, String context)
+    public static void sendUpdatePacketSafe(Entity entity, String eepIdentifier, String context)
     {
         if (!entity.worldObj.isRemote && entity.worldObj instanceof WorldServer)
         {
-            sendUpdatePacket(entity, context);
+            sendUpdatePacket(entity, eepIdentifier, context);
         }
     }
 
     /**
-     * Sends an update packet for the entity to every watching player's client.
-     * Only use this method for complex updates; if you have a primitive to sync, use the entity's data watcher instead.
-     * Do not invoke this method directly, always use {@link #sendUpdatePacketSafe(net.minecraft.entity.Entity, String)} instead.
+     * Sends an update packet for the entity properties to every watching player's client.
+     * Do not invoke this method directly, always use {@link #sendUpdatePacketSafe(net.minecraft.entity.Entity, String, String)} instead.
      *
-     * @param entity  The entity, both extending Entity and implementing IEntityUpdateData.
+     * @param entity  The owning entity.
+     * @param eepIdentifier The identifier for the extended entity properties. Must implement IExtendedEntityPropertiesUpdateData.
      * @param context The update context for the packet. Will be passed in writeUpdateData and readUpdateData. Keep in mind you can also add your own additional context information to the buffer.
      */
-    public static <UpdatableEntity extends Entity & IEntityUpdateData> void sendUpdatePacket(UpdatableEntity entity, String context)
+    public static void sendUpdatePacket(Entity entity, String eepIdentifier, String context)
     {
         ByteBuf buffer = Unpooled.buffer();
         buffer.writeInt(entity.getEntityId());
+        ByteBufUtils.writeUTF8String(buffer, eepIdentifier);
         ByteBufUtils.writeUTF8String(buffer, context);
-        entity.writeUpdateData(buffer, context);
+
+        IExtendedEntityProperties extendedEntityProperties = entity.getExtendedProperties(eepIdentifier);
+        if (!(extendedEntityProperties instanceof IExtendedEntityPropertiesUpdateData))
+            throw new IllegalArgumentException("IExtendedEntityProperties must implement IExtendedEntityPropertiesUpdateData to send update packets!");
+
+        ((IExtendedEntityPropertiesUpdateData) extendedEntityProperties).writeUpdateData(buffer, context);
 
         FMLProxyPacket packet = new FMLProxyPacket(buffer, packetChannel);
         ((WorldServer) entity.worldObj).getEntityTracker().func_151248_b(entity, packet);
@@ -76,13 +85,17 @@ public class ChannelHandlerEntityData extends SimpleChannelInboundHandler<FMLPro
     {
         ByteBuf buffer = msg.payload();
         int entityID = buffer.readInt();
+        String eepIdentifier = ByteBufUtils.readUTF8String(buffer);
         String context = ByteBufUtils.readUTF8String(buffer);
 
         Entity entity = Minecraft.getMinecraft().theWorld.getEntityByID(entityID);
 
-        if (entity instanceof IEntityUpdateData)
+        if (entity != null)
         {
-            ((IEntityUpdateData) entity).readUpdateData(buffer, context);
+            IExtendedEntityProperties extendedEntityProperties = entity.getExtendedProperties(eepIdentifier);
+
+            if (extendedEntityProperties instanceof IExtendedEntityPropertiesUpdateData)
+                ((IExtendedEntityPropertiesUpdateData) extendedEntityProperties).readUpdateData(buffer, context);
         }
     }
 }

@@ -9,9 +9,11 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
+import ivorius.psychedelicraft.blocks.PSBlocks;
 import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import ivorius.psychedelicraft.entities.DrugHelper;
 import ivorius.psychedelicraft.entities.EntityRealityRift;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ServerChatEvent;
@@ -42,9 +44,14 @@ public class PSEventHandler
             }
         }
 
-        if (event.type == TickEvent.Type.RENDER && event.phase == TickEvent.Phase.END)
+        if (event.type == TickEvent.Type.CLIENT && event.phase == TickEvent.Phase.START)
         {
             DrugShaderHelper.update();
+        }
+
+        if (event.type == TickEvent.Type.RENDER && event.phase == TickEvent.Phase.START)
+        {
+            PSBlocks.blockPsycheLeaves.setGraphicsLevel(Minecraft.getMinecraft().gameSettings.fancyGraphics);
         }
     }
 

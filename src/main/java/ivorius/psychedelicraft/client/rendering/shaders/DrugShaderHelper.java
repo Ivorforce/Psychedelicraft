@@ -254,9 +254,12 @@ public class DrugShaderHelper
 
     public static void update()
     {
-        for (IEffectWrapper effectWrapper : effectWrappers)
+        if (Minecraft.getMinecraft().theWorld != null)
         {
-            effectWrapper.update();
+            for (IEffectWrapper effectWrapper : effectWrappers)
+            {
+                effectWrapper.update();
+            }
         }
     }
 

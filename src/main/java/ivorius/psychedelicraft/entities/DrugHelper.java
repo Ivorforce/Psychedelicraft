@@ -5,9 +5,14 @@
 
 package ivorius.psychedelicraft.entities;
 
+import cpw.mods.fml.common.network.ByteBufUtils;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufUtil;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
 import ivorius.psychedelicraft.client.rendering.IDrugRenderer;
+import ivorius.psychedelicraft.ivToolkit.ChannelHandlerExtendedEntityPropertiesData;
+import ivorius.psychedelicraft.ivToolkit.IExtendedEntityPropertiesUpdateData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -27,7 +32,7 @@ import net.minecraftforge.common.util.Constants;
 
 import java.util.*;
 
-public class DrugHelper implements IExtendedEntityProperties
+public class DrugHelper implements IExtendedEntityProperties, IExtendedEntityPropertiesUpdateData
 {
     public static final UUID drugUUID = UUID.fromString("2da054e7-0fe0-4fb4-bf2c-a185a5f72aa1"); // Randomly gen'd
 
@@ -421,7 +426,7 @@ public class DrugHelper implements IExtendedEntityProperties
 
             if (!entity.worldObj.isRemote)
             {
-                DrugInfoPacket.sendDrugDataToAllClients((EntityPlayerMP) entity);
+                ChannelHandlerExtendedEntityPropertiesData.sendUpdatePacketSafe(entity, "DrugHelper", "DrugData");
             }
         }
     }
@@ -711,5 +716,25 @@ public class DrugHelper implements IExtendedEntityProperties
     public void init(Entity entity, World world)
     {
 
+    }
+
+    @Override
+    public void writeUpdateData(ByteBuf buffer, String context)
+    {
+        if ("DrugData".equals(context))
+        {
+            NBTTagCompound compound = new NBTTagCompound();
+            writeToNBT(compound);
+            ByteBufUtils.writeTag(buffer, compound);
+        }
+    }
+
+    @Override
+    public void readUpdateData(ByteBuf buffer, String context)
+    {
+        if ("DrugData".equals(context))
+        {
+            readFromNBT(ByteBufUtils.readTag(buffer), true);
+        }
     }
 }

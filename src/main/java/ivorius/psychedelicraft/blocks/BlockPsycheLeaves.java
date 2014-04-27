@@ -13,6 +13,7 @@ import net.minecraft.block.BlockLeaves;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -26,8 +27,8 @@ import java.util.Random;
 
 public class BlockPsycheLeaves extends BlockLeaves
 {
-    public static final String[][] field_150130_N = new String[][]{{Psychedelicraft.textureBase + "psycheLeaves_juniper_opaque", Psychedelicraft.textureBase + "psycheLeaves_juniperBerries_opaque"}};
-    public static final String[] field_150131_O = new String[]{Psychedelicraft.textureBase + "psycheLeaves_juniper", Psychedelicraft.textureBase + "psycheLeaves_juniperBerries"};
+    public static final String[][] field_150130_N = new String[][]{{Psychedelicraft.textureBase + "psycheLeaves_juniper", Psychedelicraft.textureBase + "psycheLeaves_juniperBerries"}, {Psychedelicraft.textureBase + "psycheLeaves_juniper_opaque", Psychedelicraft.textureBase + "psycheLeaves_juniperBerries_opaque"}};
+    public static final String[] field_150131_O = new String[]{"psycheLeaves_juniper", "psycheLeaves_juniperBerries"};
 
     @SideOnly(Side.CLIENT)
     public int getRenderColor(int p_149741_1_)

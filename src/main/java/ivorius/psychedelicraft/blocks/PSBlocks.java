@@ -31,7 +31,7 @@ public class PSBlocks
 
     public static Block blockCocaPlant;
 
-    public static Block blockPsycheLeaves;
+    public static BlockPsycheLeaves blockPsycheLeaves;
     public static Block blockPsycheLog;
     public static Block blockJuniperSapling;
 
@@ -80,7 +80,7 @@ public class PSBlocks
 
         //----------------------------------------------------------Jenever----------------------------------
 
-        blockPsycheLeaves = new BlockPsycheLeaves().setHardness(1.0F);
+        blockPsycheLeaves = (BlockPsycheLeaves) new BlockPsycheLeaves().setHardness(1.0F);
         registerBlockDefault(blockPsycheLeaves, "psycheLeaves");
 
         blockPsycheLog = new BlockPsycheLog().setHardness(1.0F);

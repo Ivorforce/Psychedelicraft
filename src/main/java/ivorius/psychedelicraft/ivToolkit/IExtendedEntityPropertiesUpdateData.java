@@ -21,10 +21,10 @@ package ivorius.psychedelicraft.ivToolkit;
 import io.netty.buffer.ByteBuf;
 
 /**
- * A interface for Entities that need extra information to be communicated
+ * A interface for ExtendedEntityProperties that need extra information to be communicated
  * between the server and client when their values are updated.
  */
-public interface IEntityUpdateData
+public interface IExtendedEntityPropertiesUpdateData
 {
     /**
      * Called by the server when constructing the update packet.
@@ -35,7 +35,7 @@ public interface IEntityUpdateData
     public void writeUpdateData(ByteBuf buffer, String context);
 
     /**
-     * Called by the client when it receives an Entity update packet.
+     * Called by the client when it receives an EEP update packet.
      * Data should be read out of the stream in the same way as it was written.
      *
      * @param buffer The packet data stream
