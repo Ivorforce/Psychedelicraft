@@ -50,7 +50,7 @@ public abstract class ScreenEffectWrapper<ScreenEffect extends Iv2DScreenEffect>
     public abstract void setScreenEffectValues(float partialTicks, int ticks);
 
     @Override
-    public boolean wantsDepthBuffer()
+    public boolean wantsDepthBuffer(float partialTicks)
     {
         return false;
     }

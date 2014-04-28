@@ -54,7 +54,7 @@ public class PSCoreHandlerClient
             int rendererUpdateCount = Minecraft.getMinecraft().ingameGUI.getUpdateCounter();
             DrugShaderHelper.preRender(partialTicks + rendererUpdateCount);
 
-            for (String s : DrugShaderHelper.getRenderPasses(partialTicks, ticks))
+            for (String s : DrugShaderHelper.getRenderPasses(partialTicks))
             {
                 if (!s.equals("Default"))
                 {
@@ -322,5 +322,11 @@ public class PSCoreHandlerClient
             DrugShaderHelper.setLightmapEnabled(true);
         else
             DrugShaderHelper.setLightmapEnabled(false);
+    }
+
+    @SubscribeEvent
+    public void glClear(GLClearEvent event)
+    {
+        event.currentMask = event.currentMask & DrugShaderHelper.getCurrentAllowedGLDataMask();
     }
 }

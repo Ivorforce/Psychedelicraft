@@ -54,8 +54,17 @@ public class WrapperUnderwaterDistortion extends ShaderWrapper<ShaderHeatDistort
     }
 
     @Override
-    public boolean wantsDepthBuffer()
+    public boolean wantsDepthBuffer(float partialTicks)
     {
-        return true;
+        DrugHelper drugHelper = DrugHelper.getDrugHelper(Minecraft.getMinecraft().renderViewEntity);
+
+        if (drugHelper != null)
+        {
+            float waterDistortion = DrugShaderHelper.doWaterDistortion ? drugHelper.drugRenderer.getCurrentWaterDistortion() : 0.0f;
+
+            return waterDistortion > 0.0f;
+        }
+
+        return false;
     }
 }

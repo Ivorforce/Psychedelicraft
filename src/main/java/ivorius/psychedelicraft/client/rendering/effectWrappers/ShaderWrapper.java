@@ -60,7 +60,6 @@ public abstract class ShaderWrapper<ShaderInstance extends IvShaderInstance2D> i
         {
             Minecraft mc = Minecraft.getMinecraft();
             int ticks = mc.renderViewEntity.ticksExisted;
-
             setShaderValues(partialTicks, ticks);
 
             if (shaderInstance.shouldApply(ticks + partialTicks))

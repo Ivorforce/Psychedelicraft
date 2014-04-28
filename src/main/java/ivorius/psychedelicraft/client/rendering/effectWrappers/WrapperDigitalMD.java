@@ -50,7 +50,7 @@ public class WrapperDigitalMD extends ShaderWrapper<ShaderDigital>
     }
 
     @Override
-    public boolean wantsDepthBuffer()
+    public boolean wantsDepthBuffer(float partialTicks)
     {
         return false;
     }

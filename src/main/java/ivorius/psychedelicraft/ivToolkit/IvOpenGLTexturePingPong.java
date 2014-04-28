@@ -18,6 +18,7 @@
 
 package ivorius.psychedelicraft.ivToolkit;
 
+import net.minecraft.client.renderer.OpenGlHelper;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GLContext;
 
@@ -55,7 +56,7 @@ public class IvOpenGLTexturePingPong
         destroy();
         this.useFramebuffer = useFramebuffer;
 
-        boolean pingPongFailed = false;
+        boolean fboFailed = false;
         for (int i = 0; i < 2; i++)
         {
             cacheTextures[i] = IvOpenGLHelper.genStandardTexture();
@@ -64,42 +65,36 @@ public class IvOpenGLTexturePingPong
 
         if (cacheTextures[0] <= 0 || cacheTextures[1] <= 0)
         {
-            pingPongFailed = true;
+            fboFailed = true;
             setup = false;
         }
-        else if (GLContext.getCapabilities().GL_EXT_framebuffer_object && useFramebuffer)
+        else if (OpenGlHelper.framebufferSupported && useFramebuffer)
         {
             pingPongFB = glGenFramebuffersEXT();
 
             glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, pingPongFB);
             glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, cacheTextures[0], 0);
             glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT1_EXT, GL_TEXTURE_2D, cacheTextures[1], 0);
-            //-------------------------
-            //Does the GPU support current FBO configuration?
-            //Before checking the configuration, you should call these 2 according to the spec.
-            //At the very least, you need to call glDrawBuffer(GL_NONE)
-            glDrawBuffer(GL_NONE);
 
             int status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
             if (status != GL_FRAMEBUFFER_COMPLETE_EXT)
             {
-                logger.error("Framebuffer object failed setting up! Error: " + status);
+                logger.error("PingPong FBO failed setting up! (" + IvDepthBuffer.getFramebufferStatusString(status) + ")");
 
-                pingPongFailed = true;
+                fboFailed = true;
             }
 
             glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, parentFrameBuffer);
-            glDrawBuffer(GL_BACK);
-            glReadBuffer(GL_BACK);
+
             setup = true;
         }
         else
         {
-            pingPongFailed = true;
+            fboFailed = true;
             setup = true;
         }
 
-        if (!pingPongFailed)
+        if (!fboFailed)
         {
             setupRealtimeFB = true;
         }

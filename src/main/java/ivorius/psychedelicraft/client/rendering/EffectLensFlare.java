@@ -84,7 +84,6 @@ public class EffectLensFlare implements Iv2DScreenEffect
         Minecraft mc = Minecraft.getMinecraft();
         World world = mc.theWorld;
         EntityLivingBase renderEntity = mc.renderViewEntity;
-        Vec3Pool vecPool = world.getWorldVec3Pool();
 
         float sunRadians = world.getCelestialAngleRadians(partialTicks);
 

@@ -67,6 +67,13 @@ public class PsycheCoreBusClient
         PsycheCoreBusCommon.EVENT_BUS.post(new GLScaleEvent(x, y, z));
     }
 
+    public static int psycheGLClear(int mask)
+    {
+        GLClearEvent event = new GLClearEvent(mask);
+        PsycheCoreBusCommon.EVENT_BUS.post(event);
+        return event.currentMask;
+    }
+
     public static void enableStandardItemLighting()
     {
         PsycheCoreBusCommon.EVENT_BUS.post(new ItemLightingEvent.Enable());

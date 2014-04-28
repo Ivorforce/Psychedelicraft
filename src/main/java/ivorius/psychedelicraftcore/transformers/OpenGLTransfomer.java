@@ -34,6 +34,7 @@ public class OpenGLTransfomer extends IvClassTransformerGeneral
         int transformed = 0;
 
         transformed += proxyGLSwitchMethods(methodNode);
+        transformed += proxyGLClearMethods(methodNode);
 
         return transformed > 0;
     }
@@ -60,6 +61,24 @@ public class OpenGLTransfomer extends IvClassTransformerGeneral
             InsnList listBefore = new InsnList();
             listBefore.add(new InsnNode(DUP));
             listBefore.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLDisable", getMethodDescriptor(Type.VOID_TYPE, Type.INT_TYPE)));
+            methodNode.instructions.insertBefore(callListNode, listBefore);
+
+            caught++;
+        }
+
+        return caught;
+    }
+
+    public static int proxyGLClearMethods(MethodNode methodNode)
+    {
+        int caught = 0;
+
+        List<AbstractInsnNode> glClearNodes = IvNodeFinder.findNodes(new IvNodeMatcherMethodSRG(INVOKESTATIC, "glClear", "org/lwjgl/opengl/GL11", null), methodNode);
+
+        for (AbstractInsnNode callListNode : glClearNodes)
+        {
+            InsnList listBefore = new InsnList();
+            listBefore.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLClear", getMethodDescriptor(Type.INT_TYPE, Type.INT_TYPE)));
             methodNode.instructions.insertBefore(callListNode, listBefore);
 
             caught++;

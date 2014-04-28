@@ -46,7 +46,7 @@ public class WrapperColorBloom extends ShaderWrapper<ShaderColorBloom>
     }
 
     @Override
-    public boolean wantsDepthBuffer()
+    public boolean wantsDepthBuffer(float partialTicks)
     {
         return false;
     }

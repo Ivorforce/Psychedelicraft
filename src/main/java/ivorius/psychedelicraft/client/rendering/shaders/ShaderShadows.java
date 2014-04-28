@@ -62,7 +62,6 @@ public class ShaderShadows extends IvShaderInstance3D implements ShaderWorld
 
             depthBuffer.setParentFB(mc.getFramebuffer() != null ? mc.getFramebuffer().framebufferObject : 0);
             depthBuffer.bind();
-            depthBuffer.bindTextureForDestination();
 
             return true;
         }

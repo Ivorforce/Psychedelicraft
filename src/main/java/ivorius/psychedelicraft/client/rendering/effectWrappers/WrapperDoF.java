@@ -44,8 +44,8 @@ public class WrapperDoF extends ShaderWrapper<ShaderDoF>
     }
 
     @Override
-    public boolean wantsDepthBuffer()
+    public boolean wantsDepthBuffer(float partialTicks)
     {
-        return true;
+        return false;
     }
 }

@@ -59,36 +59,23 @@ public class IvDepthBuffer
     {
         deallocate();
 
-        if (GLContext.getCapabilities().GL_EXT_framebuffer_object && textureWidth > 0 && textureHeight > 0)
+        if (OpenGlHelper.framebufferSupported && textureWidth > 0 && textureHeight > 0)
         {
-            depthTextureIndex = glGenTextures();
-            glBindTexture(GL_TEXTURE_2D, depthTextureIndex);
-            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-            glTexParameteri(GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE, GL_INTENSITY);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, textureWidth, textureHeight, 0, GL_DEPTH_COMPONENT, GL_FLOAT, (ByteBuffer) null);
+            depthTextureIndex = genDefaultDepthTexture(textureWidth, textureHeight);
 
-            //-------------------------
             depthFB = glGenFramebuffersEXT();
             glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, depthFB);
-            //Attach
+
             glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_TEXTURE_2D, depthTextureIndex, 0);
-            glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, textureWidth, textureHeight); // get the data space for it
-            //-------------------------
-            //Does the GPU support current FBO configuration?
-            //Before checking the configuration, you should call these 2 according to the spec.
-            //At the very least, you need to call glDrawBuffer(GL_NONE)
+            glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, textureWidth, textureHeight);
+
             glDrawBuffer(GL_NONE);
             glReadBuffer(GL_NONE);
 
             int status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
             if (status != GL_FRAMEBUFFER_COMPLETE_EXT)
             {
-                logger.error("Framebuffer object failed setting up! (" + status + ")");
+                logger.error("Depth FBO failed setting up! (" + getFramebufferStatusString(status) + ")");
             }
             else
             {
@@ -101,6 +88,22 @@ public class IvDepthBuffer
         }
 
         return setUp;
+    }
+
+    public static int genDefaultDepthTexture(int textureWidth, int textureHeight)
+    {
+        int depthTextureIndex = glGenTextures();
+        glBindTexture(GL_TEXTURE_2D, depthTextureIndex);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE, GL_INTENSITY);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, textureWidth, textureHeight, 0, GL_DEPTH_COMPONENT, GL_FLOAT, (ByteBuffer) null);
+
+        return depthTextureIndex;
     }
 
     public void deallocate()
@@ -133,7 +136,10 @@ public class IvDepthBuffer
     {
         if (isAllocated())
         {
+            bindTextureForDestination();
             glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, depthFB);
+            glDrawBuffer(GL_NONE);
+            glReadBuffer(GL_NONE);
         }
     }
 
@@ -141,7 +147,16 @@ public class IvDepthBuffer
     {
         if (isAllocated())
         {
-            glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, parentFB);
+            if (parentFB > 0) // Binds buffers itself? Anyway, calling the draw and read buffer functions causes invalid operation
+            {
+                glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, parentFB);
+            }
+            else
+            {
+                glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+                glDrawBuffer(GL_BACK);
+                glReadBuffer(GL_BACK);
+            }
         }
     }
 
@@ -210,5 +225,31 @@ public class IvDepthBuffer
     public int getTextureHeight()
     {
         return textureHeight;
+    }
+
+    public static String getFramebufferStatusString(int code)
+    {
+        String statusString;
+
+        if (code == GL_FRAMEBUFFER_COMPLETE_EXT)
+            statusString = "GL_FRAMEBUFFER_COMPLETE_EXT";
+        else if (code == GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_EXT)
+            statusString = "GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_EXT";
+        else if (code == GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_EXT)
+            statusString = "GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_EXT";
+        else if (code == GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT)
+            statusString = "GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT";
+        else if (code == GL_FRAMEBUFFER_INCOMPLETE_FORMATS_EXT)
+            statusString = "GL_FRAMEBUFFER_INCOMPLETE_FORMATS_EXT";
+        else if (code == GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_EXT)
+            statusString = "GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_EXT";
+        else if (code == GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER_EXT)
+            statusString = "GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER_EXT";
+        else if (code == GL_FRAMEBUFFER_UNSUPPORTED_EXT)
+            statusString = "GL_FRAMEBUFFER_UNSUPPORTED_EXT";
+        else
+            statusString = "Unknown";
+
+        return code + ": " + statusString;
     }
 }

@@ -20,5 +20,5 @@ public interface IEffectWrapper
 
     public void apply(float partialTicks, IvOpenGLTexturePingPong pingPong);
 
-    public boolean wantsDepthBuffer();
+    public boolean wantsDepthBuffer(float partialTicks);
 }

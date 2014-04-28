@@ -44,7 +44,7 @@ public class WrapperBlur extends ShaderWrapper<ShaderBlur>
     }
 
     @Override
-    public boolean wantsDepthBuffer()
+    public boolean wantsDepthBuffer(float partialTicks)
     {
         return false;
     }

@@ -36,7 +36,8 @@ public class DrugShaderHelper
 
     public static IvDepthBuffer depthBuffer;
 
-    public static boolean bypassFramebuffers = false;
+    public static boolean disableDepthBuffer = false;
+    public static boolean bypassPingPongBuffer = false;
     public static boolean shaderEnabled = true;
     public static boolean shader2DEnabled = true;
     public static boolean doShadows = false;
@@ -58,10 +59,8 @@ public class DrugShaderHelper
 
     }
 
-    public static ArrayList<String> getRenderPasses(float partialTicks, float ticks)
+    public static ArrayList<String> getRenderPasses(float partialTicks)
     {
-        Minecraft mc = Minecraft.getMinecraft();
-
         ArrayList<String> passes = new ArrayList<String>();
 
         passes.add("Default");
@@ -72,7 +71,7 @@ public class DrugShaderHelper
 
             for (IEffectWrapper wrapper : effectWrappers)
             {
-                if (wrapper.wantsDepthBuffer())
+                if (wrapper.wantsDepthBuffer(partialTicks))
                 {
                     addDepth = true;
                 }
@@ -118,7 +117,6 @@ public class DrugShaderHelper
         {
             depthBuffer.setParentFB(mc.getFramebuffer() != null ? mc.getFramebuffer().framebufferObject : 0);
             depthBuffer.setSize(mc.displayWidth, mc.displayHeight);
-            depthBuffer.bindTextureForDestination();
             depthBuffer.bind();
 
             return useShader(partialTicks, ticks, shaderInstanceDepth);
@@ -234,7 +232,7 @@ public class DrugShaderHelper
 
         setUpRealtimeCacheTexture();
         depthBuffer = new IvDepthBuffer(mc.displayWidth, mc.displayHeight, Psychedelicraft.logger);
-        if (!bypassFramebuffers)
+        if (!disableDepthBuffer)
         {
             depthBuffer.allocate();
         }
@@ -253,7 +251,7 @@ public class DrugShaderHelper
 
         realtimePingPong = new IvOpenGLTexturePingPong(Psychedelicraft.logger);
         realtimePingPong.setScreenSize(Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
-        realtimePingPong.initialize(!bypassFramebuffers);
+        realtimePingPong.initialize(!bypassPingPongBuffer);
     }
 
     public static void update()
@@ -406,6 +404,16 @@ public class DrugShaderHelper
         {
             shaderWorld.setProjectShadows(projectShadows);
         }
+    }
+
+    public static int getCurrentAllowedGLDataMask()
+    {
+        if ("Depth".equals(currentRenderPass))
+            return GL11.GL_DEPTH_BUFFER_BIT;
+        else if ("Shadows".equals(currentRenderPass))
+            return GL11.GL_DEPTH_BUFFER_BIT;
+
+        return ~0;
     }
 
     public static void postRender(float ticks, float partialTicks)
