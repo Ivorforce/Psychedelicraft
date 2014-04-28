@@ -11,22 +11,13 @@ uniform float maxColors;
 uniform float saturation;
 uniform float totalAlpha;
 
+uniform vec2 depthRange;
+
 float getPixelDensity(vec2 newUV, vec4 newColor)
 {
     float textureDepth = texture2D(tex3, newUV).r;
-    textureDepth -= 0.985;
-    if (textureDepth > 0.0)
-    {
-        textureDepth *= 66.6667;
-    }
-    else
-    {
-        textureDepth *= 1.5;
-    }
-    textureDepth = textureDepth * textureDepth;
-    textureDepth = clamp(textureDepth, 0.0, 1.0);
 
-    return textureDepth;
+    return linearize(textureDepth, depthRange.x, depthRange.y);
 }
 
 void main()

@@ -20,6 +20,9 @@ public class ShaderDigitalDepth extends ShaderDigital
 {
     public int depthTextureIndex;
 
+    public float zNear;
+    public float zFar;
+
     public ShaderDigitalDepth(Logger logger)
     {
         super(logger);
@@ -61,6 +64,8 @@ public class ShaderDigitalDepth extends ShaderDigital
         setUniformFloats("textProgress", textProgress);
         setUniformFloats("maxColors", maxColors);
         setUniformFloats("saturation", saturation);
+
+        setUniformFloats("depthRange", zNear, zFar);
 
         glColor3f(1.0f, 1.0f, 1.0f);
         drawFullScreen(screenWidth, screenHeight, pingPong);

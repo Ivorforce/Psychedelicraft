@@ -37,6 +37,9 @@ public class WrapperDigitalPD extends ShaderWrapper<ShaderDigitalDepth>
             shaderInstance.maxDownscale = drugHelper.getDigitalEffectPixelResize();
             shaderInstance.digitalTextTexture = DrugShaderHelper.getTextureIndex(digitalTextTexture);
             shaderInstance.depthTextureIndex = DrugShaderHelper.depthBuffer.getDepthTextureIndex();
+
+            shaderInstance.zNear = 0.05f;
+            shaderInstance.zFar = (float) (Minecraft.getMinecraft().gameSettings.renderDistanceChunks * 16);
         }
         else
         {
