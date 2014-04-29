@@ -18,6 +18,7 @@ import ivorius.psychedelicraft.entities.PSEntityList;
 import ivorius.psychedelicraft.gui.PsycheGuiHandler;
 import ivorius.psychedelicraft.items.PSItems;
 import ivorius.psychedelicraft.ivToolkit.ChannelHandlerExtendedEntityPropertiesData;
+import ivorius.psychedelicraft.ivToolkit.ChannelHandlerTileEntityData;
 import ivorius.psychedelicraft.ivToolkit.IvPacketPipeline;
 import ivorius.psychedelicraft.worldgen.PSWorldGen;
 import net.minecraft.entity.player.EntityPlayer;
@@ -86,6 +87,9 @@ public class Psychedelicraft
 
         ChannelHandlerExtendedEntityPropertiesData.packetChannel = "PDC|EEPData";
         NetworkRegistry.INSTANCE.newChannel(ChannelHandlerExtendedEntityPropertiesData.packetChannel, new ChannelHandlerExtendedEntityPropertiesData());
+
+        ChannelHandlerTileEntityData.packetChannel = "PDC|TEData";
+        NetworkRegistry.INSTANCE.newChannel(ChannelHandlerTileEntityData.packetChannel, new ChannelHandlerTileEntityData());
 
         eventHandler = new PSEventHandler();
         eventHandler.register();

@@ -91,7 +91,7 @@ public class WorldGenTilledPatch extends WorldGenerator
         for (int xP = -1; xP <= 1; xP++)
             for (int zP = -1; zP <= 1; zP++)
                 {
-                    if (par1World.getBlock(x + xP, y - 1, z + zP).getMaterial() == Material.water)
+                    if (world.getBlock(x + xP, y - 1, z + zP).getMaterial() == Material.water)
                         return true;
                 }
 
