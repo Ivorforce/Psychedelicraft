@@ -5,11 +5,10 @@
 
 package ivorius.psychedelicraft.blocks;
 
+import io.netty.buffer.ByteBuf;
 import ivorius.psychedelicraft.entities.DrugHelper;
 import ivorius.psychedelicraft.entities.EntityRealityRift;
-import ivorius.psychedelicraft.ivToolkit.IvBezierPath3D;
-import ivorius.psychedelicraft.ivToolkit.IvMathHelper;
-import ivorius.psychedelicraft.ivToolkit.IvTileEntityHelper;
+import ivorius.psychedelicraft.ivToolkit.*;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class TileEntityRiftJar extends TileEntity
+public class TileEntityRiftJar extends TileEntity implements ITileEntityUpdateData
 {
     public float currentRiftFraction;
     public int ticksAliveVisual;
@@ -189,7 +188,7 @@ public class TileEntityRiftJar extends TileEntity
             isOpening = !isOpening;
 
             markDirty();
-            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+            ChannelHandlerTileEntityData.sendUpdatePacketSafe(this, "isOpening");
         }
     }
 
@@ -200,7 +199,7 @@ public class TileEntityRiftJar extends TileEntity
             suckingRifts = !suckingRifts;
 
             markDirty();
-            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+            ChannelHandlerTileEntityData.sendUpdatePacketSafe(this, "suckingRifts");
         }
     }
 
@@ -256,6 +255,32 @@ public class TileEntityRiftJar extends TileEntity
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
     {
         readFromNBT(pkt.func_148857_g());
+    }
+
+    @Override
+    public void writeUpdateData(ByteBuf buffer, String context)
+    {
+        if ("isOpening".equals(context))
+        {
+            buffer.writeBoolean(isOpening);
+        }
+        else if ("suckingRifts".equals(context))
+        {
+            buffer.writeBoolean(suckingRifts);
+        }
+    }
+
+    @Override
+    public void readUpdateData(ByteBuf buffer, String context)
+    {
+        if ("isOpening".equals(context))
+        {
+            isOpening = buffer.readBoolean();
+        }
+        else if ("suckingRifts".equals(context))
+        {
+            suckingRifts = buffer.readBoolean();
+        }
     }
 
     public static class JarRiftConnection

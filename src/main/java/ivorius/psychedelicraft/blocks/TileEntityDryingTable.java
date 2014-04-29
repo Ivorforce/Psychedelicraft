@@ -5,6 +5,9 @@
 
 package ivorius.psychedelicraft.blocks;
 
+import io.netty.buffer.ByteBuf;
+import ivorius.psychedelicraft.ivToolkit.ChannelHandlerTileEntityData;
+import ivorius.psychedelicraft.ivToolkit.ITileEntityUpdateData;
 import ivorius.psychedelicraft.ivToolkit.IvTileEntityHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
@@ -22,7 +25,7 @@ import net.minecraftforge.common.util.Constants;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TileEntityDryingTable extends TileEntity implements ISidedInventory
+public class TileEntityDryingTable extends TileEntity implements ISidedInventory, ITileEntityUpdateData
 {
     public float heatRatio;
     public float dryingProgress;
@@ -55,7 +58,7 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
                 dryingProgress = 0;
             }
 
-            this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, PSBlocks.blockDryingTable, 1, (int) (dryingProgress * 10000f));
+            ChannelHandlerTileEntityData.sendUpdatePacketSafe(this, "dryingProgress");
         }
 
         if (plannedResult != null && (dryingTableItems[0] == null || (dryingTableItems[0] == plannedResult && dryingTableItems[0].getItemDamage() == plannedResult.getItemDamage() && plannedResult.isStackable() && plannedResult.stackSize + plannedResult.stackSize < plannedResult.getMaxStackSize())))
@@ -87,25 +90,6 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
         {
             dryingProgress = 0;
         }
-    }
-
-    @Override
-    public boolean receiveClientEvent(int par1, int par2)
-    {
-        if (par1 == 1)
-        {
-            dryingProgress = par2 / 10000f;
-
-            return true;
-        }
-        else if (par1 == 2)
-        {
-            heatRatio = par2 / 10000f;
-
-            return true;
-        }
-
-        return super.receiveClientEvent(par1, par2);
     }
 
     public ItemStack getResult()
@@ -157,7 +141,7 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
 
         heatRatio = t;
 
-        this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, PSBlocks.blockDryingTable, 2, (int) (heatRatio * 10000f));
+        ChannelHandlerTileEntityData.sendUpdatePacketSafe(this, "heatRatio");
     }
 
     @Override
@@ -291,6 +275,7 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
     public void onInventoryChanged()
     {
         plannedResult = getResult();
+
         markDirty();
         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
@@ -351,5 +336,31 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
     public boolean canExtractItem(int var1, ItemStack var2, int var3)
     {
         return true;
+    }
+
+    @Override
+    public void writeUpdateData(ByteBuf buffer, String context)
+    {
+        if ("heatRatio".equals(context))
+        {
+            buffer.writeFloat(heatRatio);
+        }
+        else if ("dryingProgress".equals(context))
+        {
+            buffer.writeFloat(dryingProgress);
+        }
+    }
+
+    @Override
+    public void readUpdateData(ByteBuf buffer, String context)
+    {
+        if ("heatRatio".equals(context))
+        {
+            heatRatio = buffer.readFloat();
+        }
+        else if ("dryingProgress".equals(context))
+        {
+            dryingProgress = buffer.readFloat();
+        }
     }
 }
