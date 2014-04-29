@@ -6,6 +6,7 @@
 package ivorius.psychedelicraft.blocks;
 
 import ivorius.psychedelicraft.Psychedelicraft;
+import ivorius.psychedelicraft.gui.PSGuiHandler;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -62,7 +63,7 @@ public class BlockDryingTable extends BlockContainer
     {
         if (!par1World.isRemote)
         {
-            par5EntityPlayer.openGui(Psychedelicraft.instance, Psychedelicraft.dryingTableContainerID, par1World, par2, par3, par4);
+            par5EntityPlayer.openGui(Psychedelicraft.instance, PSGuiHandler.dryingTableContainerID, par1World, par2, par3, par4);
         }
 
         return true;

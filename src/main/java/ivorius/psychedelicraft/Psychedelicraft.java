@@ -15,11 +15,10 @@ import ivorius.psychedelicraft.blocks.PSBlocks;
 import ivorius.psychedelicraft.entities.DrugInfluence;
 import ivorius.psychedelicraft.entities.DrugInfluenceHarmonium;
 import ivorius.psychedelicraft.entities.PSEntityList;
-import ivorius.psychedelicraft.gui.PsycheGuiHandler;
+import ivorius.psychedelicraft.gui.PSGuiHandler;
 import ivorius.psychedelicraft.items.PSItems;
 import ivorius.psychedelicraft.ivToolkit.ChannelHandlerExtendedEntityPropertiesData;
 import ivorius.psychedelicraft.ivToolkit.ChannelHandlerTileEntityData;
-import ivorius.psychedelicraft.ivToolkit.IvPacketPipeline;
 import ivorius.psychedelicraft.worldgen.PSWorldGen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.config.Configuration;
@@ -40,7 +39,7 @@ public class Psychedelicraft
 
     public static Logger logger;
 
-    public static PsycheGuiHandler guiHandler;
+    public static PSGuiHandler guiHandler;
     public static PSEventHandler eventHandler;
     public static PSCommunicationHandler communicationHandler;
 
@@ -65,8 +64,6 @@ public class Psychedelicraft
 
     public static int blockWineGrapeLatticeRenderType;
 
-    public static int dryingTableContainerID;
-
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
@@ -82,7 +79,7 @@ public class Psychedelicraft
 
         creativeTab = new CreativeTabPsyche("psychedelicraft");
 
-        guiHandler = new PsycheGuiHandler();
+        guiHandler = new PSGuiHandler();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
 
         ChannelHandlerExtendedEntityPropertiesData.packetChannel = "PDC|EEPData";
@@ -126,8 +123,6 @@ public class Psychedelicraft
 
         addCrafting();
         PSWorldGen.initWorldGen();
-
-        dryingTableContainerID = guiHandler.acquireUniqueContainerID();
     }
 
     @EventHandler
