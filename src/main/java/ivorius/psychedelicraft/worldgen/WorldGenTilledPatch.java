@@ -35,7 +35,7 @@ public class WorldGenTilledPatch extends WorldGenerator
             return false;
         }
 
-        if (par1World.isAirBlock(par3, par4, par5) && par1World.getBlock(par3, par4 - 1, par5) == Blocks.grass && (!needsWater || ((par1World.getBlock(par3 - 1, par4 - 1, par5).getMaterial() == Material.water || par1World.getBlock(par3 + 1, par4 - 1, par5).getMaterial() == Material.water || par1World.getBlock(par3, par4 - 1, par5 - 1).getMaterial() == Material.water || par1World.getBlock(par3, par4 - 1, par5 + 1).getMaterial() == Material.water))))
+        if (par1World.isAirBlock(par3, par4, par5) && par1World.getBlock(par3, par4 - 1, par5) == Blocks.grass && (!needsWater || isWaterNearby(par1World, par3, par4, par5)))
         {
             int range = par2Random.nextInt(3) + 1;
 
@@ -45,31 +45,34 @@ public class WorldGenTilledPatch extends WorldGenerator
                 {
                     if (xPlus * xPlus + zPlus * zPlus < range * range && par1World.isAirBlock(par3 + xPlus, par4, par5 + zPlus) && par1World.getBlock(par3 + xPlus, par4 - 1, par5 + zPlus) == Blocks.grass)
                     {
-                        if (needsWater)
+                        if (par2Random.nextInt(3) == 0)
                         {
-                            setBlockAndNotifyAdequately(par1World, par3 + xPlus, par4 - 1, par5 + zPlus, Blocks.farmland, needsWater ? 7 : 0);
-                        }
-                        else
-                        {
-                            setBlockAndNotifyAdequately(par1World, par3 + xPlus, par4 - 1, par5 + zPlus, Blocks.grass, 0);
-                        }
-
-                        int var10 = 2 + par2Random.nextInt(par2Random.nextInt(3) + 1);
-
-                        for (int var11 = 0; var11 < var10; ++var11)
-                        {
-                            if (block.canBlockStay(par1World, par3 + xPlus, par4 + var11, par5 + zPlus))
+                            if (needsWater)
                             {
-                                int meta = 0;
+                                setBlockAndNotifyAdequately(par1World, par3 + xPlus, par4 - 1, par5 + zPlus, Blocks.farmland, needsWater ? 7 : 0);
+                            }
+                            else
+                            {
+                                setBlockAndNotifyAdequately(par1World, par3 + xPlus, par4 - 1, par5 + zPlus, Blocks.grass, 0);
+                            }
 
-                                if (block instanceof IvTilledFieldPlant)
-                                {
-                                    meta = ((IvTilledFieldPlant) block).getMaxMetadata(var11);
-                                }
+                            int var10 = 2 + par2Random.nextInt(par2Random.nextInt(3) + 1);
 
-                                if (meta >= 0)
+                            for (int var11 = 0; var11 < var10; ++var11)
+                            {
+                                if (block.canBlockStay(par1World, par3 + xPlus, par4 + var11, par5 + zPlus))
                                 {
-                                    setBlockAndNotifyAdequately(par1World, par3 + xPlus, par4 + var11, par5 + zPlus, block, meta);
+                                    int meta = 0;
+
+                                    if (block instanceof IvTilledFieldPlant)
+                                    {
+                                        meta = ((IvTilledFieldPlant) block).getMaxMetadata(var11);
+                                    }
+
+                                    if (meta >= 0)
+                                    {
+                                        setBlockAndNotifyAdequately(par1World, par3 + xPlus, par4 + var11, par5 + zPlus, block, meta);
+                                    }
                                 }
                             }
                         }
@@ -79,6 +82,18 @@ public class WorldGenTilledPatch extends WorldGenerator
 
             return true;
         }
+
+        return false;
+    }
+
+    public static boolean isWaterNearby(World world, int x, int y, int z)
+    {
+        for (int xP = -1; xP <= 1; xP++)
+            for (int zP = -1; zP <= 1; zP++)
+                {
+                    if (par1World.getBlock(x + xP, y - 1, z + zP).getMaterial() == Material.water)
+                        return true;
+                }
 
         return false;
     }
