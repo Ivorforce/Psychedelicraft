@@ -67,8 +67,6 @@ public class IvDepthBuffer
             glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, depthFB);
 
             glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_TEXTURE_2D, depthTextureIndex, 0);
-//            glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, textureWidth, textureHeight);
-            // TODO Figure out how / whether to use this at all
 
             glDrawBuffer(GL_NONE);
             glReadBuffer(GL_NONE);
