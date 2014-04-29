@@ -60,7 +60,7 @@ public class ShaderShadows extends IvShaderInstance3D implements ShaderWorld
             setUniformInts("useScreenTexCoords", 0);
             setOverrideColor(null);
 
-            depthBuffer.setParentFB(mc.getFramebuffer() != null ? mc.getFramebuffer().framebufferObject : 0);
+            depthBuffer.setParentFB(DrugShaderHelper.getMCFBO());
             depthBuffer.bind();
 
             return true;

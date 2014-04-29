@@ -15,6 +15,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.IResource;
+import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.io.IOUtils;
 import org.lwjgl.opengl.GL11;
@@ -115,7 +116,7 @@ public class DrugShaderHelper
         }
         else if ("Depth".equals(pass))
         {
-            depthBuffer.setParentFB(mc.getFramebuffer() != null ? mc.getFramebuffer().framebufferObject : 0);
+            depthBuffer.setParentFB(getMCFBO());
             depthBuffer.setSize(mc.displayWidth, mc.displayHeight);
             depthBuffer.bind();
 
@@ -416,6 +417,14 @@ public class DrugShaderHelper
         return ~0;
     }
 
+    public static int getMCFBO()
+    {
+        Minecraft mc = Minecraft.getMinecraft();
+        Framebuffer framebuffer = mc.getFramebuffer();
+
+        return (framebuffer != null && framebuffer.framebufferObject >= 0) ? framebuffer.framebufferObject : 0;
+    }
+
     public static void postRender(float ticks, float partialTicks)
     {
         apply2DShaders(ticks, partialTicks);
@@ -431,7 +440,7 @@ public class DrugShaderHelper
         IvOpenGLHelper.setUpOpenGLStandard2D(screenWidth, screenHeight);
         GL11.glColor3f(1.0f, 1.0f, 1.0f);
 
-        realtimePingPong.setParentFrameBuffer(mc.getFramebuffer() != null ? mc.getFramebuffer().framebufferObject : 0);
+        realtimePingPong.setParentFrameBuffer(getMCFBO());
         realtimePingPong.preTick(screenWidth, screenHeight);
 
         for (IEffectWrapper effectWrapper : effectWrappers)

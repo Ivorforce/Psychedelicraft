@@ -411,7 +411,7 @@ public class DrugHelper implements IExtendedEntityProperties, IExtendedEntityPro
             }
         }
 
-        if (drugRenderer != null)
+        if (drugRenderer != null && entity.worldObj.isRemote)
         {
             drugRenderer.update(this, entity);
         }
