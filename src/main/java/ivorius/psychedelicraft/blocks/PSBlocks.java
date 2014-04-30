@@ -59,9 +59,8 @@ public class PSBlocks
         //----------------------------------------------------------Weed----------------------------------
 
         cannabisPlant = new BlockCannabisPlant().setHardness(0.5f);
-        cannabisPlant.setCreativeTab(CreativeTabs.tabDecorations);
-        registerBlockDefault(cannabisPlant, ItemBlock.class, "cannabisPlant");
         cannabisPlant.setCreativeTab(null);
+        registerBlockDefault(cannabisPlant, ItemBlock.class, "cannabisPlant");
 
         //----------------------------------------------------------Drying Table----------------------------------
 
@@ -73,16 +72,14 @@ public class PSBlocks
         //----------------------------------------------------------Tobacco----------------------------------
 
         tobaccoPlant = new BlockTobaccoPlant().setHardness(0.5f);
-        tobaccoPlant.setCreativeTab(CreativeTabs.tabDecorations);
-        registerBlockDefault(tobaccoPlant, "tobaccoPlant");
         tobaccoPlant.setCreativeTab(null);
+        registerBlockDefault(tobaccoPlant, "tobaccoPlant");
 
         //----------------------------------------------------------Cocaine----------------------------------
 
         cocaPlant = new BlockCocaPlant().setHardness(0.5f);
-        cocaPlant.setCreativeTab(CreativeTabs.tabDecorations);
-        registerBlockDefault(cocaPlant, ItemBlock.class, "cocaPlant");
         cocaPlant.setCreativeTab(null);
+        registerBlockDefault(cocaPlant, ItemBlock.class, "cocaPlant");
 
         //----------------------------------------------------------Jenever----------------------------------
 
@@ -101,9 +98,8 @@ public class PSBlocks
         //----------------------------------------------------------Coffee----------------------------------
 
         coffea = new BlockCoffea().setHardness(0.5f);
-        coffea.setCreativeTab(CreativeTabs.tabDecorations);
-        registerBlockDefault(coffea, ItemBlock.class, "coffea");
         coffea.setCreativeTab(null);
+        registerBlockDefault(coffea, ItemBlock.class, "coffea");
 
         //----------------------------------------------------------Peyote----------------------------------
 
