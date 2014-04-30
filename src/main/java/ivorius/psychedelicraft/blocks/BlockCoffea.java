@@ -132,7 +132,7 @@ public class BlockCoffea extends Block implements IvBonemealCompatibleBlock, IvT
                 int countL = (par1World.rand.nextInt(3) + 1) * (stage - 5);
                 for (int i = 0; i < countL; i++)
                 {
-                    this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(PSItems.itemCoffeaCherries, 1, 0));
+                    this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(PSItems.coffeaCherries, 1, 0));
                 }
             }
         }

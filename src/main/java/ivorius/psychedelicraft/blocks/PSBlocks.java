@@ -19,110 +19,122 @@ import net.minecraftforge.common.config.Configuration;
 
 public class PSBlocks
 {
-    public static Block blockWineGrapeLattice;
+    public static Block wineGrapeLattice;
 
-    public static Block blockBarrel;
+    public static Block barrel;
 
-    public static Block blockDryingTable;
+    public static Block dryingTable;
 
-    public static Block blockCannabisPlant;
+    public static Block cannabisPlant;
 
-    public static Block blockTobaccoPlant;
+    public static Block tobaccoPlant;
 
-    public static Block blockCocaPlant;
+    public static Block cocaPlant;
 
-    public static BlockPsycheLeaves blockPsycheLeaves;
-    public static Block blockPsycheLog;
-    public static Block blockPsycheSapling;
+    public static BlockPsycheLeaves psycheLeaves;
+    public static Block psycheLog;
+    public static Block psycheSapling;
 
-    public static Block blockCoffea;
+    public static Block coffea;
 
-    public static Block blockPeyote;
-    public static Block blockRiftJar;
-    public static Block blockGlitched;
+    public static Block peyote;
+    public static Block riftJar;
+    public static Block glitched;
 
     public static void preInit(FMLPreInitializationEvent event, Psychedelicraft mod, Configuration configuration)
     {
         //----------------------------------------------------------Barrel----------------------------------
 
-        blockBarrel = new BlockBarrel().setHardness(1.0F);
-        registerBlockDefault(blockBarrel, ItemBarrel.class, "barrel");
+        barrel = new BlockBarrel().setHardness(1.0F);
+        barrel.setCreativeTab(CreativeTabs.tabDecorations);
+        registerBlockDefault(barrel, ItemBarrel.class, "barrel");
         GameRegistry.registerTileEntity(TileEntityBarrel.class, "barrel");
 
         //----------------------------------------------------------Wine----------------------------------
 
-        blockWineGrapeLattice = new BlockWineGrapeLattice().setHardness(0.3F);
-        registerBlockDefault(blockWineGrapeLattice, ItemBlock.class, "wineGrapeLattice");
+        wineGrapeLattice = new BlockWineGrapeLattice().setHardness(0.3F);
+        wineGrapeLattice.setCreativeTab(CreativeTabs.tabDecorations);
+        registerBlockDefault(wineGrapeLattice, ItemBlock.class, "wineGrapeLattice");
 
         //----------------------------------------------------------Weed----------------------------------
 
-        blockCannabisPlant = new BlockCannabisPlant().setHardness(0.5f);
-        registerBlockDefault(blockCannabisPlant, ItemBlock.class, "cannabisPlant");
-        blockCannabisPlant.setCreativeTab(null);
+        cannabisPlant = new BlockCannabisPlant().setHardness(0.5f);
+        cannabisPlant.setCreativeTab(CreativeTabs.tabDecorations);
+        registerBlockDefault(cannabisPlant, ItemBlock.class, "cannabisPlant");
+        cannabisPlant.setCreativeTab(null);
 
         //----------------------------------------------------------Drying Table----------------------------------
 
-        blockDryingTable = new BlockDryingTable().setHardness(1.0f);
-        registerBlockDefault(blockDryingTable, "dryingTable");
+        dryingTable = new BlockDryingTable().setHardness(1.0f);
+        dryingTable.setCreativeTab(CreativeTabs.tabDecorations);
+        registerBlockDefault(dryingTable, "dryingTable");
         GameRegistry.registerTileEntity(TileEntityDryingTable.class, "dryingTable");
 
         //----------------------------------------------------------Tobacco----------------------------------
 
-        blockTobaccoPlant = new BlockTobaccoPlant().setHardness(0.5f);
-        registerBlockDefault(blockTobaccoPlant, "tobaccoPlant");
-        blockTobaccoPlant.setCreativeTab(null);
+        tobaccoPlant = new BlockTobaccoPlant().setHardness(0.5f);
+        tobaccoPlant.setCreativeTab(CreativeTabs.tabDecorations);
+        registerBlockDefault(tobaccoPlant, "tobaccoPlant");
+        tobaccoPlant.setCreativeTab(null);
 
         //----------------------------------------------------------Cocaine----------------------------------
 
-        blockCocaPlant = new BlockCocaPlant().setHardness(0.5f);
-        registerBlockDefault(blockCocaPlant, ItemBlock.class, "cocaPlant");
-        blockCocaPlant.setCreativeTab(null);
+        cocaPlant = new BlockCocaPlant().setHardness(0.5f);
+        cocaPlant.setCreativeTab(CreativeTabs.tabDecorations);
+        registerBlockDefault(cocaPlant, ItemBlock.class, "cocaPlant");
+        cocaPlant.setCreativeTab(null);
 
         //----------------------------------------------------------Jenever----------------------------------
 
-        blockPsycheLeaves = (BlockPsycheLeaves) new BlockPsycheLeaves();
-        registerBlockDefault(blockPsycheLeaves, "psycheLeaves");
+        psycheLeaves = (BlockPsycheLeaves) new BlockPsycheLeaves();
+        psycheLeaves.setCreativeTab(CreativeTabs.tabDecorations);
+        registerBlockDefault(psycheLeaves, "psycheLeaves");
 
-        blockPsycheLog = new BlockPsycheLog().setHardness(1.0F);
-        registerBlockDefault(blockPsycheLog, "psycheLog");
+        psycheLog = new BlockPsycheLog().setHardness(1.0F);
+        psycheLog.setCreativeTab(CreativeTabs.tabDecorations);
+        registerBlockDefault(psycheLog, "psycheLog");
 
-        blockPsycheSapling = new BlockPsycheSapling().setHardness(1.0F);
-        registerBlockDefault(blockPsycheSapling, "psycheSapling");
+        psycheSapling = new BlockPsycheSapling().setHardness(1.0F);
+        psycheSapling.setCreativeTab(CreativeTabs.tabDecorations);
+        registerBlockDefault(psycheSapling, "psycheSapling");
 
         //----------------------------------------------------------Coffee----------------------------------
 
-        blockCoffea = new BlockCoffea().setHardness(0.5f);
-        registerBlockDefault(blockCoffea, ItemBlock.class, "coffea");
-        blockCoffea.setCreativeTab(null);
+        coffea = new BlockCoffea().setHardness(0.5f);
+        coffea.setCreativeTab(CreativeTabs.tabDecorations);
+        registerBlockDefault(coffea, ItemBlock.class, "coffea");
+        coffea.setCreativeTab(null);
 
         //----------------------------------------------------------Peyote----------------------------------
 
-        blockPeyote = new BlockPeyote().setHardness(0.5f);
-        registerBlockDefault(blockPeyote, ItemBlock.class, "peyote");
+        peyote = new BlockPeyote().setHardness(0.5f);
+        peyote.setCreativeTab(CreativeTabs.tabDecorations);
+        registerBlockDefault(peyote, ItemBlock.class, "peyote");
         GameRegistry.registerTileEntity(TileEntityPeyote.class, "peyote");
 
         //----------------------------------------------------------Digital----------------------------------
 
-        blockRiftJar = new BlockRiftJar().setBlockName("riftJar").setBlockTextureName(Psychedelicraft.textureBase + "riftJar");
-        GameRegistry.registerBlock(blockRiftJar, ItemRiftJar.class, "riftJar", Psychedelicraft.MODID);
+        riftJar = new BlockRiftJar().setBlockName("riftJar").setBlockTextureName(Psychedelicraft.textureBase + "riftJar");
+        riftJar.setCreativeTab(CreativeTabs.tabDecorations);
+        GameRegistry.registerBlock(riftJar, ItemRiftJar.class, "riftJar", Psychedelicraft.MODID);
         GameRegistry.registerTileEntity(TileEntityRiftJar.class, "riftJar");
-        blockRiftJar.setCreativeTab(CreativeTabs.tabDecorations);
+        riftJar.setCreativeTab(CreativeTabs.tabDecorations);
 
-        blockGlitched = new BlockGlitched().setBlockName("glitched").setBlockTextureName(Psychedelicraft.textureBase + "glitched");
-        GameRegistry.registerBlock(blockGlitched, ItemBlock.class, "glitched", Psychedelicraft.MODID);
-        blockGlitched.setCreativeTab(null);
+        glitched = new BlockGlitched().setBlockName("glitched").setBlockTextureName(Psychedelicraft.textureBase + "glitched");
+        GameRegistry.registerBlock(glitched, ItemBlock.class, "glitched", Psychedelicraft.MODID);
+        glitched.setCreativeTab(null);
     }
 
     public static void preInitEnd(FMLPreInitializationEvent event, Psychedelicraft mod, Configuration configuration)
     {
         ResourceLocation beerBarrelTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "beerBarrelTexture.png");
-        BlockBarrel.registerBarrelEntry(0, blockBarrel, new BlockBarrel.BarrelEntry(beerBarrelTexture, PSItems.itemWoodenMug, 0, PSItems.itemWoodenMug, 15, 1, 1), new ItemBarrel.BarrelEntry("beer", 0, Psychedelicraft.textureBase + "barrelItemBeer"));
+        BlockBarrel.registerBarrelEntry(0, barrel, new BlockBarrel.BarrelEntry(beerBarrelTexture, PSItems.woodenMug, 0, PSItems.woodenMug, 15, 1, 1), new ItemBarrel.BarrelEntry("beer", 0, Psychedelicraft.textureBase + "barrelItemBeer"));
 
         ResourceLocation wineBarrelTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "wineBarrelTexture.png");
-        BlockBarrel.registerBarrelEntry(1, blockBarrel, new BlockBarrel.BarrelEntry(wineBarrelTexture, PSItems.itemGlassChalice, 0, PSItems.itemGlassChalice, 10, 15, 1), new ItemBarrel.BarrelEntry("wine", 1, Psychedelicraft.textureBase + "barrelItemWine"));
+        BlockBarrel.registerBarrelEntry(1, barrel, new BlockBarrel.BarrelEntry(wineBarrelTexture, PSItems.glassChalice, 0, PSItems.glassChalice, 10, 15, 1), new ItemBarrel.BarrelEntry("wine", 1, Psychedelicraft.textureBase + "barrelItemWine"));
 
         ResourceLocation jeneverBarrelTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "jeneverBarrelTexture.png");
-        BlockBarrel.registerBarrelEntry(2, blockBarrel, new BlockBarrel.BarrelEntry(jeneverBarrelTexture, PSItems.itemWoodenMug, 0, PSItems.itemWoodenMug, 15, 2, 2), new ItemBarrel.BarrelEntry("jenever", 2, Psychedelicraft.textureBase + "barrelItemJenever"));
+        BlockBarrel.registerBarrelEntry(2, barrel, new BlockBarrel.BarrelEntry(jeneverBarrelTexture, PSItems.woodenMug, 0, PSItems.woodenMug, 15, 2, 2), new ItemBarrel.BarrelEntry("jenever", 2, Psychedelicraft.textureBase + "barrelItemJenever"));
     }
 
     public static void registerBlockDefault(Block block, String id)
@@ -130,7 +142,7 @@ public class PSBlocks
         GameRegistry.registerBlock(block, id);
         block.setBlockName(id);
         block.setBlockTextureName(Psychedelicraft.textureBase + id);
-        block.setCreativeTab(Psychedelicraft.creativeTab);
+//        block.setCreativeTab(Psychedelicraft.creativeTab);
     }
 
     public static void registerBlockDefault(Block block, Class<? extends ItemBlock> itemBlock, String id)
@@ -138,6 +150,6 @@ public class PSBlocks
         GameRegistry.registerBlock(block, itemBlock, id);
         block.setBlockName(id);
         block.setBlockTextureName(Psychedelicraft.textureBase + id);
-        block.setCreativeTab(Psychedelicraft.creativeTab);
+//        block.setCreativeTab(Psychedelicraft.creativeTab);
     }
 }

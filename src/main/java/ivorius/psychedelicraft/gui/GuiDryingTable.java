@@ -132,7 +132,7 @@ public class GuiDryingTable extends GuiContainer
         public boolean canInteractWith(EntityPlayer par1EntityPlayer)
         {
             Block id = this.worldObj.getBlock(tileEntityDryingTable.xCoord, tileEntityDryingTable.yCoord, tileEntityDryingTable.zCoord);
-            return id != PSBlocks.blockDryingTable ? false : par1EntityPlayer.getDistanceSq(tileEntityDryingTable.xCoord + 0.5D, tileEntityDryingTable.yCoord + 0.5D, tileEntityDryingTable.zCoord + 0.5D) <= 64.0D;
+            return id != PSBlocks.dryingTable ? false : par1EntityPlayer.getDistanceSq(tileEntityDryingTable.xCoord + 0.5D, tileEntityDryingTable.yCoord + 0.5D, tileEntityDryingTable.zCoord + 0.5D) <= 64.0D;
         }
 
         /**

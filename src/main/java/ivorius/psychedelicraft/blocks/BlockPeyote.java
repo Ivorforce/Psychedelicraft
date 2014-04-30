@@ -115,7 +115,7 @@ public class BlockPeyote extends BlockContainer implements IvBonemealCompatibleB
 
             for (int i = 0; i < meta + 1; i++)
             {
-                this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(PSBlocks.blockPeyote, 1, 0));
+                this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(PSBlocks.peyote, 1, 0));
             }
         }
     }

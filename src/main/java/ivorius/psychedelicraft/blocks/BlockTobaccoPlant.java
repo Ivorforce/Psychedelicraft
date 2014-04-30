@@ -152,13 +152,13 @@ public class BlockTobaccoPlant extends Block implements IvBonemealCompatibleBloc
             int countL = par1World.rand.nextInt(par5 / 3 + 1) + par5 / 5;
             for (int i = 0; i < countL; i++)
             {
-                this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(PSItems.itemTobaccoLeaf, 1, 0));
+                this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(PSItems.tobaccoLeaf, 1, 0));
             }
 
             int countS = par5 / 8;
             for (int i = 0; i < countS; i++)
             {
-                this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(PSItems.itemTobaccoSeeds, 1, 0));
+                this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(PSItems.tobaccoSeeds, 1, 0));
             }
         }
     }

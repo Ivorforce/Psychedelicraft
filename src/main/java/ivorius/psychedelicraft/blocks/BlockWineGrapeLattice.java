@@ -121,7 +121,7 @@ public class BlockWineGrapeLattice extends Block implements IvBonemealCompatible
         {
             if (l >> 1 == 4)
             {
-                dropBlockAsItem(world, i, j, k, new ItemStack(PSItems.itemWineGrapes, world.rand.nextInt(3) + 1));
+                dropBlockAsItem(world, i, j, k, new ItemStack(PSItems.wineGrapes, world.rand.nextInt(3) + 1));
             }
 
             world.setBlock(i, j, k, this, (l & 1 | 2 << 1), 3);

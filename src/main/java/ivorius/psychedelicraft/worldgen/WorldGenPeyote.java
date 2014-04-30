@@ -25,9 +25,9 @@ public class WorldGenPeyote extends WorldGenerator
         {
             int meta = par2Random.nextInt(4);
 
-            if (PSBlocks.blockPeyote.canBlockStay(par1World, par3, par4, par5))
+            if (PSBlocks.peyote.canBlockStay(par1World, par3, par4, par5))
             {
-                setBlockAndNotifyAdequately(par1World, par3, par4, par5, PSBlocks.blockPeyote, meta);
+                setBlockAndNotifyAdequately(par1World, par3, par4, par5, PSBlocks.peyote, meta);
             }
         }
 

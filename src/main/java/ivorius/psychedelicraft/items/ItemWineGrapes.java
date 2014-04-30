@@ -27,7 +27,7 @@ public class ItemWineGrapes extends ItemFood
         }
         else
         {
-            if (par3World.getBlock(par4, par5, par6) == PSBlocks.blockWineGrapeLattice && (par3World.getBlockMetadata(par4, par5, par6) >> 1) == 0)
+            if (par3World.getBlock(par4, par5, par6) == PSBlocks.wineGrapeLattice && (par3World.getBlockMetadata(par4, par5, par6) >> 1) == 0)
             {
                 int m = par3World.getBlockMetadata(par4, par5, par6);
                 par3World.setBlockMetadataWithNotify(par4, par5, par6, m | 1 << 1, 3);

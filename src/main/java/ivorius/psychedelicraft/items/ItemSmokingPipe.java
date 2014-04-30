@@ -65,7 +65,9 @@ public class ItemSmokingPipe extends Item
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (DrugHelper.getDrugHelper(par3EntityPlayer).timeBreathingSmoke <= 0)
+        DrugHelper drugHelper = DrugHelper.getDrugHelper(par3EntityPlayer);
+
+        if (drugHelper != null && drugHelper.timeBreathingSmoke <= 0)
         {
             if (getUsedConsumable(par3EntityPlayer) != null)
             {

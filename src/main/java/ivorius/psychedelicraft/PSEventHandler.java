@@ -51,7 +51,7 @@ public class PSEventHandler
 
         if (event.type == TickEvent.Type.RENDER && event.phase == TickEvent.Phase.START)
         {
-            PSBlocks.blockPsycheLeaves.setGraphicsLevel(Minecraft.getMinecraft().gameSettings.fancyGraphics);
+            PSBlocks.psycheLeaves.setGraphicsLevel(Minecraft.getMinecraft().gameSettings.fancyGraphics);
         }
     }
 

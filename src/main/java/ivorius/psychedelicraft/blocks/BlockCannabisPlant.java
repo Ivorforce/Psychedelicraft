@@ -146,19 +146,19 @@ public class BlockCannabisPlant extends Block implements IvBonemealCompatibleBlo
             int countB = par1World.rand.nextInt(par5 / 6 + 1);
             for (int i = 0; i < countB; i++)
             {
-                this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(PSItems.itemCannabisBuds, 1, 0));
+                this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(PSItems.cannabisBuds, 1, 0));
             }
 
             int countL = par1World.rand.nextInt(par5 / 5 + 1) + par5 / 6;
             for (int i = 0; i < countL; i++)
             {
-                this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(PSItems.itemCannabisLeaf, 1, 0));
+                this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(PSItems.cannabisLeaf, 1, 0));
             }
 
             int countS = par5 / 8;
             for (int i = 0; i < countS; i++)
             {
-                this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(PSItems.itemCannabisSeeds, 1, 0));
+                this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(PSItems.cannabisSeeds, 1, 0));
             }
         }
     }

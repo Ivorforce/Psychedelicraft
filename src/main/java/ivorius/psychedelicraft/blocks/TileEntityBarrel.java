@@ -102,7 +102,7 @@ public class TileEntityBarrel extends TileEntity
 
     public BlockBarrel.BarrelEntry getBarrelType()
     {
-        return ((BlockBarrel) PSBlocks.blockBarrel).entries[barrelType];
+        return ((BlockBarrel) PSBlocks.barrel).entries[barrelType];
     }
 
     @Override

@@ -144,7 +144,7 @@ public class EntityRealityRift extends Entity
 
                                 if (b.getBlockHardness(worldObj, nX + x, nY + y, nZ + z) >= 0.0f && b.getMaterial() != Material.air)
                                 {
-                                    worldObj.setBlock(nX + x, nY + y, nZ + z, PSBlocks.blockGlitched);
+                                    worldObj.setBlock(nX + x, nY + y, nZ + z, PSBlocks.glitched);
                                 }
                             }
                         }

@@ -11,16 +11,24 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import ivorius.psychedelicraft.blocks.PSBlocks;
+import ivorius.psychedelicraft.blocks.TileEntityDryingTable;
 import ivorius.psychedelicraft.entities.DrugInfluence;
 import ivorius.psychedelicraft.entities.DrugInfluenceHarmonium;
 import ivorius.psychedelicraft.entities.PSEntityList;
 import ivorius.psychedelicraft.gui.PSGuiHandler;
+import ivorius.psychedelicraft.items.ItemSmokingPipe;
 import ivorius.psychedelicraft.items.PSItems;
 import ivorius.psychedelicraft.ivToolkit.ChannelHandlerExtendedEntityPropertiesData;
 import ivorius.psychedelicraft.ivToolkit.ChannelHandlerTileEntityData;
 import ivorius.psychedelicraft.worldgen.PSWorldGen;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 import org.apache.logging.log4j.Logger;
@@ -47,7 +55,7 @@ public class Psychedelicraft
     public static PSCoreHandlerCommon coreHandlerCommon;
     public static PSCoreHandlerServer coreHandlerServer;
 
-    public static CreativeTabPsyche creativeTab;
+//    public static CreativeTabPsyche creativeTab;
 
     public static String filePathTexturesFull = "psychedelicraft:textures/mod/";
     public static String filePathTextures = "textures/mod/";
@@ -77,7 +85,7 @@ public class Psychedelicraft
 
         spawnRifts = config.get("Balancing", "spawnRifts", true).getBoolean(true);
 
-        creativeTab = new CreativeTabPsyche("psychedelicraft");
+//        creativeTab = new CreativeTabPsyche("psychedelicraft");
 
         guiHandler = new PSGuiHandler();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
@@ -116,7 +124,7 @@ public class Psychedelicraft
     {
         proxy.registerRenderers();
 
-        creativeTab.tabIcon = PSItems.itemCannabisLeaf;
+//        creativeTab.tabIcon = PSItems.cannabisLeaf;
 
         DrugInfluence.registerInfluence(DrugInfluence.class, "default");
         DrugInfluence.registerInfluence(DrugInfluenceHarmonium.class, "harmonium");
@@ -133,60 +141,60 @@ public class Psychedelicraft
 
     private void addCrafting()
     {
-//        GameRegistry.addRecipe(new ItemStack(itemSyringe), "I", "#", 'I', Items.iron_ingot, '#', Blocks.glass);
-//        GameRegistry.addRecipe(new ItemStack(itemPipe), "  I", " S ", "WS ", 'I', Items.iron_ingot, 'S', Items.stick, 'W', Blocks.planks);
-//
-//        GameRegistry.addRecipe(new ItemStack(itemGlassChalice, 4), "# #", " # ", " # ", '#', Blocks.glass);
-//        GameRegistry.addRecipe(new ItemStack(blockBarrel, 1, 1), "###", "###", "W#W", '#', itemWineGrapes, 'W', Blocks.planks);
-//        GameRegistry.addRecipe(new ItemStack(blockWineGrapeLattice), "###", "###", "O#O", '#', Items.stick, 'O', Blocks.planks);
-//
-//        for (int i = 0; i < 16; i++)
-//        {
-//            GameRegistry.addRecipe(new ItemStack(itemMolotovCocktail, 1, i), "#", "W", '#', Items.paper, 'W', new ItemStack(itemGlassChalice, 1, i + 1));
-//        }
-//
-//        GameRegistry.addRecipe(new ItemStack(itemWoodenMug, 8), "# #", "# #", "###", '#', Blocks.planks);
-//        GameRegistry.addRecipe(new ItemStack(blockBarrel, 1, 0), "###", "###", "WUW", '#', Items.wheat, 'U', Items.water_bucket, 'W', Blocks.planks);
-//
-//        GameRegistry.addRecipe(new ItemStack(blockDryingTable), "###", "#R#", '#', Blocks.planks, 'R', Items.redstone);
-//
-//        TileEntityDryingTable.addDryingResult(itemCannabisLeaf, new ItemStack(itemDriedCannabisLeaves, 3));
-//        TileEntityDryingTable.addDryingResult(itemCannabisBuds, new ItemStack(itemDriedCannabisBuds, 3));
-//        GameRegistry.addRecipe(new ItemStack(itemHashMuffin), "LLL", "#X#", "LLL", 'X', new ItemStack(Items.dye, 1, 3), '#', Items.wheat, 'L', itemDriedCannabisLeaves);
-//        GameRegistry.addRecipe(new ItemStack(itemJoint), "P", "C", "P", 'P', Items.paper, 'C', itemDriedCannabisBuds);
-//        itemPipe.addConsumable(new ItemSmokingPipe.ItemSmokingPipeConsumable(new ItemStack(itemDriedCannabisBuds), new DrugInfluence[]{new DrugInfluence("Cannabis", 20, 0.002, 0.001, 0.25f)}));
-//
-//        TileEntityDryingTable.addDryingResult(Item.getItemFromBlock(Blocks.brown_mushroom), new ItemStack(itemMagicMushroomsBrown, 3));
-//        TileEntityDryingTable.addDryingResult(Item.getItemFromBlock(Blocks.red_mushroom), new ItemStack(itemMagicMushroomsRed, 3));
-//
-//        GameRegistry.addRecipe(new ItemStack(itemCigarette, 4), "P", "T", "P", 'P', Items.paper, 'T', itemDriedTobacco);
-//        GameRegistry.addRecipe(new ItemStack(itemCigar), "TTT", "TTT", "PPP", 'P', Items.paper, 'T', itemDriedTobacco);
-//        TileEntityDryingTable.addDryingResult(itemTobaccoLeaf, new ItemStack(itemDriedTobacco, 3));
-//        itemPipe.addConsumable(new ItemSmokingPipe.ItemSmokingPipeConsumable(new ItemStack(itemDriedTobacco), new DrugInfluence[]{new DrugInfluence("Tobacco", 0, 0.1, 0.02, 0.8f)}));
-//
-//        GameRegistry.addShapelessRecipe(new ItemStack(itemSyringe, 1, itemSyringeCocaineDamage), new ItemStack(Items.water_bucket), new ItemStack(itemSyringe), new ItemStack(itemDriedCocaLeaves));
-//        TileEntityDryingTable.addDryingResult(itemCocaLeaf, new ItemStack(itemDriedCocaLeaves, 3));
-//
-//        GameRegistry.addRecipe(new ItemStack(Blocks.planks, 4, 1), "#", '#', blockPsycheLog);
-//        GameRegistry.addRecipe(new ItemStack(blockBarrel, 1, 2), "JSJ", "AGA", "WUW", 'J', itemJuniperBerries, 'S', Items.sugar, 'A', itemWineGrapes, 'G', Items.wheat, 'U', Items.water_bucket, 'W', Blocks.planks);
-//
-//        GameRegistry.addSmelting(itemCoffeaCherries, new ItemStack(itemCoffeeBeans), 0.2f);
-//
-//        GameRegistry.addShapelessRecipe(new ItemStack(itemColdCoffee), new ItemStack(Items.water_bucket), new ItemStack(itemWoodenMug, 1, 0), new ItemStack(itemCoffeeBeans), new ItemStack(itemCoffeeBeans));
-//        GameRegistry.addSmelting(itemColdCoffee, new ItemStack(itemWoodenMug, 1, 3), 0.2f);
-//        GameRegistry.addShapelessRecipe(new ItemStack(itemSyringe, 1, itemSyringeCaffeineDamage), new ItemStack(Items.water_bucket), new ItemStack(itemSyringe), new ItemStack(itemCoffeeBeans), new ItemStack(itemCoffeeBeans));
-//
-//        GameRegistry.addRecipe(new ItemStack(itemWoodenBowlDrug, 1, 0), "P", "P", "B", 'P', itemDriedPeyote, 'B', Items.bowl);
-//        TileEntityDryingTable.addDryingResult(Item.getItemFromBlock(blockPeyote), new ItemStack(itemDriedPeyote, 3));
-//        GameRegistry.addRecipe(new ItemStack(itemPeyoteJoint), "P", "D", "P", 'P', Items.paper, 'D', itemDriedPeyote);
-//
-//        for (int i = 0; i < 16; i++)
-//        {
-//            itemPipe.addConsumable(new ItemSmokingPipe.ItemSmokingPipeConsumable(new ItemStack(itemHarmonium, 1, 15 - i), new DrugInfluence[]{new DrugInfluenceHarmonium("Harmonium", 0, 0.04, 0.01, 0.65f, EntitySheep.fleeceColorTable[i])}, EntitySheep.fleeceColorTable[i]));
-//            GameRegistry.addShapelessRecipe(new ItemStack(itemHarmonium, 1, i), new ItemStack(Items.dye, 1, i), new ItemStack(Items.glowstone_dust), new ItemStack(itemDriedTobacco));
-//        }
-//
-//        GameRegistry.addRecipe(new ItemStack(blockRiftJar), "O-O", "GO ", "OIO", 'O', Blocks.glass, '-', Blocks.planks, 'G', Items.gold_ingot, 'I', Items.iron_ingot);
+        GameRegistry.addRecipe(new ItemStack(PSItems.syringe), "I", "#", 'I', Items.iron_ingot, '#', Blocks.glass);
+        GameRegistry.addRecipe(new ItemStack(PSItems.pipe), "  I", " S ", "WS ", 'I', Items.iron_ingot, 'S', Items.stick, 'W', Blocks.planks);
+
+        GameRegistry.addRecipe(new ItemStack(PSItems.glassChalice, 4), "# #", " # ", " # ", '#', Blocks.glass);
+        GameRegistry.addRecipe(new ItemStack(PSBlocks.barrel, 1, 1), "###", "###", "W#W", '#', PSItems.wineGrapes, 'W', Blocks.planks);
+        GameRegistry.addRecipe(new ItemStack(PSBlocks.wineGrapeLattice), "###", "###", "O#O", '#', Items.stick, 'O', Blocks.planks);
+
+        for (int i = 0; i < 16; i++)
+        {
+            GameRegistry.addRecipe(new ItemStack(PSItems.molotovCocktail, 1, i), "#", "W", '#', Items.paper, 'W', new ItemStack(PSItems.glassChalice, 1, i + 1));
+        }
+
+        GameRegistry.addRecipe(new ItemStack(PSItems.woodenMug, 8), "# #", "# #", "###", '#', Blocks.planks);
+        GameRegistry.addRecipe(new ItemStack(PSBlocks.barrel, 1, 0), "###", "###", "WUW", '#', Items.wheat, 'U', Items.water_bucket, 'W', Blocks.planks);
+
+        GameRegistry.addRecipe(new ItemStack(PSBlocks.dryingTable), "###", "#R#", '#', Blocks.planks, 'R', Items.redstone);
+
+        TileEntityDryingTable.addDryingResult(PSItems.cannabisLeaf, new ItemStack(PSItems.driedCannabisLeaves, 3));
+        TileEntityDryingTable.addDryingResult(PSItems.cannabisBuds, new ItemStack(PSItems.driedCannabisBuds, 3));
+        GameRegistry.addRecipe(new ItemStack(PSItems.hashMuffin), "LLL", "#X#", "LLL", 'X', new ItemStack(Items.dye, 1, 3), '#', Items.wheat, 'L', PSItems.driedCannabisLeaves);
+        GameRegistry.addRecipe(new ItemStack(PSItems.joint), "P", "C", "P", 'P', Items.paper, 'C', PSItems.driedCannabisBuds);
+        PSItems.pipe.addConsumable(new ItemSmokingPipe.ItemSmokingPipeConsumable(new ItemStack(PSItems.driedCannabisBuds), new DrugInfluence[]{new DrugInfluence("Cannabis", 20, 0.002, 0.001, 0.25f)}));
+
+        TileEntityDryingTable.addDryingResult(Item.getItemFromBlock(Blocks.brown_mushroom), new ItemStack(PSItems.magicMushroomsBrown, 3));
+        TileEntityDryingTable.addDryingResult(Item.getItemFromBlock(Blocks.red_mushroom), new ItemStack(PSItems.magicMushroomsRed, 3));
+
+        GameRegistry.addRecipe(new ItemStack(PSItems.cigarette, 4), "P", "T", "P", 'P', Items.paper, 'T', PSItems.driedTobacco);
+        GameRegistry.addRecipe(new ItemStack(PSItems.cigar), "TTT", "TTT", "PPP", 'P', Items.paper, 'T', PSItems.driedTobacco);
+        TileEntityDryingTable.addDryingResult(PSItems.tobaccoLeaf, new ItemStack(PSItems.driedTobacco, 3));
+        PSItems.pipe.addConsumable(new ItemSmokingPipe.ItemSmokingPipeConsumable(new ItemStack(PSItems.driedTobacco), new DrugInfluence[]{new DrugInfluence("Tobacco", 0, 0.1, 0.02, 0.8f)}));
+
+        GameRegistry.addShapelessRecipe(new ItemStack(PSItems.syringe, 1, PSItems.syringeCocaineDamage), new ItemStack(Items.water_bucket), new ItemStack(PSItems.syringe), new ItemStack(PSItems.driedCocaLeaves));
+        TileEntityDryingTable.addDryingResult(PSItems.cocaLeaf, new ItemStack(PSItems.driedCocaLeaves, 3));
+
+        GameRegistry.addRecipe(new ItemStack(Blocks.planks, 4, 1), "#", '#', PSBlocks.psycheLog);
+        GameRegistry.addRecipe(new ItemStack(PSBlocks.barrel, 1, 2), "JSJ", "AGA", "WUW", 'J', PSItems.juniperBerries, 'S', Items.sugar, 'A', PSItems.wineGrapes, 'G', Items.wheat, 'U', Items.water_bucket, 'W', Blocks.planks);
+
+        GameRegistry.addSmelting(PSItems.coffeaCherries, new ItemStack(PSItems.coffeeBeans), 0.2f);
+
+        GameRegistry.addShapelessRecipe(new ItemStack(PSItems.coldCoffee), new ItemStack(Items.water_bucket), new ItemStack(PSItems.woodenMug, 1, 0), new ItemStack(PSItems.coffeeBeans), new ItemStack(PSItems.coffeeBeans));
+        GameRegistry.addSmelting(PSItems.coldCoffee, new ItemStack(PSItems.woodenMug, 1, 3), 0.2f);
+        GameRegistry.addShapelessRecipe(new ItemStack(PSItems.syringe, 1, PSItems.syringeCaffeineDamage), new ItemStack(Items.water_bucket), new ItemStack(PSItems.syringe), new ItemStack(PSItems.coffeeBeans), new ItemStack(PSItems.coffeeBeans));
+
+        GameRegistry.addRecipe(new ItemStack(PSItems.woodenBowlDrug, 1, 0), "P", "P", "B", 'P', PSItems.driedPeyote, 'B', Items.bowl);
+        TileEntityDryingTable.addDryingResult(Item.getItemFromBlock(PSBlocks.peyote), new ItemStack(PSItems.driedPeyote, 3));
+        GameRegistry.addRecipe(new ItemStack(PSItems.peyoteJoint), "P", "D", "P", 'P', Items.paper, 'D', PSItems.driedPeyote);
+
+        for (int i = 0; i < 16; i++)
+        {
+            PSItems.pipe.addConsumable(new ItemSmokingPipe.ItemSmokingPipeConsumable(new ItemStack(PSItems.harmonium, 1, 15 - i), new DrugInfluence[]{new DrugInfluenceHarmonium("Harmonium", 0, 0.04, 0.01, 0.65f, EntitySheep.fleeceColorTable[i])}, EntitySheep.fleeceColorTable[i]));
+            GameRegistry.addShapelessRecipe(new ItemStack(PSItems.harmonium, 1, i), new ItemStack(Items.dye, 1, i), new ItemStack(Items.glowstone_dust), new ItemStack(PSItems.driedTobacco));
+        }
+
+        GameRegistry.addRecipe(new ItemStack(PSBlocks.riftJar), "O-O", "GO ", "OIO", 'O', Blocks.glass, '-', Blocks.planks, 'G', Items.gold_ingot, 'I', Items.iron_ingot);
     }
 
     @EventHandler

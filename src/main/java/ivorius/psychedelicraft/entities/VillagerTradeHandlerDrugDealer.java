@@ -22,23 +22,23 @@ public class VillagerTradeHandlerDrugDealer implements VillagerRegistry.IVillage
     @Override
     public void manipulateTradesForVillager(EntityVillager villager, MerchantRecipeList recipeList, Random random)
     {
-        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.itemCannabisLeaf, 0.7f, 1, 1);
-        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.itemCannabisSeeds, 0.5f, 1, 5);
-        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.itemDriedCannabisBuds, 0.9f, 1, 2);
-        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.itemDriedCannabisLeaves, 0.8f, 1, 2);
-        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.itemHashMuffin, 0.7f, 1, 2);
+        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.cannabisLeaf, 0.7f, 1, 1);
+        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.cannabisSeeds, 0.5f, 1, 5);
+        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.driedCannabisBuds, 0.9f, 1, 2);
+        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.driedCannabisLeaves, 0.8f, 1, 2);
+        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.hashMuffin, 0.7f, 1, 2);
 
-        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.itemMagicMushroomsBrown, 0.5f, 2, 8);
-        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.itemMagicMushroomsRed, 0.5f, 2, 8);
+        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.magicMushroomsBrown, 0.5f, 2, 8);
+        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.magicMushroomsRed, 0.5f, 2, 8);
 
-        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.itemCocaLeaf, 0.5f, 1, 4);
-        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.itemCocaSeeds, 0.5f, 2, 4);
-        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.itemDriedCocaLeaves, 0.5f, 2, 20);
+        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.cocaLeaf, 0.5f, 1, 4);
+        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.cocaSeeds, 0.5f, 2, 4);
+        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.driedCocaLeaves, 0.5f, 2, 20);
 
-        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.itemSyringe, 0.5f, 2, 4);
+        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.syringe, 0.5f, 2, 4);
 
-        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.itemDriedPeyote, 0.5f, 3, 10);
-        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.itemPeyoteJoint, 0.5f, 1, 3);
-        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, Item.getItemFromBlock(PSBlocks.blockPeyote), 0.5f, 1, 5);
+        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.driedPeyote, 0.5f, 3, 10);
+        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.peyoteJoint, 0.5f, 1, 3);
+        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, Item.getItemFromBlock(PSBlocks.peyote), 0.5f, 1, 5);
     }
 }
