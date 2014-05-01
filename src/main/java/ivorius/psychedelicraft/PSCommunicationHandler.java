@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.DimensionManager;
 
 /**
@@ -99,7 +100,7 @@ public class PSCommunicationHandler
         }
         else
         {
-            return DimensionManager.getWorld(compound.getInteger(worldKey)).getEntityByID(compound.getInteger(entityKey));
+            return MinecraftServer.getServer().worldServerForDimension(compound.getInteger(worldKey)).getEntityByID(compound.getInteger(entityKey));
         }
     }
 
