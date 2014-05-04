@@ -34,48 +34,52 @@ public class ItemSmokingPipe extends Item
     }
 
     @Override
-    public EnumAction getItemUseAction(ItemStack par1ItemStack)
+    public EnumAction getItemUseAction(ItemStack stack)
     {
         return EnumAction.bow;
     }
 
     @Override
-    public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onEaten(ItemStack stack, World world, EntityPlayer player)
     {
-        ItemSmokingPipeConsumable usedConsumable = getUsedConsumable(par3EntityPlayer);
+        ItemSmokingPipeConsumable usedConsumable = getUsedConsumable(player);
 
         if (usedConsumable != null)
         {
-            if (IvInventoryHelper.consumeInventoryItem(par3EntityPlayer.inventory, usedConsumable.consumedItem))
+            if (IvInventoryHelper.consumeInventoryItem(player.inventory, usedConsumable.consumedItem))
             {
-                for (DrugInfluence influence : usedConsumable.drugInfluences)
+                DrugHelper drugHelper = DrugHelper.getDrugHelper(player);
+
+                if (drugHelper != null)
                 {
-                    DrugHelper.getDrugHelper(par3EntityPlayer).addToDrug(influence.clone());
+                    for (DrugInfluence influence : usedConsumable.drugInfluences) {
+                        drugHelper.addToDrug(influence.clone());
+                    }
+
+                    stack.damageItem(1, player);
+
+                    drugHelper.startBreathingSmoke(10 + world.rand.nextInt(10), usedConsumable.smokeColor);
                 }
-
-                par1ItemStack.damageItem(1, par3EntityPlayer);
-
-                DrugHelper.getDrugHelper(par3EntityPlayer).startBreathingSmoke(10 + par2World.rand.nextInt(10), usedConsumable.smokeColor);
             }
         }
 
-        return super.onEaten(par1ItemStack, par2World, par3EntityPlayer);
+        return super.onEaten(stack, world, player);
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(par3EntityPlayer);
+        DrugHelper drugHelper = DrugHelper.getDrugHelper(player);
 
         if (drugHelper != null && drugHelper.timeBreathingSmoke <= 0)
         {
-            if (getUsedConsumable(par3EntityPlayer) != null)
+            if (getUsedConsumable(player) != null)
             {
-                par3EntityPlayer.setItemInUse(par1ItemStack, getMaxItemUseDuration(par1ItemStack));
+                player.setItemInUse(stack, getMaxItemUseDuration(stack));
             }
         }
 
-        return par1ItemStack;
+        return stack;
     }
 
     public ItemSmokingPipeConsumable getUsedConsumable(EntityPlayer player)
@@ -92,7 +96,7 @@ public class ItemSmokingPipe extends Item
     }
 
     @Override
-    public int getMaxItemUseDuration(ItemStack par1ItemStack)
+    public int getMaxItemUseDuration(ItemStack stack)
     {
         return 25;
     }

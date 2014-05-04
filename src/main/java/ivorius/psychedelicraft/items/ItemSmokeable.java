@@ -43,46 +43,46 @@ public class ItemSmokeable extends Item
     }
 
     @Override
-    public EnumAction getItemUseAction(ItemStack par1ItemStack)
+    public EnumAction getItemUseAction(ItemStack stack)
     {
         return EnumAction.bow;
     }
 
     @Override
-    public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onEaten(ItemStack stack, World world, EntityPlayer player)
     {
         for (DrugInfluence drugInfluence : drugEffects)
         {
-            DrugHelper.getDrugHelper(par3EntityPlayer).addToDrug(drugInfluence.clone());
+            DrugHelper.getDrugHelper(player).addToDrug(drugInfluence.clone());
         }
 
-        if (par1ItemStack.getItemDamage() < textures.length - 1)
+        if (stack.getItemDamage() < textures.length - 1)
         {
-            par1ItemStack.setItemDamage(par1ItemStack.getItemDamage() + 1);
+            stack.setItemDamage(stack.getItemDamage() + 1);
         }
         else
         {
-            par1ItemStack.stackSize--;
+            stack.stackSize--;
         }
 
-        DrugHelper.getDrugHelper(par3EntityPlayer).startBreathingSmoke(10 + par2World.rand.nextInt(10), smokeColor);
+        DrugHelper.getDrugHelper(player).startBreathingSmoke(10 + world.rand.nextInt(10), smokeColor);
 
-        return super.onEaten(par1ItemStack, par2World, par3EntityPlayer);
+        return super.onEaten(stack, world, player);
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (DrugHelper.getDrugHelper(par3EntityPlayer).timeBreathingSmoke == 0)
+        if (DrugHelper.getDrugHelper(player).timeBreathingSmoke == 0)
         {
-            par3EntityPlayer.setItemInUse(par1ItemStack, getMaxItemUseDuration(par1ItemStack));
+            player.setItemInUse(stack, getMaxItemUseDuration(stack));
         }
 
-        return par1ItemStack;
+        return stack;
     }
 
     @Override
-    public int getMaxItemUseDuration(ItemStack par1ItemStack)
+    public int getMaxItemUseDuration(ItemStack stack)
     {
         return 25;
     }
@@ -94,18 +94,18 @@ public class ItemSmokeable extends Item
     }
 
     @Override
-     public void registerIcons(IIconRegister par1IconRegister)
+     public void registerIcons(IIconRegister iconRegister)
 {
     for (int i = 0; i < textureNames.length; i++)
     {
-        textures[i] = par1IconRegister.registerIcon(getIconString() + "_" + textureNames[i]);
+        textures[i] = iconRegister.registerIcon(getIconString() + "_" + textureNames[i]);
     }
 
     for (int i = 0; i < inUseTextureNames.length; i++)
     {
         if (inUseTextureNames[i] != null)
         {
-            inUseTextures[i] = par1IconRegister.registerIcon(getIconString() + "_" + inUseTextureNames[i]);
+            inUseTextures[i] = iconRegister.registerIcon(getIconString() + "_" + inUseTextureNames[i]);
         }
     }
 }
@@ -124,11 +124,11 @@ public class ItemSmokeable extends Item
     }
 
     @Override
-    public IIcon getIconFromDamage(int par1)
+    public IIcon getIconFromDamage(int damage)
     {
-        if (par1 < textures.length)
+        if (damage < textures.length)
         {
-            return textures[par1];
+            return textures[damage];
         }
 
         return textures[0];
