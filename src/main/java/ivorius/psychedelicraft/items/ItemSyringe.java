@@ -24,6 +24,9 @@ import java.util.Set;
 
 public class ItemSyringe extends Item
 {
+    public static final int damageCocaine = 1;
+    public static final int damageCaffeine = 2;
+
     public Hashtable<Integer, DrugInfluence[]> effects;
     public Hashtable<Integer, Integer> liquidColors;
     public Hashtable<Integer, String> names;
@@ -48,13 +51,11 @@ public class ItemSyringe extends Item
         return EnumAction.bow;
     }
 
-    public int addEffect(int damage, DrugInfluence[] effects, int color, String name)
+    public void addEffect(int damage, DrugInfluence[] effects, int color, String name)
     {
         this.effects.put(damage, effects);
         this.liquidColors.put(damage, color);
         this.names.put(damage, name);
-
-        return damage;
     }
 
     @Override

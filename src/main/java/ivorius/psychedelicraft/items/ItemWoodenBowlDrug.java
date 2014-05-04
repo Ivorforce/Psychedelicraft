@@ -22,6 +22,8 @@ import java.util.List;
 
 public class ItemWoodenBowlDrug extends Item
 {
+    public static final int damagePeyote = 0;
+
     public Hashtable<Integer, DrugInfluence[]> effects;
     public Hashtable<Integer, String> translationNames;
     public Hashtable<Integer, String> iconFiles;
@@ -40,13 +42,11 @@ public class ItemWoodenBowlDrug extends Item
         icons = new Hashtable<Integer, IIcon>();
     }
 
-    public int addEffect(int damage, DrugInfluence[] effects, String translationName, String iconFile)
+    public void addEffect(int damage, DrugInfluence[] effects, String translationName, String iconFile)
     {
         this.effects.put(damage, effects);
         this.translationNames.put(damage, translationName);
         this.iconFiles.put(damage, iconFile);
-
-        return damage;
     }
 
     @Override

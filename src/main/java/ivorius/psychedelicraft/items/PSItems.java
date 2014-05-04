@@ -55,11 +55,8 @@ public class PSItems
     public static Item driedCocaLeaves;
 
     public static ItemSyringe syringe;
-    public static int syringeCocaineDamage;
-    public static int syringeCaffeineDamage;
 
     public static ItemWoodenBowlDrug woodenBowlDrug;
-    public static int woodenBowlPeyoteDamage;
 
     public static Item juniperBerries;
 
@@ -93,7 +90,7 @@ public class PSItems
         GameRegistry.registerItem(pipe, "smokingPipe", Psychedelicraft.MODID);
         pipe.setCreativeTab(CreativeTabs.tabMisc);
 
-        bong = (ItemBong) (new ItemBong().setUnlocalizedName("bong").setTextureName(Psychedelicraft.textureBase + "bong"));
+        bong = (ItemBong) new ItemBong().setUnlocalizedName("bong").setTextureName(Psychedelicraft.textureBase + "bong");
         GameRegistry.registerItem(bong, "bong", Psychedelicraft.MODID);
         bong.setCreativeTab(CreativeTabs.tabMisc);
 
@@ -232,9 +229,9 @@ public class PSItems
 
     public static void preInitEnd(FMLPreInitializationEvent event, Psychedelicraft mod, Configuration configuration)
     {
-        syringeCocaineDamage = syringe.addEffect(1, new DrugInfluence[]{new DrugInfluence("Cocaine", 0, 0.005, 0.01, 0.5f)}, 0x55ffffff, "cocaine");
-        syringeCaffeineDamage = syringe.addEffect(2, new DrugInfluence[]{new DrugInfluence("Caffeine", 0, 0.005, 0.01, 0.85f)}, 0x552e1404, "caffeine");
+        syringe.addEffect(ItemSyringe.damageCocaine, new DrugInfluence[]{new DrugInfluence("Cocaine", 0, 0.005, 0.01, 0.5f)}, 0x55ffffff, "cocaine");
+        syringe.addEffect(ItemSyringe.damageCaffeine, new DrugInfluence[]{new DrugInfluence("Caffeine", 0, 0.005, 0.01, 0.85f)}, 0x552e1404, "caffeine");
 
-        woodenBowlPeyoteDamage = woodenBowlDrug.addEffect(0, new DrugInfluence[]{new DrugInfluence("Peyote", 15, 0.005, 0.003, 0.9f)}, "peyote", Psychedelicraft.textureBase + "woodenBowlPeyote");
+        woodenBowlDrug.addEffect(ItemWoodenBowlDrug.damagePeyote, new DrugInfluence[]{new DrugInfluence("Peyote", 15, 0.005, 0.003, 0.9f)}, "peyote", Psychedelicraft.textureBase + "woodenBowlPeyote");
     }
 }

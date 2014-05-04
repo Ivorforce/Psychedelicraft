@@ -18,9 +18,7 @@ import ivorius.psychedelicraft.entities.DrugInfluence;
 import ivorius.psychedelicraft.entities.DrugInfluenceHarmonium;
 import ivorius.psychedelicraft.entities.PSEntityList;
 import ivorius.psychedelicraft.gui.PSGuiHandler;
-import ivorius.psychedelicraft.items.ItemBong;
-import ivorius.psychedelicraft.items.ItemSmokingPipe;
-import ivorius.psychedelicraft.items.PSItems;
+import ivorius.psychedelicraft.items.*;
 import ivorius.psychedelicraft.ivToolkit.ChannelHandlerExtendedEntityPropertiesData;
 import ivorius.psychedelicraft.ivToolkit.ChannelHandlerTileEntityData;
 import ivorius.psychedelicraft.worldgen.PSWorldGen;
@@ -178,7 +176,7 @@ public class Psychedelicraft
         PSItems.pipe.addConsumable(new ItemSmokingPipe.ItemSmokingPipeConsumable(new ItemStack(PSItems.driedTobacco), new DrugInfluence[]{new DrugInfluence("Tobacco", 0, 0.1, 0.02, 0.8f)}));
         PSItems.bong.addConsumable(new ItemBong.ItemBongConsumable(new ItemStack(PSItems.driedTobacco), new DrugInfluence[]{new DrugInfluence("Tobacco", 0, 0.1, 0.02, 0.8f)})); //TODO: Play around with the bongs benefits
 
-        GameRegistry.addShapelessRecipe(new ItemStack(PSItems.syringe, 1, PSItems.syringeCocaineDamage), new ItemStack(Items.water_bucket), new ItemStack(PSItems.syringe), new ItemStack(PSItems.driedCocaLeaves));
+        GameRegistry.addShapelessRecipe(new ItemStack(PSItems.syringe, 1, ItemSyringe.damageCocaine), new ItemStack(Items.water_bucket), new ItemStack(PSItems.syringe), new ItemStack(PSItems.driedCocaLeaves));
         TileEntityDryingTable.addDryingResult(PSItems.cocaLeaf, new ItemStack(PSItems.driedCocaLeaves, 3));
 
         GameRegistry.addRecipe(new ItemStack(Blocks.planks, 4, 1), "#", '#', PSBlocks.psycheLog);
@@ -188,9 +186,9 @@ public class Psychedelicraft
 
         GameRegistry.addShapelessRecipe(new ItemStack(PSItems.coldCoffee), new ItemStack(Items.water_bucket), new ItemStack(PSItems.woodenMug, 1, 0), new ItemStack(PSItems.coffeeBeans), new ItemStack(PSItems.coffeeBeans));
         GameRegistry.addSmelting(PSItems.coldCoffee, new ItemStack(PSItems.woodenMug, 1, 3), 0.2f);
-        GameRegistry.addShapelessRecipe(new ItemStack(PSItems.syringe, 1, PSItems.syringeCaffeineDamage), new ItemStack(Items.water_bucket), new ItemStack(PSItems.syringe), new ItemStack(PSItems.coffeeBeans), new ItemStack(PSItems.coffeeBeans));
+        GameRegistry.addShapelessRecipe(new ItemStack(PSItems.syringe, 1, ItemSyringe.damageCaffeine), new ItemStack(Items.water_bucket), new ItemStack(PSItems.syringe), new ItemStack(PSItems.coffeeBeans), new ItemStack(PSItems.coffeeBeans));
 
-        GameRegistry.addRecipe(new ItemStack(PSItems.woodenBowlDrug, 1, 0), "P", "P", "B", 'P', PSItems.driedPeyote, 'B', Items.bowl);
+        GameRegistry.addRecipe(new ItemStack(PSItems.woodenBowlDrug, 1, ItemWoodenBowlDrug.damagePeyote), "P", "P", "B", 'P', PSItems.driedPeyote, 'B', Items.bowl);
         TileEntityDryingTable.addDryingResult(Item.getItemFromBlock(PSBlocks.peyote), new ItemStack(PSItems.driedPeyote, 3));
         GameRegistry.addRecipe(new ItemStack(PSItems.peyoteJoint), "P", "D", "P", 'P', Items.paper, 'D', PSItems.driedPeyote);
 
