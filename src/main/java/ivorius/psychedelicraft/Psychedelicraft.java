@@ -166,7 +166,7 @@ public class Psychedelicraft
         GameRegistry.addRecipe(new ItemStack(PSItems.hashMuffin), "LLL", "#X#", "LLL", 'X', new ItemStack(Items.dye, 1, 3), '#', Items.wheat, 'L', PSItems.driedCannabisLeaves);
         GameRegistry.addRecipe(new ItemStack(PSItems.joint), "P", "C", "P", 'P', Items.paper, 'C', PSItems.driedCannabisBuds);
         PSItems.pipe.addConsumable(new ItemSmokingPipe.ItemSmokingPipeConsumable(new ItemStack(PSItems.driedCannabisBuds), new DrugInfluence[]{new DrugInfluence("Cannabis", 20, 0.002, 0.001, 0.25f)}));
-        PSItems.bong.addConsumable(new ItemBong.ItemBongConsumable(new ItemStack(PSItems.driedCannabisBuds), new DrugInfluence[]{new DrugInfluence("Cannabis", 20, 0.002, 0.001, 0.25f)})); //TODO: Play around with the bongs benefits
+        PSItems.bong.addConsumable(new ItemBong.ItemBongConsumable(new ItemStack(PSItems.driedCannabisBuds), new DrugInfluence[]{new DrugInfluence("Cannabis", 20, 0.002, 0.001, 0.2f)})); //TODO: Play around with the bongs benefits
 
         TileEntityDryingTable.addDryingResult(Item.getItemFromBlock(Blocks.brown_mushroom), new ItemStack(PSItems.magicMushroomsBrown, 3));
         TileEntityDryingTable.addDryingResult(Item.getItemFromBlock(Blocks.red_mushroom), new ItemStack(PSItems.magicMushroomsRed, 3));
@@ -175,7 +175,7 @@ public class Psychedelicraft
         GameRegistry.addRecipe(new ItemStack(PSItems.cigar), "TTT", "TTT", "PPP", 'P', Items.paper, 'T', PSItems.driedTobacco);
         TileEntityDryingTable.addDryingResult(PSItems.tobaccoLeaf, new ItemStack(PSItems.driedTobacco, 3));
         PSItems.pipe.addConsumable(new ItemSmokingPipe.ItemSmokingPipeConsumable(new ItemStack(PSItems.driedTobacco), new DrugInfluence[]{new DrugInfluence("Tobacco", 0, 0.1, 0.02, 0.8f)}));
-        PSItems.bong.addConsumable(new ItemBong.ItemBongConsumable(new ItemStack(PSItems.driedTobacco), new DrugInfluence[]{new DrugInfluence("Tobacco", 0, 0.1, 0.02, 0.8f)})); //TODO: Play around with the bongs benefits
+        PSItems.bong.addConsumable(new ItemBong.ItemBongConsumable(new ItemStack(PSItems.driedTobacco), new DrugInfluence[]{new DrugInfluence("Tobacco", 0, 0.1, 0.02, 0.6f)})); //TODO: Play around with the bongs benefits
 
         addShapelessRecipe(new ItemStack(PSItems.syringe, 1, ItemSyringe.damageCocaine), Items.water_bucket, new ItemStack(PSItems.syringe, 1, 0), PSItems.driedCocaLeaves);
         TileEntityDryingTable.addDryingResult(PSItems.cocaLeaf, new ItemStack(PSItems.driedCocaLeaves, 3));
