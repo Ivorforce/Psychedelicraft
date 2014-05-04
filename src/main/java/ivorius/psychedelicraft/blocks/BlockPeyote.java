@@ -22,6 +22,7 @@ public class BlockPeyote extends BlockContainer implements IvBonemealCompatibleB
         super(Material.plants);
         float var3 = 0.2F;
         this.setBlockBounds(0.5F - var3, 0.0F, 0.5F - var3, 0.5F + var3, var3 * 2.0F, 0.5F + var3);
+        this.setStepSound(soundTypeGrass);
         this.setTickRandomly(true);
     }
 

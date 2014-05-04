@@ -18,6 +18,7 @@ import ivorius.psychedelicraft.entities.DrugInfluence;
 import ivorius.psychedelicraft.entities.DrugInfluenceHarmonium;
 import ivorius.psychedelicraft.entities.PSEntityList;
 import ivorius.psychedelicraft.gui.PSGuiHandler;
+import ivorius.psychedelicraft.items.ItemBong;
 import ivorius.psychedelicraft.items.ItemSmokingPipe;
 import ivorius.psychedelicraft.items.PSItems;
 import ivorius.psychedelicraft.ivToolkit.ChannelHandlerExtendedEntityPropertiesData;
@@ -31,6 +32,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Logger;
 
 @Mod(modid = Psychedelicraft.MODID, version = Psychedelicraft.VERSION)
@@ -143,6 +145,8 @@ public class Psychedelicraft
     {
         GameRegistry.addRecipe(new ItemStack(PSItems.syringe), "I", "#", 'I', Items.iron_ingot, '#', Blocks.glass);
         GameRegistry.addRecipe(new ItemStack(PSItems.pipe), "  I", " S ", "WS ", 'I', Items.iron_ingot, 'S', Items.stick, 'W', Blocks.planks);
+        GameRegistry.addRecipe(new ItemStack(PSItems.bong, 1, 3), " P ", "G G", "GGG", 'P', Blocks.glass_pane, 'G', Blocks.glass);
+        GameRegistry.addShapelessRecipe(new ItemStack(PSItems.bong), Items.water_bucket, new ItemStack(PSItems.bong, 1, OreDictionary.WILDCARD_VALUE));
 
         GameRegistry.addRecipe(new ItemStack(PSItems.glassChalice, 4), "# #", " # ", " # ", '#', Blocks.glass);
         GameRegistry.addRecipe(new ItemStack(PSBlocks.barrel, 1, 1), "###", "###", "W#W", '#', PSItems.wineGrapes, 'W', Blocks.planks);
@@ -163,6 +167,7 @@ public class Psychedelicraft
         GameRegistry.addRecipe(new ItemStack(PSItems.hashMuffin), "LLL", "#X#", "LLL", 'X', new ItemStack(Items.dye, 1, 3), '#', Items.wheat, 'L', PSItems.driedCannabisLeaves);
         GameRegistry.addRecipe(new ItemStack(PSItems.joint), "P", "C", "P", 'P', Items.paper, 'C', PSItems.driedCannabisBuds);
         PSItems.pipe.addConsumable(new ItemSmokingPipe.ItemSmokingPipeConsumable(new ItemStack(PSItems.driedCannabisBuds), new DrugInfluence[]{new DrugInfluence("Cannabis", 20, 0.002, 0.001, 0.25f)}));
+        PSItems.bong.addConsumable(new ItemBong.ItemBongConsumable(new ItemStack(PSItems.driedCannabisBuds), new DrugInfluence[]{new DrugInfluence("Cannabis", 20, 0.002, 0.001, 0.25f)})); //TODO: Play around with the bongs benefits
 
         TileEntityDryingTable.addDryingResult(Item.getItemFromBlock(Blocks.brown_mushroom), new ItemStack(PSItems.magicMushroomsBrown, 3));
         TileEntityDryingTable.addDryingResult(Item.getItemFromBlock(Blocks.red_mushroom), new ItemStack(PSItems.magicMushroomsRed, 3));
@@ -171,6 +176,7 @@ public class Psychedelicraft
         GameRegistry.addRecipe(new ItemStack(PSItems.cigar), "TTT", "TTT", "PPP", 'P', Items.paper, 'T', PSItems.driedTobacco);
         TileEntityDryingTable.addDryingResult(PSItems.tobaccoLeaf, new ItemStack(PSItems.driedTobacco, 3));
         PSItems.pipe.addConsumable(new ItemSmokingPipe.ItemSmokingPipeConsumable(new ItemStack(PSItems.driedTobacco), new DrugInfluence[]{new DrugInfluence("Tobacco", 0, 0.1, 0.02, 0.8f)}));
+        PSItems.bong.addConsumable(new ItemBong.ItemBongConsumable(new ItemStack(PSItems.driedTobacco), new DrugInfluence[]{new DrugInfluence("Tobacco", 0, 0.1, 0.02, 0.8f)})); //TODO: Play around with the bongs benefits
 
         GameRegistry.addShapelessRecipe(new ItemStack(PSItems.syringe, 1, PSItems.syringeCocaineDamage), new ItemStack(Items.water_bucket), new ItemStack(PSItems.syringe), new ItemStack(PSItems.driedCocaLeaves));
         TileEntityDryingTable.addDryingResult(PSItems.cocaLeaf, new ItemStack(PSItems.driedCocaLeaves, 3));

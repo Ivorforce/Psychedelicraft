@@ -37,6 +37,7 @@ public class PSItems
     public static Item driedCannabisBuds;
     public static Item driedCannabisLeaves;
     public static ItemSmokingPipe pipe;
+    public static ItemBong bong;
     public static Item hashMuffin;
 
     public static Item magicMushroomsBrown;
@@ -91,6 +92,10 @@ public class PSItems
         pipe = (ItemSmokingPipe) (new ItemSmokingPipe().setUnlocalizedName("smokingPipe").setTextureName(Psychedelicraft.textureBase + "smokingPipe"));
         GameRegistry.registerItem(pipe, "smokingPipe", Psychedelicraft.MODID);
         pipe.setCreativeTab(CreativeTabs.tabMisc);
+
+        bong = (ItemBong) (new ItemBong().setUnlocalizedName("bong").setTextureName(Psychedelicraft.textureBase + "bong"));
+        GameRegistry.registerItem(bong, "bong", Psychedelicraft.MODID);
+        bong.setCreativeTab(CreativeTabs.tabMisc);
 
         //----------------------------------------------------------Wine----------------------------------
 
