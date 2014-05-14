@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class DrinkWine implements IDrink
 {
-    public ItemStack createWineStack(Item item, int stackSize, int wineStrength)
+    public static ItemStack createWineStack(Item item, int stackSize, int wineStrength)
     {
         ItemStack stack = DrinkRegistry.createDrinkStack(item, stackSize, "wine");
         stack.setTagInfo("wineStrength", new NBTTagInt(wineStrength));

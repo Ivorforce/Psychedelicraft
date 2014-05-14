@@ -41,7 +41,7 @@ public class TileEntityRendererBarrel extends TileEntitySpecialRenderer
         Entity emptyEntity = new EntityArrow(tileEntity.getWorldObj());
         emptyEntity.ticksExisted = (int) (tileEntity.getTapRotation() * 100.0f);
 
-        this.bindTexture(tileEntity.getBarrelType().barrelTexture);
+        this.bindTexture(tileEntity.getBarrelType().getTexture(tileEntity));
         barrelModel.render(emptyEntity, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 
         GL11.glPopMatrix();

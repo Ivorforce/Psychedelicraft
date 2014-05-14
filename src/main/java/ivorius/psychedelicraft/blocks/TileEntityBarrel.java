@@ -16,7 +16,7 @@ public class TileEntityBarrel extends TileEntity
 {
     public int barrelType;
 
-    public float currentItemDamage;
+    public int ticksExisted;
     public int currentContainedItems;
 
     public float tapRotation = 0.0f;
@@ -24,7 +24,6 @@ public class TileEntityBarrel extends TileEntity
 
     public TileEntityBarrel()
     {
-        currentItemDamage = 0.0f;
         currentContainedItems = 0;
     }
 
@@ -32,18 +31,13 @@ public class TileEntityBarrel extends TileEntity
     {
         barrelType = type;
 
-        currentItemDamage = this.getBarrelType().startMetadata;
-        currentContainedItems = this.getBarrelType().containedItemQuantity;
+        currentContainedItems = this.getBarrelType().getContainedItems();
     }
 
     @Override
     public void updateEntity()
     {
-        currentItemDamage += 1.0f / 8000.0f;
-        if (currentItemDamage > getBarrelType().maxMetadata)
-        {
-            currentItemDamage = getBarrelType().maxMetadata;
-        }
+        ticksExisted ++;
 
         if (timeLeftTapOpen > 0)
         {
@@ -67,7 +61,7 @@ public class TileEntityBarrel extends TileEntity
 
         nbttagcompound.setInteger("barrelType", barrelType);
 
-        nbttagcompound.setFloat("currentItemDamage", currentItemDamage);
+        nbttagcompound.setInteger("ticksExisted", ticksExisted);
 
         nbttagcompound.setInteger("currentContainedItems", currentContainedItems);
 
@@ -82,7 +76,7 @@ public class TileEntityBarrel extends TileEntity
 
         this.setBarrelType(nbttagcompound.getInteger("barrelType"));
 
-        currentItemDamage = nbttagcompound.getFloat("currentItemDamage");
+        ticksExisted = nbttagcompound.getInteger("ticksExisted");
 
         currentContainedItems = nbttagcompound.getInteger("currentContainedItems");
 
@@ -100,7 +94,7 @@ public class TileEntityBarrel extends TileEntity
         return tapRotation;
     }
 
-    public BlockBarrel.BarrelEntry getBarrelType()
+    public BlockBarrel.IBarrelEntry getBarrelType()
     {
         return ((BlockBarrel) PSBlocks.barrel).entries[barrelType];
     }

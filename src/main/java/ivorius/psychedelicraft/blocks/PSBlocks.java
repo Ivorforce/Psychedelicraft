@@ -124,13 +124,13 @@ public class PSBlocks
     public static void preInitEnd(FMLPreInitializationEvent event, Psychedelicraft mod, Configuration configuration)
     {
         ResourceLocation beerBarrelTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "beerBarrelTexture.png");
-        BlockBarrel.registerBarrelEntry(0, barrel, new BlockBarrel.BarrelEntry(beerBarrelTexture, PSItems.woodenMug, 0, PSItems.woodenMug, 15, 1, 1), new ItemBarrel.BarrelEntry("beer", 0, Psychedelicraft.textureBase + "barrelItemBeer"));
+        BlockBarrel.registerBarrelEntry(0, barrel, new BlockBarrel.BarrelEntry(beerBarrelTexture, "beer", 15), new ItemBarrel.BarrelEntry("beer", 0, Psychedelicraft.textureBase + "barrelItemBeer"));
 
         ResourceLocation wineBarrelTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "wineBarrelTexture.png");
-        BlockBarrel.registerBarrelEntry(1, barrel, new BlockBarrel.BarrelEntry(wineBarrelTexture, PSItems.glassChalice, 0, PSItems.glassChalice, 10, 15, 1), new ItemBarrel.BarrelEntry("wine", 1, Psychedelicraft.textureBase + "barrelItemWine"));
+        BlockBarrel.registerBarrelEntry(1, barrel, new BlockBarrel.BarrelEntryWine(wineBarrelTexture, "wine", 15), new ItemBarrel.BarrelEntry("wine", 1, Psychedelicraft.textureBase + "barrelItemWine"));
 
         ResourceLocation jeneverBarrelTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "jeneverBarrelTexture.png");
-        BlockBarrel.registerBarrelEntry(2, barrel, new BlockBarrel.BarrelEntry(jeneverBarrelTexture, PSItems.woodenMug, 0, PSItems.woodenMug, 15, 2, 2), new ItemBarrel.BarrelEntry("jenever", 2, Psychedelicraft.textureBase + "barrelItemJenever"));
+        BlockBarrel.registerBarrelEntry(2, barrel, new BlockBarrel.BarrelEntry(jeneverBarrelTexture, "jenever", 15), new ItemBarrel.BarrelEntry("jenever", 2, Psychedelicraft.textureBase + "barrelItemJenever"));
     }
 
     public static void registerBlockDefault(Block block, String id)
