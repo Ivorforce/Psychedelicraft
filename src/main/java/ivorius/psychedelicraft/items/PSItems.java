@@ -56,14 +56,13 @@ public class PSItems
 
     public static ItemSyringe syringe;
 
-    public static ItemWoodenBowlDrug woodenBowlDrug;
+    public static Item woodenBowlDrug;
 
     public static Item juniperBerries;
 
     public static Item coffeaCherries;
 
     public static Item coffeeBeans;
-    public static Item coldCoffee;
 
     public static Item driedPeyote;
     public static Item peyoteJoint;
@@ -78,11 +77,12 @@ public class PSItems
         GameRegistry.registerItem(syringe, "syringe", Psychedelicraft.MODID);
         syringe.setCreativeTab(CreativeTabs.tabMisc);
 
-        woodenBowlDrug = (ItemWoodenBowlDrug) new ItemWoodenBowlDrug().setUnlocalizedName("woodenBowlDrug").setTextureName(Psychedelicraft.textureBase + "woodenBowl");
+        woodenBowlDrug = new ItemDrinkHolder().setUnlocalizedName("woodenBowlDrug").setTextureName("bowl");
+        ((ItemDrinkHolder) woodenBowlDrug).addEmptySelfToCreativeMenu = false;
         GameRegistry.registerItem(woodenBowlDrug, "psycheWoodenBowl", Psychedelicraft.MODID);
         woodenBowlDrug.setCreativeTab(CreativeTabs.tabFood);
 
-        woodenMug = new ItemWoodenMug().setUnlocalizedName("woodenMug").setTextureName(Psychedelicraft.textureBase + "woodenMug");
+        woodenMug = new ItemDrinkHolder().setUnlocalizedName("woodenMug").setTextureName(Psychedelicraft.textureBase + "woodenMug");
         GameRegistry.registerItem(woodenMug, "woodenMug", Psychedelicraft.MODID);
         woodenMug.setCreativeTab(CreativeTabs.tabFood);
 
@@ -96,7 +96,7 @@ public class PSItems
 
         //----------------------------------------------------------Wine----------------------------------
 
-        glassChalice = new ItemGlassChalice().setUnlocalizedName("glassChalice").setTextureName(Psychedelicraft.textureBase + "glassChalice");
+        glassChalice = new ItemDrinkHolder().setUnlocalizedName("glassChalice").setTextureName(Psychedelicraft.textureBase + "glassChalice");
         GameRegistry.registerItem(glassChalice, "glassChalice", Psychedelicraft.MODID);
         glassChalice.setCreativeTab(CreativeTabs.tabFood);
 
@@ -206,10 +206,6 @@ public class PSItems
         GameRegistry.registerItem(coffeeBeans, "coffeeBeans", Psychedelicraft.MODID);
         coffeeBeans.setCreativeTab(CreativeTabs.tabFood);
 
-        coldCoffee = new ItemWoodenMugColdCoffee().setUnlocalizedName("coldCoffee").setTextureName(Psychedelicraft.textureBase + "coldCoffee");
-        GameRegistry.registerItem(coldCoffee, "coldCoffee", Psychedelicraft.MODID);
-        coldCoffee.setCreativeTab(CreativeTabs.tabFood);
-
         //----------------------------------------------------------Peyote----------------------------------
 
         driedPeyote = new ItemEdibleDrug(new DrugInfluence("Peyote", 15, 0.005, 0.003, 0.5f)).setUnlocalizedName("driedPeyote").setTextureName(Psychedelicraft.textureBase + "driedPeyote");
@@ -232,6 +228,20 @@ public class PSItems
         syringe.addEffect(ItemSyringe.damageCocaine, new DrugInfluence[]{new DrugInfluence("Cocaine", 0, 0.005, 0.01, 0.5f)}, 0x55ffffff, "cocaine");
         syringe.addEffect(ItemSyringe.damageCaffeine, new DrugInfluence[]{new DrugInfluence("Caffeine", 0, 0.005, 0.01, 0.85f)}, 0x552e1404, "caffeine");
 
-        woodenBowlDrug.addEffect(ItemWoodenBowlDrug.damagePeyote, new DrugInfluence[]{new DrugInfluence("Peyote", 15, 0.005, 0.003, 0.9f)}, "peyote", Psychedelicraft.textureBase + "woodenBowlPeyote");
+        DrinkRegistry.registerDrink("beer", new Drink(new DrugInfluence("Alcohol", 20, 0.002, 0.001, 0.06f)));
+        DrinkRegistry.registerDrink("jenever", new Drink(new DrugInfluence("Alcohol", 20, 0.002, 0.001, 0.25f)));
+        DrinkRegistry.registerDrink("coffee", new Drink(new DrugInfluence("Caffeine", 20, 0.002, 0.001, 0.3f), new DrugInfluence("Warmth", 0, 0.00, 0.1, 0.8f)));
+        DrinkRegistry.registerDrink("coldCoffee", new Drink(new DrugInfluence("Caffeine", 20, 0.002, 0.001, 0.25f)));
+        DrinkRegistry.registerDrink("wine", new DrinkWine());
+        DrinkRegistry.registerDrink("peyote", new Drink(new DrugInfluence("Peyote", 15, 0.005, 0.003, 0.9f)));
+
+        DrinkRegistry.registerSpecialIcon("beer", PSItems.woodenMug, Psychedelicraft.textureBase + "woodenMugBeer");
+        DrinkRegistry.registerSpecialIcon("jenever", PSItems.woodenMug, Psychedelicraft.textureBase + "woodenMugJenever");
+        DrinkRegistry.registerSpecialIcon("coffee", PSItems.woodenMug, Psychedelicraft.textureBase + "woodenMugCoffee");
+        DrinkRegistry.registerSpecialIcon("coldCoffee", PSItems.woodenMug, Psychedelicraft.textureBase + "woodenMugCoffee");
+
+        DrinkRegistry.registerSpecialIcon("peyote", PSItems.woodenBowlDrug, Psychedelicraft.textureBase + "woodenBowlPeyote");
+
+        DrinkRegistry.registerSpecialIcon("wine", PSItems.glassChalice, Psychedelicraft.textureBase + "glassChaliceWine");
     }
 }

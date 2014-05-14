@@ -7,8 +7,8 @@ package ivorius.psychedelicraft.worldgen;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import ivorius.psychedelicraft.blocks.PSBlocks;
+import ivorius.psychedelicraft.items.DrinkRegistry;
 import ivorius.psychedelicraft.items.ItemSyringe;
-import ivorius.psychedelicraft.items.ItemWoodenBowlDrug;
 import ivorius.psychedelicraft.items.PSItems;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -75,10 +75,11 @@ public class PSWorldGen
         ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(PSItems.cigarette, 0, 1, 16, 1));
         ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(PSItems.cigar, 0, 1, 1, 1));
         ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(PSItems.joint, 0, 1, 1, 1));
-        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(PSItems.coldCoffee, 0, 1, 4, 1));
+        // TODO Find a way to add item with NBT
+//        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(DrinkRegistry.createDrinkStack(PSItems.woodenMug, 1, "coldCoffee"), 0, 1, 4, 1));
+//        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(PSItems.woodenBowlDrug, ItemWoodenBowlDrug.damagePeyote, 1, 1, 1));
         ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(PSItems.syringe, ItemSyringe.damageCocaine, 1, 1, 1));
         ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(PSItems.syringe, ItemSyringe.damageCaffeine, 1, 1, 1));
-        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(PSItems.woodenBowlDrug, ItemWoodenBowlDrug.damagePeyote, 1, 1, 1));
         ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(PSItems.hashMuffin, 0, 1, 8, 1));
     }
 }

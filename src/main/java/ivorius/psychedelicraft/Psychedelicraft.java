@@ -185,11 +185,12 @@ public class Psychedelicraft
 
         GameRegistry.addSmelting(PSItems.coffeaCherries, new ItemStack(PSItems.coffeeBeans), 0.2f);
 
-        addShapelessRecipe(new ItemStack(PSItems.coldCoffee), Items.water_bucket, new ItemStack(PSItems.woodenMug, 1, 0), PSItems.coffeeBeans, PSItems.coffeeBeans);
-        GameRegistry.addSmelting(PSItems.coldCoffee, new ItemStack(PSItems.woodenMug, 1, 3), 0.2f);
+        addShapelessRecipe(DrinkRegistry.createDrinkStack(PSItems.woodenMug, 1, "coldCoffee"), Items.water_bucket, new ItemStack(PSItems.woodenMug, 1, 0), PSItems.coffeeBeans, PSItems.coffeeBeans);
+        //TODO Add a heating system - smelting sucks (and doesn't properly work)
+//        GameRegistry.addSmelting(DrinkRegistry.createDrinkStack(PSItems.woodenMug, 1, "coldCoffee"), new ItemStack(PSItems.woodenMug, 1, 3), 0.2f);
         addShapelessRecipe(new ItemStack(PSItems.syringe, 1, ItemSyringe.damageCaffeine), Items.water_bucket, new ItemStack(PSItems.syringe, 1, 0), PSItems.coffeeBeans, PSItems.coffeeBeans);
 
-        GameRegistry.addRecipe(new ItemStack(PSItems.woodenBowlDrug, 1, ItemWoodenBowlDrug.damagePeyote), "P", "P", "B", 'P', PSItems.driedPeyote, 'B', Items.bowl);
+        GameRegistry.addRecipe(DrinkRegistry.createDrinkStack(PSItems.woodenBowlDrug, 1, "peyote"), "P", "P", "B", 'P', PSItems.driedPeyote, 'B', Items.bowl);
         TileEntityDryingTable.addDryingResult(Item.getItemFromBlock(PSBlocks.peyote), new ItemStack(PSItems.driedPeyote, 3));
         GameRegistry.addRecipe(new ItemStack(PSItems.peyoteJoint), "P", "D", "P", 'P', Items.paper, 'D', PSItems.driedPeyote);
 

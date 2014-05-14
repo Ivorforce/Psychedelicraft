@@ -41,29 +41,9 @@ item.riftJar.halfFilled=Half Full
 item.riftJar.full=Full
 item.riftJar.overflowing=Overflowing
 tile.glitched.name=Block $__0
-
 item.woodenMug.name=Wooden Mug
-item.woodenMug.beer.name=Beer
-item.woodenMug.jenever.name=Jenever
-item.woodenMug.warmCoffee.name=Warm Coffee
-
 item.glassChalice.name=Glass Chalice
-item.glassChalice.wine0.name=Grape juice
-item.glassChalice.wine1.name=Grape juice
-item.glassChalice.wine2.name=Very Young Wine
-item.glassChalice.wine3.name=Very Young Wine
-item.glassChalice.wine4.name=Young Wine
-item.glassChalice.wine5.name=Young Wine
-item.glassChalice.wine6.name=Intermediate Wine
-item.glassChalice.wine7.name=Intermediate Wine
-item.glassChalice.wine8.name=Aged Wine
-item.glassChalice.wine9.name=Aged Wine
-item.glassChalice.wine10.name=Quality Wine
-item.glassChalice.wine11.name=Quality Wine
-item.glassChalice.wine12.name=Historical Wine
-item.glassChalice.wine13.name=Historical Wine
-item.glassChalice.wine14.name=Vinegar
-item.glassChalice.wine15.name=Vinegar
+item.woodenBowlDrug.name=Wooden Bowl
 
 item.molotovCocktail.name=Molotov Cocktail
 item.molotovCocktail.cocktail0.name=Bottle of Grape Juice
@@ -93,9 +73,6 @@ item.syringe.caffeine.name=Caffeine Shot
 item.syringe.cocaine.name=Cocaine Shot
 item.syringe.zero.name=0
 
-item.woodenBowlDrug.name=Empty Wooden Bowl
-item.woodenBowlDrug.peyote.name=Peyote Juice
-
 item.harmonium.dye0.name=Black Harmonium
 item.harmonium.dye1.name=Red Harmonium
 item.harmonium.dye2.name=Green Harmonium
@@ -117,5 +94,27 @@ entity.realityRift.name=Zero Rift
 entity.molotovCocktail.name=Molotov Cocktail
 
 tile.bed.onDrugs=The drugs in your body keep you awake
+
+psDrink.beer=Beer
+psDrink.jenever=Jenever
+psDrink.coffee=Warm Coffee
+psDrink.coldCoffee=Cold Coffee
+psDrink.peyote=Peyote
+psDrink.wine.0=Grape juice
+psDrink.wine.1=Grape juice
+psDrink.wine.2=Very Young Wine
+psDrink.wine.3=Very Young Wine
+psDrink.wine.4=Young Wine
+psDrink.wine.5=Young Wine
+psDrink.wine.6=Intermediate Wine
+psDrink.wine.7=Intermediate Wine
+psDrink.wine.8=Aged Wine
+psDrink.wine.9=Aged Wine
+psDrink.wine.10=Quality Wine
+psDrink.wine.11=Quality Wine
+psDrink.wine.12=Historical Wine
+psDrink.wine.13=Historical Wine
+psDrink.wine.14=Vinegar
+psDrink.wine.15=Vinegar
 
 itemGroup.psychedelicraft=Psychedelicraft
