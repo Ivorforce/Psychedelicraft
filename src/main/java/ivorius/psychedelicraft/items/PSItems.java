@@ -24,12 +24,12 @@ import net.minecraftforge.common.config.Configuration;
  */
 public class PSItems
 {
-    public static Item glassChalice;
+    public static ItemDrinkHolder woodenMug;
+    public static ItemDrinkHolder woodenBowlDrug;
+    public static ItemDrinkHolder glassChalice;
 
     public static Item wineGrapes;
     public static Item molotovCocktail;
-
-    public static Item woodenMug;
 
     public static Item cannabisSeeds;
     public static Item cannabisLeaf;
@@ -56,8 +56,6 @@ public class PSItems
 
     public static ItemSyringe syringe;
 
-    public static Item woodenBowlDrug;
-
     public static Item juniperBerries;
 
     public static Item coffeaCherries;
@@ -77,14 +75,21 @@ public class PSItems
         GameRegistry.registerItem(syringe, "syringe", Psychedelicraft.MODID);
         syringe.setCreativeTab(CreativeTabs.tabMisc);
 
-        woodenBowlDrug = new ItemDrinkHolder().setUnlocalizedName("woodenBowlDrug").setTextureName("bowl");
-        ((ItemDrinkHolder) woodenBowlDrug).addEmptySelfToCreativeMenu = false;
+        woodenBowlDrug = (ItemDrinkHolder) new ItemDrinkHolder().setUnlocalizedName("woodenBowlDrug").setTextureName("bowl");
+        woodenBowlDrug.addEmptySelfToCreativeMenu = false;
         GameRegistry.registerItem(woodenBowlDrug, "psycheWoodenBowl", Psychedelicraft.MODID);
         woodenBowlDrug.setCreativeTab(CreativeTabs.tabFood);
+        DrinkRegistry.registerDrinkHolder(woodenBowlDrug);
 
-        woodenMug = new ItemDrinkHolder().setUnlocalizedName("woodenMug").setTextureName(Psychedelicraft.textureBase + "woodenMug");
+        woodenMug = (ItemDrinkHolder) new ItemDrinkHolder().setUnlocalizedName("woodenMug").setTextureName(Psychedelicraft.textureBase + "woodenMug");
         GameRegistry.registerItem(woodenMug, "woodenMug", Psychedelicraft.MODID);
         woodenMug.setCreativeTab(CreativeTabs.tabFood);
+        DrinkRegistry.registerDrinkHolder(woodenMug);
+
+        glassChalice = (ItemDrinkHolder) new ItemDrinkHolder().setUnlocalizedName("glassChalice").setTextureName(Psychedelicraft.textureBase + "glassChalice");
+        GameRegistry.registerItem(glassChalice, "glassChalice", Psychedelicraft.MODID);
+        glassChalice.setCreativeTab(CreativeTabs.tabFood);
+        DrinkRegistry.registerDrinkHolder(glassChalice);
 
         pipe = (ItemSmokingPipe) (new ItemSmokingPipe().setUnlocalizedName("smokingPipe").setTextureName(Psychedelicraft.textureBase + "smokingPipe"));
         GameRegistry.registerItem(pipe, "smokingPipe", Psychedelicraft.MODID);
@@ -95,10 +100,6 @@ public class PSItems
         bong.setCreativeTab(CreativeTabs.tabMisc);
 
         //----------------------------------------------------------Wine----------------------------------
-
-        glassChalice = new ItemDrinkHolder().setUnlocalizedName("glassChalice").setTextureName(Psychedelicraft.textureBase + "glassChalice");
-        GameRegistry.registerItem(glassChalice, "glassChalice", Psychedelicraft.MODID);
-        glassChalice.setCreativeTab(CreativeTabs.tabFood);
 
         wineGrapes = (new ItemWineGrapes(1, 0.5F, true)).setUnlocalizedName("wineGrapes").setTextureName(Psychedelicraft.textureBase + "wineGrapes");
         GameRegistry.registerItem(wineGrapes, "wineGrapes", Psychedelicraft.MODID);

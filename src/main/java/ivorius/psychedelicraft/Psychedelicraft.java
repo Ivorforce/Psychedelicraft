@@ -185,12 +185,8 @@ public class Psychedelicraft
 
         GameRegistry.addSmelting(PSItems.coffeaCherries, new ItemStack(PSItems.coffeeBeans), 0.2f);
 
-        addShapelessRecipe(DrinkRegistry.createDrinkStack(PSItems.woodenMug, 1, "coldCoffee"), Items.water_bucket, new ItemStack(PSItems.woodenMug, 1, 0), PSItems.coffeeBeans, PSItems.coffeeBeans);
-        //TODO Add a heating system - smelting sucks (and doesn't properly work)
-//        GameRegistry.addSmelting(DrinkRegistry.createDrinkStack(PSItems.woodenMug, 1, "coldCoffee"), new ItemStack(PSItems.woodenMug, 1, 3), 0.2f);
         addShapelessRecipe(new ItemStack(PSItems.syringe, 1, ItemSyringe.damageCaffeine), Items.water_bucket, new ItemStack(PSItems.syringe, 1, 0), PSItems.coffeeBeans, PSItems.coffeeBeans);
 
-        GameRegistry.addRecipe(DrinkRegistry.createDrinkStack(PSItems.woodenBowlDrug, 1, "peyote"), "P", "P", "B", 'P', PSItems.driedPeyote, 'B', Items.bowl);
         TileEntityDryingTable.addDryingResult(Item.getItemFromBlock(PSBlocks.peyote), new ItemStack(PSItems.driedPeyote, 3));
         GameRegistry.addRecipe(new ItemStack(PSItems.peyoteJoint), "P", "D", "P", 'P', Items.paper, 'D', PSItems.driedPeyote);
 
@@ -201,6 +197,17 @@ public class Psychedelicraft
         }
 
         GameRegistry.addRecipe(new ItemStack(PSBlocks.riftJar), "O-O", "GO ", "OIO", 'O', Blocks.glass, '-', Blocks.planks, 'G', Items.gold_ingot, 'I', Items.iron_ingot);
+
+        for (ItemDrinkHolder itemDrinkHolder : DrinkRegistry.getAllDrinkHolders())
+        {
+            Item emptyContainer = itemDrinkHolder == PSItems.woodenBowlDrug ? Items.bowl : itemDrinkHolder; // Hacky but eh
+
+            GameRegistry.addShapelessRecipe(DrinkRegistry.createDrinkStack(itemDrinkHolder, 1, "peyote"), PSItems.driedPeyote, PSItems.driedPeyote, new ItemStack(emptyContainer));
+
+            addShapelessRecipe(DrinkRegistry.createDrinkStack(itemDrinkHolder, 1, "coldCoffee"), Items.water_bucket, new ItemStack(emptyContainer), PSItems.coffeeBeans, PSItems.coffeeBeans);
+            //TODO Add when Forge fixes smelting with NBT
+//        GameRegistry.addSmelting(DrinkRegistry.createDrinkStack(itemDrinkHolder, 1, "coldCoffee"), new ItemStack(emptyContainer, 1, 3), 0.2f);
+        }
     }
 
     private static void addShapelessRecipe(ItemStack output, Object... params)
