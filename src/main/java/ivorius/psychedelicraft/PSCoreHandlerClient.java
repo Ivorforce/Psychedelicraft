@@ -206,7 +206,7 @@ public class PSCoreHandlerClient
     {
         if (event instanceof RenderHandEvent.Pre)
         {
-            if (!DrugShaderHelper.currentRenderPass.equals("Default"))
+            if (!"Default".equals(DrugShaderHelper.currentRenderPass))
             {
                 DrugShaderHelper.setDepthMultiplier(0.0f);
                 event.setCanceled(true);
@@ -214,7 +214,7 @@ public class PSCoreHandlerClient
         }
         else if (event instanceof RenderHandEvent.Post)
         {
-            if (!DrugShaderHelper.currentRenderPass.equals("Default"))
+            if (!"Default".equals(DrugShaderHelper.currentRenderPass))
             {
                 DrugShaderHelper.setDepthMultiplier(1.0f);
             }
@@ -302,7 +302,7 @@ public class PSCoreHandlerClient
     @SubscribeEvent
     public void renderBlockOverlay(RenderBlockOverlayEvent event)
     {
-        if (!DrugShaderHelper.currentRenderPass.equals("Default"))
+        if (!"Default".equals(DrugShaderHelper.currentRenderPass))
         {
             event.setCanceled(true);
         }
