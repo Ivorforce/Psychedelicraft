@@ -5,6 +5,7 @@
 
 package ivorius.psychedelicraft.entities;
 
+import ivorius.psychedelicraft.ivToolkit.IvMathHelper;
 import net.minecraft.entity.Entity;
 
 import java.util.Random;
@@ -27,47 +28,48 @@ public class DrugMessageDistorter
         }
 
         float alcohol = drugHelper.getDrugValue("Alcohol");
-        if (alcohol > 0.0f)
+        float zero = drugHelper.getDrugValue("Zero");
+        if (alcohol > 0.0f || zero > 0.0f)
         {
             StringBuilder builder = new StringBuilder();
 
-            float randomCaseChance = alcohol * 0.1f - 0.03f;
-            float randomLetterChance = alcohol * 0.04f - 0.025f;
-            float sToShChance = alcohol * 1.5f - 0.2f;
+            float randomCaseChance = IvMathHelper.zeroToOne(alcohol, 0.3f, 1.0f) * 0.06f + IvMathHelper.zeroToOne(zero, 0.0f, 0.3f);
+            float randomLetterChance = IvMathHelper.zeroToOne(alcohol, 0.5f, 1.0f) * 0.015f;
+            float sToShChance = IvMathHelper.zeroToOne(alcohol, 0.2f, 0.6f);
             float longShChance = alcohol * 0.8f;
-            float hicChance = alcohol * 0.08f - 0.04f;
-            float rewindChance = alcohol * 0.06f - 0.03f;
-            float longCharChance = alcohol * 0.035f - 0.01f;
+            float hicChance = IvMathHelper.zeroToOne(alcohol, 0.5f, 1.0f) * 0.04f;
+            float rewindChance = IvMathHelper.zeroToOne(alcohol, 0.4f, 0.9f) * 0.03f;
+            float longCharChance = IvMathHelper.zeroToOne(alcohol, 0.3f, 1.0f) * 0.025f;
+
+            float oneZeroChance = IvMathHelper.zeroToOne(zero, 0.6f, 0.95f);
+            float randomCharChance = IvMathHelper.zeroToOne(zero, 0.2f, 0.95f);
 
             for (int i = 0; i < message.length(); i++)
             {
                 char origChar = message.charAt(i);
                 char curChar = origChar;
 
-                if (random.nextFloat() < randomLetterChance)
-                {
+                if (random.nextFloat() < oneZeroChance)
+                    curChar = random.nextBoolean() ? '0' : '1';
+                else if (random.nextFloat() < randomCharChance)
+                    curChar = (char)(' ' + random.nextInt(('~' - ' ' + 1)));
+                else if (random.nextFloat() < randomLetterChance)
                     curChar = (char) ((random.nextBoolean() ? 'a' : 'A') + random.nextInt(26));
-                }
                 else if (random.nextFloat() < randomCaseChance)
                 {
-                    if (Character.isUpperCase(curChar))
+                    if (random.nextBoolean())
                     {
-                        curChar = Character.toLowerCase(curChar);
-                    }
-                    else
-                    {
-                        curChar = Character.toUpperCase(curChar);
+                        if (Character.isUpperCase(curChar))
+                            curChar = Character.toLowerCase(curChar);
+                        else
+                            curChar = Character.toUpperCase(curChar);
                     }
                 }
 
                 if ((curChar == 's' || curChar == 'S') && random.nextFloat() < sToShChance)
-                {
-                    builder.append(curChar + (random.nextFloat() < longShChance ? "hh" : "h"));
-                }
+                    builder.append(curChar).append(random.nextFloat() < longShChance ? "hh" : "h");
                 else
-                {
                     builder.append(curChar);
-                }
 
                 if (random.nextFloat() < longCharChance)
                 {

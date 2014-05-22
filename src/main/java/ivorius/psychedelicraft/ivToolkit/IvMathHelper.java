@@ -270,4 +270,9 @@ public class IvMathHelper
     {
         return MathHelper.floor_float(number) + ((random.nextFloat() < (number % 1.0f)) ? 1 : 0);
     }
+
+    public static float zeroToOne(float value, float min, float max)
+    {
+        return clamp(0.0f, (value - min) / (max - min), 1.0f);
+    }
 }
