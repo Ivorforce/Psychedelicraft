@@ -37,9 +37,7 @@ public class IvNBTHelper
             double[] array = new double[list.tagCount()];
 
             for (int i = 0; i < array.length; i++)
-            {
                 array[i] = list.func_150309_d(i);
-            }
 
             return array;
         }
@@ -54,9 +52,7 @@ public class IvNBTHelper
             NBTTagList list = new NBTTagList();
 
             for (double d : array)
-            {
                 list.appendTag(new NBTTagDouble(d));
-            }
 
             compound.setTag(key, list);
         }

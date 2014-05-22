@@ -70,9 +70,7 @@ public class IvBezierPath3DRendererTexture
     public void render(IvBezierPath3D path)
     {
         if (path.isDirty())
-        {
             path.buildDistances();
-        }
 
         Tessellator tessellator = Tessellator.instance;
 

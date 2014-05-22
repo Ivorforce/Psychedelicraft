@@ -46,9 +46,7 @@ public class IvTileEntityHelper
         List<EntityPlayerMP> playersWatching = getPlayersWatchingChunk(world, chunkX, chunkZ);
 
         for (EntityPlayerMP playerMP : playersWatching)
-        {
             sendToPlayer(channel, playerMP, message);
-        }
     }
 
     public static void sendToPlayersWatchingChunk(World world, int chunkX, int chunkZ, Packet packet)
@@ -56,9 +54,7 @@ public class IvTileEntityHelper
         List<EntityPlayerMP> playersWatching = getPlayersWatchingChunk(world, chunkX, chunkZ);
 
         for (EntityPlayerMP playerMP : playersWatching)
-        {
             playerMP.playerNetServerHandler.sendPacket(packet);
-        }
     }
 
     public static void sendToPlayer(Channel channel, EntityPlayerMP playerMP, Object message)
@@ -71,9 +67,7 @@ public class IvTileEntityHelper
     public static List<EntityPlayerMP> getPlayersWatchingChunk(World world, int chunkX, int chunkZ)
     {
         if (world.isRemote || !(world instanceof WorldServer))
-        {
             return new ArrayList<EntityPlayerMP>(0);
-        }
 
         ArrayList<EntityPlayerMP> playersWatching = new ArrayList<EntityPlayerMP>();
 
@@ -84,9 +78,7 @@ public class IvTileEntityHelper
         for (EntityPlayerMP player : players)
         {
             if (playerManager.isPlayerWatchingChunk(player, chunkX, chunkZ))
-            {
                 playersWatching.add(player);
-            }
         }
 
         return playersWatching;

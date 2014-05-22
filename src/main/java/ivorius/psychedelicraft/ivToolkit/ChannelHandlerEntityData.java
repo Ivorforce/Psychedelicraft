@@ -68,7 +68,7 @@ public class ChannelHandlerEntityData extends SimpleChannelInboundHandler<FMLPro
         entity.writeUpdateData(buffer, context);
 
         FMLProxyPacket packet = new FMLProxyPacket(buffer, packetChannel);
-        ((WorldServer) entity.worldObj).getEntityTracker().func_151248_b(entity, packet);
+        ((WorldServer) entity.worldObj).getEntityTracker().func_151247_a(entity, packet);
     }
 
     @Override

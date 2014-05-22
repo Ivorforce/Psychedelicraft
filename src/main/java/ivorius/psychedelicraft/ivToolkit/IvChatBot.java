@@ -19,13 +19,14 @@
 package ivorius.psychedelicraft.ivToolkit;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public abstract class IvChatBot
 {
     public Random random;
 
-    public ArrayList<IvChatLine> sendQueue = new ArrayList<IvChatLine>();
+    public List<IvChatLine> sendQueue = new ArrayList<IvChatLine>();
 
     public IvChatBot(Random rand)
     {

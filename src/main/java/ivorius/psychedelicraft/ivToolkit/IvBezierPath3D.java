@@ -39,7 +39,7 @@ public class IvBezierPath3D
         setBezierPoints(new ArrayList<IvBezierPoint3D>());
     }
 
-    public IvBezierPath3D(ArrayList<IvBezierPoint3D> bezierPoints)
+    public IvBezierPath3D(List<IvBezierPoint3D> bezierPoints)
     {
         cachedProgresses = new ArrayList<Double>();
         cachedDistances = new ArrayList<Double>();

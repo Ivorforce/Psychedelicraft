@@ -22,11 +22,12 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class IvRaytracer
 {
-    public static ArrayList<IvRaytracedIntersection> getIntersections(ArrayList<IvRaytraceableObject> objects, double x, double y, double z, double xDir, double yDir, double zDir)
+    public static List<IvRaytracedIntersection> getIntersections(List<IvRaytraceableObject> objects, double x, double y, double z, double xDir, double yDir, double zDir)
     {
         ArrayList<IvRaytracedIntersection> hitPoints = new ArrayList<IvRaytracedIntersection>();
 
@@ -38,7 +39,7 @@ public class IvRaytracer
         return hitPoints;
     }
 
-    public static IvRaytracedIntersection findFirstIntersection(ArrayList<IvRaytracedIntersection> intersections, double x, double y, double z, double xDir, double yDir, double zDir)
+    public static IvRaytracedIntersection findFirstIntersection(List<IvRaytracedIntersection> intersections, double x, double y, double z, double xDir, double yDir, double zDir)
     {
         IvRaytracedIntersection firstPoint = null;
         double firstDistanceSQ = -1;
@@ -57,7 +58,7 @@ public class IvRaytracer
         return firstPoint;
     }
 
-    public static IvRaytracedIntersection getFirstIntersection(ArrayList<IvRaytraceableObject> objects, double x, double y, double z, double xDir, double yDir, double zDir)
+    public static IvRaytracedIntersection getFirstIntersection(List<IvRaytraceableObject> objects, double x, double y, double z, double xDir, double yDir, double zDir)
     {
         ArrayList<IvRaytracedIntersection> intersections = new ArrayList<IvRaytracedIntersection>();
 
@@ -69,7 +70,7 @@ public class IvRaytracer
         return findFirstIntersection(intersections, x, y, z, xDir, yDir, zDir);
     }
 
-    public static void drawStandardOutlines(ArrayList<IvRaytraceableObject> objects)
+    public static void drawStandardOutlines(List<IvRaytraceableObject> objects)
     {
         GL11.glEnable(GL11.GL_BLEND);
         OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);

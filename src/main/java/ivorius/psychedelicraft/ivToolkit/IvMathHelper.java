@@ -20,6 +20,8 @@ package ivorius.psychedelicraft.ivToolkit;
 
 import net.minecraft.util.MathHelper;
 
+import java.util.Random;
+
 public class IvMathHelper
 {
     public static double length(double[] vector)
@@ -27,9 +29,7 @@ public class IvMathHelper
         double max = 0.0;
 
         for (int i = 0; i < vector.length; i++)
-        {
             max += vector[i] * vector[i];
-        }
 
         return MathHelper.sqrt_double(max);
     }
@@ -39,9 +39,7 @@ public class IvMathHelper
         double distanceSQ = 0.0;
 
         for (int i = 0; i < pos1.length; i++)
-        {
             distanceSQ += (pos1[i] - pos2[i]) * (pos1[i] - pos2[i]);
-        }
 
         return distanceSQ;
     }
@@ -118,9 +116,7 @@ public class IvMathHelper
         double[] result = new double[pos1.length];
 
         for (int i = 0; i < result.length; i++)
-        {
             result[i] = pos1[i] - pos2[i];
-        }
 
         return result;
     }
@@ -242,24 +238,22 @@ public class IvMathHelper
 
     /**
      * Calculates cartesian from spherical coordinates.
-     *
      * @param vector The spherical vector {azimuth, inclination, radius}
      * @return The cartesian vector {x, y, z}
      */
     public static double[] cartesianFromSpherical(double[] vector)
     {
-        double sinInclination = MathHelper.sin((float) vector[1]);
+        double sinInclination = MathHelper.sin((float)vector[1]);
 
-        double x = vector[2] * sinInclination * MathHelper.cos((float) vector[0]);
-        double y = vector[2] * MathHelper.cos((float) vector[1]);
-        double z = vector[2] * sinInclination * MathHelper.sin((float) vector[0]);
+        double x = vector[2] * sinInclination * MathHelper.cos((float)vector[0]);
+        double y = vector[2] * MathHelper.cos((float)vector[1]);
+        double z = vector[2] * sinInclination * MathHelper.sin((float)vector[0]);
 
         return new double[]{x, y, z};
     }
 
     /**
      * Calculates spherical from cartesian coordinates.
-     *
      * @param vector The cartesian vector {x, y, z}
      * @return The spherical vector {azimuth, inclination, radius}
      */
@@ -270,5 +264,10 @@ public class IvMathHelper
         double azimuth = Math.atan2(vector[2], vector[0]);
 
         return new double[]{azimuth, inclination, r};
+    }
+
+    public static int randomLinearNumber(Random random, float number)
+    {
+        return MathHelper.floor_float(number) + ((random.nextFloat() < (number % 1.0f)) ? 1 : 0);
     }
 }

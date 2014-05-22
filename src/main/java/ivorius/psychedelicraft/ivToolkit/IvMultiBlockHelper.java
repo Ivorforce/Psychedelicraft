@@ -26,14 +26,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
+import net.minecraft.util.Vec3Pool;
 import net.minecraft.world.World;
+import org.lwjgl.util.vector.Vector3f;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class IvMultiBlockHelper implements Iterable<int[]>
 {
     private Iterator<int[]> iterator;
+    private List<int[]> childLocations;
     private IvTileEntityMultiBlock parentTileEntity = null;
 
     private World world;
@@ -49,9 +54,9 @@ public class IvMultiBlockHelper implements Iterable<int[]>
 
     }
 
-    public boolean beginPlacing(ArrayList<int[]> positions, World world, int x, int y, int z, int blockSide, ItemStack itemStack, EntityPlayer player, Block block, int metadata, int direction)
+    public boolean beginPlacing(List<int[]> positions, World world, int x, int y, int z, int blockSide, ItemStack itemStack, EntityPlayer player, Block block, int metadata, int direction)
     {
-        ArrayList<int[]> validLocations = IvMultiBlockHelper.getBestPlacement(positions, world, x, y, z, blockSide, itemStack, player, block);
+        List<int[]> validLocations = IvMultiBlockHelper.getBestPlacement(positions, world, x, y, z, blockSide, itemStack, player, block);
 
         if (validLocations == null)
         {
@@ -66,6 +71,7 @@ public class IvMultiBlockHelper implements Iterable<int[]>
 
         this.center = IvMultiBlockHelper.getTileEntityCenter(validLocations);
         this.size = IvMultiBlockHelper.getTileEntitySize(validLocations);
+        this.childLocations = validLocations;
 
         this.iterator = validLocations.iterator();
 
@@ -94,7 +100,9 @@ public class IvMultiBlockHelper implements Iterable<int[]>
 
             if (parent)
             {
-                this.parentTileEntity = tileEntityMB;
+                parentTileEntity = tileEntityMB;
+                childLocations.remove(new int[]{parentTileEntity.xCoord, parentTileEntity.yCoord, parentTileEntity.zCoord});
+                parentTileEntity.becomeParent(childLocations);
             }
             else
             {
@@ -111,19 +119,19 @@ public class IvMultiBlockHelper implements Iterable<int[]>
         return null;
     }
 
-    public static double[] getTileEntityCenter(ArrayList<int[]> positions)
+    public static double[] getTileEntityCenter(List<int[]> positions)
     {
         double[] result = getCenter(positions);
 
         return new double[]{result[0] + 0.5f, result[1] + 0.5f, result[2] + 0.5f};
     }
 
-    public static double[] getTileEntitySize(ArrayList<int[]> positions)
+    public static double[] getTileEntitySize(List<int[]> positions)
     {
         return getSize(positions);
     }
 
-    public static double[] getCenter(ArrayList<int[]> positions)
+    public static double[] getCenter(List<int[]> positions)
     {
         if (positions.size() > 0)
         {
@@ -142,7 +150,7 @@ public class IvMultiBlockHelper implements Iterable<int[]>
         return null;
     }
 
-    public static double[] getSize(ArrayList<int[]> positions)
+    public static double[] getSize(List<int[]> positions)
     {
         if (positions.size() > 0)
         {
@@ -161,7 +169,7 @@ public class IvMultiBlockHelper implements Iterable<int[]>
         return null;
     }
 
-    public static int[] getExtremeCoords(ArrayList<int[]> positions, boolean min)
+    public static int[] getExtremeCoords(List<int[]> positions, boolean min)
     {
         if (positions.size() > 0)
         {
@@ -183,7 +191,7 @@ public class IvMultiBlockHelper implements Iterable<int[]>
         return null;
     }
 
-    public static int[] getLengths(ArrayList<int[]> positions)
+    public static int[] getLengths(List<int[]> positions)
     {
         int[] min = getExtremeCoords(positions, true);
         int[] max = getExtremeCoords(positions, false);
@@ -191,7 +199,7 @@ public class IvMultiBlockHelper implements Iterable<int[]>
         return new int[]{max[0] - min[0], max[1] - min[1], max[2] - min[2]};
     }
 
-    public static boolean canPlace(World world, Block block, ArrayList<int[]> positions, Entity entity, ItemStack stack)
+    public static boolean canPlace(World world, Block block, List<int[]> positions, Entity entity, ItemStack stack)
     {
         for (int[] position : positions)
         {
@@ -204,7 +212,7 @@ public class IvMultiBlockHelper implements Iterable<int[]>
         return true;
     }
 
-    public static ArrayList<ArrayList<int[]>> getValidPlacements(ArrayList<int[]> positions, World world, int x, int y, int z, int blockSide, ItemStack itemStack, EntityPlayer player, Block block)
+    public static List<List<int[]>> getValidPlacements(List<int[]> positions, World world, int x, int y, int z, int blockSide, ItemStack itemStack, EntityPlayer player, Block block)
     {
         Block var11 = world.getBlock(x, y, z);
 
@@ -215,38 +223,26 @@ public class IvMultiBlockHelper implements Iterable<int[]>
         else if (var11 != Blocks.vine && var11 != Blocks.tallgrass && var11 != Blocks.deadbush && !var11.isReplaceable(world, x, y, z))
         {
             if (blockSide == 0)
-            {
                 --y;
-            }
             else if (blockSide == 1)
-            {
                 ++y;
-            }
             else if (blockSide == 2)
-            {
                 --z;
-            }
             else if (blockSide == 3)
-            {
                 ++z;
-            }
             else if (blockSide == 4)
-            {
                 --x;
-            }
             else if (blockSide == 5)
-            {
                 ++x;
-            }
         }
 
         if (!player.canPlayerEdit(x, y, z, blockSide, itemStack))
         {
-            return new ArrayList<ArrayList<int[]>>();
+            return new ArrayList<List<int[]>>();
         }
         else if (y == world.getHeight() && block.getMaterial().isSolid())
         {
-            return new ArrayList<ArrayList<int[]>>();
+            return new ArrayList<List<int[]>>();
         }
         else
         {
@@ -254,7 +250,7 @@ public class IvMultiBlockHelper implements Iterable<int[]>
             int[] min = getExtremeCoords(positions, true);
 
             // Run from min+length (maximimum) being the placed x, y, z to minimum being the x, y, z
-            ArrayList<ArrayList<int[]>> validPlacements = new ArrayList<ArrayList<int[]>>();
+            ArrayList<List<int[]>> validPlacements = new ArrayList<List<int[]>>();
             for (int xShift = min[0] - lengths[0]; xShift <= min[0]; xShift++)
             {
                 for (int yShift = min[0] - lengths[1]; yShift <= min[1]; yShift++)
@@ -280,16 +276,16 @@ public class IvMultiBlockHelper implements Iterable<int[]>
         }
     }
 
-    public static ArrayList<int[]> getBestPlacement(ArrayList<int[]> positions, World world, int x, int y, int z, int blockSide, ItemStack itemStack, EntityPlayer player, Block block)
+    public static List<int[]> getBestPlacement(List<int[]> positions, World world, int x, int y, int z, int blockSide, ItemStack itemStack, EntityPlayer player, Block block)
     {
         int[] lengths = getLengths(positions);
 
-        ArrayList<ArrayList<int[]>> validPlacements = getValidPlacements(positions, world, x, y, z, blockSide, itemStack, player, block);
+        List<List<int[]>> validPlacements = getValidPlacements(positions, world, x, y, z, blockSide, itemStack, player, block);
 
         if (validPlacements.size() > 0)
         {
             float[] center = new float[]{x - lengths[0] * 0.5f, y - lengths[1] * 0.5f, z - lengths[2] * 0.5f};
-            ArrayList<int[]> preferredPositions = validPlacements.get(0);
+            List<int[]> preferredPositions = validPlacements.get(0);
             for (int i = 1; i < validPlacements.size(); i++)
             {
                 int[] referenceBlock = validPlacements.get(i).get(0);
@@ -316,28 +312,20 @@ public class IvMultiBlockHelper implements Iterable<int[]>
         return distX * distX + distY * distY + distZ * distZ;
     }
 
-    public static ArrayList<int[]> getRotatedPositions(ArrayList<int[]> positions, int rotation)
+    public static List<int[]> getRotatedPositions(List<int[]> positions, int rotation)
     {
         ArrayList<int[]> returnList = new ArrayList<int[]>(positions.size());
 
         for (int[] position : positions)
         {
             if (rotation == 0)
-            {
                 returnList.add(new int[]{position[0], position[1], position[2]});
-            }
             if (rotation == 1)
-            {
                 returnList.add(new int[]{position[2], position[1], position[0]});
-            }
             if (rotation == 2)
-            {
                 returnList.add(new int[]{position[0], position[1], position[2]});
-            }
             if (rotation == 3)
-            {
                 returnList.add(new int[]{position[2], position[1], position[0]});
-            }
         }
 
         return returnList;
@@ -348,21 +336,13 @@ public class IvMultiBlockHelper implements Iterable<int[]>
         IvRaytraceableAxisAlignedBox box = null;
 
         if (direction == 0)
-        {
             box = new IvRaytraceableAxisAlignedBox(userInfo, centerCoords[0] - x - width, centerCoords[1] + y, centerCoords[2] + z, width, height, depth);
-        }
         if (direction == 1)
-        {
             box = new IvRaytraceableAxisAlignedBox(userInfo, centerCoords[0] - z - depth, centerCoords[1] + y, centerCoords[2] - x - width, depth, height, width);
-        }
         if (direction == 2)
-        {
             box = new IvRaytraceableAxisAlignedBox(userInfo, centerCoords[0] + x, centerCoords[1] + y, centerCoords[2] - z - depth, width, height, depth);
-        }
         if (direction == 3)
-        {
             box = new IvRaytraceableAxisAlignedBox(userInfo, centerCoords[0] + z, centerCoords[1] + y, centerCoords[2] + x, depth, height, width);
-        }
 
         return box;
     }
@@ -372,23 +352,43 @@ public class IvMultiBlockHelper implements Iterable<int[]>
         AxisAlignedBB box = null;
 
         if (direction == 0)
-        {
             box = getBBWithLengths(centerCoords[0] + x, centerCoords[1] + y, centerCoords[2] + z, width, height, depth);
-        }
         if (direction == 1)
-        {
             box = getBBWithLengths(centerCoords[0] - z - depth, centerCoords[1] + y, centerCoords[2] + x, depth, height, width);
-        }
         if (direction == 2)
-        {
             box = getBBWithLengths(centerCoords[0] - x - width, centerCoords[1] + y, centerCoords[2] - z - depth, width, height, depth);
-        }
         if (direction == 3)
-        {
             box = getBBWithLengths(centerCoords[0] + z, centerCoords[1] + y, centerCoords[2] - x - width, depth, height, width);
-        }
 
         return box;
+    }
+
+    public static Vector3f getRotatedVector(Vector3f vector3f, int rotation)
+    {
+        if (rotation == 0)
+            return new Vector3f(vector3f.x, vector3f.y, vector3f.z);
+        else if (rotation == 1)
+            return new Vector3f(-vector3f.z, vector3f.y, vector3f.x);
+        else if (rotation == 2)
+            return new Vector3f(-vector3f.x, vector3f.y, -vector3f.z);
+        else if (rotation == 3)
+            return new Vector3f(vector3f.z, vector3f.y, -vector3f.x);
+
+        return null;
+    }
+
+    public static Vec3 getRotatedVector(Vec3 vec3, Vec3Pool pool, int rotation)
+    {
+        if (rotation == 0)
+            return pool.getVecFromPool(vec3.xCoord, vec3.yCoord, vec3.zCoord);
+        else if (rotation == 1)
+            return pool.getVecFromPool(-vec3.zCoord, vec3.yCoord, vec3.xCoord);
+        else if (rotation == 2)
+            return pool.getVecFromPool(-vec3.xCoord, vec3.yCoord, -vec3.zCoord);
+        else if (rotation == 3)
+            return pool.getVecFromPool(vec3.zCoord, vec3.yCoord, -vec3.xCoord);
+
+        return null;
     }
 
     public static AxisAlignedBB getBBWithLengths(double x, double y, double z, double width, double height, double depth)
@@ -401,26 +401,22 @@ public class IvMultiBlockHelper implements Iterable<int[]>
         return MathHelper.floor_double((entity.rotationYaw * 4F) / 360F + 0.5D) & 3;
     }
 
-    public static ArrayList<int[]> getRotatedPositions(int rotation, int width, int height, int length)
+    public static List<int[]> getRotatedPositions(int rotation, int width, int height, int length)
     {
         boolean affectsX = (rotation == 0) || (rotation == 2);
         return getPositions(affectsX ? width : length, height, affectsX ? length : width);
     }
 
-    public static ArrayList<int[]> getPositions(int width, int height, int length)
+    public static List<int[]> getPositions(int width, int height, int length)
     {
         ArrayList<int[]> positions = new ArrayList<int[]>();
 
         for (int x = 0; x < width; x++)
-        {
             for (int y = 0; y < height; y++)
-            {
                 for (int z = 0; z < length; z++)
                 {
                     positions.add(new int[]{x, y, z});
                 }
-            }
-        }
 
         return positions;
     }

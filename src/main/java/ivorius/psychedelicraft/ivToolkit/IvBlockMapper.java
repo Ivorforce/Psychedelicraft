@@ -26,24 +26,23 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.util.Constants;
 import org.apache.logging.log4j.Logger;
 
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lukas on 11.02.14.
  */
 public class IvBlockMapper
 {
-    public ArrayList<Block> mappings = new ArrayList<Block>();
-    public ArrayList<Integer> currentIDs = new ArrayList<Integer>();
-    public ArrayList<Byte> currentMetadatas = new ArrayList<Byte>();
-
-    public static final byte tagCompoundID = 10;
-    public static final byte tagStringID = 8;
+    public List<Block> mappings = new ArrayList<Block>();
+    public List<Integer> currentIDs = new ArrayList<Integer>();
+    public List<Byte> currentMetadatas = new ArrayList<Byte>();
 
     public void addBlock(Block block, byte metadata)
     {
@@ -162,7 +161,7 @@ public class IvBlockMapper
 
     public void readFromNBT(NBTTagCompound tagCompound)
     {
-        NBTTagList mappingsList = tagCompound.getTagList("mappings", tagStringID);
+        NBTTagList mappingsList = tagCompound.getTagList("mappings", Constants.NBT.TAG_STRING);
         for (int i = 0; i < mappingsList.tagCount(); i++)
         {
             mappings.add((Block) Block.blockRegistry.getObject(mappingsList.getStringTagAt(i)));
@@ -181,7 +180,7 @@ public class IvBlockMapper
         }
     }
 
-    private ArrayList<String> getNames(ArrayList list)
+    private List<String> getNames(List list)
     {
         ArrayList<String> stringList = new ArrayList<String>(list.size());
 
@@ -193,7 +192,7 @@ public class IvBlockMapper
         return stringList;
     }
 
-    private String getAttributeString(String name, String type, String prefix, String suffix, ArrayList<String> names)
+    private String getAttributeString(String name, String type, String prefix, String suffix, List<String> names)
     {
         String mappingString = "";
 

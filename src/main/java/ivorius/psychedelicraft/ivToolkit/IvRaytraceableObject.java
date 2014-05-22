@@ -25,7 +25,7 @@ public abstract class IvRaytraceableObject
 {
     public Object userInfo;
 
-    private ArrayList<IvRaytraceableObject> containedObjects;
+    private List<IvRaytraceableObject> containedObjects;
     private boolean isContainer;
 
     public IvRaytraceableObject(Object userInfo)

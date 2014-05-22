@@ -115,9 +115,7 @@ public class IvBezierPath3DRendererText
     public void render(IvBezierPath3D path)
     {
         if (path.isDirty())
-        {
             path.buildDistances();
-        }
 
         GL11.glEnable(GL11.GL_BLEND);
         OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);

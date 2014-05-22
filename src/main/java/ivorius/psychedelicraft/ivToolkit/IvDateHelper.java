@@ -18,27 +18,48 @@
 
 package ivorius.psychedelicraft.ivToolkit;
 
-import io.netty.buffer.ByteBuf;
+import java.util.Calendar;
+
+import static java.util.Calendar.*;
 
 /**
- * A interface for Entities that need extra information to be communicated
- * between the server and client when their values are updated.
+ * Created by lukas on 01.05.14.
  */
-public interface IEntityUpdateData
+public class IvDateHelper
 {
-    /**
-     * Called by the server when constructing the update packet.
-     * Data should be added to the provided stream.
-     *
-     * @param buffer The packet data stream
-     */
-    public void writeUpdateData(ByteBuf buffer, String context);
+    public static boolean isHalloween()
+    {
+        Calendar cal = getInstance();
 
-    /**
-     * Called by the client when it receives a Entity update packet.
-     * Data should be read out of the stream in the same way as it was written.
-     *
-     * @param buffer The packet data stream
-     */
-    public void readUpdateData(ByteBuf buffer, String context);
+        return cal.get(MONTH) == OCTOBER && cal.get(DAY_OF_MONTH) == 31;
+    }
+
+    public static boolean isChristmas()
+    {
+        Calendar cal = getInstance();
+
+        int day = cal.get(DAY_OF_MONTH);
+        return cal.get(MONTH) == DECEMBER && day == 23 || day == 24;
+    }
+
+    public static boolean isAprilFools()
+    {
+        Calendar cal = getInstance();
+
+        return cal.get(MONTH) == APRIL && cal.get(DAY_OF_MONTH) == 1;
+    }
+
+    public static boolean isMardiGras()
+    {
+        Calendar cal = getInstance();
+
+        return cal.get(MONTH) == MARCH && cal.get(DAY_OF_MONTH) == 4;
+    }
+
+    public static boolean isOppositeDay()
+    {
+        Calendar cal = getInstance();
+
+        return cal.get(MONTH) == JANUARY && cal.get(DAY_OF_MONTH) == 25;
+    }
 }
