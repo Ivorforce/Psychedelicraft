@@ -17,6 +17,8 @@ import ivorius.psychedelicraft.blocks.TileEntityDryingTable;
 import ivorius.psychedelicraft.entities.DrugInfluence;
 import ivorius.psychedelicraft.entities.DrugInfluenceHarmonium;
 import ivorius.psychedelicraft.entities.PSEntityList;
+import ivorius.psychedelicraft.events.PSEventFMLHandler;
+import ivorius.psychedelicraft.events.PSEventForgeHandler;
 import ivorius.psychedelicraft.gui.PSGuiHandler;
 import ivorius.psychedelicraft.items.*;
 import ivorius.psychedelicraft.ivToolkit.ChannelHandlerExtendedEntityPropertiesData;
@@ -49,7 +51,8 @@ public class Psychedelicraft
     public static Logger logger;
 
     public static PSGuiHandler guiHandler;
-    public static PSEventHandler eventHandler;
+    public static PSEventForgeHandler eventForgeHandler;
+    public static PSEventFMLHandler eventFMLHandler;
     public static PSCommunicationHandler communicationHandler;
 
     public static PSCoreHandlerClient coreHandlerClient;
@@ -97,8 +100,10 @@ public class Psychedelicraft
         ChannelHandlerTileEntityData.packetChannel = "PDC|TEData";
         NetworkRegistry.INSTANCE.newChannel(ChannelHandlerTileEntityData.packetChannel, new ChannelHandlerTileEntityData());
 
-        eventHandler = new PSEventHandler();
-        eventHandler.register();
+        eventForgeHandler = new PSEventForgeHandler();
+        eventForgeHandler.register();
+        eventFMLHandler = new PSEventFMLHandler();
+        eventFMLHandler.register();
 
         communicationHandler = new PSCommunicationHandler();
 
