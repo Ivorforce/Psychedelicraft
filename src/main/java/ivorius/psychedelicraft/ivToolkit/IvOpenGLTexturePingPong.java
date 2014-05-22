@@ -20,7 +20,6 @@ package ivorius.psychedelicraft.ivToolkit;
 
 import net.minecraft.client.renderer.OpenGlHelper;
 import org.apache.logging.log4j.Logger;
-import org.lwjgl.opengl.GLContext;
 
 import java.nio.ByteBuffer;
 

@@ -37,7 +37,7 @@ public class TileEntityBarrel extends TileEntity
     @Override
     public void updateEntity()
     {
-        ticksExisted ++;
+        ticksExisted++;
 
         if (timeLeftTapOpen > 0)
         {

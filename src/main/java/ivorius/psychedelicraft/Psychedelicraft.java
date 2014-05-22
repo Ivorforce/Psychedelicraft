@@ -85,8 +85,6 @@ public class Psychedelicraft
 
         config.load();
 
-        PSEntityList.villagerDealerProfessionID = config.get("General", "villagerDealerProfessionID", 87).getInt();
-
         spawnRifts = config.get("Balancing", "spawnRifts", true).getBoolean(true);
 
 //        creativeTab = new CreativeTabPsyche("psychedelicraft");
@@ -220,9 +218,13 @@ public class Psychedelicraft
         for (int i = 0; i < params.length; i++)
         {
             if (params[i] instanceof Item)
+            {
                 params[i] = new ItemStack((Item) params[i], 1, OreDictionary.WILDCARD_VALUE);
+            }
             else if (params[i] instanceof Block)
+            {
                 params[i] = new ItemStack((Block) params[i], 1, OreDictionary.WILDCARD_VALUE);
+            }
         }
 
         GameRegistry.addShapelessRecipe(output, params);

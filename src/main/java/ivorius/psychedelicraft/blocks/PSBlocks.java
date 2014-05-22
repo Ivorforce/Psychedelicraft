@@ -10,7 +10,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.items.ItemBarrel;
 import ivorius.psychedelicraft.items.ItemRiftJar;
-import ivorius.psychedelicraft.items.PSItems;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;

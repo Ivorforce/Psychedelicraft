@@ -94,21 +94,21 @@ public class ItemSmokeable extends Item
     }
 
     @Override
-     public void registerIcons(IIconRegister iconRegister)
-{
-    for (int i = 0; i < textureNames.length; i++)
+    public void registerIcons(IIconRegister iconRegister)
     {
-        textures[i] = iconRegister.registerIcon(getIconString() + "_" + textureNames[i]);
-    }
-
-    for (int i = 0; i < inUseTextureNames.length; i++)
-    {
-        if (inUseTextureNames[i] != null)
+        for (int i = 0; i < textureNames.length; i++)
         {
-            inUseTextures[i] = iconRegister.registerIcon(getIconString() + "_" + inUseTextureNames[i]);
+            textures[i] = iconRegister.registerIcon(getIconString() + "_" + textureNames[i]);
+        }
+
+        for (int i = 0; i < inUseTextureNames.length; i++)
+        {
+            if (inUseTextureNames[i] != null)
+            {
+                inUseTextures[i] = iconRegister.registerIcon(getIconString() + "_" + inUseTextureNames[i]);
+            }
         }
     }
-}
 
     @Override
     public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining)

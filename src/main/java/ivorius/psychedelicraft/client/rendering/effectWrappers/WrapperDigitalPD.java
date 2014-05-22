@@ -59,7 +59,9 @@ public class WrapperDigitalPD extends ShaderWrapper<ShaderDigitalDepth>
         DrugHelper drugHelper = DrugHelper.getDrugHelper(Minecraft.getMinecraft().renderViewEntity);
 
         if (drugHelper != null)
+        {
             return drugHelper.getDrugValue("Zero") > 0.0;
+        }
 
         return false;
     }

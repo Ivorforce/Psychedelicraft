@@ -78,7 +78,9 @@ public class DrugRenderer implements IDrugRenderer
         }
 
         if (DrugShaderHelper.sunFlareIntensity > 0.0f)
+        {
             effectLensFlare.updateLensFlares();
+        }
 
         Block bID = ActiveRenderInfo.getBlockAtEntityViewpoint(entity.worldObj, entity, 1.0F);
         wasInWater = bID.getMaterial() == Material.water;

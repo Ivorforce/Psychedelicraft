@@ -27,8 +27,6 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.IExtendedEntityProperties;
 
@@ -43,9 +41,9 @@ public class ChannelHandlerExtendedEntityPropertiesData extends SimpleChannelInb
     /**
      * Sends an update packet for the entity properties to every watching player's client, if the current active side is the server.
      *
-     * @param entity  The owning entity.
+     * @param entity        The owning entity.
      * @param eepIdentifier The identifier for the extended entity properties. Must implement IExtendedEntityPropertiesUpdateData.
-     * @param context The update context for the packet. Will be passed in writeUpdateData and readUpdateData. Keep in mind you can also add your own additional context information to the buffer.
+     * @param context       The update context for the packet. Will be passed in writeUpdateData and readUpdateData. Keep in mind you can also add your own additional context information to the buffer.
      */
     public static void sendUpdatePacketSafe(Entity entity, String eepIdentifier, String context)
     {
@@ -59,9 +57,9 @@ public class ChannelHandlerExtendedEntityPropertiesData extends SimpleChannelInb
      * Sends an update packet for the entity properties to every watching player's client.
      * Do not invoke this method directly, always use {@link #sendUpdatePacketSafe(net.minecraft.entity.Entity, String, String)} instead.
      *
-     * @param entity  The owning entity.
+     * @param entity        The owning entity.
      * @param eepIdentifier The identifier for the extended entity properties. Must implement IExtendedEntityPropertiesUpdateData.
-     * @param context The update context for the packet. Will be passed in writeUpdateData and readUpdateData. Keep in mind you can also add your own additional context information to the buffer.
+     * @param context       The update context for the packet. Will be passed in writeUpdateData and readUpdateData. Keep in mind you can also add your own additional context information to the buffer.
      */
     public static void sendUpdatePacket(Entity entity, String eepIdentifier, String context)
     {
@@ -72,7 +70,9 @@ public class ChannelHandlerExtendedEntityPropertiesData extends SimpleChannelInb
 
         IExtendedEntityProperties extendedEntityProperties = entity.getExtendedProperties(eepIdentifier);
         if (!(extendedEntityProperties instanceof IExtendedEntityPropertiesUpdateData))
+        {
             throw new IllegalArgumentException("IExtendedEntityProperties must implement IExtendedEntityPropertiesUpdateData to send update packets!");
+        }
 
         ((IExtendedEntityPropertiesUpdateData) extendedEntityProperties).writeUpdateData(buffer, context);
 
@@ -95,7 +95,9 @@ public class ChannelHandlerExtendedEntityPropertiesData extends SimpleChannelInb
             IExtendedEntityProperties extendedEntityProperties = entity.getExtendedProperties(eepIdentifier);
 
             if (extendedEntityProperties instanceof IExtendedEntityPropertiesUpdateData)
+            {
                 ((IExtendedEntityPropertiesUpdateData) extendedEntityProperties).readUpdateData(buffer, context);
+            }
         }
     }
 }

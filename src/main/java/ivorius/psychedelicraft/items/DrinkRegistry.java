@@ -5,13 +5,14 @@
 
 package ivorius.psychedelicraft.items;
 
-import ivorius.psychedelicraft.entities.DrugInfluence;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagString;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Hashtable;
+import java.util.List;
 
 /**
  * Created by lukas on 14.05.14.
@@ -30,7 +31,9 @@ public class DrinkRegistry
     public static void registerSpecialIcon(String drinkID, Item item, String iconName)
     {
         if (!registeredDrinkSpecialIcons.containsKey(item))
+        {
             registeredDrinkSpecialIcons.put(item, new Hashtable<String, String>());
+        }
 
         registeredDrinkSpecialIcons.get(item).put(drinkID, iconName);
     }
@@ -48,7 +51,9 @@ public class DrinkRegistry
     public static String getDrinkIDFromStack(ItemStack stack)
     {
         if (!stack.hasTagCompound())
+        {
             return null;
+        }
 
         return stack.getTagCompound().getString("drinkID");
     }
@@ -58,7 +63,9 @@ public class DrinkRegistry
         String drinkID = getDrinkIDFromStack(stack);
 
         if (drinkID != null)
+        {
             return registeredDrinks.get(drinkID);
+        }
 
         return null;
     }
@@ -91,7 +98,9 @@ public class DrinkRegistry
             Hashtable<String, String> iconsForItem = registeredDrinkSpecialIcons.get(stack.getItem());
 
             if (iconsForItem != null)
+            {
                 return iconsForItem.get(drinkID);
+            }
         }
 
         return null;

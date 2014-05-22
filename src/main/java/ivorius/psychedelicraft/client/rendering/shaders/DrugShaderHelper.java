@@ -410,9 +410,13 @@ public class DrugShaderHelper
     public static int getCurrentAllowedGLDataMask()
     {
         if ("Depth".equals(currentRenderPass))
+        {
             return GL11.GL_DEPTH_BUFFER_BIT;
+        }
         else if ("Shadows".equals(currentRenderPass))
+        {
             return GL11.GL_DEPTH_BUFFER_BIT;
+        }
 
         return ~0;
     }

@@ -33,6 +33,7 @@ public class PSEntityList
 
         //----------------------------------------------------------Villager Dealer----------------------------------
 
+        villagerDealerProfessionID = configuration.get("General", "villagerDealerProfessionID", 87).getInt();
         VillagerRegistry.instance().registerVillagerId(PSEntityList.villagerDealerProfessionID);
 
         VillagerRegistry.instance().registerVillageTradeHandler(PSEntityList.villagerDealerProfessionID, new VillagerTradeHandlerDrugDealer());

@@ -54,7 +54,8 @@ public class ItemBong extends Item
 
                 if (drugHelper != null)
                 {
-                    for (DrugInfluence influence : usedConsumable.drugInfluences) {
+                    for (DrugInfluence influence : usedConsumable.drugInfluences)
+                    {
                         drugHelper.addToDrug(influence.clone());
                     }
 

@@ -7,7 +7,6 @@ package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
-import ivorius.psychedelicraft.client.rendering.shaders.ShaderBlur;
 import ivorius.psychedelicraft.client.rendering.shaders.ShaderSimpleEffects;
 import ivorius.psychedelicraft.entities.DrugHelper;
 import net.minecraft.client.Minecraft;

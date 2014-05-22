@@ -21,7 +21,6 @@ package ivorius.psychedelicraft.ivToolkit;
 import net.minecraft.client.renderer.OpenGlHelper;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.ARBMultitexture;
-import org.lwjgl.opengl.GLContext;
 
 import java.nio.ByteBuffer;
 
@@ -149,7 +148,9 @@ public class IvDepthBuffer
             glReadBuffer(GL_BACK);
 
             if (parentFB > 0) // Binds buffers itself? Anyway, calling the draw and read buffer functions causes invalid operation
+            {
                 glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, parentFB);
+            }
         }
     }
 
@@ -225,23 +226,41 @@ public class IvDepthBuffer
         String statusString;
 
         if (code == GL_FRAMEBUFFER_COMPLETE_EXT)
+        {
             statusString = "GL_FRAMEBUFFER_COMPLETE_EXT";
+        }
         else if (code == GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_EXT)
+        {
             statusString = "GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_EXT";
+        }
         else if (code == GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_EXT)
+        {
             statusString = "GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_EXT";
+        }
         else if (code == GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT)
+        {
             statusString = "GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT";
+        }
         else if (code == GL_FRAMEBUFFER_INCOMPLETE_FORMATS_EXT)
+        {
             statusString = "GL_FRAMEBUFFER_INCOMPLETE_FORMATS_EXT";
+        }
         else if (code == GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_EXT)
+        {
             statusString = "GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_EXT";
+        }
         else if (code == GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER_EXT)
+        {
             statusString = "GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER_EXT";
+        }
         else if (code == GL_FRAMEBUFFER_UNSUPPORTED_EXT)
+        {
             statusString = "GL_FRAMEBUFFER_UNSUPPORTED_EXT";
+        }
         else
+        {
             statusString = "Unknown";
+        }
 
         return code + ": " + statusString;
     }

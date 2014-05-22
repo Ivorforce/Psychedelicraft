@@ -13,7 +13,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.common.DimensionManager;
 
 /**
  * Created by Lukas Tenbrink on 17.03.14.

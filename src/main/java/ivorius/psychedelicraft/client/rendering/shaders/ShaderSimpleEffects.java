@@ -5,13 +5,11 @@
 
 package ivorius.psychedelicraft.client.rendering.shaders;
 
-import ivorius.psychedelicraft.ivToolkit.IvMathHelper;
 import ivorius.psychedelicraft.ivToolkit.IvOpenGLTexturePingPong;
 import ivorius.psychedelicraft.ivToolkit.IvShaderInstance2D;
-import net.minecraft.client.renderer.OpenGlHelper;
 import org.apache.logging.log4j.Logger;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.glColor3f;
 
 /**
  * Created by lukas on 18.02.14.

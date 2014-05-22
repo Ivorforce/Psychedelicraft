@@ -6,7 +6,6 @@
 package ivorius.psychedelicraft.entities;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.util.MathHelper;
 
 import java.util.Random;
 
@@ -47,14 +46,18 @@ public class DrugMessageDistorter
 
                 if (random.nextFloat() < randomLetterChance)
                 {
-                    curChar = (char)((random.nextBoolean() ? 'a' : 'A') + random.nextInt(26));
+                    curChar = (char) ((random.nextBoolean() ? 'a' : 'A') + random.nextInt(26));
                 }
                 else if (random.nextFloat() < randomCaseChance)
                 {
                     if (Character.isUpperCase(curChar))
+                    {
                         curChar = Character.toLowerCase(curChar);
+                    }
                     else
+                    {
                         curChar = Character.toUpperCase(curChar);
+                    }
                 }
 
                 if ((curChar == 's' || curChar == 'S') && random.nextFloat() < sToShChance)
@@ -62,7 +65,9 @@ public class DrugMessageDistorter
                     builder.append(curChar + (random.nextFloat() < longShChance ? "hh" : "h"));
                 }
                 else
+                {
                     builder.append(curChar);
+                }
 
                 if (random.nextFloat() < longCharChance)
                 {
@@ -76,7 +81,9 @@ public class DrugMessageDistorter
                 }
 
                 if (random.nextFloat() < hicChance)
+                {
                     builder.append("*hic*");
+                }
 
                 if (random.nextFloat() < rewindChance)
                 {
@@ -88,7 +95,9 @@ public class DrugMessageDistorter
                     }
 
                     if (i < 0)
+                    {
                         i = 0;
+                    }
                 }
             }
 

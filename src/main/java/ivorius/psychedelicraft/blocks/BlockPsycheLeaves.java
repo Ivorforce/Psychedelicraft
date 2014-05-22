@@ -85,7 +85,9 @@ public class BlockPsycheLeaves extends BlockLeaves
     public int damageDropped(int meta)
     {
         if ((meta & 3) == 1) // Juniper Berries
+        {
             return 0;
+        }
 
         return super.damageDropped(meta);
     }

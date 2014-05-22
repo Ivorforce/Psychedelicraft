@@ -6,7 +6,6 @@
 package ivorius.psychedelicraft.items;
 
 import com.sun.tools.javac.util.Pair;
-import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.entities.DrugHelper;
 import ivorius.psychedelicraft.entities.DrugInfluence;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -86,7 +85,9 @@ public class ItemDrinkHolder extends Item
         if (drink != null)
         {
             if (drink.getFoodLevel(par1ItemStack) == null || par3EntityPlayer.getFoodStats().needFood())
+            {
                 par3EntityPlayer.setItemInUse(par1ItemStack, getMaxItemUseDuration(par1ItemStack));
+            }
         }
 
         return par1ItemStack;
@@ -130,7 +131,9 @@ public class ItemDrinkHolder extends Item
         String specialIcon = DrinkRegistry.getDrinkSpecialIcon(stack);
 
         if (specialIcon != null && registeredSpecialIcons.containsKey(specialIcon))
+        {
             return registeredSpecialIcons.get(specialIcon);
+        }
 
         return super.getIcon(stack, pass);
     }
@@ -141,7 +144,9 @@ public class ItemDrinkHolder extends Item
         String specialIcon = DrinkRegistry.getDrinkSpecialIcon(par1ItemStack);
 
         if (specialIcon != null && registeredSpecialIcons.containsKey(specialIcon))
+        {
             return registeredSpecialIcons.get(specialIcon);
+        }
 
         return super.getIconIndex(par1ItemStack);
     }
@@ -160,14 +165,18 @@ public class ItemDrinkHolder extends Item
         String specialKey = DrinkRegistry.getDrinkTranslationKey(par1ItemStack);
 
         if (specialKey != null)
+        {
             par3List.add(StatCollector.translateToLocal(specialKey).trim());
+        }
     }
 
     @Override
     public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List)
     {
         if (addEmptySelfToCreativeMenu)
+        {
             super.getSubItems(par1, par2CreativeTabs, par3List);
+        }
 
         for (String iconKey : DrinkRegistry.getAllDrinks())
         {

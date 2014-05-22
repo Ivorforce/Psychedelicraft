@@ -6,7 +6,6 @@
 package ivorius.psychedelicraft.items;
 
 import com.sun.tools.javac.util.Pair;
-import ivorius.psychedelicraft.entities.DrugHelper;
 import ivorius.psychedelicraft.entities.DrugInfluence;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;

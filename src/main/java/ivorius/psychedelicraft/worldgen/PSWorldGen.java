@@ -7,7 +7,6 @@ package ivorius.psychedelicraft.worldgen;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import ivorius.psychedelicraft.blocks.PSBlocks;
-import ivorius.psychedelicraft.items.DrinkRegistry;
 import ivorius.psychedelicraft.items.ItemSyringe;
 import ivorius.psychedelicraft.items.PSItems;
 import net.minecraft.util.WeightedRandomChestContent;

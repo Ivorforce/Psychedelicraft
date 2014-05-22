@@ -89,11 +89,15 @@ public class WorldGenTilledPatch extends WorldGenerator
     public static boolean isWaterNearby(World world, int x, int y, int z)
     {
         for (int xP = -1; xP <= 1; xP++)
+        {
             for (int zP = -1; zP <= 1; zP++)
+            {
+                if (world.getBlock(x + xP, y - 1, z + zP).getMaterial() == Material.water)
                 {
-                    if (world.getBlock(x + xP, y - 1, z + zP).getMaterial() == Material.water)
-                        return true;
+                    return true;
                 }
+            }
+        }
 
         return false;
     }

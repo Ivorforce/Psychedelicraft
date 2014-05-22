@@ -6,7 +6,6 @@
 package ivorius.psychedelicraft.client.rendering;
 
 import ivorius.psychedelicraft.blocks.TileEntityBarrel;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.EntityArrow;
