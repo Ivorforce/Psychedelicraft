@@ -48,6 +48,7 @@ public class DrugHelper implements IExtendedEntityProperties, IExtendedEntityPro
     public ArrayList<DrugHallucination> hallucinations = new ArrayList<DrugHallucination>();
 
     public IDrugRenderer drugRenderer;
+    public DrugMessageDistorter drugMessageDistorter;
 
     public int ticksExisted = 0;
 
@@ -62,6 +63,8 @@ public class DrugHelper implements IExtendedEntityProperties, IExtendedEntityPro
     {
         drugs = new Hashtable<String, Drug>();
         influences = new ArrayList<DrugInfluence>();
+
+        drugMessageDistorter = new DrugMessageDistorter();
 
         addDrug("Alcohol", new Drug(1, 0.0002d));
         addDrug("Cannabis", new Drug(1, 0.0002d));
@@ -554,75 +557,6 @@ public class DrugHelper implements IExtendedEntityProperties, IExtendedEntityPro
         {
             drugs.get(key).resetDrugValue();
         }
-    }
-
-    public String distortMessage(EntityLivingBase entity, String par1Str)
-    {
-        if (par1Str.indexOf("/") == 0)
-        {
-            return par1Str;
-        }
-
-        if (getDrugValue("Alcohol") > 0)
-        {
-            int c = 50 - (int) (getDrugValue("Alcohol") * 25f);
-            if (c < 8)
-            {
-                c = 8;
-            }
-
-            float cC = getDrugValue("Alcohol") / 4f + 0.5f;
-            if (cC > 1f)
-            {
-                cC = 1f;
-            }
-
-            for (int i = 0; i < par1Str.length(); i++)
-            {
-                if (entity.getRNG().nextInt(c) == 0)
-                {
-                    char randChar = (char) (entity.getRNG().nextInt(26) + 65);
-                    if (entity.getRNG().nextBoolean())
-                    {
-                        randChar += 32;
-                    }
-                    par1Str = String.format("%s%c%s", par1Str.substring(0, i), randChar, par1Str.substring(i + 1, par1Str.length()));
-                }
-                if (entity.getRNG().nextFloat() * cC > 0.5f)
-                {
-                    char capChar = par1Str.charAt(i);
-                    if (capChar > 96 && capChar < 123)
-                    {
-                        capChar -= 32;
-                    }
-                    else if (capChar > 64 && capChar < 91)
-                    {
-                        capChar += 32;
-                    }
-                    par1Str = String.format("%s%c%s", par1Str.substring(0, i), capChar, par1Str.substring(i + 1, par1Str.length()));
-                }
-                if (entity.getRNG().nextFloat() * cC > 0.5f && par1Str.substring(i, i + 1).equals(" "))
-                {
-                    char capChar = par1Str.charAt(i);
-                    if (capChar > 96 && capChar < 123)
-                    {
-                        capChar -= 32;
-                    }
-                    else if (capChar > 64 && capChar < 91)
-                    {
-                        capChar += 32;
-                    }
-                    par1Str = String.format("%s%c%s", par1Str.substring(0, i), capChar, par1Str.substring(i + 1, par1Str.length()));
-                }
-            }
-        }
-
-        return par1Str;
-    }
-
-    public String distortIncomingMessage(EntityLivingBase entity, String par1Str)
-    {
-        return par1Str;
     }
 
     public void receiveChatMessage(EntityLivingBase entity, String message)

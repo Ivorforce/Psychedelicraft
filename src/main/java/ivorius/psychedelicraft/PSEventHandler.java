@@ -10,11 +10,17 @@ import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import ivorius.psychedelicraft.blocks.PSBlocks;
+import ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
+import ivorius.psychedelicraft.client.rendering.SmoothCameraHelper;
 import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import ivorius.psychedelicraft.entities.DrugHelper;
 import ivorius.psychedelicraft.entities.EntityRealityRift;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ChatComponentText;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.EntityEvent;
@@ -93,8 +99,34 @@ public class PSEventHandler
 
         if (args.length > 1)
         {
-            String modified = DrugHelper.getDrugHelper(event.player).distortMessage(event.player, event.message);
-            args[1] = modified;
+            DrugHelper drugHelper = DrugHelper.getDrugHelper(event.player);
+
+            if (drugHelper != null)
+            {
+                String modified = drugHelper.drugMessageDistorter.distortOutgoingMessage(drugHelper, event.player, event.player.getRNG(), event.message);
+                args[1] = modified;
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onClientChatReceived(ClientChatReceivedEvent event)
+    {
+        if (event.message instanceof ChatComponentText)
+        {
+            ChatComponentText text = (ChatComponentText) event.message;
+
+            EntityLivingBase renderEntity = Minecraft.getMinecraft().renderViewEntity;
+            DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
+
+            if (drugHelper != null)
+            {
+                String message = text.getUnformattedTextForChat();
+                drugHelper.receiveChatMessage(renderEntity, message);
+                String modified = drugHelper.drugMessageDistorter.distortIncomingMessage(drugHelper, renderEntity, renderEntity.getRNG(), message);
+
+                event.message = new ChatComponentText(modified);
+            }
         }
     }
 
@@ -131,6 +163,41 @@ public class PSEventHandler
         if (drugHelper != null)
         {
             event.newSpeed = event.newSpeed * drugHelper.getDigSpeedModifier(event.entityLiving);
+        }
+    }
+
+    @SubscribeEvent
+    public void onRenderOverlay(RenderGameOverlayEvent.Pre event)
+    {
+        if (event.type == RenderGameOverlayEvent.ElementType.PORTAL)
+        {
+            Minecraft mc = Minecraft.getMinecraft();
+            EntityLivingBase renderEntity = mc.renderViewEntity;
+            DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
+
+            if (drugHelper != null && drugHelper.drugRenderer != null)
+            {
+                drugHelper.drugRenderer.renderOverlaysAfterShaders(event.partialTicks, renderEntity, renderEntity.ticksExisted, event.resolution.getScaledWidth(), event.resolution.getScaledHeight(), drugHelper);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onClientTick(TickEvent.ClientTickEvent event)
+    {
+        if (event.phase == TickEvent.Phase.START)
+        {
+            Minecraft mc = Minecraft.getMinecraft();
+
+            if (mc != null && !mc.isGamePaused())
+            {
+                DrugHelper drugHelper = DrugHelper.getDrugHelper(mc.renderViewEntity);
+
+                if (drugHelper != null)
+                {
+                    SmoothCameraHelper.instance.update(mc.gameSettings.mouseSensitivity, DrugEffectInterpreter.getSmoothVision(drugHelper));
+                }
+            }
         }
     }
 }

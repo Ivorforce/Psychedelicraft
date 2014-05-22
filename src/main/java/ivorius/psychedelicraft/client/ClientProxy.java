@@ -59,9 +59,6 @@ public class ClientProxy extends ServerProxy
         DrugShaderHelper.disableDepthBuffer = config.get("Visual", "disableDepthBuffer", false).getBoolean(false);
         DrugShaderHelper.bypassPingPongBuffer = config.get("Visual", "bypassPingPongBuffer", false).getBoolean(false);
 
-        MinecraftForge.EVENT_BUS.register(this);
-        FMLCommonHandler.instance().bus().register(this);
-
         Psychedelicraft.coreHandlerClient = new PSCoreHandlerClient();
         Psychedelicraft.coreHandlerClient.register();
     }
@@ -83,62 +80,6 @@ public class ClientProxy extends ServerProxy
 
         DrugShaderHelper.allocate();
         DrugShaderHelper.outputShaderInfo();
-    }
-
-    @SubscribeEvent
-    public void onRenderOverlay(RenderGameOverlayEvent.Pre event)
-    {
-        if (event.type == RenderGameOverlayEvent.ElementType.PORTAL)
-        {
-            Minecraft mc = Minecraft.getMinecraft();
-            EntityLivingBase renderEntity = mc.renderViewEntity;
-            DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
-
-            if (drugHelper != null && drugHelper.drugRenderer != null)
-            {
-                drugHelper.drugRenderer.renderOverlaysAfterShaders(event.partialTicks, renderEntity, renderEntity.ticksExisted, event.resolution.getScaledWidth(), event.resolution.getScaledHeight(), drugHelper);
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public void onClientChat(ClientChatReceivedEvent event)
-    {
-        if (event.message instanceof ChatComponentText)
-        {
-            ChatComponentText text = (ChatComponentText) event.message;
-
-            EntityLivingBase renderEntity = Minecraft.getMinecraft().renderViewEntity;
-            DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
-
-            if (drugHelper != null)
-            {
-                String message = text.getUnformattedTextForChat();
-                drugHelper.receiveChatMessage(renderEntity, message);
-                String modified = drugHelper.distortIncomingMessage(renderEntity, message);
-
-                event.message = new ChatComponentText(modified);
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event)
-    {
-        if (event.phase == TickEvent.Phase.START)
-        {
-            Minecraft mc = Minecraft.getMinecraft();
-
-            if (mc != null && !mc.isGamePaused())
-            {
-                DrugHelper drugHelper = DrugHelper.getDrugHelper(mc.renderViewEntity);
-
-                if (drugHelper != null)
-                {
-                    SmoothCameraHelper.instance.update(mc.gameSettings.mouseSensitivity, DrugEffectInterpreter.getSmoothVision(drugHelper));
-                }
-            }
-        }
     }
 
     @Override
