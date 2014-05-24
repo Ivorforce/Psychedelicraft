@@ -23,6 +23,7 @@ import ivorius.psychedelicraft.gui.PSGuiHandler;
 import ivorius.psychedelicraft.items.*;
 import ivorius.psychedelicraft.ivToolkit.ChannelHandlerExtendedEntityPropertiesData;
 import ivorius.psychedelicraft.ivToolkit.ChannelHandlerTileEntityData;
+import ivorius.psychedelicraft.server.ServerProxy;
 import ivorius.psychedelicraft.worldgen.PSWorldGen;
 import net.minecraft.block.Block;
 import net.minecraft.entity.passive.EntitySheep;
@@ -45,8 +46,8 @@ public class Psychedelicraft
     @Instance(value = "psychedelicraft")
     public static Psychedelicraft instance;
 
-    @SidedProxy(clientSide = "ivorius.psychedelicraft.client.ClientProxy", serverSide = "ivorius.psychedelicraft.ServerProxy")
-    public static ServerProxy proxy;
+    @SidedProxy(clientSide = "ivorius.psychedelicraft.client.ClientProxy", serverSide = "ivorius.psychedelicraft.server.ServerProxy")
+    public static PSProxy proxy;
 
     public static Logger logger;
 

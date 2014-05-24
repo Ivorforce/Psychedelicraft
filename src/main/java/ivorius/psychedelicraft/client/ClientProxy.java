@@ -9,8 +9,9 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import ivorius.psychedelicraft.PSCoreHandlerClient;
+import ivorius.psychedelicraft.PSProxy;
 import ivorius.psychedelicraft.Psychedelicraft;
-import ivorius.psychedelicraft.ServerProxy;
+import ivorius.psychedelicraft.server.ServerProxy;
 import ivorius.psychedelicraft.blocks.TileEntityBarrel;
 import ivorius.psychedelicraft.blocks.TileEntityDryingTable;
 import ivorius.psychedelicraft.blocks.TileEntityPeyote;
@@ -31,7 +32,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.common.config.Configuration;
 
-public class ClientProxy extends ServerProxy
+public class ClientProxy implements PSProxy
 {
     @Override
     public void preInit(Configuration config)
