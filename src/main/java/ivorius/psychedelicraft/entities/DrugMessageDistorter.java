@@ -15,6 +15,9 @@ import java.util.Random;
  */
 public class DrugMessageDistorter
 {
+    public static String[] fillerWords = {", like, ", "... like, ", ", uhm, ", ", uhhhh, "};
+    public static String[] startFillerWords = {"Dude, ", "Dood, ", "Dewd, ", "Dude, like, ", "Dood, like, ", "Dewd, like, ", "Yeah... ", "And, "};
+
     public String distortIncomingMessage(DrugHelper drugHelper, Entity entity, Random random, String message)
     {
         return message;
@@ -29,13 +32,14 @@ public class DrugMessageDistorter
 
         float alcohol = drugHelper.getDrugValue("Alcohol");
         float zero = drugHelper.getDrugValue("Zero");
-        if (alcohol > 0.0f || zero > 0.0f)
-            return distortIncomingMessage(message, random, alcohol, zero);
+        float cannabis = drugHelper.getDrugValue("Cannabis");
+        if (alcohol > 0.0f || zero > 0.0f || cannabis > 0.0f)
+            return distortIncomingMessage(message, random, alcohol, zero, cannabis);
 
         return message;
     }
 
-    public String distortIncomingMessage(String message, Random random, float alcohol, float zero)
+    public String distortIncomingMessage(String message, Random random, float alcohol, float zero, float cannabis)
     {
         StringBuilder builder = new StringBuilder();
 
@@ -50,6 +54,10 @@ public class DrugMessageDistorter
         float oneZeroChance = IvMathHelper.zeroToOne(zero, 0.6f, 0.95f);
         float randomCharChance = IvMathHelper.zeroToOne(zero, 0.2f, 0.95f);
 
+        float fillerWordChance = IvMathHelper.zeroToOne(cannabis, 0.2f, 0.95f) * 0.1f;
+        float startFillerWordChance = IvMathHelper.zeroToOne(cannabis, 0.2f, 0.95f) * 0.7f;
+
+        boolean wasPoint = true;
         for (int i = 0; i < message.length(); i++)
         {
             char origChar = message.charAt(i);
@@ -86,10 +94,20 @@ public class DrugMessageDistorter
             {
                 builder.append(curChar).append(random.nextFloat() < longShChance ? "hh" : "h");
             }
+            else if (curChar == ' ' && random.nextFloat() < fillerWordChance)
+            {
+                builder.append(fillerWords[random.nextInt(fillerWords.length)]);
+            }
+            else if (wasPoint && random.nextFloat() < startFillerWordChance)
+            {
+                builder.append(startFillerWords[random.nextInt(startFillerWords.length)]).append(curChar);
+            }
             else
             {
                 builder.append(curChar);
             }
+
+            wasPoint = false; // Grammar and stuff... I'd rather be safe
 
             if (random.nextFloat() < longCharChance)
             {
