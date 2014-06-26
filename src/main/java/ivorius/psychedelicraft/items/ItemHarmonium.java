@@ -22,6 +22,8 @@ public class ItemHarmonium extends Item
     public ItemHarmonium()
     {
         super();
+        setHasSubtypes(true);
+        this.setMaxDamage(0);
     }
 
     @Override
