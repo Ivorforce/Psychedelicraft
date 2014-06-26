@@ -24,6 +24,8 @@ import net.minecraft.entity.player.EntityPlayer;
  */
 public class PSEventFMLHandler
 {
+    public static final int RIFT_TICK_SPAWN_CHANCE = 20 * 60 * 180;
+
     public void register()
     {
         FMLCommonHandler.instance().bus().register(this);
@@ -62,7 +64,7 @@ public class PSEventFMLHandler
 
             if (!event.player.getEntityWorld().isRemote && Psychedelicraft.spawnRifts)
             {
-                if (event.player.getRNG().nextInt(20 * 60 * 100) == 0)
+                if (event.player.getRNG().nextInt(RIFT_TICK_SPAWN_CHANCE) == 0)
                 {
                     spawnRiftAtPlayer(event.player);
                 }
