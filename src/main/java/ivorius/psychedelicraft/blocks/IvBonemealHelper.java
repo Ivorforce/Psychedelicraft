@@ -24,7 +24,7 @@ public abstract class IvBonemealHelper
                 {
                     if (--var2.stackSize == 0)
                     {
-                        par5EntityPlayer.inventory.setInventorySlotContents(par5EntityPlayer.inventory.currentItem, (ItemStack) null);
+                        par5EntityPlayer.inventory.setInventorySlotContents(par5EntityPlayer.inventory.currentItem, null);
                     }
                 }
 

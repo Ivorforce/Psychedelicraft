@@ -37,9 +37,9 @@ public class GeneratorGeneric implements IWorldGenerator
 
         int generate = 0;
 
-        for (int i = 0; i < biomeEntries.size(); i++)
+        for (Entry biomeEntry : biomeEntries)
         {
-            generate += this.biomeEntries.get(i).numberGenerated(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider, biomeGen);
+            generate += biomeEntry.numberGenerated(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider, biomeGen);
         }
 
         for (int i = 0; i < generate; i++)

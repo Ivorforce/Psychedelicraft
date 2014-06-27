@@ -140,7 +140,7 @@ public class DrugHallucinationEntity extends DrugHallucination
 
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GL11.glEnable(GL11.GL_BLEND);
-            DrugShaderHelper.setOverrideColor(new float[]{color[0], color[1], color[2], alpha * dAlpha});
+            DrugShaderHelper.setOverrideColor(color[0], color[1], color[2], alpha * dAlpha);
             DrugShaderHelper.setLightmapEnabled(false);
 
             Render var10 = RenderManager.instance.getEntityRenderObject(this.entity);
@@ -151,7 +151,7 @@ public class DrugHallucinationEntity extends DrugHallucination
             var10.doRender(this.entity, 0.0F, 0.0F, 0.0F, 0.0F, 1.0f);
 
             DrugShaderHelper.setLightmapEnabled(true);
-            DrugShaderHelper.setOverrideColor(null);
+            DrugShaderHelper.setOverrideColor((float[])null);
 
             GL11.glPopMatrix();
         }

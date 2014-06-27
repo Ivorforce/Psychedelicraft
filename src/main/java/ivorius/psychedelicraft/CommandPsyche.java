@@ -13,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.Vec3;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CommandPsyche extends CommandBase
@@ -66,10 +67,7 @@ public class CommandPsyche extends CommandBase
             String[] values = new String[]{"spawnRift"};
 
             ArrayList list = new ArrayList<String>();
-            for (String s : values)
-            {
-                list.add(s);
-            }
+            Collections.addAll(list, values);
 
             return list;
         }

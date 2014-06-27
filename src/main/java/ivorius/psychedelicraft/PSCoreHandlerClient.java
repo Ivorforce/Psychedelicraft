@@ -76,7 +76,7 @@ public class PSCoreHandlerClient
 
             if (drugHelper != null && drugHelper.drugRenderer != null)
             {
-                drugHelper.drugRenderer.renderOverlaysBeforeShaders(event.partialTicks, mc.renderViewEntity, (int) mc.ingameGUI.getUpdateCounter(), mc.displayWidth, mc.displayHeight, drugHelper);
+                drugHelper.drugRenderer.renderOverlaysBeforeShaders(event.partialTicks, mc.renderViewEntity, mc.ingameGUI.getUpdateCounter(), mc.displayWidth, mc.displayHeight, drugHelper);
             }
 
             DrugShaderHelper.postRender(ticks, partialTicks);

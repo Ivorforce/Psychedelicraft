@@ -69,11 +69,11 @@ public class ItemBarrel extends ItemBlock
     @Override
     public void registerIcons(IIconRegister par1IconRegister)
     {
-        for (int i = 0; i < entries.length; i++)
+        for (BarrelEntry entry : entries)
         {
-            if (entries[i] != null)
+            if (entry != null)
             {
-                entries[i].icon = par1IconRegister.registerIcon(entries[i].iconName);
+                entry.icon = par1IconRegister.registerIcon(entry.iconName);
             }
         }
     }

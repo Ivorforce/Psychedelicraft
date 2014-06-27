@@ -31,7 +31,7 @@ public class BlockTobaccoPlant extends Block implements IvBonemealCompatibleBloc
         this.setBlockBounds(0.5F - var3, 0.0F, 0.5F - var3, 0.5F + var3, 1.0F, 0.5F + var3);
         this.setTickRandomly(true);
 
-        this.setCreativeTab((CreativeTabs) null);
+        this.setCreativeTab(null);
         this.disableStats();
         setStepSound(Block.soundTypeGrass);
     }
@@ -72,7 +72,7 @@ public class BlockTobaccoPlant extends Block implements IvBonemealCompatibleBloc
     public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
     {
         Block var5 = par1World.getBlock(par2, par3 - 1, par4);
-        return var5 == this ? true : (var5 != Blocks.grass && var5 != Blocks.dirt && var5 != Blocks.farmland ? false : true);
+        return var5 == this || var5 == Blocks.grass || var5 == Blocks.dirt || var5 == Blocks.farmland;
     }
 
     /**
@@ -191,12 +191,8 @@ public class BlockTobaccoPlant extends Block implements IvBonemealCompatibleBloc
     @Override
     public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
     {
-        if (IvBonemealHelper.tryGrowing(par1World, par2, par3, par4, par5EntityPlayer, this))
-        {
-            return true;
-        }
+        return IvBonemealHelper.tryGrowing(par1World, par2, par3, par4, par5EntityPlayer, this);
 
-        return false;
     }
 
     @Override

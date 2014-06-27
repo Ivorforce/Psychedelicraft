@@ -14,6 +14,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CommandDrug extends CommandBase
@@ -42,7 +43,7 @@ public class CommandDrug extends CommandBase
 
             if (var3 != null && par2ArrayOfStr.length < 3)
             {
-                throw new WrongUsageException(getCommandUsage(par1ICommandSender), new Object[0]);
+                throw new WrongUsageException(getCommandUsage(par1ICommandSender));
             }
 
             if (var3 == null)
@@ -65,7 +66,7 @@ public class CommandDrug extends CommandBase
                 }
                 catch (Exception e)
                 {
-                    throw new WrongUsageException(getCommandUsage(par1ICommandSender), new Object[0]);
+                    throw new WrongUsageException(getCommandUsage(par1ICommandSender));
                 }
 
                 boolean lock = DrugHelper.getDrugHelper(var3).getDrug(drugName).isLocked();
@@ -90,7 +91,7 @@ public class CommandDrug extends CommandBase
         }
         else
         {
-            throw new WrongUsageException(getCommandUsage(par1ICommandSender), new Object[0]);
+            throw new WrongUsageException(getCommandUsage(par1ICommandSender));
         }
     }
 
@@ -164,10 +165,7 @@ public class CommandDrug extends CommandBase
         {
             String[] values = new String[]{"1.0", "0.5", "-0.5", "-1.0"};
             ArrayList list = new ArrayList<String>();
-            for (String s : values)
-            {
-                list.add(s);
-            }
+            Collections.addAll(list, values);
 
             return list;
         }
@@ -175,10 +173,7 @@ public class CommandDrug extends CommandBase
         {
             String[] values = new String[]{"lock", "unlock"};
             ArrayList list = new ArrayList<String>();
-            for (String s : values)
-            {
-                list.add(s);
-            }
+            Collections.addAll(list, values);
 
             return list;
         }
@@ -188,9 +183,7 @@ public class CommandDrug extends CommandBase
 
     protected EntityPlayer getTargetPlayer(String par1Str)
     {
-        EntityPlayerMP var2 = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(par1Str);
-
-        return var2;
+        return MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(par1Str);
     }
 
     protected String[] getPlayers()

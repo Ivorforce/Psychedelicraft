@@ -11,7 +11,6 @@ import cpw.mods.fml.common.registry.VillagerRegistry;
 import ivorius.psychedelicraft.PSCoreHandlerClient;
 import ivorius.psychedelicraft.PSProxy;
 import ivorius.psychedelicraft.Psychedelicraft;
-import ivorius.psychedelicraft.server.ServerProxy;
 import ivorius.psychedelicraft.blocks.TileEntityBarrel;
 import ivorius.psychedelicraft.blocks.TileEntityDryingTable;
 import ivorius.psychedelicraft.blocks.TileEntityPeyote;

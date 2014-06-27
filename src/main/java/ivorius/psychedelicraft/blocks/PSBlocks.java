@@ -82,7 +82,7 @@ public class PSBlocks
 
         //----------------------------------------------------------Jenever----------------------------------
 
-        psycheLeaves = (BlockPsycheLeaves) new BlockPsycheLeaves();
+        psycheLeaves = new BlockPsycheLeaves();
         psycheLeaves.setCreativeTab(CreativeTabs.tabDecorations);
         registerBlockDefault(psycheLeaves, "psycheLeaves");
 

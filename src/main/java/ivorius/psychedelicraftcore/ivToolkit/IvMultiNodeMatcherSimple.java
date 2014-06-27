@@ -44,9 +44,9 @@ public class IvMultiNodeMatcherSimple implements IvMultiNodeMatcher
     @Override
     public boolean matchFromNodeInList(InsnList nodes, AbstractInsnNode node)
     {
-        for (int i = 0; i < singleNodeMatchers.size(); i++)
+        for (IvSingleNodeMatcher singleNodeMatcher : singleNodeMatchers)
         {
-            if (!singleNodeMatchers.get(i).matchNode(node))
+            if (!singleNodeMatcher.matchNode(node))
             {
                 return false;
             }

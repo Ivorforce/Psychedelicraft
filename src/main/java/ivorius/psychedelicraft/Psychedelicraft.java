@@ -23,7 +23,6 @@ import ivorius.psychedelicraft.gui.PSGuiHandler;
 import ivorius.psychedelicraft.items.*;
 import ivorius.psychedelicraft.ivToolkit.ChannelHandlerExtendedEntityPropertiesData;
 import ivorius.psychedelicraft.ivToolkit.ChannelHandlerTileEntityData;
-import ivorius.psychedelicraft.server.ServerProxy;
 import ivorius.psychedelicraft.worldgen.PSWorldGen;
 import net.minecraft.block.Block;
 import net.minecraft.entity.passive.EntitySheep;
