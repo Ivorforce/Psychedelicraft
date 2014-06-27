@@ -5,7 +5,7 @@
 
 package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
-import ivorius.psychedelicraft.ivtoolkit.IvOpenGLTexturePingPong;
+import ivorius.ivtoolkit.rendering.IvOpenGLTexturePingPong;
 
 /**
  * Created by lukas on 26.04.14.

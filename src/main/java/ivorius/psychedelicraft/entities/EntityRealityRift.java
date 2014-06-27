@@ -5,8 +5,8 @@
 
 package ivorius.psychedelicraft.entities;
 
+import ivorius.ivtoolkit.math.IvMathHelper;
 import ivorius.psychedelicraft.blocks.PSBlocks;
-import ivorius.psychedelicraft.ivtoolkit.IvMathHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;

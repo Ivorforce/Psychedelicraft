@@ -1,8 +1,8 @@
 package ivorius.psychedelicraft.items;
 
+import ivorius.ivtoolkit.tools.IvInventoryHelper;
 import ivorius.psychedelicraft.entities.DrugHelper;
 import ivorius.psychedelicraft.entities.DrugInfluence;
-import ivorius.psychedelicraft.ivtoolkit.IvInventoryHelper;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;

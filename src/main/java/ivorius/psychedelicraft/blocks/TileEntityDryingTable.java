@@ -6,9 +6,10 @@
 package ivorius.psychedelicraft.blocks;
 
 import io.netty.buffer.ByteBuf;
-import ivorius.psychedelicraft.ivtoolkit.network.ChannelHandlerTileEntityData;
-import ivorius.psychedelicraft.ivtoolkit.ITileEntityUpdateData;
-import ivorius.psychedelicraft.ivtoolkit.IvTileEntityHelper;
+import ivorius.ivtoolkit.blocks.IvTileEntityHelper;
+import ivorius.ivtoolkit.network.ChannelHandlerTileEntityData;
+import ivorius.ivtoolkit.network.ITileEntityUpdateData;
+import ivorius.psychedelicraft.Psychedelicraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
@@ -58,7 +59,7 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
                 dryingProgress = 0;
             }
 
-            ChannelHandlerTileEntityData.sendUpdatePacketSafe(this, "dryingProgress");
+            Psychedelicraft.chTileEntityData.sendUpdatePacketSafe(this, "dryingProgress");
         }
 
         if (plannedResult != null && (dryingTableItems[0] == null || (dryingTableItems[0] == plannedResult && dryingTableItems[0].getItemDamage() == plannedResult.getItemDamage() && plannedResult.isStackable() && plannedResult.stackSize + plannedResult.stackSize < plannedResult.getMaxStackSize())))
@@ -141,7 +142,7 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
 
         heatRatio = t;
 
-        ChannelHandlerTileEntityData.sendUpdatePacketSafe(this, "heatRatio");
+        Psychedelicraft.chTileEntityData.sendUpdatePacketSafe(this, "heatRatio");
     }
 
     @Override

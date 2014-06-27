@@ -5,7 +5,7 @@
 
 package ivorius.psychedelicraft.entities;
 
-import ivorius.psychedelicraft.ivtoolkit.IvMathHelper;
+import ivorius.ivtoolkit.IvMathHelper;
 import net.minecraft.nbt.NBTTagCompound;
 
 /**

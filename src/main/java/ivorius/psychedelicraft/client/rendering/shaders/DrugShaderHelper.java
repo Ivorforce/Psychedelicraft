@@ -6,11 +6,11 @@
 package ivorius.psychedelicraft.client.rendering.shaders;
 
 import com.google.common.base.Charsets;
+import ivorius.ivtoolkit.rendering.*;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.EntityFakeSun;
 import ivorius.psychedelicraft.client.rendering.PsycheShadowHelper;
 import ivorius.psychedelicraft.client.rendering.effectWrappers.*;
-import ivorius.psychedelicraft.ivtoolkit.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureManager;

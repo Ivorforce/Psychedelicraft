@@ -5,8 +5,8 @@
 
 package ivorius.psychedelicraft.client.rendering.shaders;
 
-import ivorius.psychedelicraft.ivtoolkit.IvOpenGLTexturePingPong;
-import ivorius.psychedelicraft.ivtoolkit.IvShaderInstance2D;
+import ivorius.ivtoolkit.rendering.IvOpenGLTexturePingPong;
+import ivorius.ivtoolkit.rendering.IvShaderInstance2D;
 import org.apache.logging.log4j.Logger;
 
 /**

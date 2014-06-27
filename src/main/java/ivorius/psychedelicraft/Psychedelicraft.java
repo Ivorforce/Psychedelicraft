@@ -21,8 +21,8 @@ import ivorius.psychedelicraft.events.PSEventFMLHandler;
 import ivorius.psychedelicraft.events.PSEventForgeHandler;
 import ivorius.psychedelicraft.gui.PSGuiHandler;
 import ivorius.psychedelicraft.items.*;
-import ivorius.psychedelicraft.ivtoolkit.network.ChannelHandlerExtendedEntityPropertiesData;
-import ivorius.psychedelicraft.ivtoolkit.network.ChannelHandlerTileEntityData;
+import ivorius.ivtoolkit.network.ChannelHandlerExtendedEntityPropertiesData;
+import ivorius.ivtoolkit.network.ChannelHandlerTileEntityData;
 import ivorius.psychedelicraft.worldgen.PSWorldGen;
 import net.minecraft.block.Block;
 import net.minecraft.entity.passive.EntitySheep;
@@ -59,6 +59,9 @@ public class Psychedelicraft
     public static PSCoreHandlerCommon coreHandlerCommon;
     public static PSCoreHandlerServer coreHandlerServer;
 
+    public static ChannelHandlerExtendedEntityPropertiesData chEEPData;
+    public static ChannelHandlerTileEntityData chTileEntityData;
+
 //    public static CreativeTabPsyche creativeTab;
 
     public static String filePathTexturesFull = "psychedelicraft:textures/mod/";
@@ -92,11 +95,11 @@ public class Psychedelicraft
         guiHandler = new PSGuiHandler();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
 
-        ChannelHandlerExtendedEntityPropertiesData.packetChannel = "PDC|EEPData";
-        NetworkRegistry.INSTANCE.newChannel(ChannelHandlerExtendedEntityPropertiesData.packetChannel, new ChannelHandlerExtendedEntityPropertiesData());
+        chEEPData = new ChannelHandlerExtendedEntityPropertiesData("PDC|EEPData");
+        NetworkRegistry.INSTANCE.newChannel(chEEPData.packetChannel, chEEPData);
 
-        ChannelHandlerTileEntityData.packetChannel = "PDC|TEData";
-        NetworkRegistry.INSTANCE.newChannel(ChannelHandlerTileEntityData.packetChannel, new ChannelHandlerTileEntityData());
+        chTileEntityData = new ChannelHandlerTileEntityData("PDC|TEData");
+        NetworkRegistry.INSTANCE.newChannel(chTileEntityData.packetChannel, chTileEntityData);
 
         eventForgeHandler = new PSEventForgeHandler();
         eventForgeHandler.register();

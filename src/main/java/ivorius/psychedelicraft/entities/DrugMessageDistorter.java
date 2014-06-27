@@ -5,7 +5,7 @@
 
 package ivorius.psychedelicraft.entities;
 
-import ivorius.psychedelicraft.ivtoolkit.IvMathHelper;
+import ivorius.ivtoolkit.math.IvMathHelper;
 import net.minecraft.entity.Entity;
 
 import java.util.Random;

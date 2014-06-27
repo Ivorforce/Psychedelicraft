@@ -5,11 +5,11 @@
 
 package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
+import ivorius.ivtoolkit.rendering.IvOpenGLTexturePingPong;
+import ivorius.ivtoolkit.rendering.IvShaderInstance2D;
+import ivorius.ivtoolkit.rendering.IvShaderInstanceMC;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
-import ivorius.psychedelicraft.ivtoolkit.IvOpenGLTexturePingPong;
-import ivorius.psychedelicraft.ivtoolkit.IvShaderInstance2D;
-import ivorius.psychedelicraft.ivtoolkit.IvShaderInstanceMC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 

@@ -6,10 +6,14 @@
 package ivorius.psychedelicraft.blocks;
 
 import io.netty.buffer.ByteBuf;
+import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.entities.DrugHelper;
 import ivorius.psychedelicraft.entities.EntityRealityRift;
-import ivorius.psychedelicraft.ivtoolkit.*;
-import ivorius.psychedelicraft.ivtoolkit.network.ChannelHandlerTileEntityData;
+import ivorius.ivtoolkit.bezier.IvBezierPath3D;
+import ivorius.ivtoolkit.blocks.IvTileEntityHelper;
+import ivorius.ivtoolkit.math.IvMathHelper;
+import ivorius.ivtoolkit.network.ChannelHandlerTileEntityData;
+import ivorius.ivtoolkit.network.ITileEntityUpdateData;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -189,7 +193,7 @@ public class TileEntityRiftJar extends TileEntity implements ITileEntityUpdateDa
             isOpening = !isOpening;
 
             markDirty();
-            ChannelHandlerTileEntityData.sendUpdatePacketSafe(this, "isOpening");
+            Psychedelicraft.chTileEntityData.sendUpdatePacketSafe(this, "isOpening");
         }
     }
 
@@ -200,7 +204,7 @@ public class TileEntityRiftJar extends TileEntity implements ITileEntityUpdateDa
             suckingRifts = !suckingRifts;
 
             markDirty();
-            ChannelHandlerTileEntityData.sendUpdatePacketSafe(this, "suckingRifts");
+            Psychedelicraft.chTileEntityData.sendUpdatePacketSafe(this, "suckingRifts");
         }
     }
 
