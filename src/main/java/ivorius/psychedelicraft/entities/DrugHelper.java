@@ -466,7 +466,7 @@ public class DrugHelper implements IExtendedEntityProperties, IExtendedEntityPro
 
     public void readFromNBT(NBTTagCompound par1NBTTagCompound, boolean fromPacket)
     {
-        for (String key : drugs.keySet()) // Doesn't work yet, because client
+        for (String key : drugs.keySet())
         {
             NBTTagCompound cmp = par1NBTTagCompound.getCompoundTag(key);
 
