@@ -16,7 +16,7 @@
  * No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
  */
 
-package ivorius.psychedelicraft.ivToolkit;
+package ivorius.psychedelicraft.ivtoolkit;
 
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
