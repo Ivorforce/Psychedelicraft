@@ -16,7 +16,7 @@
  * No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
  */
 
-package ivorius.psychedelicraft.ivToolkit;
+package ivorius.psychedelicraft.ivtoolkit;
 
 
 import net.minecraft.block.Block;
