@@ -9,6 +9,7 @@ import io.netty.buffer.ByteBuf;
 import ivorius.psychedelicraft.entities.DrugHelper;
 import ivorius.psychedelicraft.entities.EntityRealityRift;
 import ivorius.psychedelicraft.ivtoolkit.*;
+import ivorius.psychedelicraft.ivtoolkit.network.ChannelHandlerTileEntityData;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;

@@ -6,7 +6,7 @@
 package ivorius.psychedelicraft.blocks;
 
 import io.netty.buffer.ByteBuf;
-import ivorius.psychedelicraft.ivtoolkit.ChannelHandlerTileEntityData;
+import ivorius.psychedelicraft.ivtoolkit.network.ChannelHandlerTileEntityData;
 import ivorius.psychedelicraft.ivtoolkit.ITileEntityUpdateData;
 import ivorius.psychedelicraft.ivtoolkit.IvTileEntityHelper;
 import net.minecraft.entity.player.EntityPlayer;

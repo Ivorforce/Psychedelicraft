@@ -16,7 +16,7 @@
  * No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
  */
 
-package ivorius.psychedelicraft.ivtoolkit;
+package ivorius.psychedelicraft.ivtoolkit.network;
 
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -27,6 +27,8 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import ivorius.psychedelicraft.ivtoolkit.ITileEntityUpdateData;
+import ivorius.psychedelicraft.ivtoolkit.IvTileEntityHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
