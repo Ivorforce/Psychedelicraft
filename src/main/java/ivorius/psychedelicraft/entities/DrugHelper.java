@@ -91,12 +91,9 @@ public class DrugHelper implements IExtendedEntityProperties, IExtendedEntityPro
 
     public static void initInEntity(Entity entity)
     {
-        if (entity instanceof EntityPlayer)
-        {
-            entity.registerExtendedProperties("DrugHelper", new DrugHelper());
-        }
-
+        entity.registerExtendedProperties("DrugHelper", new DrugHelper());
         DrugHelper drugHelper = getDrugHelper(entity);
+
         if (drugHelper != null)
         {
             Psychedelicraft.proxy.createDrugRender(drugHelper);

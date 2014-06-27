@@ -103,7 +103,10 @@ public class PSEventForgeHandler
     @SubscribeEvent
     public void onEntityConstruction(EntityEvent.EntityConstructing event)
     {
-        DrugHelper.initInEntity(event.entity);
+        if (event.entity instanceof EntityPlayer)
+        {
+            DrugHelper.initInEntity(event.entity);
+        }
     }
 
     @SubscribeEvent
