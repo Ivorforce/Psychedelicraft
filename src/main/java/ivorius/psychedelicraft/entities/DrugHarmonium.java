@@ -5,7 +5,7 @@
 
 package ivorius.psychedelicraft.entities;
 
-import ivorius.psychedelicraft.ivToolkit.IvShaderInstance;
+import ivorius.psychedelicraft.ivtoolkit.IvShaderInstance;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 

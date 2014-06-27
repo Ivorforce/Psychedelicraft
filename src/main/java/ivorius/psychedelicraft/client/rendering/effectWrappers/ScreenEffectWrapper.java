@@ -5,8 +5,8 @@
 
 package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
-import ivorius.psychedelicraft.ivToolkit.Iv2DScreenEffect;
-import ivorius.psychedelicraft.ivToolkit.IvOpenGLTexturePingPong;
+import ivorius.psychedelicraft.ivtoolkit.Iv2DScreenEffect;
+import ivorius.psychedelicraft.ivtoolkit.IvOpenGLTexturePingPong;
 import net.minecraft.client.Minecraft;
 
 /**

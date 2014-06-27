@@ -5,10 +5,10 @@
 
 package ivorius.psychedelicraft.client.rendering;
 
-import ivorius.psychedelicraft.ivToolkit.Iv2DScreenEffect;
-import ivorius.psychedelicraft.ivToolkit.IvOpenGLHelper;
-import ivorius.psychedelicraft.ivToolkit.IvOpenGLTexturePingPong;
-import ivorius.psychedelicraft.ivToolkit.IvRenderHelper;
+import ivorius.psychedelicraft.ivtoolkit.Iv2DScreenEffect;
+import ivorius.psychedelicraft.ivtoolkit.IvOpenGLHelper;
+import ivorius.psychedelicraft.ivtoolkit.IvOpenGLTexturePingPong;
+import ivorius.psychedelicraft.ivtoolkit.IvRenderHelper;
 
 import java.nio.ByteBuffer;
 

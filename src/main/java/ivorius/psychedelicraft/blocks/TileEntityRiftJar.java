@@ -8,7 +8,7 @@ package ivorius.psychedelicraft.blocks;
 import io.netty.buffer.ByteBuf;
 import ivorius.psychedelicraft.entities.DrugHelper;
 import ivorius.psychedelicraft.entities.EntityRealityRift;
-import ivorius.psychedelicraft.ivToolkit.*;
+import ivorius.psychedelicraft.ivtoolkit.*;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;

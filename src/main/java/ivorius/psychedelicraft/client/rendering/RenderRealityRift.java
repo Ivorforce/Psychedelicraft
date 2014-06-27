@@ -8,7 +8,7 @@ package ivorius.psychedelicraft.client.rendering;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import ivorius.psychedelicraft.entities.EntityRealityRift;
-import ivorius.psychedelicraft.ivToolkit.IvRenderHelper;
+import ivorius.psychedelicraft.ivtoolkit.IvRenderHelper;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;

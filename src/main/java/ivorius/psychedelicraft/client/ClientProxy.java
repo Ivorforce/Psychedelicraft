@@ -22,7 +22,7 @@ import ivorius.psychedelicraft.entities.EntityMolotovCocktail;
 import ivorius.psychedelicraft.entities.EntityRealityRift;
 import ivorius.psychedelicraft.entities.PSEntityList;
 import ivorius.psychedelicraft.items.PSItems;
-import ivorius.psychedelicraft.ivToolkit.IvParticleHelper;
+import ivorius.psychedelicraft.ivtoolkit.IvParticleHelper;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.particle.EntitySmokeFX;
 import net.minecraft.client.renderer.entity.RenderSnowball;

@@ -5,10 +5,10 @@
 
 package ivorius.psychedelicraft.client.rendering;
 
-import ivorius.psychedelicraft.ivToolkit.Iv2DScreenEffect;
-import ivorius.psychedelicraft.ivToolkit.IvMathHelper;
-import ivorius.psychedelicraft.ivToolkit.IvOpenGLTexturePingPong;
-import ivorius.psychedelicraft.ivToolkit.IvRenderHelper;
+import ivorius.psychedelicraft.ivtoolkit.Iv2DScreenEffect;
+import ivorius.psychedelicraft.ivtoolkit.IvMathHelper;
+import ivorius.psychedelicraft.ivtoolkit.IvOpenGLTexturePingPong;
+import ivorius.psychedelicraft.ivtoolkit.IvRenderHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
