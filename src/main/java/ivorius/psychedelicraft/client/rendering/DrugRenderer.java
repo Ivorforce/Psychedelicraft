@@ -5,12 +5,12 @@
 
 package ivorius.psychedelicraft.client.rendering;
 
+import ivorius.ivtoolkit.math.IvMathHelper;
+import ivorius.ivtoolkit.rendering.IvOpenGLHelper;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import ivorius.psychedelicraft.entities.DrugHallucination;
 import ivorius.psychedelicraft.entities.DrugHelper;
-import ivorius.ivtoolkit.IvMathHelper;
-import ivorius.ivtoolkit.IvOpenGLHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;

@@ -5,10 +5,10 @@
 
 package ivorius.psychedelicraft.client.rendering;
 
+import ivorius.ivtoolkit.rendering.IvRenderHelper;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import ivorius.psychedelicraft.entities.EntityRealityRift;
-import ivorius.ivtoolkit.IvRenderHelper;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;

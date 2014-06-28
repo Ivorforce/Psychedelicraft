@@ -424,7 +424,7 @@ public class DrugHelper implements IExtendedEntityProperties, IExtendedEntityPro
 
             if (!entity.worldObj.isRemote)
             {
-                ChannelHandlerExtendedEntityPropertiesData.sendUpdatePacketSafe(entity, "DrugHelper", "DrugData");
+                Psychedelicraft.chEEPData.sendUpdatePacketSafe(entity, "DrugHelper", "DrugData");
             }
         }
     }

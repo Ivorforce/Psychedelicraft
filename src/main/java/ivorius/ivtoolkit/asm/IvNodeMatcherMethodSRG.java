@@ -42,7 +42,7 @@ public class IvNodeMatcherMethodSRG implements IvSingleNodeMatcher
 
     public IvNodeMatcherMethodSRG(int opCode, String srgMethodName, String owner, Type returnValue, Type... desc)
     {
-        this(opCode, srgMethodName, owner, IvClassTransformer.getMethodDescriptor(returnValue, desc));
+        this(opCode, srgMethodName, owner, IvClassTransformer.getMethodDescriptor(returnValue, (Object[])desc));
     }
 
     @Override

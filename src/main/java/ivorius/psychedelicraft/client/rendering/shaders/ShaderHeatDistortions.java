@@ -5,9 +5,9 @@
 
 package ivorius.psychedelicraft.client.rendering.shaders;
 
-import ivorius.ivtoolkit.IvDepthBuffer;
-import ivorius.ivtoolkit.IvOpenGLTexturePingPong;
-import ivorius.ivtoolkit.IvShaderInstance2D;
+import ivorius.ivtoolkit.rendering.IvDepthBuffer;
+import ivorius.ivtoolkit.rendering.IvOpenGLTexturePingPong;
+import ivorius.ivtoolkit.rendering.IvShaderInstance2D;
 import net.minecraft.client.renderer.OpenGlHelper;
 import org.apache.logging.log4j.Logger;
 
