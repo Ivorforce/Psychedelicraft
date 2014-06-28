@@ -5,10 +5,10 @@
 
 package ivorius.psychedelicraftcore.transformers;
 
-import ivorius.psychedelicraftcore.ivtoolkit.IvClassTransformerGeneral;
-import ivorius.psychedelicraftcore.ivtoolkit.IvInsnHelper;
-import ivorius.psychedelicraftcore.ivtoolkit.IvNodeFinder;
-import ivorius.psychedelicraftcore.ivtoolkit.IvNodeMatcherMethodSRG;
+import ivorius.ivtoolkit.asm.IvClassTransformerGeneral;
+import ivorius.ivtoolkit.asm.IvInsnHelper;
+import ivorius.ivtoolkit.asm.IvNodeFinder;
+import ivorius.ivtoolkit.asm.IvNodeMatcherMethodSRG;
 import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.*;
