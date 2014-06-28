@@ -88,7 +88,7 @@ public class TileEntityRiftJar extends TileEntity implements ITileEntityUpdateDa
             {
                 float minus = Math.min(0.0004f * fractionOpen * currentRiftFraction + 0.0004f, currentRiftFraction);
 
-                List<EntityLivingBase> entities = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getAABBPool().getAABB(xCoord - 5.0f, yCoord - 5.0f, zCoord - 2.0f, xCoord + 6.0f, yCoord + 6.0f, zCoord + 6.0f));
+                List<EntityLivingBase> entities = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(xCoord - 5.0f, yCoord - 5.0f, zCoord - 2.0f, xCoord + 6.0f, yCoord + 6.0f, zCoord + 6.0f));
 
                 for (EntityLivingBase entity : entities)
                 {
@@ -242,12 +242,12 @@ public class TileEntityRiftJar extends TileEntity implements ITileEntityUpdateDa
     @Override
     public AxisAlignedBB getRenderBoundingBox()
     {
-        return AxisAlignedBB.getAABBPool().getAABB(xCoord - 10.0f, yCoord - 5.0f, zCoord - 10.0f, xCoord + 11.0f, yCoord + 11.0f, zCoord + 11.0f);
+        return AxisAlignedBB.getBoundingBox(xCoord - 10.0f, yCoord - 5.0f, zCoord - 10.0f, xCoord + 11.0f, yCoord + 11.0f, zCoord + 11.0f);
     }
 
     public List<EntityRealityRift> getAffectedRifts()
     {
-        return worldObj.getEntitiesWithinAABB(EntityRealityRift.class, AxisAlignedBB.getAABBPool().getAABB(xCoord - 2.0f, yCoord + 0.0f, zCoord - 2.0f, xCoord + 3.0f, yCoord + 10.0f, zCoord + 3.0f));
+        return worldObj.getEntitiesWithinAABB(EntityRealityRift.class, AxisAlignedBB.getBoundingBox(xCoord - 2.0f, yCoord + 0.0f, zCoord - 2.0f, xCoord + 3.0f, yCoord + 10.0f, zCoord + 3.0f));
     }
 
     @Override

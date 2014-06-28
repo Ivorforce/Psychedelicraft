@@ -40,24 +40,22 @@ public class EffectLensFlare implements Iv2DScreenEffect
 
         if (renderEntity != null && world != null)
         {
-            Vec3Pool vecPool = world.getWorldVec3Pool();
-
             float sunSizeRadians = -5.0f / 180.0f * 3.1315926f;
             float sunWidth = 20.0f;
             float sunRadians = world.getCelestialAngleRadians(1.0f);
 
-            Vec3 sunVecTopLeft = vecPool.getVecFromPool(-MathHelper.sin(sunRadians - sunSizeRadians) * 120.0f, MathHelper.cos(sunRadians - sunSizeRadians) * 120.0f, -sunWidth);
-            Vec3 sunVecTopRight = vecPool.getVecFromPool(-MathHelper.sin(sunRadians - sunSizeRadians) * 120.0f, MathHelper.cos(sunRadians - sunSizeRadians) * 120.0f, sunWidth);
-            Vec3 sunVecBottomLeft = vecPool.getVecFromPool(-MathHelper.sin(sunRadians + sunSizeRadians) * 120.0f, MathHelper.cos(sunRadians + sunSizeRadians) * 120.0f, -sunWidth);
-            Vec3 sunVecBottomRight = vecPool.getVecFromPool(-MathHelper.sin(sunRadians + sunSizeRadians) * 120.0f, MathHelper.cos(sunRadians + sunSizeRadians) * 120.0f, sunWidth);
+            Vec3 sunVecTopLeft = Vec3.createVectorHelper(-MathHelper.sin(sunRadians - sunSizeRadians) * 120.0f, MathHelper.cos(sunRadians - sunSizeRadians) * 120.0f, -sunWidth);
+            Vec3 sunVecTopRight = Vec3.createVectorHelper(-MathHelper.sin(sunRadians - sunSizeRadians) * 120.0f, MathHelper.cos(sunRadians - sunSizeRadians) * 120.0f, sunWidth);
+            Vec3 sunVecBottomLeft = Vec3.createVectorHelper(-MathHelper.sin(sunRadians + sunSizeRadians) * 120.0f, MathHelper.cos(sunRadians + sunSizeRadians) * 120.0f, -sunWidth);
+            Vec3 sunVecBottomRight = Vec3.createVectorHelper(-MathHelper.sin(sunRadians + sunSizeRadians) * 120.0f, MathHelper.cos(sunRadians + sunSizeRadians) * 120.0f, sunWidth);
 
             Vec3 playerPos = renderEntity.getPosition(1.0f);
 
             //Need copies, because the raytracer edits these
-            Vec3 playerPositionLT = vecPool.getVecFromPool(playerPos.xCoord, playerPos.yCoord, playerPos.zCoord);
-            Vec3 playerPositionLB = vecPool.getVecFromPool(playerPos.xCoord, playerPos.yCoord, playerPos.zCoord);
-            Vec3 playerPositionRT = vecPool.getVecFromPool(playerPos.xCoord, playerPos.yCoord, playerPos.zCoord);
-            Vec3 playerPositionRB = vecPool.getVecFromPool(playerPos.xCoord, playerPos.yCoord, playerPos.zCoord);
+            Vec3 playerPositionLT = Vec3.createVectorHelper(playerPos.xCoord, playerPos.yCoord, playerPos.zCoord);
+            Vec3 playerPositionLB = Vec3.createVectorHelper(playerPos.xCoord, playerPos.yCoord, playerPos.zCoord);
+            Vec3 playerPositionRT = Vec3.createVectorHelper(playerPos.xCoord, playerPos.yCoord, playerPos.zCoord);
+            Vec3 playerPositionRB = Vec3.createVectorHelper(playerPos.xCoord, playerPos.yCoord, playerPos.zCoord);
 
             Vec3 sunPosTopLeft = playerPositionLT.addVector(sunVecTopLeft.xCoord, sunVecTopLeft.yCoord, sunVecTopLeft.zCoord);
             Vec3 sunPosTopRight = playerPositionRT.addVector(sunVecTopRight.xCoord, sunVecTopRight.yCoord, sunVecTopRight.zCoord);

@@ -111,12 +111,12 @@ public class PSBlocks
 
         riftJar = new BlockRiftJar().setBlockName("riftJar").setBlockTextureName(Psychedelicraft.textureBase + "riftJar");
         riftJar.setCreativeTab(CreativeTabs.tabDecorations);
-        GameRegistry.registerBlock(riftJar, ItemRiftJar.class, "riftJar", Psychedelicraft.MODID);
+        GameRegistry.registerBlock(riftJar, ItemRiftJar.class, "riftJar");
         GameRegistry.registerTileEntity(TileEntityRiftJar.class, "riftJar");
         riftJar.setCreativeTab(CreativeTabs.tabDecorations);
 
         glitched = new BlockGlitched().setBlockName("glitched").setBlockTextureName(Psychedelicraft.textureBase + "glitched");
-        GameRegistry.registerBlock(glitched, ItemBlock.class, "glitched", Psychedelicraft.MODID);
+        GameRegistry.registerBlock(glitched, ItemBlock.class, "glitched");
         glitched.setCreativeTab(null);
     }
 

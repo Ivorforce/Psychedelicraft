@@ -12,6 +12,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
 import net.minecraft.util.Vec3Pool;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
@@ -82,7 +83,6 @@ public class PsycheMatrixHelper
             double d4 = (double) (MathHelper.cos(f6 / 180.0F * (float) Math.PI) * MathHelper.cos(f2 / 180.0F * (float) Math.PI)) * d7;
             double d5 = (double) (-MathHelper.sin(f2 / 180.0F * (float) Math.PI)) * d7;
 
-            Vec3Pool vec3Pool = mc.theWorld.getWorldVec3Pool();
             for (int k = 0; k < 8; ++k)
             {
                 float f3 = (float) ((k & 1) * 2 - 1);
@@ -91,11 +91,11 @@ public class PsycheMatrixHelper
                 f3 *= 0.1F;
                 f4 *= 0.1F;
                 f5 *= 0.1F;
-                MovingObjectPosition movingobjectposition = mc.theWorld.rayTraceBlocks(vec3Pool.getVecFromPool(d0 + (double) f3, d1 + (double) f4, d2 + (double) f5), vec3Pool.getVecFromPool(d0 - d3 + (double) f3 + (double) f5, d1 - d5 + (double) f4, d2 - d4 + (double) f5));
+                MovingObjectPosition movingobjectposition = mc.theWorld.rayTraceBlocks(Vec3.createVectorHelper(d0 + (double) f3, d1 + (double) f4, d2 + (double) f5), Vec3.createVectorHelper(d0 - d3 + (double) f3 + (double) f5, d1 - d5 + (double) f4, d2 - d4 + (double) f5));
 
                 if (movingobjectposition != null)
                 {
-                    double d6 = movingobjectposition.hitVec.distanceTo(vec3Pool.getVecFromPool(d0, d1, d2));
+                    double d6 = movingobjectposition.hitVec.distanceTo(Vec3.createVectorHelper(d0, d1, d2));
 
                     if (d6 < d7)
                     {
