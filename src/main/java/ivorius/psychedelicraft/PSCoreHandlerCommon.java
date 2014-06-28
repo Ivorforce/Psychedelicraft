@@ -8,7 +8,7 @@ package ivorius.psychedelicraft;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import ivorius.psychedelicraft.entities.DrugHelper;
 import ivorius.psychedelicraftcore.PsycheCoreBusCommon;
-import ivorius.psychedelicraftcoreUtils.events.WakeUpPlayerEvent;
+import ivorius.pscoreutils.events.WakeUpPlayerEvent;
 
 /**
  * Created by lukas on 04.03.14.

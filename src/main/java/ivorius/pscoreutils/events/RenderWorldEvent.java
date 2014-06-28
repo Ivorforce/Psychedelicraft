@@ -3,25 +3,23 @@
  *  * http://lukas.axxim.net
  */
 
-package ivorius.psychedelicraftcoreUtils.events;
+package ivorius.pscoreutils.events;
 
-import cpw.mods.fml.common.eventhandler.Cancelable;
 import cpw.mods.fml.common.eventhandler.Event;
 
 /**
  * Created by lukas on 13.03.14.
  */
-@Cancelable
-public class RenderHandEvent extends Event
+public class RenderWorldEvent extends Event
 {
     public final float partialTicks;
 
-    public RenderHandEvent(float partialTicks)
+    public RenderWorldEvent(float partialTicks)
     {
         this.partialTicks = partialTicks;
     }
 
-    public static class Pre extends RenderHandEvent
+    public static class Pre extends RenderWorldEvent
     {
         public Pre(float partialTicks)
         {
@@ -29,17 +27,11 @@ public class RenderHandEvent extends Event
         }
     }
 
-    public static class Post extends RenderHandEvent
+    public static class Post extends RenderWorldEvent
     {
         public Post(float partialTicks)
         {
             super(partialTicks);
-        }
-
-        @Override
-        public boolean isCancelable()
-        {
-            return false;
         }
     }
 }

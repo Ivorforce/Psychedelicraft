@@ -3,21 +3,21 @@
  *  * http://lukas.axxim.net
  */
 
-package ivorius.psychedelicraftcoreUtils.events;
+package ivorius.pscoreutils.events;
 
 import cpw.mods.fml.common.eventhandler.Event;
 
 /**
  * Created by lukas on 13.03.14.
  */
-public class ItemLightingEvent extends Event
+public class LightmapSwitchEvent extends Event
 {
-    public ItemLightingEvent()
+    public LightmapSwitchEvent()
     {
 
     }
 
-    public static class Enable extends ItemLightingEvent
+    public static class Enable extends LightmapSwitchEvent
     {
         public Enable()
         {
@@ -25,7 +25,7 @@ public class ItemLightingEvent extends Event
         }
     }
 
-    public static class Disable extends ItemLightingEvent
+    public static class Disable extends LightmapSwitchEvent
     {
         public Disable()
         {

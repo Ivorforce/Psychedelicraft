@@ -3,7 +3,7 @@
  *  * http://lukas.axxim.net
  */
 
-package ivorius.psychedelicraftcoreUtils.events;
+package ivorius.pscoreutils.events;
 
 import cpw.mods.fml.common.eventhandler.Event;
 import net.minecraft.client.audio.ISound;

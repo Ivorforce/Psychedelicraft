@@ -11,7 +11,7 @@ import ivorius.psychedelicraft.client.rendering.SmoothCameraHelper;
 import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import ivorius.psychedelicraft.entities.DrugHelper;
 import ivorius.psychedelicraftcore.PsycheCoreBusCommon;
-import ivorius.psychedelicraftcoreUtils.events.*;
+import ivorius.pscoreutils.events.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.EntityLivingBase;
