@@ -36,10 +36,11 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = Psychedelicraft.MODID, version = Psychedelicraft.VERSION)
+@Mod(modid = Psychedelicraft.MODID, version = Psychedelicraft.VERSION, name = Psychedelicraft.NAME)
 public class Psychedelicraft
 {
     public static final String MODID = "psychedelicraft";
+    public static final String NAME = "Psychedelicraft";
     public static final String VERSION = "1.4.1";
 
     @Instance(value = "psychedelicraft")
