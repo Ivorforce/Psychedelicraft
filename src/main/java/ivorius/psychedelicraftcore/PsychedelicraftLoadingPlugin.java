@@ -12,10 +12,14 @@ import java.util.Map;
 /**
  * Created by lukas on 21.02.14.
  */
+@IFMLLoadingPlugin.Name(value = PsychedelicraftLoadingPlugin.NAME)
 @IFMLLoadingPlugin.MCVersion(value = "1.7.2")
 @IFMLLoadingPlugin.TransformerExclusions(value = "ivorius.psychedelicraftcore.")
+@IFMLLoadingPlugin.SortingIndex(value = 0)
 public class PsychedelicraftLoadingPlugin implements IFMLLoadingPlugin
 {
+    public static final String NAME = "Psychedelicraft Core";
+
     @Override
     public String[] getASMTransformerClass()
     {
@@ -45,6 +49,4 @@ public class PsychedelicraftLoadingPlugin implements IFMLLoadingPlugin
     {
         return null;
     }
-
-
 }

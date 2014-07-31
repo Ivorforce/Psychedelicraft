@@ -17,13 +17,20 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.0"
+version = "1.4.1"
 group= "ivorius.psychedelicraft" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Psychedelicraft"
 
 minecraft {
     version = "1.7.2-10.12.2.1147"
     assetDir = "eclipse/assets"
+}
+
+jar {
+    manifest {
+        attributes 'FMLCorePlugin': 'ivorius.psychedelicraftcore.PsychedelicraftLoadingPlugin',
+                'FMLCorePluginContainsFMLMod': 'true'
+    }
 }
 
 dependencies {

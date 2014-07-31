@@ -30,7 +30,7 @@ public class PsychedelicraftCoreContainer extends DummyModContainer
         myMeta.description = "CoreMod for Psychedelicraft. Required API Psychedelicraft is built on top of. ";
         myMeta.modId = "psychedelicraftcore";
         myMeta.version = "1.4";
-        myMeta.name = "Psychedelicraft Core";
+        myMeta.name = PsychedelicraftLoadingPlugin.NAME;
         myMeta.url = "http://www.minecraftforum.net/topic/563257-172";
     }
 
