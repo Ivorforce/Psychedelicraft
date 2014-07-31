@@ -41,7 +41,7 @@ public class DrugShaderHelper
     public static boolean bypassPingPongBuffer = false;
     public static boolean shaderEnabled = true;
     public static boolean shader2DEnabled = true;
-    public static boolean doShadows = false;
+    public static boolean doShadows = true;
     public static boolean doHeatDistortion = false;
     public static boolean doWaterDistortion = false;
 

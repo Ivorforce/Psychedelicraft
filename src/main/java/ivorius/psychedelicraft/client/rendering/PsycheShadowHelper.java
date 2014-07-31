@@ -86,12 +86,12 @@ public class PsycheShadowHelper
         return sunMatrix;
     }
 
-    public static Matrix4f getInverseViewMatrix()
+    public static Matrix4f getInverseViewMatrix(float partialTicks)
     {
 //        return (Matrix4f) getSunMatrix().invert();
 
         EntityLivingBase renderEntity = Minecraft.getMinecraft().renderViewEntity;
-        return (Matrix4f) PsycheMatrixHelper.getLookProjectionMatrix(PsycheMatrixHelper.getCurrentProjectionMatrix(), renderEntity).invert();
+        return (Matrix4f) PsycheMatrixHelper.getLookProjectionMatrix(PsycheMatrixHelper.getCurrentProjectionMatrix(partialTicks), renderEntity).invert();
     }
 
     public static float getSunZFar()

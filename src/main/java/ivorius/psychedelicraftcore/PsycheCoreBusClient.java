@@ -84,11 +84,6 @@ public class PsycheCoreBusClient
         PsycheCoreBusCommon.EVENT_BUS.post(new ItemLightingEvent.Disable());
     }
 
-    public static void updateFOVValue(float value, boolean worldFOV)
-    {
-        PsycheCoreBusCommon.EVENT_BUS.post(new FovValueEvent(value, worldFOV));
-    }
-
     public static void orientCamera(float partialTicks)
     {
         PsycheCoreBusCommon.EVENT_BUS.post(new OrientCameraEvent(partialTicks));

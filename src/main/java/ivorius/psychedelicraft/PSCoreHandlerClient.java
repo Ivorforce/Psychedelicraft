@@ -21,6 +21,8 @@ import net.minecraft.util.Vec3;
 import net.minecraftforge.client.MinecraftForgeClient;
 import org.lwjgl.opengl.GL11;
 
+import java.lang.reflect.Method;
+
 /**
  * Created by lukas on 21.02.14.
  */
@@ -30,7 +32,6 @@ public class PSCoreHandlerClient
     private final Vec3 field_82884_b = Vec3.createVectorHelper(0.20000000298023224D, 1.0D, -0.699999988079071D).normalize();
     private final Vec3 field_82885_c = Vec3.createVectorHelper(-0.20000000298023224D, 1.0D, 0.699999988079071D).normalize();
 
-    private float lastFovValue = 90.0f;
     private int lastActiveTexture = OpenGlHelper.defaultTexUnit;
 
     public void register()
@@ -256,25 +257,6 @@ public class PSCoreHandlerClient
         {
             DrugShaderHelper.setFogMode(event.param);
         }
-    }
-
-    @SubscribeEvent
-    public void updateFOVValue(FovValueEvent event)
-    {
-        if (event.worldFOV)
-        {
-            lastFovValue = event.fov;
-        }
-    }
-
-    public float getLastFovValue()
-    {
-        return lastFovValue;
-    }
-
-    public static float getCurrentFOV()
-    {
-        return Psychedelicraft.coreHandlerClient != null ? Psychedelicraft.coreHandlerClient.getLastFovValue() : 90.0f;
     }
 
     @SubscribeEvent

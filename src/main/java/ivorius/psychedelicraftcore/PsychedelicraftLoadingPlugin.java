@@ -14,7 +14,7 @@ import java.util.Map;
  */
 @IFMLLoadingPlugin.Name(value = PsychedelicraftLoadingPlugin.NAME)
 @IFMLLoadingPlugin.MCVersion(value = "1.7.2")
-@IFMLLoadingPlugin.TransformerExclusions(value = "ivorius.psychedelicraftcore.")
+@IFMLLoadingPlugin.TransformerExclusions(value = {"ivorius.psychedelicraftcore.", "ivorius.ivtoolkit.asm."})
 @IFMLLoadingPlugin.SortingIndex(value = 0)
 public class PsychedelicraftLoadingPlugin implements IFMLLoadingPlugin
 {

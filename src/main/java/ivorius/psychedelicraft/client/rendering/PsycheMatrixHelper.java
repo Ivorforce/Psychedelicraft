@@ -5,9 +5,11 @@
 
 package ivorius.psychedelicraft.client.rendering;
 
+import cpw.mods.fml.relauncher.ReflectionHelper;
 import ivorius.ivtoolkit.math.IvMatrixHelper;
 import ivorius.psychedelicraft.PSCoreHandlerClient;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
@@ -18,18 +20,23 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 /**
  * Created by lukas on 09.03.14.
  */
 public class PsycheMatrixHelper
 {
-    public static Matrix4f getCurrentProjectionMatrix()
+    private static Method getFOVMethod;
+
+    public static Matrix4f getCurrentProjectionMatrix(float partialTicks)
     {
         Minecraft mc = Minecraft.getMinecraft();
         float degToRad = (float) Math.PI / 180.0f;
 
         float farPlaneDistance = (float) (mc.gameSettings.renderDistanceChunks * 16);
-        return IvMatrixHelper.getProjectionMatrix(PSCoreHandlerClient.getCurrentFOV() * degToRad, (float) mc.displayWidth / (float) mc.displayHeight, 0.05f, farPlaneDistance * 2.0f);
+        return IvMatrixHelper.getProjectionMatrix(getCurrentFOV(partialTicks, true) * degToRad, (float) mc.displayWidth / (float) mc.displayHeight, 0.05f, farPlaneDistance * 2.0f);
     }
 
     public static Matrix4f getLookProjectionMatrix(Matrix4f projectionMatrix, Entity entity)
@@ -42,9 +49,9 @@ public class PsycheMatrixHelper
         return IvMatrixHelper.lookFrom(0.0f, 0.0f, 0.0f, (entity.rotationYaw + 180.0f) * degToRad, entity.rotationPitch * degToRad, roll * degToRad, projectionMatrix, projectionMatrix);
     }
 
-    public static Vector3f projectPoint(Entity entity, Vector3f point)
+    public static Vector3f projectPoint(Entity entity, Vector3f point, float partialTicks)
     {
-        Matrix4f projectionMatrix = getLookProjectionMatrix(getCurrentProjectionMatrix(), entity);
+        Matrix4f projectionMatrix = getLookProjectionMatrix(getCurrentProjectionMatrix(partialTicks), entity);
 
         Vector4f clippedPoint = new Vector4f(point.x, point.y, point.z, 1.0f);
         Matrix4f.transform(projectionMatrix, clippedPoint, clippedPoint);
@@ -56,7 +63,7 @@ public class PsycheMatrixHelper
         Minecraft mc = Minecraft.getMinecraft();
         EntityLivingBase renderViewEntity = mc.renderViewEntity;
 
-        Matrix4f transformMatrix = getCurrentProjectionMatrix();
+        Matrix4f transformMatrix = getCurrentProjectionMatrix(partialTicks);
 
         // Copied from EntityRenderer
         if (mc.gameSettings.thirdPersonView > 0)
@@ -121,5 +128,23 @@ public class PsycheMatrixHelper
         Vector4f clippedPoint = new Vector4f(point.x, point.y, point.z, 1.0f);
         Matrix4f.transform(transformMatrix, clippedPoint, clippedPoint);
         return new Vector3f(clippedPoint.x, -clippedPoint.y, clippedPoint.z);
+    }
+
+    public static float getCurrentFOV(float partialTicks, boolean isWorld)
+    {
+        EntityRenderer instance = Minecraft.getMinecraft().entityRenderer;
+        if (getFOVMethod == null)
+            getFOVMethod = ReflectionHelper.findMethod(EntityRenderer.class, instance, new String[]{"func_78481_a", "getFOVModifier"}, Float.TYPE, Boolean.TYPE);
+
+        try
+        {
+            return (Float) getFOVMethod.invoke(instance, partialTicks, isWorld);
+        }
+        catch (IllegalAccessException | InvocationTargetException e)
+        {
+            e.printStackTrace();
+        }
+
+        return 90.0f;
     }
 }

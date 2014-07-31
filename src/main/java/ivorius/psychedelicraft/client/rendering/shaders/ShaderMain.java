@@ -77,7 +77,7 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
 
             if (shouldDoShadows)
             {
-                setUniformMatrix("inverseViewMatrix", PsycheShadowHelper.getInverseViewMatrix());
+                setUniformMatrix("inverseViewMatrix", PsycheShadowHelper.getInverseViewMatrix(partialTicks));
                 setUniformMatrix("sunMatrix", PsycheShadowHelper.getSunMatrix());
 
                 setUniformInts("texShadow", 3);

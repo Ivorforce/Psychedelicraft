@@ -32,7 +32,6 @@ public class EntityRendererTransformer extends IvClassTransformerClass
         registerExpectedMethod("renderWorld", "func_78471_a", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE, Type.LONG_TYPE));
         registerExpectedMethod("renderWorldAdditions", "func_78471_a", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE, Type.LONG_TYPE));
         registerExpectedMethod("setupFog", "func_78468_a", getMethodDescriptor(Type.VOID_TYPE, Type.INT_TYPE, Type.FLOAT_TYPE));
-        registerExpectedMethod("getFOVModifier", "func_78481_a", getMethodDescriptor(Type.FLOAT_TYPE, Type.FLOAT_TYPE, Type.BOOLEAN_TYPE));
         registerExpectedMethod("setupCameraTransform", "func_78479_a", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE, Type.INT_TYPE));
     }
 
@@ -174,21 +173,6 @@ public class EntityRendererTransformer extends IvClassTransformerClass
             }
 
             return true;
-        }
-        else if (methodID.equals("getFOVModifier"))
-        {
-            List<AbstractInsnNode> returnNodes = IvNodeFinder.findNodes(new IvNodeMatcherSimple(FRETURN), methodNode);
-
-            for (AbstractInsnNode callListNode : returnNodes)
-            {
-                InsnList listBefore = new InsnList();
-                listBefore.add(new InsnNode(DUP));
-                listBefore.add(new VarInsnNode(ILOAD, 2));
-                listBefore.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "updateFOVValue", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE, Type.BOOLEAN_TYPE)));
-                methodNode.instructions.insertBefore(callListNode, listBefore);
-            }
-
-            return returnNodes.size() > 0;
         }
         else if (methodID.equals("setupCameraTransform"))
         {
