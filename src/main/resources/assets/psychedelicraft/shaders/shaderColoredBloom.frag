@@ -12,7 +12,7 @@ float influenceFromColor(vec3 color1, vec3 color2)
     vec3 rdistCol = (color1 - color2);
     vec3 distCol = sqrt(rdistCol * rdistCol);
     
-    float influence = 1.0 - (distCol.r + distCol.g + distCol.g) * 2.0;
+    float influence = 1.0 - (distCol.r + distCol.g + distCol.b) * 2.0;
     
     return clamp(influence, 0.0, 1.0);
 }
