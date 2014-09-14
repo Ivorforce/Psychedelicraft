@@ -23,15 +23,15 @@ void main()
     vec4 newColor = gl_FragColor;
     float bloomInfluence = 0.0;
 
-    float xMul = (vertical == 0) ? (pixelSize.x * 1.0) : 0.0;
-    float yMul = (vertical == 1) ? (pixelSize.y * 1.0) : 0.0;
-        
+    vec2 dirVec = vec2((vertical == 0) ? pixelSize.x : 0.0, (vertical == 1) ? pixelSize.y : 0.0);
+
     for(float i = -1.0; i < 2.0; i += 2.0)
     {
-        vec3 color1 = texture2D(tex0, clamp(gl_TexCoord[0].st + vec2(1.0 * i * xMul, 1.0 * i * yMul), 0.0, 1.0)).rgb;
-        vec3 color2 = texture2D(tex0, clamp(gl_TexCoord[0].st + vec2(2.0 * i * xMul, 2.0 * i * yMul), 0.0, 1.0)).rgb;
-        vec3 color3 = texture2D(tex0, clamp(gl_TexCoord[0].st + vec2(3.0 * i * xMul, 3.0 * i * yMul), 0.0, 1.0)).rgb;
-        vec3 color4 = texture2D(tex0, clamp(gl_TexCoord[0].st + vec2(4.0 * i * xMul, 4.0 * i * yMul), 0.0, 1.0)).rgb;
+        vec2 activeDirVec = i * dirVec;
+        vec3 color1 = texture2D(tex0, clamp(gl_TexCoord[0].st + 1.0 * activeDirVec, 0.0, 1.0)).rgb;
+        vec3 color2 = texture2D(tex0, clamp(gl_TexCoord[0].st + 2.0 * activeDirVec, 0.0, 1.0)).rgb;
+        vec3 color3 = texture2D(tex0, clamp(gl_TexCoord[0].st + 3.0 * activeDirVec, 0.0, 1.0)).rgb;
+        vec3 color4 = texture2D(tex0, clamp(gl_TexCoord[0].st + 4.0 * activeDirVec, 0.0, 1.0)).rgb;
         
         bloomInfluence += influenceFromColor(color1, bloomColor) * 0.028 * 2.0;
         bloomInfluence += influenceFromColor(color2, bloomColor) * 0.020 * 2.0;
