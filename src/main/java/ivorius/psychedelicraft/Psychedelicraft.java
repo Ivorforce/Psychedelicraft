@@ -139,14 +139,12 @@ public class Psychedelicraft
 
         addCrafting();
         PSWorldGen.initWorldGen();
-
-        PSOutboundCommuncationHandler.init();
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-
+        PSOutboundCommuncationHandler.init();
     }
 
     private void addCrafting()
