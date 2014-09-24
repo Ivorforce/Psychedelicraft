@@ -139,6 +139,8 @@ public class Psychedelicraft
 
         addCrafting();
         PSWorldGen.initWorldGen();
+
+        PSOutboundCommuncationHandler.init();
     }
 
     @EventHandler
