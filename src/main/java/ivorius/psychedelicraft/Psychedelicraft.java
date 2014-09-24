@@ -63,7 +63,7 @@ public class Psychedelicraft
     public static ChannelHandlerExtendedEntityPropertiesData chEEPData;
     public static ChannelHandlerTileEntityData chTileEntityData;
 
-//    public static CreativeTabPsyche creativeTab;
+    public static CreativeTabPsyche creativeTab;
 
     public static String filePathTexturesFull = "psychedelicraft:textures/mod/";
     public static String filePathTextures = "textures/mod/";
@@ -91,7 +91,7 @@ public class Psychedelicraft
 
         spawnRifts = config.get("Balancing", "spawnRifts", true).getBoolean(true);
 
-//        creativeTab = new CreativeTabPsyche("psychedelicraft");
+        creativeTab = new CreativeTabPsyche("psychedelicraft");
 
         guiHandler = new PSGuiHandler();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
@@ -132,7 +132,7 @@ public class Psychedelicraft
     {
         proxy.registerRenderers();
 
-//        creativeTab.tabIcon = PSItems.cannabisLeaf;
+        creativeTab.tabIcon = PSItems.cannabisLeaf;
 
         DrugInfluence.registerInfluence(DrugInfluence.class, "default");
         DrugInfluence.registerInfluence(DrugInfluenceHarmonium.class, "harmonium");

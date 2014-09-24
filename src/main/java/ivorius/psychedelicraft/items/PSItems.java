@@ -12,7 +12,6 @@ import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.blocks.PSBlocks;
 import ivorius.psychedelicraft.entities.DrugInfluence;
 import ivorius.psychedelicraft.entities.EntityMolotovCocktail;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
@@ -73,37 +72,37 @@ public class PSItems
 
         syringe = (ItemSyringe) new ItemSyringe().setUnlocalizedName("syringe").setTextureName(Psychedelicraft.textureBase + "syringe");
         GameRegistry.registerItem(syringe, "syringe", Psychedelicraft.MODID);
-        syringe.setCreativeTab(CreativeTabs.tabMisc);
+        syringe.setCreativeTab(Psychedelicraft.creativeTab);
 
         woodenBowlDrug = (ItemDrinkHolder) new ItemDrinkHolder().setUnlocalizedName("woodenBowlDrug").setTextureName("bowl");
         woodenBowlDrug.addEmptySelfToCreativeMenu = false;
         GameRegistry.registerItem(woodenBowlDrug, "psycheWoodenBowl", Psychedelicraft.MODID);
-        woodenBowlDrug.setCreativeTab(CreativeTabs.tabFood);
+        woodenBowlDrug.setCreativeTab(Psychedelicraft.creativeTab);
         DrinkRegistry.registerDrinkHolder(woodenBowlDrug);
 
         woodenMug = (ItemDrinkHolder) new ItemDrinkHolder().setUnlocalizedName("woodenMug").setTextureName(Psychedelicraft.textureBase + "woodenMug");
         GameRegistry.registerItem(woodenMug, "woodenMug", Psychedelicraft.MODID);
-        woodenMug.setCreativeTab(CreativeTabs.tabFood);
+        woodenMug.setCreativeTab(Psychedelicraft.creativeTab);
         DrinkRegistry.registerDrinkHolder(woodenMug);
 
         glassChalice = (ItemDrinkHolder) new ItemDrinkHolder().setUnlocalizedName("glassChalice").setTextureName(Psychedelicraft.textureBase + "glassChalice");
         GameRegistry.registerItem(glassChalice, "glassChalice", Psychedelicraft.MODID);
-        glassChalice.setCreativeTab(CreativeTabs.tabFood);
+        glassChalice.setCreativeTab(Psychedelicraft.creativeTab);
         DrinkRegistry.registerDrinkHolder(glassChalice);
 
         pipe = (ItemSmokingPipe) (new ItemSmokingPipe().setUnlocalizedName("smokingPipe").setTextureName(Psychedelicraft.textureBase + "smokingPipe"));
         GameRegistry.registerItem(pipe, "smokingPipe", Psychedelicraft.MODID);
-        pipe.setCreativeTab(CreativeTabs.tabMisc);
+        pipe.setCreativeTab(Psychedelicraft.creativeTab);
 
         bong = (ItemBong) new ItemBong().setUnlocalizedName("bong").setTextureName(Psychedelicraft.textureBase + "bong");
         GameRegistry.registerItem(bong, "bong", Psychedelicraft.MODID);
-        bong.setCreativeTab(CreativeTabs.tabMisc);
+        bong.setCreativeTab(Psychedelicraft.creativeTab);
 
         //----------------------------------------------------------Wine----------------------------------
 
         wineGrapes = (new ItemWineGrapes(1, 0.5F, true)).setUnlocalizedName("wineGrapes").setTextureName(Psychedelicraft.textureBase + "wineGrapes");
         GameRegistry.registerItem(wineGrapes, "wineGrapes", Psychedelicraft.MODID);
-        wineGrapes.setCreativeTab(CreativeTabs.tabFood);
+        wineGrapes.setCreativeTab(Psychedelicraft.creativeTab);
 
         //----------------------------------------------------------Molotov Cocktail----------------------------------
 
@@ -113,115 +112,115 @@ public class PSItems
 
         molotovCocktail = new ItemMolotovCocktail().setUnlocalizedName("molotovCocktail").setTextureName(Psychedelicraft.textureBase + "molotovCocktail");
         GameRegistry.registerItem(molotovCocktail, "molotovCocktail", Psychedelicraft.MODID);
-        molotovCocktail.setCreativeTab(CreativeTabs.tabCombat);
+        molotovCocktail.setCreativeTab(Psychedelicraft.creativeTab);
 
         //----------------------------------------------------------Weed----------------------------------
 
         cannabisSeeds = new ItemSeeds(PSBlocks.cannabisPlant, Blocks.farmland).setUnlocalizedName("cannabisSeeds").setTextureName(Psychedelicraft.textureBase + "cannabisSeeds");
         GameRegistry.registerItem(cannabisSeeds, "cannabisSeeds", Psychedelicraft.MODID);
-        cannabisSeeds.setCreativeTab(CreativeTabs.tabMisc);
+        cannabisSeeds.setCreativeTab(Psychedelicraft.creativeTab);
 
         cannabisLeaf = new Item().setUnlocalizedName("cannabisLeaf").setTextureName(Psychedelicraft.textureBase + "cannabisLeaf");
         GameRegistry.registerItem(cannabisLeaf, "cannabisLeaf", Psychedelicraft.MODID);
-        cannabisLeaf.setCreativeTab(CreativeTabs.tabMisc);
+        cannabisLeaf.setCreativeTab(Psychedelicraft.creativeTab);
 
         cannabisBuds = new Item().setUnlocalizedName("cannabisBuds").setTextureName(Psychedelicraft.textureBase + "cannabisBuds");
         GameRegistry.registerItem(cannabisBuds, "cannabisBuds", Psychedelicraft.MODID);
-        cannabisBuds.setCreativeTab(CreativeTabs.tabMisc);
+        cannabisBuds.setCreativeTab(Psychedelicraft.creativeTab);
 
         driedCannabisBuds = new Item().setUnlocalizedName("driedCannabisBuds").setTextureName(Psychedelicraft.textureBase + "driedCannabisBuds");
         GameRegistry.registerItem(driedCannabisBuds, "driedCannabisBuds", Psychedelicraft.MODID);
-        driedCannabisBuds.setCreativeTab(CreativeTabs.tabMisc);
+        driedCannabisBuds.setCreativeTab(Psychedelicraft.creativeTab);
 
         driedCannabisLeaves = new Item().setUnlocalizedName("driedCannabisLeaves").setTextureName(Psychedelicraft.textureBase + "driedCannabisLeaves");
         GameRegistry.registerItem(driedCannabisLeaves, "driedCannabisLeaves", Psychedelicraft.MODID);
-        driedCannabisLeaves.setCreativeTab(CreativeTabs.tabMisc);
+        driedCannabisLeaves.setCreativeTab(Psychedelicraft.creativeTab);
 
         hashMuffin = new ItemHashMuffin().setUnlocalizedName("hashMuffin").setTextureName(Psychedelicraft.textureBase + "hashMuffin");
         GameRegistry.registerItem(hashMuffin, "hashMuffin", Psychedelicraft.MODID);
-        hashMuffin.setCreativeTab(CreativeTabs.tabFood);
+        hashMuffin.setCreativeTab(Psychedelicraft.creativeTab);
 
         //----------------------------------------------------------Magic Mushrooms----------------------------------
 
         magicMushroomsBrown = new ItemEdibleDrug(new DrugInfluence("BrownShrooms", 15, 0.005, 0.003, 0.5f)).setUnlocalizedName("magicMushroomsBrown").setTextureName(Psychedelicraft.textureBase + "magicMushroomsBrown");
         GameRegistry.registerItem(magicMushroomsBrown, "brownMagicMushrooms", Psychedelicraft.MODID);
-        magicMushroomsBrown.setCreativeTab(CreativeTabs.tabFood);
+        magicMushroomsBrown.setCreativeTab(Psychedelicraft.creativeTab);
 
         magicMushroomsRed = new ItemEdibleDrug(new DrugInfluence("RedShrooms", 15, 0.005, 0.003, 0.5f)).setUnlocalizedName("magicMushroomsRed").setTextureName(Psychedelicraft.textureBase + "magicMushroomsRed");
         GameRegistry.registerItem(magicMushroomsRed, "redMagicMushrooms", Psychedelicraft.MODID);
-        magicMushroomsRed.setCreativeTab(CreativeTabs.tabFood);
+        magicMushroomsRed.setCreativeTab(Psychedelicraft.creativeTab);
 
         //----------------------------------------------------------Tobacco----------------------------------
 
         tobaccoLeaf = new Item().setUnlocalizedName("tobaccoLeaf").setTextureName(Psychedelicraft.textureBase + "tobaccoLeaf");
         GameRegistry.registerItem(tobaccoLeaf, "tobaccoLeaf", Psychedelicraft.MODID);
-        tobaccoLeaf.setCreativeTab(CreativeTabs.tabMisc);
+        tobaccoLeaf.setCreativeTab(Psychedelicraft.creativeTab);
 
         tobaccoSeeds = new ItemSeeds(PSBlocks.tobaccoPlant, Blocks.farmland).setUnlocalizedName("tobaccoSeeds").setTextureName(Psychedelicraft.textureBase + "tobaccoSeeds");
         GameRegistry.registerItem(tobaccoSeeds, "tobaccoSeeds", Psychedelicraft.MODID);
-        tobaccoSeeds.setCreativeTab(CreativeTabs.tabMisc);
+        tobaccoSeeds.setCreativeTab(Psychedelicraft.creativeTab);
 
         driedTobacco = new Item().setUnlocalizedName("driedTobacco").setTextureName(Psychedelicraft.textureBase + "driedTobacco");
         GameRegistry.registerItem(driedTobacco, "driedTobacco", Psychedelicraft.MODID);
-        driedTobacco.setCreativeTab(CreativeTabs.tabMisc);
+        driedTobacco.setCreativeTab(Psychedelicraft.creativeTab);
 
         cigarette = new ItemSmokeable(new DrugInfluence[]{new DrugInfluence("Tobacco", 0, 0.1, 0.02, 0.7f)}, new String[]{"cigarette"}, new String[]{"cigaretteInUse"}).setUnlocalizedName("cigarette").setTextureName(Psychedelicraft.textureBase + "cigarette");
         GameRegistry.registerItem(cigarette, "cigarette", Psychedelicraft.MODID);
-        cigarette.setCreativeTab(CreativeTabs.tabMisc);
+        cigarette.setCreativeTab(Psychedelicraft.creativeTab);
 
         cigar = new ItemSmokeable(new DrugInfluence[]{new DrugInfluence("Tobacco", 0, 0.1, 0.02, 0.7f)}, new String[]{"cigar", "cigar1", "cigar2", "cigar3"}, new String[]{"cigarInUse", "cigar1InUse", "cigar2InUse", "cigar3InUse"}).setUnlocalizedName("cigar").setTextureName(Psychedelicraft.textureBase + "cigar");
         GameRegistry.registerItem(cigar, "cigar", Psychedelicraft.MODID);
-        cigar.setCreativeTab(CreativeTabs.tabMisc);
+        cigar.setCreativeTab(Psychedelicraft.creativeTab);
 
         joint = new ItemSmokeable(new DrugInfluence[]{new DrugInfluence("Cannabis", 20, 0.002, 0.001, 0.20f)}, new String[]{"joint"}, new String[]{"jointInUse"}).setUnlocalizedName("joint").setTextureName(Psychedelicraft.textureBase + "joint");
         GameRegistry.registerItem(joint, "joint", Psychedelicraft.MODID);
-        joint.setCreativeTab(CreativeTabs.tabMisc);
+        joint.setCreativeTab(Psychedelicraft.creativeTab);
 
         //----------------------------------------------------------Cocaine----------------------------------
 
         cocaSeeds = new ItemSeeds(PSBlocks.cocaPlant, Blocks.farmland).setUnlocalizedName("cocaSeeds").setTextureName(Psychedelicraft.textureBase + "cocaSeeds");
         GameRegistry.registerItem(cocaSeeds, "cocaSeeds", Psychedelicraft.MODID);
-        cocaSeeds.setCreativeTab(CreativeTabs.tabMisc);
+        cocaSeeds.setCreativeTab(Psychedelicraft.creativeTab);
 
         cocaLeaf = new Item().setUnlocalizedName("cocaLeaf").setTextureName(Psychedelicraft.textureBase + "cocaLeaf");
         GameRegistry.registerItem(cocaLeaf, "cocaLeaf", Psychedelicraft.MODID);
-        cocaLeaf.setCreativeTab(CreativeTabs.tabMisc);
+        cocaLeaf.setCreativeTab(Psychedelicraft.creativeTab);
 
         driedCocaLeaves = new Item().setUnlocalizedName("driedCocaLeaves").setTextureName(Psychedelicraft.textureBase + "driedCocaLeaves");
         GameRegistry.registerItem(driedCocaLeaves, "driedCocaLeaves", Psychedelicraft.MODID);
-        driedCocaLeaves.setCreativeTab(CreativeTabs.tabMisc);
+        driedCocaLeaves.setCreativeTab(Psychedelicraft.creativeTab);
 
         //----------------------------------------------------------Jenever----------------------------------
 
         juniperBerries = new ItemFood(1, 0.5F, true).setUnlocalizedName("juniperBerries").setTextureName(Psychedelicraft.textureBase + "juniperBerries");
         GameRegistry.registerItem(juniperBerries, "juniperBerries", Psychedelicraft.MODID);
-        juniperBerries.setCreativeTab(CreativeTabs.tabFood);
+        juniperBerries.setCreativeTab(Psychedelicraft.creativeTab);
 
         //----------------------------------------------------------Coffee----------------------------------
 
         coffeaCherries = new ItemSeeds(PSBlocks.coffea, Blocks.farmland).setUnlocalizedName("coffeaCherries").setTextureName(Psychedelicraft.textureBase + "coffeaCherries");
         GameRegistry.registerItem(coffeaCherries, "coffeaCherries", Psychedelicraft.MODID);
-        coffeaCherries.setCreativeTab(CreativeTabs.tabFood);
+        coffeaCherries.setCreativeTab(Psychedelicraft.creativeTab);
 
         coffeeBeans = new Item().setUnlocalizedName("coffeeBeans").setTextureName(Psychedelicraft.textureBase + "coffeeBeans");
         GameRegistry.registerItem(coffeeBeans, "coffeeBeans", Psychedelicraft.MODID);
-        coffeeBeans.setCreativeTab(CreativeTabs.tabFood);
+        coffeeBeans.setCreativeTab(Psychedelicraft.creativeTab);
 
         //----------------------------------------------------------Peyote----------------------------------
 
         driedPeyote = new ItemEdibleDrug(new DrugInfluence("Peyote", 15, 0.005, 0.003, 0.5f)).setUnlocalizedName("driedPeyote").setTextureName(Psychedelicraft.textureBase + "driedPeyote");
         GameRegistry.registerItem(driedPeyote, "driedPeyote", Psychedelicraft.MODID);
-        driedPeyote.setCreativeTab(CreativeTabs.tabFood);
+        driedPeyote.setCreativeTab(Psychedelicraft.creativeTab);
 
         peyoteJoint = new ItemSmokeable(new DrugInfluence[]{new DrugInfluence("Peyote", 20, 0.003, 0.0015, 0.4f), new DrugInfluence("Tobacco", 0, 0.1, 0.02, 0.1f)}, new String[]{"jointPeyote"}, new String[]{"jointPeyoteInUse"}).setUnlocalizedName("jointPeyote").setTextureName(Psychedelicraft.textureBase + "jointPeyote");
         GameRegistry.registerItem(peyoteJoint, "peyoteJoint", Psychedelicraft.MODID);
-        peyoteJoint.setCreativeTab(CreativeTabs.tabMisc);
+        peyoteJoint.setCreativeTab(Psychedelicraft.creativeTab);
 
         //----------------------------------------------------------Harmonium----------------------------------
 
         harmonium = new ItemHarmonium().setUnlocalizedName("harmonium").setTextureName(Psychedelicraft.textureBase + "harmonium");
         GameRegistry.registerItem(harmonium, "harmonium", Psychedelicraft.MODID);
-        harmonium.setCreativeTab(CreativeTabs.tabMisc);
+        harmonium.setCreativeTab(Psychedelicraft.creativeTab);
     }
 
     public static void preInitEnd(FMLPreInitializationEvent event, Psychedelicraft mod, Configuration configuration)

@@ -11,7 +11,6 @@ import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.items.ItemBarrel;
 import ivorius.psychedelicraft.items.ItemRiftJar;
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
@@ -45,14 +44,14 @@ public class PSBlocks
         //----------------------------------------------------------Barrel----------------------------------
 
         barrel = new BlockBarrel().setHardness(1.0F);
-        barrel.setCreativeTab(CreativeTabs.tabDecorations);
+        barrel.setCreativeTab(Psychedelicraft.creativeTab);
         registerBlockDefault(barrel, ItemBarrel.class, "barrel");
         GameRegistry.registerTileEntity(TileEntityBarrel.class, "barrel");
 
         //----------------------------------------------------------Wine----------------------------------
 
         wineGrapeLattice = new BlockWineGrapeLattice().setHardness(0.3F);
-        wineGrapeLattice.setCreativeTab(CreativeTabs.tabDecorations);
+        wineGrapeLattice.setCreativeTab(Psychedelicraft.creativeTab);
         registerBlockDefault(wineGrapeLattice, ItemBlock.class, "wineGrapeLattice");
 
         //----------------------------------------------------------Weed----------------------------------
@@ -64,7 +63,7 @@ public class PSBlocks
         //----------------------------------------------------------Drying Table----------------------------------
 
         dryingTable = new BlockDryingTable().setHardness(1.0f);
-        dryingTable.setCreativeTab(CreativeTabs.tabDecorations);
+        dryingTable.setCreativeTab(Psychedelicraft.creativeTab);
         registerBlockDefault(dryingTable, "dryingTable");
         GameRegistry.registerTileEntity(TileEntityDryingTable.class, "dryingTable");
 
@@ -83,15 +82,15 @@ public class PSBlocks
         //----------------------------------------------------------Jenever----------------------------------
 
         psycheLeaves = new BlockPsycheLeaves();
-        psycheLeaves.setCreativeTab(CreativeTabs.tabDecorations);
+        psycheLeaves.setCreativeTab(Psychedelicraft.creativeTab);
         registerBlockDefault(psycheLeaves, "psycheLeaves");
 
         psycheLog = new BlockPsycheLog().setHardness(1.0F);
-        psycheLog.setCreativeTab(CreativeTabs.tabDecorations);
+        psycheLog.setCreativeTab(Psychedelicraft.creativeTab);
         registerBlockDefault(psycheLog, "psycheLog");
 
         psycheSapling = new BlockPsycheSapling().setHardness(1.0F);
-        psycheSapling.setCreativeTab(CreativeTabs.tabDecorations);
+        psycheSapling.setCreativeTab(Psychedelicraft.creativeTab);
         registerBlockDefault(psycheSapling, "psycheSapling");
 
         //----------------------------------------------------------Coffee----------------------------------
@@ -103,17 +102,17 @@ public class PSBlocks
         //----------------------------------------------------------Peyote----------------------------------
 
         peyote = new BlockPeyote().setHardness(0.5f);
-        peyote.setCreativeTab(CreativeTabs.tabDecorations);
+        peyote.setCreativeTab(Psychedelicraft.creativeTab);
         registerBlockDefault(peyote, ItemBlock.class, "peyote");
         GameRegistry.registerTileEntity(TileEntityPeyote.class, "peyote");
 
         //----------------------------------------------------------Digital----------------------------------
 
         riftJar = new BlockRiftJar().setBlockName("riftJar").setBlockTextureName(Psychedelicraft.textureBase + "riftJar");
-        riftJar.setCreativeTab(CreativeTabs.tabDecorations);
+        riftJar.setCreativeTab(Psychedelicraft.creativeTab);
         GameRegistry.registerBlock(riftJar, ItemRiftJar.class, "riftJar");
         GameRegistry.registerTileEntity(TileEntityRiftJar.class, "riftJar");
-        riftJar.setCreativeTab(CreativeTabs.tabDecorations);
+        riftJar.setCreativeTab(Psychedelicraft.creativeTab);
 
         glitched = new BlockGlitched().setBlockName("glitched").setBlockTextureName(Psychedelicraft.textureBase + "glitched");
         GameRegistry.registerBlock(glitched, ItemBlock.class, "glitched");
