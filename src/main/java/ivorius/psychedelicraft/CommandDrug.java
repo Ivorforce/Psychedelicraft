@@ -6,12 +6,11 @@
 package ivorius.psychedelicraft;
 
 import ivorius.psychedelicraft.entities.DrugHelper;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.command.WrongUsageException;
+import net.minecraft.command.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChatComponentTranslation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,154 +28,88 @@ public class CommandDrug extends CommandBase
     @Override
     public String getCommandUsage(ICommandSender par1ICommandSender)
     {
-//		return "/drug <optional: player> <drug> <value: 0.0 - 1.0> <optional:lock/unlock> -- Adds the specified amount to the drug\nLock: Locks the value at the amount specified\nUnlock: Unlocks the drug, and sets the value to amount specified";
-        return "/drug <drug> <value: 0.0 - 1.0> <optional:lock/unlock> -- Adds the specified amount to the drug\nLock: Locks the value at the amount specified\nUnlock: Unlocks the drug, and sets the value to amount specified";
+        return "commands.drug.usage";
     }
 
     @Override
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(ICommandSender par1ICommandSender, String[] arguments)
     {
-        if (par2ArrayOfStr.length >= 2)
+        if (arguments.length < 3)
+            throw new WrongUsageException(getCommandUsage(par1ICommandSender));
+
+        EntityPlayer player = getPlayer(par1ICommandSender, arguments[0]);
+
+        String drugName = arguments[1];
+
+        DrugHelper drugHelper = DrugHelper.getDrugHelper(player);
+        if (drugHelper == null)
+            return ;
+
+        if (drugHelper.doesDrugExist(drugName))
         {
-            EntityPlayer var3 = getPlayer(par1ICommandSender, par2ArrayOfStr[0]);
-            int startIndex = 0;
-
-            if (var3 != null && par2ArrayOfStr.length < 3)
-            {
-                throw new WrongUsageException(getCommandUsage(par1ICommandSender));
-            }
-
-            if (var3 == null)
-            {
-                var3 = getCommandSenderAsPlayer(par1ICommandSender);
-            }
+            String method = arguments[2];
+            int lock;
+            if (method.equalsIgnoreCase("set"))
+                lock = 0;
+            else if (method.equalsIgnoreCase("lock"))
+                lock = 1;
+            else if (method.equalsIgnoreCase("unlock"))
+                lock = -1;
             else
+                throw new WrongUsageException(getCommandUsage(par1ICommandSender));
+
+            if (lock != 0)
+                drugHelper.getDrug(drugName).setLocked(lock == 1);
+
+            if (arguments.length >= 4)
             {
-                startIndex++;
+                double amount = parseDouble(par1ICommandSender, arguments[3]);
+                drugHelper.setDrugValue(drugName, amount);
+
+                if (lock == 0)
+                    par1ICommandSender.addChatMessage(new ChatComponentTranslation("commands.drug.success", player.getCommandSenderName(), drugName, String.valueOf(amount)));
+                else if (lock == 1)
+                    par1ICommandSender.addChatMessage(new ChatComponentTranslation("commands.drug.success.lock", player.getCommandSenderName(), drugName, String.valueOf(amount)));
+                else if (lock == 2)
+                    par1ICommandSender.addChatMessage(new ChatComponentTranslation("commands.drug.success.unlock", player.getCommandSenderName(), drugName, String.valueOf(amount)));
             }
-
-            if (DrugHelper.getDrugHelper(var3).doesDrugExist(par2ArrayOfStr[startIndex]))
-            {
-                float amount = 0;
-                String drugName = par2ArrayOfStr[startIndex];
-
-                try
-                {
-                    amount = Float.valueOf(par2ArrayOfStr[startIndex + 1]);
-                }
-                catch (Exception e)
-                {
-                    throw new WrongUsageException(getCommandUsage(par1ICommandSender));
-                }
-
-                boolean lock = DrugHelper.getDrugHelper(var3).getDrug(drugName).isLocked();
-                if (par2ArrayOfStr.length > startIndex + 2)
-                {
-                    lock = par2ArrayOfStr[startIndex + 2].equals("lock");
-                }
-
-                DrugHelper.getDrugHelper(var3).getDrug(drugName).setLocked(false);
-
-                if (lock)
-                {
-                    DrugHelper.getDrugHelper(var3).setDrugValue(drugName, amount);
-                }
-                else
-                {
-                    DrugHelper.getDrugHelper(var3).addToDrug(drugName, amount);
-                }
-
-                DrugHelper.getDrugHelper(var3).getDrug(drugName).setLocked(lock);
-            }
+            else if (lock == 0)
+                throw new CommandException(getCommandUsage(par1ICommandSender), drugName); // Didn't actually do anything
+            else if (lock == 1)
+                par1ICommandSender.addChatMessage(new ChatComponentTranslation("commands.drug.success.lock", player.getCommandSenderName(), drugName, drugHelper.getDrugValue(drugName)));
+            else if (lock == 2)
+                par1ICommandSender.addChatMessage(new ChatComponentTranslation("commands.drug.success.unlock", player.getCommandSenderName(), drugName, drugHelper.getDrugValue(drugName)));
         }
         else
         {
-            throw new WrongUsageException(getCommandUsage(par1ICommandSender));
+            throw new CommandException("commands.drug.nodrug", drugName);
         }
     }
 
-//    public void processCommandClient(EntityPlayer player, String[] par2ArrayOfStr)
-//    {
-//        if (par2ArrayOfStr.length >= 2)
-//        {
-////			EntityPlayer var3 = this.getTargetPlayer(par2ArrayOfStr[0]);
-//            EntityPlayer var3 = null;
-//            int startIndex = 0;
-//
-//            if (var3 == null)
-//                var3 = player;
-//            else
-//                startIndex++;
-//
-//            if (DrugHelper.getDrugHelper(var3).doesDrugExist(par2ArrayOfStr[startIndex]))
-//            {
-//                float amount = 0;
-//
-//                try
-//                {
-//                    amount = Float.valueOf(par2ArrayOfStr[startIndex + 1]);
-//                }
-//                catch (Exception e)
-//                {
-//
-//                }
-//
-//                if (par2ArrayOfStr.length > startIndex + 2)
-//                {
-//                    Drug drug = DrugHelper.getDrugHelper(var3).getDrug(par2ArrayOfStr[startIndex]);
-//
-//                    drug.setLocked(par2ArrayOfStr[startIndex + 2].equals("lock"));
-//                    DrugHelper.getDrugHelper(var3).setDrugValue(par2ArrayOfStr[startIndex], amount);
-//                }
-//                else
-//                {
-//                    DrugHelper.getDrugHelper(var3).addToDrug(par2ArrayOfStr[startIndex], amount);
-//                }
-//            }
-//        }
-//        else
-//        {
-//
-//        }
-//    }
-
     @Override
-    public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] arguments)
     {
-//		if (par2ArrayOfStr.length == 1)
-//			return getListOfStringsMatchingLastWord(par2ArrayOfStr, this.getPlayers());
-
-//		EntityPlayer var3 = this.getTargetPlayer(par2ArrayOfStr[0]);
-//		int startIndex = 0;
-//
-//		if (var3 == null)
-//			var3 = getCommandSenderAsPlayer(par1ICommandSender);
-//		else
-//			startIndex++;
-
-        int startIndex = 0;
-        EntityPlayer var3 = getCommandSenderAsPlayer(par1ICommandSender);
-
-        if (par2ArrayOfStr.length == startIndex + 1)
+        if (arguments.length == 1)
+            return getListOfStringsMatchingLastWord(arguments, getPlayers());
+        else if (arguments.length == 2)
         {
-            return getListOfStringsMatchingLastWord(par2ArrayOfStr, DrugHelper.getDrugHelper(var3).getAllVisibleDrugNames());
+            try
+            {
+                DrugHelper drugHelper = DrugHelper.getDrugHelper(getPlayer(par1ICommandSender, arguments[0]));
+                if (drugHelper != null)
+                    return getListOfStringsMatchingLastWord(arguments, drugHelper.getAllVisibleDrugNames());
+                else
+                    return null;
+            }
+            catch (CommandException ex)
+            {
+                return null;
+            }
         }
-        if (par2ArrayOfStr.length == startIndex + 2)
-        {
-            String[] values = new String[]{"1.0", "0.5", "-0.5", "-1.0"};
-            ArrayList list = new ArrayList<String>();
-            Collections.addAll(list, values);
-
-            return list;
-        }
-        if (par2ArrayOfStr.length == startIndex + 3)
-        {
-            String[] values = new String[]{"lock", "unlock"};
-            ArrayList list = new ArrayList<String>();
-            Collections.addAll(list, values);
-
-            return list;
-        }
+        else if (arguments.length == 3)
+            return getListOfStringsMatchingLastWord(arguments, "set", "lock", "unlock");
+        else if (arguments.length == 4)
+            return getListOfStringsMatchingLastWord(arguments, "0.0", "0.5", "1.0");
 
         return null;
     }
