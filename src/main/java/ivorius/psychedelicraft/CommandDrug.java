@@ -38,7 +38,7 @@ public class CommandDrug extends CommandBase
     {
         if (par2ArrayOfStr.length >= 2)
         {
-            EntityPlayer var3 = this.getTargetPlayer(par2ArrayOfStr[0]);
+            EntityPlayer var3 = getPlayer(par1ICommandSender, par2ArrayOfStr[0]);
             int startIndex = 0;
 
             if (var3 != null && par2ArrayOfStr.length < 3)
@@ -179,11 +179,6 @@ public class CommandDrug extends CommandBase
         }
 
         return null;
-    }
-
-    protected EntityPlayer getTargetPlayer(String par1Str)
-    {
-        return MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(par1Str);
     }
 
     protected String[] getPlayers()

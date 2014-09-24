@@ -25,6 +25,7 @@ import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 
+import java.io.DataInputStream;
 import java.io.IOException;
 
 /**
@@ -62,7 +63,7 @@ public abstract class IvNBTPacket extends IvPacket
     {
         try
         {
-            compound = CompressedStreamTools.read(new ByteBufInputStream(buffer));
+            compound = CompressedStreamTools.read(new DataInputStream(new ByteBufInputStream(buffer)));
         }
         catch (IOException e)
         {

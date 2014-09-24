@@ -7,7 +7,6 @@ package ivorius.psychedelicraft.client.rendering;
 
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import ivorius.ivtoolkit.math.IvMatrixHelper;
-import ivorius.psychedelicraft.PSCoreHandlerClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.entity.Entity;
@@ -15,7 +14,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
-import net.minecraft.util.Vec3Pool;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
