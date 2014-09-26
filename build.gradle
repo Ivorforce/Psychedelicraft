@@ -71,3 +71,49 @@ processResources
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
+
+uploadArchives {
+    if (System.getenv("mavenUrl") != null) {
+        repositories {
+            logger.info('Publishing to files server')
+
+            mavenDeployer {
+
+                repository(url: System.getenv("mavenUrl")) {
+                    authentication(userName: System.getenv("mavenUser"), password: System.getenv("mavenPassword"))
+                }
+
+                pom {
+                    groupId = project.group
+                    version = project.version
+                    artifactId = project.archivesBaseName
+                    project {
+                        name project.archivesBaseName
+                        packaging 'jar'
+                        description 'Adds drugs to the game minecraft'
+                        url 'https://github.com/Ivorforce/Psychedelicraft'
+
+                        scm {
+                            url 'scm:git:git@github.com:Ivorforce/Psychedelicraft.git'
+                            connection 'scm:git:git@github.com:Ivorforce/Psychedelicraft.git'
+                            developerConnection 'scm:git:git@github.com:Ivorforce/Psychedelicraft.git'
+                        }
+
+                        issueManagement {
+                            system 'github'
+                            url 'https://github.com/Ivorforce/Psychedelicraft/issues'
+                        }
+
+                        developers {
+                            developer {
+                                id 'Ivorius'
+                                name 'Ivorius'
+                                roles { role 'developer' }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
