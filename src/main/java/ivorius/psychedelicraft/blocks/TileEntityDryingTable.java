@@ -7,8 +7,8 @@ package ivorius.psychedelicraft.blocks;
 
 import io.netty.buffer.ByteBuf;
 import ivorius.ivtoolkit.blocks.IvTileEntityHelper;
-import ivorius.ivtoolkit.network.ChannelHandlerTileEntityData;
-import ivorius.ivtoolkit.network.ITileEntityUpdateData;
+import ivorius.ivtoolkit.network.IvNetworkHelperServer;
+import ivorius.ivtoolkit.network.PartialUpdateHandler;
 import ivorius.psychedelicraft.Psychedelicraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
@@ -26,7 +26,7 @@ import net.minecraftforge.common.util.Constants;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TileEntityDryingTable extends TileEntity implements ISidedInventory, ITileEntityUpdateData
+public class TileEntityDryingTable extends TileEntity implements ISidedInventory, PartialUpdateHandler
 {
     public float heatRatio;
     public float dryingProgress;
@@ -59,7 +59,7 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
                 dryingProgress = 0;
             }
 
-            Psychedelicraft.chTileEntityData.sendUpdatePacketSafe(this, "dryingProgress");
+            IvNetworkHelperServer.sendTileEntityUpdatePacket(this, "dryingProgress", Psychedelicraft.network);
         }
 
         if (plannedResult != null && (dryingTableItems[0] == null || (dryingTableItems[0] == plannedResult && dryingTableItems[0].getItemDamage() == plannedResult.getItemDamage() && plannedResult.isStackable() && plannedResult.stackSize + plannedResult.stackSize < plannedResult.getMaxStackSize())))
@@ -142,7 +142,8 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
 
         heatRatio = t;
 
-        Psychedelicraft.chTileEntityData.sendUpdatePacketSafe(this, "heatRatio");
+        if (!worldObj.isRemote)
+            IvNetworkHelperServer.sendTileEntityUpdatePacket(this, "heatRatio", Psychedelicraft.network);
     }
 
     @Override
@@ -340,7 +341,7 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
     }
 
     @Override
-    public void writeUpdateData(ByteBuf buffer, String context)
+    public void writeUpdateData(ByteBuf buffer, String context, Object... params)
     {
         if ("heatRatio".equals(context))
         {

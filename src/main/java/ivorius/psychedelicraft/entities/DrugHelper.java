@@ -7,11 +7,12 @@ package ivorius.psychedelicraft.entities;
 
 import cpw.mods.fml.common.network.ByteBufUtils;
 import io.netty.buffer.ByteBuf;
+import ivorius.ivtoolkit.network.IvNetworkHelperServer;
+import ivorius.ivtoolkit.network.PartialUpdateHandler;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
 import ivorius.psychedelicraft.client.rendering.IDrugRenderer;
-import ivorius.ivtoolkit.network.ChannelHandlerExtendedEntityPropertiesData;
-import ivorius.ivtoolkit.network.IExtendedEntityPropertiesUpdateData;
+import ivorius.psychedelicraft.network.PSNetworkHelperServer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -30,7 +31,7 @@ import net.minecraftforge.common.util.Constants;
 
 import java.util.*;
 
-public class DrugHelper implements IExtendedEntityProperties, IExtendedEntityPropertiesUpdateData
+public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandler
 {
     public static final UUID drugUUID = UUID.fromString("2da054e7-0fe0-4fb4-bf2c-a185a5f72aa1"); // Randomly gen'd
 
@@ -423,9 +424,7 @@ public class DrugHelper implements IExtendedEntityProperties, IExtendedEntityPro
             hasChanges = false;
 
             if (!entity.worldObj.isRemote)
-            {
-                Psychedelicraft.chEEPData.sendUpdatePacketSafe(entity, "DrugHelper", "DrugData");
-            }
+                PSNetworkHelperServer.sendEEPUpdatePacket(entity, "DrugHelper", "DrugData", Psychedelicraft.network);
         }
     }
 
@@ -648,7 +647,7 @@ public class DrugHelper implements IExtendedEntityProperties, IExtendedEntityPro
     }
 
     @Override
-    public void writeUpdateData(ByteBuf buffer, String context)
+    public void writeUpdateData(ByteBuf buffer, String context, Object... params)
     {
         if ("DrugData".equals(context))
         {

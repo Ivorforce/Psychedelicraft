@@ -6,14 +6,14 @@
 package ivorius.psychedelicraft.blocks;
 
 import io.netty.buffer.ByteBuf;
+import ivorius.ivtoolkit.network.IvNetworkHelperServer;
+import ivorius.ivtoolkit.network.PartialUpdateHandler;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.entities.DrugHelper;
 import ivorius.psychedelicraft.entities.EntityRealityRift;
 import ivorius.ivtoolkit.bezier.IvBezierPath3D;
 import ivorius.ivtoolkit.blocks.IvTileEntityHelper;
 import ivorius.ivtoolkit.math.IvMathHelper;
-import ivorius.ivtoolkit.network.ChannelHandlerTileEntityData;
-import ivorius.ivtoolkit.network.ITileEntityUpdateData;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class TileEntityRiftJar extends TileEntity implements ITileEntityUpdateData
+public class TileEntityRiftJar extends TileEntity implements PartialUpdateHandler
 {
     public float currentRiftFraction;
     public int ticksAliveVisual;
@@ -193,7 +193,7 @@ public class TileEntityRiftJar extends TileEntity implements ITileEntityUpdateDa
             isOpening = !isOpening;
 
             markDirty();
-            Psychedelicraft.chTileEntityData.sendUpdatePacketSafe(this, "isOpening");
+            IvNetworkHelperServer.sendTileEntityUpdatePacket(this, "isOpening", Psychedelicraft.network);
         }
     }
 
@@ -204,7 +204,7 @@ public class TileEntityRiftJar extends TileEntity implements ITileEntityUpdateDa
             suckingRifts = !suckingRifts;
 
             markDirty();
-            Psychedelicraft.chTileEntityData.sendUpdatePacketSafe(this, "suckingRifts");
+            IvNetworkHelperServer.sendTileEntityUpdatePacket(this, "suckingRifts", Psychedelicraft.network);
         }
     }
 
@@ -263,7 +263,7 @@ public class TileEntityRiftJar extends TileEntity implements ITileEntityUpdateDa
     }
 
     @Override
-    public void writeUpdateData(ByteBuf buffer, String context)
+    public void writeUpdateData(ByteBuf buffer, String context, Object... params)
     {
         if ("isOpening".equals(context))
         {

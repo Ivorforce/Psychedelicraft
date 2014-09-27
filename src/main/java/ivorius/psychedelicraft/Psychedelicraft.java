@@ -11,7 +11,13 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import ivorius.ivtoolkit.network.PacketExtendedEntityPropertiesData;
+import ivorius.ivtoolkit.network.PacketExtendedEntityPropertiesDataHandler;
+import ivorius.ivtoolkit.network.PacketTileEntityData;
+import ivorius.ivtoolkit.network.PacketTileEntityDataHandler;
 import ivorius.psychedelicraft.blocks.PSBlocks;
 import ivorius.psychedelicraft.blocks.TileEntityDryingTable;
 import ivorius.psychedelicraft.entities.DrugInfluence;
@@ -21,8 +27,6 @@ import ivorius.psychedelicraft.events.PSEventFMLHandler;
 import ivorius.psychedelicraft.events.PSEventForgeHandler;
 import ivorius.psychedelicraft.gui.PSGuiHandler;
 import ivorius.psychedelicraft.items.*;
-import ivorius.ivtoolkit.network.ChannelHandlerExtendedEntityPropertiesData;
-import ivorius.ivtoolkit.network.ChannelHandlerTileEntityData;
 import ivorius.psychedelicraft.worldgen.PSWorldGen;
 import net.minecraft.block.Block;
 import net.minecraft.entity.passive.EntitySheep;
@@ -56,12 +60,11 @@ public class Psychedelicraft
     public static PSEventFMLHandler eventFMLHandler;
     public static PSCommunicationHandler communicationHandler;
 
+    public static SimpleNetworkWrapper network;
+
     public static PSCoreHandlerClient coreHandlerClient;
     public static PSCoreHandlerCommon coreHandlerCommon;
     public static PSCoreHandlerServer coreHandlerServer;
-
-    public static ChannelHandlerExtendedEntityPropertiesData chEEPData;
-    public static ChannelHandlerTileEntityData chTileEntityData;
 
     public static CreativeTabPsyche creativeTab;
 
@@ -96,12 +99,6 @@ public class Psychedelicraft
         guiHandler = new PSGuiHandler();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
 
-        chEEPData = new ChannelHandlerExtendedEntityPropertiesData("PDC|EEPData");
-        NetworkRegistry.INSTANCE.newChannel(chEEPData.packetChannel, chEEPData);
-
-        chTileEntityData = new ChannelHandlerTileEntityData("PDC|TEData");
-        NetworkRegistry.INSTANCE.newChannel(chTileEntityData.packetChannel, chTileEntityData);
-
         eventForgeHandler = new PSEventForgeHandler();
         eventForgeHandler.register();
         eventFMLHandler = new PSEventFMLHandler();
@@ -130,6 +127,10 @@ public class Psychedelicraft
     @EventHandler
     public void load(FMLInitializationEvent event)
     {
+        network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
+        network.registerMessage(PacketExtendedEntityPropertiesDataHandler.class, PacketExtendedEntityPropertiesData.class, 0, Side.CLIENT);
+        network.registerMessage(PacketTileEntityDataHandler.class, PacketTileEntityData.class, 1, Side.CLIENT);
+
         proxy.registerRenderers();
 
         creativeTab.tabIcon = PSItems.cannabisLeaf;
