@@ -5,7 +5,6 @@
 
 package ivorius.psychedelicraft.items;
 
-import com.sun.tools.javac.util.Pair;
 import ivorius.psychedelicraft.entities.DrugHelper;
 import ivorius.psychedelicraft.entities.DrugInfluence;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -17,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Hashtable;
 import java.util.List;
@@ -65,7 +65,7 @@ public class ItemDrinkHolder extends Item
             Pair<Integer, Float> foodLevel = drink.getFoodLevel(par1ItemStack);
             if (foodLevel != null)
             {
-                par3EntityPlayer.getFoodStats().addStats(foodLevel.fst, foodLevel.snd);
+                par3EntityPlayer.getFoodStats().addStats(foodLevel.getLeft(), foodLevel.getRight());
             }
 
             drink.applyToEntity(par1ItemStack, par2World, par3EntityPlayer);

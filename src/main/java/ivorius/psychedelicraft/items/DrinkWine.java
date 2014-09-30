@@ -5,13 +5,14 @@
 
 package ivorius.psychedelicraft.items;
 
-import com.sun.tools.javac.util.Pair;
 import ivorius.psychedelicraft.entities.DrugInfluence;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.world.World;
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Arrays;
 import java.util.List;
@@ -49,7 +50,7 @@ public class DrinkWine implements IDrink
         if (wineStrength < 14)
         {
             int foodLevel = wineStrength < 5 ? 1 : 0;
-            return new Pair<Integer, Float>(foodLevel, foodLevel * 0.1f);
+            return new MutablePair<>(foodLevel, foodLevel * 0.1f);
         }
 
         return null;

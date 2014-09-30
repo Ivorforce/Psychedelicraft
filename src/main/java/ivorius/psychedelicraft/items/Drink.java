@@ -5,11 +5,12 @@
 
 package ivorius.psychedelicraft.items;
 
-import com.sun.tools.javac.util.Pair;
 import ivorius.psychedelicraft.entities.DrugInfluence;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Arrays;
 import java.util.List;
@@ -44,7 +45,7 @@ public class Drink implements IDrink
     @Override
     public Pair<Integer, Float> getFoodLevel(ItemStack stack)
     {
-        return foodLevel != 0 || foodSaturation != 0.0f ? new Pair<Integer, Float>(foodLevel, foodSaturation) : null;
+        return foodLevel != 0 || foodSaturation != 0.0f ? new MutablePair<>(foodLevel, foodSaturation) : null;
     }
 
     @Override
