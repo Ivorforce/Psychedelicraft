@@ -31,7 +31,7 @@ public class ItemBong extends Item
     {
         super();
 
-        setMaxDamage(3);
+        setMaxDamage(128);
         setMaxStackSize(1);
     }
 
@@ -81,7 +81,7 @@ public class ItemBong extends Item
 
         if (drugHelper != null && drugHelper.timeBreathingSmoke <= 0)
         {
-            if (getUsedConsumable(player) != null && stack.getItemDamage() != 3)
+            if (getUsedConsumable(player) != null)
             {
                 player.setItemInUse(stack, getMaxItemUseDuration(stack));
             }

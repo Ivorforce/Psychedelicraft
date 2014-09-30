@@ -154,7 +154,6 @@ public class Psychedelicraft
         GameRegistry.addRecipe(new ItemStack(PSItems.syringe), "I", "#", 'I', Items.iron_ingot, '#', Blocks.glass);
         GameRegistry.addRecipe(new ItemStack(PSItems.pipe), "  I", " S ", "WS ", 'I', Items.iron_ingot, 'S', Items.stick, 'W', Blocks.planks);
         GameRegistry.addRecipe(new ItemStack(PSItems.bong, 1, 3), " P ", "G G", "GGG", 'P', Blocks.glass_pane, 'G', Blocks.glass);
-        addShapelessRecipe(new ItemStack(PSItems.bong), Items.water_bucket, PSItems.bong);
 
         GameRegistry.addRecipe(new ItemStack(PSItems.glassChalice, 4), "# #", " # ", " # ", '#', Blocks.glass);
         GameRegistry.addRecipe(new ItemStack(PSBlocks.barrel, 1, 1), "###", "###", "W#W", '#', PSItems.wineGrapes, 'W', Blocks.planks);
