@@ -33,8 +33,30 @@ jar {
     }
 }
 
+// Provided - Start
+// FML doesnt laod coremods and ATs from the classpath
+
+apply plugin: 'idea'
+
+configurations {
+    provided
+//    provided.extendsFrom(compile)
+}
+
+sourceSets {
+    main { compileClasspath += [configurations.provided] }
+}
+
+idea {
+    module {
+        scopes.PROVIDED.plus += [configurations.provided]
+    }
+}
+
+// Provided - Stop
+
 dependencies {
-    compile 'ivorius.ivtoolkit:IvToolkit:1.0:dev'
+    provided 'ivorius.ivtoolkit:IvToolkit:1.0:dev'
 }
 
 processResources
@@ -55,6 +77,24 @@ processResources
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+}
+
+// FML doesnt laod coremods and ATs from the classpath
+task copyMods(type: Copy, dependsOn: "extractUserDev") {
+    from { configurations.provided }
+    include "**/*.jar"
+    into file(minecraft.runDir + "/mods")
+    mustRunAfter "deobfBinJar"
+    mustRunAfter "repackMinecraft"
+}
+tasks.setupDevWorkspace.dependsOn copyMods
+tasks.setupDecompWorkspace.dependsOn copyMods
+
+runClient {
+    jvmArgs '-Dfml.coreMods.load=ivorius.psychedelicraftcore.PsychedelicraftLoadingPlugin'
+}
+runServer {
+    jvmArgs '-Dfml.coreMods.load=ivorius.psychedelicraftcore.PsychedelicraftLoadingPlugin'
 }
 
 sourceCompatibility = 1.7
