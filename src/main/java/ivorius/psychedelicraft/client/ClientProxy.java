@@ -86,4 +86,10 @@ public class ClientProxy implements PSProxy
     {
         drugHelper.drugRenderer = new DrugRenderer();
     }
+
+    @Override
+    public void loadConfig(String configID)
+    {
+
+    }
 }

@@ -5,10 +5,12 @@
 
 package ivorius.psychedelicraft.events;
 
+import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
+import ivorius.psychedelicraft.PSConfig;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.blocks.PSBlocks;
 import ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
@@ -62,7 +64,7 @@ public class PSEventFMLHandler
 
             drugHelper.updateDrugEffects(event.player);
 
-            if (!event.player.getEntityWorld().isRemote && Psychedelicraft.spawnRifts)
+            if (!event.player.getEntityWorld().isRemote && PSConfig.spawnRifts)
             {
                 if (event.player.getRNG().nextInt(RIFT_TICK_SPAWN_CHANCE) == 0)
                 {
@@ -100,6 +102,18 @@ public class PSEventFMLHandler
                     SmoothCameraHelper.instance.update(mc.gameSettings.mouseSensitivity, DrugEffectInterpreter.getSmoothVision(drugHelper));
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onConfigChanged(ConfigChangedEvent event)
+    {
+        if (event instanceof ConfigChangedEvent.OnConfigChangedEvent && event.modID.equals(Psychedelicraft.MODID))
+        {
+            PSConfig.loadConfig(event.configID);
+
+            if (Psychedelicraft.config.hasChanged())
+                Psychedelicraft.config.save();
         }
     }
 }

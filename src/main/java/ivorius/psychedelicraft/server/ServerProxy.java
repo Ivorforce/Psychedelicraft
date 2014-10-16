@@ -39,4 +39,10 @@ public class ServerProxy implements PSProxy
     {
 
     }
+
+    @Override
+    public void loadConfig(String configID)
+    {
+
+    }
 }

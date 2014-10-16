@@ -41,7 +41,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Logger;
 
 @Mod(modid = Psychedelicraft.MODID, version = Psychedelicraft.VERSION, name = Psychedelicraft.NAME,
-        dependencies = "required-after:ivtoolkit")
+        guiFactory = "ivorius.psychedelicraft.gui.PSConfigGuiFactory", dependencies = "required-after:ivtoolkit")
 public class Psychedelicraft
 {
     public static final String MODID = "psychedelicraft";
@@ -55,6 +55,7 @@ public class Psychedelicraft
     public static PSProxy proxy;
 
     public static Logger logger;
+    public static Configuration config;
 
     public static PSGuiHandler guiHandler;
     public static PSEventForgeHandler eventForgeHandler;
@@ -78,8 +79,6 @@ public class Psychedelicraft
     public static String otherBase = "psychedelicraft:";
     public static String shaderBase = "psychedelicraft:";
 
-    public static boolean spawnRifts;
-
     public static EntityPlayer.EnumStatus sleepStatusDrugs;
 
     public static int blockWineGrapeLatticeRenderType;
@@ -89,11 +88,10 @@ public class Psychedelicraft
     {
         logger = event.getModLog();
 
-        Configuration config = new Configuration(event.getSuggestedConfigurationFile());
-
+        config = new Configuration(event.getSuggestedConfigurationFile());
         config.load();
-
-        spawnRifts = config.get("Balancing", "spawnRifts", true).getBoolean(true);
+        PSConfig.loadConfig(null);
+        config.save();
 
         creativeTab = new CreativeTabPsyche("psychedelicraft");
 
@@ -121,8 +119,6 @@ public class Psychedelicraft
         PSEntityList.preInitEnd(event, this, config);
 
         proxy.preInit(config);
-
-        config.save();
     }
 
     @EventHandler
