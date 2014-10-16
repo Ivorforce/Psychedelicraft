@@ -103,7 +103,7 @@ public class Psychedelicraft
         eventFMLHandler = new PSEventFMLHandler();
         eventFMLHandler.register();
 
-        communicationHandler = new PSCommunicationHandler();
+        communicationHandler = new PSCommunicationHandler(logger, MODID, this);
 
         coreHandlerCommon = new PSCoreHandlerCommon();
         coreHandlerCommon.register();
