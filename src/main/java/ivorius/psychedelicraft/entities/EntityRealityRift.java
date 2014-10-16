@@ -13,6 +13,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
@@ -282,5 +283,11 @@ public class EntityRealityRift extends Entity
     public boolean shouldRenderInPass(int pass)
     {
         return pass == 1;
+    }
+
+    @Override
+    public String getCommandSenderName()
+    {
+        return EnumChatFormatting.OBFUSCATED + super.getCommandSenderName();
     }
 }
