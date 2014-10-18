@@ -101,6 +101,7 @@ psDrink.coffee=Warm Coffee
 psDrink.coldCoffee=Cold Coffee
 psDrink.peyote=Peyote
 psDrink.cocaTea=Coca Tea
+psDrink.cannabisTea=Cannabis Tea
 psDrink.wine.0=Grape juice
 psDrink.wine.1=Grape juice
 psDrink.wine.2=Very Young Wine

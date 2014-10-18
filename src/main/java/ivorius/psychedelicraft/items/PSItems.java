@@ -235,6 +235,7 @@ public class PSItems
         DrinkRegistry.registerDrink("wine", new DrinkWine());
         DrinkRegistry.registerDrink("peyote", new Drink(new DrugInfluence("Peyote", 15, 0.005, 0.003, 0.9f)));
         DrinkRegistry.registerDrink("cocaTea", new Drink(new DrugInfluence("Cocaine", 60, 0.005, 0.002, 0.1f)));
+        DrinkRegistry.registerDrink("cannabisTea", new Drink(new DrugInfluence("Cannabis", 60, 0.005, 0.002, 0.15f)));
 
         DrinkRegistry.registerSpecialIcon("beer", PSItems.woodenMug, Psychedelicraft.textureBase + "woodenMugBeer");
         DrinkRegistry.registerSpecialIcon("jenever", PSItems.woodenMug, Psychedelicraft.textureBase + "woodenMugJenever");
@@ -243,6 +244,7 @@ public class PSItems
         DrinkRegistry.registerSpecialIcon("wine", PSItems.woodenMug, Psychedelicraft.textureBase + "woodenMugWine");
         DrinkRegistry.registerSpecialIcon("peyote", PSItems.woodenMug, Psychedelicraft.textureBase + "woodenMugPeyote");
         DrinkRegistry.registerSpecialIcon("cocaTea", PSItems.woodenMug, Psychedelicraft.textureBase + "woodenMugCocaTea");
+        DrinkRegistry.registerSpecialIcon("cannabisTea", PSItems.woodenMug, Psychedelicraft.textureBase + "woodenMugCocaTea");
 
         DrinkRegistry.registerSpecialIcon("beer", PSItems.woodenBowlDrug, Psychedelicraft.textureBase + "woodenBowlBeer");
         DrinkRegistry.registerSpecialIcon("jenever", PSItems.woodenBowlDrug, Psychedelicraft.textureBase + "woodenBowlJenever");
@@ -251,6 +253,7 @@ public class PSItems
         DrinkRegistry.registerSpecialIcon("wine", PSItems.woodenBowlDrug, Psychedelicraft.textureBase + "woodenBowlWine");
         DrinkRegistry.registerSpecialIcon("peyote", PSItems.woodenBowlDrug, Psychedelicraft.textureBase + "woodenBowlPeyote");
         DrinkRegistry.registerSpecialIcon("cocaTea", PSItems.woodenBowlDrug, Psychedelicraft.textureBase + "woodenBowlCocaTea");
+        DrinkRegistry.registerSpecialIcon("cannabisTea", PSItems.woodenBowlDrug, Psychedelicraft.textureBase + "woodenBowlCocaTea");
 
         DrinkRegistry.registerSpecialIcon("beer", PSItems.glassChalice, Psychedelicraft.textureBase + "glassChaliceBeer");
         DrinkRegistry.registerSpecialIcon("jenever", PSItems.glassChalice, Psychedelicraft.textureBase + "glassChaliceJenever");
@@ -259,5 +262,6 @@ public class PSItems
         DrinkRegistry.registerSpecialIcon("wine", PSItems.glassChalice, Psychedelicraft.textureBase + "glassChaliceWine");
         DrinkRegistry.registerSpecialIcon("peyote", PSItems.glassChalice, Psychedelicraft.textureBase + "glassChalicePeyote");
         DrinkRegistry.registerSpecialIcon("cocaTea", PSItems.glassChalice, Psychedelicraft.textureBase + "glassChaliceCocaTea");
+        DrinkRegistry.registerSpecialIcon("cannabisTea", PSItems.glassChalice, Psychedelicraft.textureBase + "glassChaliceCocaTea");
     }
 }
