@@ -9,19 +9,16 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagString;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by lukas on 14.05.14.
  */
 public class DrinkRegistry
 {
-    private static List<ItemDrinkHolder> registeredDrinkHolders = new ArrayList<ItemDrinkHolder>();
-    private static Hashtable<String, IDrink> registeredDrinks = new Hashtable<String, IDrink>();
-    private static Hashtable<Item, Hashtable<String, String>> registeredDrinkSpecialIcons = new Hashtable<Item, Hashtable<String, String>>();
+    private static List<ItemDrinkHolder> registeredDrinkHolders = new ArrayList<>();
+    private static Hashtable<String, IDrink> registeredDrinks = new Hashtable<>();
+    private static Hashtable<Item, Hashtable<String, String>> registeredDrinkSpecialIcons = new Hashtable<>();
 
     public static void registerDrink(String id, IDrink drink)
     {
@@ -108,7 +105,8 @@ public class DrinkRegistry
 
     public static Collection<String> getSpecialIcons(Item item)
     {
-        return registeredDrinkSpecialIcons.get(item).values();
+        Hashtable<String, String> icons = registeredDrinkSpecialIcons.get(item);
+        return icons != null ? icons.values() : Collections.<String>emptyList();
     }
 
     public static List<ItemDrinkHolder> getAllDrinkHolders()
