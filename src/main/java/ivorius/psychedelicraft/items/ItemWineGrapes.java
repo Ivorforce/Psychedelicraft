@@ -7,15 +7,14 @@ package ivorius.psychedelicraft.items;
 
 import ivorius.psychedelicraft.blocks.PSBlocks;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemWineGrapes extends ItemFood
+public class ItemWineGrapes extends ItemFoodSpecial
 {
-    public ItemWineGrapes(int j, float f, boolean flag)
+    public ItemWineGrapes(int healAmount, float saturation, boolean canFeedWolves, int eatSpeed)
     {
-        super(j, f, flag);
+        super(healAmount, saturation, canFeedWolves, eatSpeed);
     }
 
     @Override

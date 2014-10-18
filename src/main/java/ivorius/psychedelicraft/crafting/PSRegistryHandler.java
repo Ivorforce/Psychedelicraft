@@ -82,7 +82,7 @@ public class PSRegistryHandler
         wineGrapeLattice.setCreativeTab(Psychedelicraft.creativeTab);
         PSRegistryHandler.registerBlockDefault(wineGrapeLattice, ItemBlock.class, "wineGrapeLattice");
 
-        wineGrapes = (new ItemWineGrapes(1, 0.5F, true)).setUnlocalizedName("wineGrapes").setTextureName(textureBase + "wineGrapes");
+        wineGrapes = (new ItemWineGrapes(1, 0.5F, true, 15)).setUnlocalizedName("wineGrapes").setTextureName(textureBase + "wineGrapes");
         GameRegistry.registerItem(wineGrapes, "wineGrapes", Psychedelicraft.MODID);
         wineGrapes.setCreativeTab(Psychedelicraft.creativeTab);
 
@@ -198,7 +198,7 @@ public class PSRegistryHandler
         psycheSapling.setCreativeTab(Psychedelicraft.creativeTab);
         PSRegistryHandler.registerBlockDefault(psycheSapling, "psycheSapling");
 
-        juniperBerries = new ItemFood(1, 0.5F, true).setUnlocalizedName("juniperBerries").setTextureName(textureBase + "juniperBerries");
+        juniperBerries = new ItemFoodSpecial(1, 0.5F, true, 15).setUnlocalizedName("juniperBerries").setTextureName(textureBase + "juniperBerries");
         GameRegistry.registerItem(juniperBerries, "juniperBerries", Psychedelicraft.MODID);
         juniperBerries.setCreativeTab(Psychedelicraft.creativeTab);
 
