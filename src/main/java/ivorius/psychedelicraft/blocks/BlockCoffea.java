@@ -114,11 +114,10 @@ public class BlockCoffea extends Block implements IvBonemealCompatibleBlock, IvT
     }
 
     @Override
-    public void dropBlockAsItemWithChance(World par1World, int par2, int par3, int par4, int par5, float par6, int par7)
+    public void dropBlockAsItemWithChance(World world, int x, int y, int z, int meta, float par6, int par7)
     {
-        if (!par1World.isRemote)
+        if (!world.isRemote)
         {
-            int meta = par1World.getBlockMetadata(par2, par3, par4);
             int stage = (meta >> 1);
             boolean above = (meta & 1) == 1;
 
@@ -129,10 +128,10 @@ public class BlockCoffea extends Block implements IvBonemealCompatibleBlock, IvT
 
             if (stage == 6 || stage == 7)
             {
-                int countL = (par1World.rand.nextInt(3) + 1) * (stage - 5);
+                int countL = (world.rand.nextInt(3) + 1) * (stage - 5);
                 for (int i = 0; i < countL; i++)
                 {
-                    this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(PSItems.coffeaCherries, 1, 0));
+                    this.dropBlockAsItem(world, x, y, z, new ItemStack(PSItems.coffeaCherries, 1, 0));
                 }
             }
         }
