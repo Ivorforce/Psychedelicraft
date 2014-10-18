@@ -12,5 +12,6 @@
   "logoFile": "gfx/psychedelicraft/logo.png",
   "screenshots": [],
   "dependencies": []
+  "required-after": ["ivtoolkit@[1.0.1,)"]
 }
 ]

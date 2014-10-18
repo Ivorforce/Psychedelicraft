@@ -41,7 +41,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Logger;
 
 @Mod(modid = Psychedelicraft.MODID, version = Psychedelicraft.VERSION, name = Psychedelicraft.NAME,
-        guiFactory = "ivorius.psychedelicraft.gui.PSConfigGuiFactory", dependencies = "required-after:ivtoolkit")
+        guiFactory = "ivorius.psychedelicraft.gui.PSConfigGuiFactory")
 public class Psychedelicraft
 {
     public static final String MODID = "psychedelicraft";

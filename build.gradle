@@ -22,7 +22,7 @@ group= "ivorius.psychedelicraft" // http://maven.apache.org/guides/mini/guide-na
 archivesBaseName = "Psychedelicraft"
 
 minecraft {
-    version = "1.7.10-10.13.0.1207"
+    version = "1.7.10-10.13.2.1231"
     runDir = "eclipse"
 }
 

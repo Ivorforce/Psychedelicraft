@@ -5,9 +5,16 @@
 
 package ivorius.psychedelicraftcore;
 
+import com.google.common.collect.Sets;
+import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.MissingModsException;
+import cpw.mods.fml.common.versioning.ArtifactVersion;
+import cpw.mods.fml.common.versioning.DefaultArtifactVersion;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by lukas on 21.02.14.
@@ -19,10 +26,12 @@ import java.util.Map;
 public class PsychedelicraftLoadingPlugin implements IFMLLoadingPlugin
 {
     public static final String NAME = "Psychedelicraft Core";
+    public static final String MODID = "psychedelicraftcore";
 
     @Override
     public String[] getASMTransformerClass()
     {
+        requireClass("ivorius.ivtoolkit.asm.IvClassTransformerManager", new DefaultArtifactVersion("ivtoolkit", true), MODID, NAME);
         return new String[]{PsychedelicraftClassTransformer.class.getName()};
     }
 
@@ -48,5 +57,20 @@ public class PsychedelicraftLoadingPlugin implements IFMLLoadingPlugin
     public String getAccessTransformerClass()
     {
         return null;
+    }
+
+    public static void requireClass(String classname, ArtifactVersion artifactVersion, String modID, String modName)
+    {
+        try
+        {
+            Class.forName(classname);
+        }
+        catch (ClassNotFoundException e)
+        {
+            FMLLog.severe("The mod %s (%s) requires mods %s to be available", modID, modName, artifactVersion.getLabel());
+            Set<ArtifactVersion> versionMissingMods = Sets.newHashSet();
+            versionMissingMods.add(artifactVersion);
+            throw new MissingModsException(versionMissingMods);
+        }
     }
 }
