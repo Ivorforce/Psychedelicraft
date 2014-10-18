@@ -8,6 +8,7 @@ package ivorius.psychedelicraft.entities;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
+import ivorius.psychedelicraft.PSConfig;
 import ivorius.psychedelicraft.Psychedelicraft;
 import net.minecraftforge.common.config.Configuration;
 
@@ -21,7 +22,7 @@ public class PSEntityList
 
     public static int villagerDealerProfessionID;
 
-    public static void preInit(FMLPreInitializationEvent event, Psychedelicraft mod, Configuration configuration)
+    public static void preInit(FMLPreInitializationEvent event, Psychedelicraft mod)
     {
         //----------------------------------------------------------Molotov Cocktail----------------------------------
 
@@ -33,14 +34,15 @@ public class PSEntityList
 
         //----------------------------------------------------------Villager Dealer----------------------------------
 
-        villagerDealerProfessionID = configuration.get("General", "villagerDealerProfessionID", 87).getInt();
-        VillagerRegistry.instance().registerVillagerId(PSEntityList.villagerDealerProfessionID);
+        VillagerRegistry.instance().registerVillagerId(villagerDealerProfessionID);
 
-        VillagerRegistry.instance().registerVillageTradeHandler(PSEntityList.villagerDealerProfessionID, new VillagerTradeHandlerDrugDealer());
-        VillagerRegistry.instance().registerVillageTradeHandler(0, new VillagerTradeHandlerFarmer());
+        VillagerRegistry.instance().registerVillageTradeHandler(villagerDealerProfessionID, new VillagerTradeHandlerDrugDealer());
+
+        if (PSConfig.farmerDrugDeals)
+            VillagerRegistry.instance().registerVillageTradeHandler(0, new VillagerTradeHandlerFarmer());
     }
 
-    public static void preInitEnd(FMLPreInitializationEvent event, Psychedelicraft mod, Configuration configuration)
+    public static void preInitEnd(FMLPreInitializationEvent event, Psychedelicraft mod)
     {
 
     }

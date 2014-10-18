@@ -112,11 +112,11 @@ public class Psychedelicraft
 
         PSBlocks.preInit(event, this, config);
         PSItems.preInit(event, this, config);
-        PSEntityList.preInit(event, this, config);
+        PSEntityList.preInit(event, this);
 
         PSBlocks.preInitEnd(event, this, config);
         PSItems.preInitEnd(event, this, config);
-        PSEntityList.preInitEnd(event, this, config);
+        PSEntityList.preInitEnd(event, this);
 
         proxy.preInit(config);
     }
