@@ -112,7 +112,7 @@ public class DrugEffectInterpreter
         float intensification = 0.0f;
 
         intensification += (1.0f - intensification) * drugHelper.getDrugValue("Caffeine") * 0.3f;
-        intensification += (1.0f - intensification) * drugHelper.getDrugValue("Cannabis") * 1.0f;
+        intensification += (1.0f - intensification) * drugHelper.getDrugValue("Cannabis") * 0.6f;
         intensification += (1.0f - intensification) * drugHelper.getDrugValue("BrownShrooms") * 1.0f;
 
         return intensification;
