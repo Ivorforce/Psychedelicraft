@@ -78,13 +78,13 @@ public class PSRegistryHandler
 
         //----------------------------------------------------------Wine----------------------------------
 
-        wineGrapes = (new ItemWineGrapes(1, 0.5F, true)).setUnlocalizedName("wineGrapes").setTextureName(textureBase + "wineGrapes");
-        GameRegistry.registerItem(wineGrapes, "wineGrapes", Psychedelicraft.MODID);
-        wineGrapes.setCreativeTab(Psychedelicraft.creativeTab);
-
         wineGrapeLattice = new BlockWineGrapeLattice().setHardness(0.3F);
         wineGrapeLattice.setCreativeTab(Psychedelicraft.creativeTab);
         PSRegistryHandler.registerBlockDefault(wineGrapeLattice, ItemBlock.class, "wineGrapeLattice");
+
+        wineGrapes = (new ItemWineGrapes(1, 0.5F, true)).setUnlocalizedName("wineGrapes").setTextureName(textureBase + "wineGrapes");
+        GameRegistry.registerItem(wineGrapes, "wineGrapes", Psychedelicraft.MODID);
+        wineGrapes.setCreativeTab(Psychedelicraft.creativeTab);
 
         //----------------------------------------------------------Molotov Cocktail----------------------------------
 
@@ -97,6 +97,10 @@ public class PSRegistryHandler
         molotovCocktail.setCreativeTab(Psychedelicraft.creativeTab);
 
         //----------------------------------------------------------Weed----------------------------------
+
+        cannabisPlant = new BlockCannabisPlant().setHardness(0.5f);
+        cannabisPlant.setCreativeTab(null);
+        PSRegistryHandler.registerBlockDefault(cannabisPlant, ItemBlock.class, "cannabisPlant");
 
         cannabisSeeds = new ItemSeeds(cannabisPlant, Blocks.farmland).setUnlocalizedName("cannabisSeeds").setTextureName(textureBase + "cannabisSeeds");
         GameRegistry.registerItem(cannabisSeeds, "cannabisSeeds", Psychedelicraft.MODID);
@@ -122,10 +126,6 @@ public class PSRegistryHandler
         GameRegistry.registerItem(hashMuffin, "hashMuffin", Psychedelicraft.MODID);
         hashMuffin.setCreativeTab(Psychedelicraft.creativeTab);
 
-        cannabisPlant = new BlockCannabisPlant().setHardness(0.5f);
-        cannabisPlant.setCreativeTab(null);
-        PSRegistryHandler.registerBlockDefault(cannabisPlant, ItemBlock.class, "cannabisPlant");
-
         //----------------------------------------------------------Magic Mushrooms----------------------------------
 
         magicMushroomsBrown = new ItemEdibleDrug(new DrugInfluence("BrownShrooms", 15, 0.005, 0.003, 0.5f)).setUnlocalizedName("magicMushroomsBrown").setTextureName(textureBase + "magicMushroomsBrown");
@@ -137,6 +137,10 @@ public class PSRegistryHandler
         magicMushroomsRed.setCreativeTab(Psychedelicraft.creativeTab);
 
         //----------------------------------------------------------Tobacco----------------------------------
+
+        tobaccoPlant = new BlockTobaccoPlant().setHardness(0.5f);
+        tobaccoPlant.setCreativeTab(null);
+        PSRegistryHandler.registerBlockDefault(tobaccoPlant, "tobaccoPlant");
 
         tobaccoLeaf = new Item().setUnlocalizedName("tobaccoLeaf").setTextureName(textureBase + "tobaccoLeaf");
         GameRegistry.registerItem(tobaccoLeaf, "tobaccoLeaf", Psychedelicraft.MODID);
@@ -162,11 +166,11 @@ public class PSRegistryHandler
         GameRegistry.registerItem(joint, "joint", Psychedelicraft.MODID);
         joint.setCreativeTab(Psychedelicraft.creativeTab);
 
-        tobaccoPlant = new BlockTobaccoPlant().setHardness(0.5f);
-        tobaccoPlant.setCreativeTab(null);
-        PSRegistryHandler.registerBlockDefault(tobaccoPlant, "tobaccoPlant");
-
         //----------------------------------------------------------Cocaine----------------------------------
+
+        cocaPlant = new BlockCocaPlant().setHardness(0.5f);
+        cocaPlant.setCreativeTab(null);
+        PSRegistryHandler.registerBlockDefault(cocaPlant, ItemBlock.class, "cocaPlant");
 
         cocaSeeds = new ItemSeeds(cocaPlant, Blocks.farmland).setUnlocalizedName("cocaSeeds").setTextureName(textureBase + "cocaSeeds");
         GameRegistry.registerItem(cocaSeeds, "cocaSeeds", Psychedelicraft.MODID);
@@ -180,15 +184,7 @@ public class PSRegistryHandler
         GameRegistry.registerItem(driedCocaLeaves, "driedCocaLeaves", Psychedelicraft.MODID);
         driedCocaLeaves.setCreativeTab(Psychedelicraft.creativeTab);
 
-        cocaPlant = new BlockCocaPlant().setHardness(0.5f);
-        cocaPlant.setCreativeTab(null);
-        PSRegistryHandler.registerBlockDefault(cocaPlant, ItemBlock.class, "cocaPlant");
-
         //----------------------------------------------------------Jenever----------------------------------
-
-        juniperBerries = new ItemFood(1, 0.5F, true).setUnlocalizedName("juniperBerries").setTextureName(textureBase + "juniperBerries");
-        GameRegistry.registerItem(juniperBerries, "juniperBerries", Psychedelicraft.MODID);
-        juniperBerries.setCreativeTab(Psychedelicraft.creativeTab);
 
         psycheLeaves = new BlockPsycheLeaves();
         psycheLeaves.setCreativeTab(Psychedelicraft.creativeTab);
@@ -202,7 +198,15 @@ public class PSRegistryHandler
         psycheSapling.setCreativeTab(Psychedelicraft.creativeTab);
         PSRegistryHandler.registerBlockDefault(psycheSapling, "psycheSapling");
 
+        juniperBerries = new ItemFood(1, 0.5F, true).setUnlocalizedName("juniperBerries").setTextureName(textureBase + "juniperBerries");
+        GameRegistry.registerItem(juniperBerries, "juniperBerries", Psychedelicraft.MODID);
+        juniperBerries.setCreativeTab(Psychedelicraft.creativeTab);
+
         //----------------------------------------------------------Coffee----------------------------------
+
+        coffea = new BlockCoffea().setHardness(0.5f);
+        coffea.setCreativeTab(null);
+        PSRegistryHandler.registerBlockDefault(coffea, ItemBlock.class, "coffea");
 
         coffeaCherries = new ItemSeeds(coffea, Blocks.farmland).setUnlocalizedName("coffeaCherries").setTextureName(textureBase + "coffeaCherries");
         GameRegistry.registerItem(coffeaCherries, "coffeaCherries", Psychedelicraft.MODID);
@@ -211,10 +215,6 @@ public class PSRegistryHandler
         coffeeBeans = new Item().setUnlocalizedName("coffeeBeans").setTextureName(textureBase + "coffeeBeans");
         GameRegistry.registerItem(coffeeBeans, "coffeeBeans", Psychedelicraft.MODID);
         coffeeBeans.setCreativeTab(Psychedelicraft.creativeTab);
-
-        coffea = new BlockCoffea().setHardness(0.5f);
-        coffea.setCreativeTab(null);
-        PSRegistryHandler.registerBlockDefault(coffea, ItemBlock.class, "coffea");
 
         //----------------------------------------------------------Peyote----------------------------------
 
