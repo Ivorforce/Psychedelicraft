@@ -209,6 +209,7 @@ public class Psychedelicraft
             GameRegistry.addShapelessRecipe(DrinkRegistry.createDrinkStack(itemDrinkHolder, 1, "peyote"), PSItems.driedPeyote, PSItems.driedPeyote, new ItemStack(emptyContainer));
 
             addShapelessRecipe(DrinkRegistry.createDrinkStack(itemDrinkHolder, 1, "coldCoffee"), Items.water_bucket, new ItemStack(emptyContainer), PSItems.coffeeBeans, PSItems.coffeeBeans);
+            addShapelessRecipe(DrinkRegistry.createDrinkStack(itemDrinkHolder, 1, "cocaTea"), Items.water_bucket, new ItemStack(emptyContainer), PSItems.cocaLeaf, PSItems.cocaLeaf);
             //TODO Add when Forge fixes smelting with NBT
 //        GameRegistry.addSmelting(DrinkRegistry.createDrinkStack(itemDrinkHolder, 1, "coldCoffee"), new ItemStack(emptyContainer, 1, 3), 0.2f);
         }
