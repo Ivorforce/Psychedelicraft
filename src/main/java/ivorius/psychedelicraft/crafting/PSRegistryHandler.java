@@ -271,12 +271,12 @@ public class PSRegistryHandler
 
         DrinkRegistry.registerDrink("beer", new Drink(textureBase + "drinkBeer", new DrugInfluence("Alcohol", 20, 0.002, 0.001, 0.06f)));
         DrinkRegistry.registerDrink("jenever", new Drink(textureBase + "drinkJenever", new DrugInfluence("Alcohol", 20, 0.002, 0.001, 0.25f)));
-        DrinkRegistry.registerDrink("coffee", new Drink(null, new DrugInfluence("Caffeine", 20, 0.002, 0.001, 0.3f), new DrugInfluence("Warmth", 0, 0.00, 0.1, 0.8f)));
-        DrinkRegistry.registerDrink("coldCoffee", new Drink(null, new DrugInfluence("Caffeine", 20, 0.002, 0.001, 0.25f)));
+        DrinkRegistry.registerDrink("coffee", new Drink(textureBase + "drinkCoffee", new DrugInfluence("Caffeine", 20, 0.002, 0.001, 0.3f), new DrugInfluence("Warmth", 0, 0.00, 0.1, 0.8f)));
+        DrinkRegistry.registerDrink("coldCoffee", new Drink(textureBase + "drinkCoffee", new DrugInfluence("Caffeine", 20, 0.002, 0.001, 0.25f)));
         DrinkRegistry.registerDrink("wine", new DrinkWine(textureBase + "drinkWine"));
-        DrinkRegistry.registerDrink("peyote", new Drink(null, new DrugInfluence("Peyote", 15, 0.005, 0.003, 0.9f)));
-        DrinkRegistry.registerDrink("cocaTea", new Drink(null, new DrugInfluence("Cocaine", 60, 0.005, 0.002, 0.1f)));
-        DrinkRegistry.registerDrink("cannabisTea", new Drink(null, new DrugInfluence("Cannabis", 60, 0.005, 0.002, 0.15f)));
+        DrinkRegistry.registerDrink("peyote", new Drink(textureBase + "drinkPeyote", new DrugInfluence("Peyote", 15, 0.005, 0.003, 0.9f)));
+        DrinkRegistry.registerDrink("cocaTea", new Drink(textureBase + "drinkCocaTea", new DrugInfluence("Cocaine", 60, 0.005, 0.002, 0.1f)));
+        DrinkRegistry.registerDrink("cannabisTea", new Drink(textureBase + "drinkCannabisTea", new DrugInfluence("Cannabis", 60, 0.005, 0.002, 0.15f)));
         DrinkRegistry.registerDrink("vodka", new Drink(textureBase + "drinkVodka", new DrugInfluence("Alcohol", 20, 0.003, 0.002, 0.5f)));
 
         registerSpecialIcon("beer", woodenMug, textureBase + "woodenMugBeer");
@@ -287,6 +287,7 @@ public class PSRegistryHandler
         registerSpecialIcon("peyote", woodenMug, textureBase + "woodenMugPeyote");
         registerSpecialIcon("cocaTea", woodenMug, textureBase + "woodenMugCocaTea");
         registerSpecialIcon("cannabisTea", woodenMug, textureBase + "woodenMugCocaTea");
+        registerSpecialIcon("vodka", woodenMug, textureBase + "woodenMugVodka");
 
         registerSpecialIcon("beer", woodenBowlDrug, textureBase + "woodenBowlBeer");
         registerSpecialIcon("jenever", woodenBowlDrug, textureBase + "woodenBowlJenever");
@@ -296,6 +297,7 @@ public class PSRegistryHandler
         registerSpecialIcon("peyote", woodenBowlDrug, textureBase + "woodenBowlPeyote");
         registerSpecialIcon("cocaTea", woodenBowlDrug, textureBase + "woodenBowlCocaTea");
         registerSpecialIcon("cannabisTea", woodenBowlDrug, textureBase + "woodenBowlCocaTea");
+        registerSpecialIcon("vodka", woodenBowlDrug, textureBase + "woodenBowlVodka");
 
         registerSpecialIcon("beer", glassChalice, textureBase + "glassChaliceBeer");
         registerSpecialIcon("jenever", glassChalice, textureBase + "glassChaliceJenever");
@@ -305,6 +307,7 @@ public class PSRegistryHandler
         registerSpecialIcon("peyote", glassChalice, textureBase + "glassChalicePeyote");
         registerSpecialIcon("cocaTea", glassChalice, textureBase + "glassChaliceCocaTea");
         registerSpecialIcon("cannabisTea", glassChalice, textureBase + "glassChaliceCocaTea");
+        registerSpecialIcon("vodka", glassChalice, textureBase + "glassChaliceVodka");
     }
 
     public static void load(FMLInitializationEvent event, Psychedelicraft mod)
