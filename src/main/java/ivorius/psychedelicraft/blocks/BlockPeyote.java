@@ -104,15 +104,13 @@ public class BlockPeyote extends BlockContainer implements IvBonemealCompatibleB
     }
 
     @Override
-    public void dropBlockAsItemWithChance(World par1World, int par2, int par3, int par4, int par5, float par6, int par7)
+    public void dropBlockAsItemWithChance(World par1World, int x, int y, int z, int meta, float par6, int par7)
     {
         if (!par1World.isRemote)
         {
-            int meta = par1World.getBlockMetadata(par2, par3, par4);
-
             for (int i = 0; i < meta + 1; i++)
             {
-                this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(PSBlocks.peyote, 1, 0));
+                this.dropBlockAsItem(par1World, x, y, z, new ItemStack(PSBlocks.peyote, 1, 0));
             }
         }
     }
