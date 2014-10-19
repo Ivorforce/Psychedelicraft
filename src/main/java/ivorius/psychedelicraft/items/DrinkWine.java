@@ -30,10 +30,9 @@ public class DrinkWine implements IDrink
 {
     public static ItemStack createWineStack(Item item, int stackSize, int wineStrength)
     {
-        ItemStack stack = ItemDrinkHolder.createDrinkStack(item, stackSize, "wine");
         NBTTagCompound drinkInfo = new NBTTagCompound();
         drinkInfo.setInteger("wineStrength", wineStrength);
-        stack.setTagInfo("drinkInfo", drinkInfo);
+        ItemStack stack = ItemDrinkHolder.createDrinkStack(item, stackSize, new DrinkInformation("wine", 1, drinkInfo));
         return stack;
     }
 

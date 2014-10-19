@@ -5,6 +5,7 @@
 
 package ivorius.psychedelicraft.items;
 
+import ivorius.psychedelicraft.entities.DrugInfluence;
 import ivorius.psychedelicraft.entities.EntityMolotovCocktail;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;

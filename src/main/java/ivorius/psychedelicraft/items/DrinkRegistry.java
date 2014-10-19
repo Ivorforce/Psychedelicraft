@@ -40,7 +40,7 @@ public class DrinkRegistry
     {
         if (!registeredDrinkSpecialIcons.containsKey(item))
         {
-            registeredDrinkSpecialIcons.put(item, new Hashtable<String, String>());
+            registeredDrinkSpecialIcons.put(item, new HashMap<String, String>());
         }
 
         registeredDrinkSpecialIcons.get(item).put(drinkID, iconName);

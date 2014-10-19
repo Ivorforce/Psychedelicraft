@@ -30,33 +30,16 @@ public class ItemBarrel extends ItemBlock
 {
     public static final int DEFAULT_FILLINGS = 16;
 
-    public ItemStack createBarrel(String drinkID, int fillings)
+    public ItemStack createBarrel(DrinkInformation drinkInformation)
     {
         ItemStack stack = new ItemStack(this);
-        stack.setTagInfo("drinkID", new NBTTagString(drinkID));
-        stack.setTagInfo("drinkFillings", new NBTTagInt(fillings));
+        stack.setTagInfo("drinkInfo", drinkInformation.writeToNBT());
         return stack;
     }
 
-    public static String containedDrinkID(ItemStack stack)
+    public static DrinkInformation getDrinkInfo(ItemStack stack)
     {
-        return stack.hasTagCompound() && stack.getTagCompound().hasKey("drinkID", Constants.NBT.TAG_STRING) ? stack.getTagCompound().getString("drinkID") : null;
-    }
-
-    public static IDrink containedDrink(ItemStack stack)
-    {
-        String id = containedDrinkID(stack);
-        return id != null ? DrinkRegistry.getDrink(id) : null;
-    }
-
-    public static int containedFillings(ItemStack stack)
-    {
-        return stack.hasTagCompound() ? stack.getTagCompound().getInteger("drinkFillings") : 0;
-    }
-
-    public static NBTTagCompound getDrinkInfo(ItemStack stack)
-    {
-        return stack.getTagCompound() != null ? stack.getTagCompound().getCompoundTag("drinkInfo") : new NBTTagCompound();
+        return stack.hasTagCompound() && stack.getTagCompound().hasKey("drinkInfo", Constants.NBT.TAG_COMPOUND) ? new DrinkInformation(stack.getTagCompound().getCompoundTag("drinkInfo")) : null;
     }
 
     private IIcon baseIcon;
@@ -69,34 +52,32 @@ public class ItemBarrel extends ItemBlock
     }
 
     @Override
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int u, int size, float par8, float par9, float par10)
     {
-        if (par3World.getBlock(par4, par5, par6) == Blocks.snow)
+        if (world.getBlock(x, y, u) == Blocks.snow)
         {
-            par5--;
+            y--;
         }
 
-        if (par7 != 1)
+        if (size != 1)
         {
             return false;
         }
 
-        par5++;
+        y++;
 
-        int direction = MathHelper.floor_double((par2EntityPlayer.rotationYaw * 4F) / 360F + 0.5D) & 3;
+        int direction = MathHelper.floor_double((player.rotationYaw * 4F) / 360F + 0.5D) & 3;
 
-        par3World.setBlock(par4, par5, par6, field_150939_a, direction, 3);
+        world.setBlock(x, y, u, field_150939_a, direction, 3);
 
-        TileEntity tileEntity = par3World.getTileEntity(par4, par5, par6);
+        TileEntity tileEntity = world.getTileEntity(x, y, u);
         if (tileEntity != null && tileEntity instanceof TileEntityBarrel)
         {
             TileEntityBarrel tileEntityBarrel = (TileEntityBarrel) tileEntity;
-            tileEntityBarrel.containedDrink = containedDrinkID(par1ItemStack);
-            tileEntityBarrel.containedDrinkInfo = getDrinkInfo(par1ItemStack);
-            tileEntityBarrel.containedFillings = containedFillings(par1ItemStack);
+            tileEntityBarrel.containedDrink = getDrinkInfo(stack);
         }
 
-        par1ItemStack.stackSize--;
+        stack.stackSize--;
 
         return true;
     }
@@ -128,10 +109,10 @@ public class ItemBarrel extends ItemBlock
         if (pass == 0)
             return super.getIcon(stack, pass);
 
-        IDrink drink = containedDrink(stack);
-        if (drink != null)
+        DrinkInformation drinkInfo = getDrinkInfo(stack);
+        if (drinkInfo != null)
         {
-            IIcon icon = drink.getDrinkIcon(getDrinkInfo(stack));
+            IIcon icon = drinkInfo.getDrinkIcon();
             if (icon != null)
                 return icon;
         }
@@ -148,24 +129,24 @@ public class ItemBarrel extends ItemBlock
         {
             for (NBTTagCompound compound : drink.creativeTabInfos(item, tab))
             {
-                ItemStack stack = createBarrel(DrinkRegistry.getDrinkID(drink), DEFAULT_FILLINGS);
-                if (compound != null)
-                    stack.setTagInfo("drinkInfo", compound);
+                ItemStack stack = createBarrel(new DrinkInformation(DrinkRegistry.getDrinkID(drink), DEFAULT_FILLINGS, compound));
                 list.add(stack);
             }
         }
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List par3List, boolean par4)
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
     {
-        super.addInformation(stack, player, par3List, par4);
+        super.addInformation(stack, player, list, par4);
 
-        IDrink drink = containedDrink(stack);
+        DrinkInformation drinkInfo = getDrinkInfo(stack);
 
-        if (drink != null)
+        if (drinkInfo != null)
         {
-            par3List.add(StatCollector.translateToLocal(DrinkRegistry.getDrinkTranslationKey(drink, getDrinkInfo(stack))).trim());
+            String translationKey = drinkInfo.getFullTranslationKey();
+            if (translationKey != null)
+                list.add(StatCollector.translateToLocal(translationKey).trim());
         }
     }
 }

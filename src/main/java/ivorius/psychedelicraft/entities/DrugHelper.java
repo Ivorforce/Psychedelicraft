@@ -39,8 +39,8 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
     public static boolean hurtOverlayEnabled;
     public static float[] digitalEffectPixelRescale;
 
-    private Hashtable<String, Drug> drugs;
-    public ArrayList<DrugInfluence> influences;
+    private Map<String, Drug> drugs;
+    public List<DrugInfluence> influences;
 
     public boolean hasChanges;
 
@@ -60,8 +60,8 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
 
     public DrugHelper()
     {
-        drugs = new Hashtable<String, Drug>();
-        influences = new ArrayList<DrugInfluence>();
+        drugs = new HashMap<>();
+        influences = new ArrayList<>();
 
         drugMessageDistorter = new DrugMessageDistorter();
 

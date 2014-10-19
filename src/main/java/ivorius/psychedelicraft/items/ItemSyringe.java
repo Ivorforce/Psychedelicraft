@@ -18,18 +18,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ItemSyringe extends Item
 {
     public static final int damageCocaine = 1;
     public static final int damageCaffeine = 2;
 
-    public Hashtable<Integer, DrugInfluence[]> effects;
-    public Hashtable<Integer, Integer> liquidColors;
-    public Hashtable<Integer, String> names;
+    public Map<Integer, DrugInfluence[]> effects;
+    public Map<Integer, Integer> liquidColors;
+    public Map<Integer, String> names;
 
     public IIcon iconLiquid;
 
@@ -37,9 +35,9 @@ public class ItemSyringe extends Item
     {
         super();
 
-        this.effects = new Hashtable<Integer, DrugInfluence[]>();
-        this.liquidColors = new Hashtable<Integer, Integer>();
-        this.names = new Hashtable<Integer, String>();
+        this.effects = new HashMap<>();
+        this.liquidColors = new HashMap<>();
+        this.names = new HashMap<>();
 
         this.setHasSubtypes(true);
         setMaxStackSize(1);

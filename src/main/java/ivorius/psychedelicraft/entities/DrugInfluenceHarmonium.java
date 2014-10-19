@@ -34,7 +34,7 @@ public class DrugInfluenceHarmonium extends DrugInfluence
     {
         super.addToDrug(drugHelper, value);
 
-        Drug drug = drugHelper.getDrug(drugName);
+        Drug drug = drugHelper.getDrug(getDrugName());
 
         if (drug instanceof DrugHarmonium)
         {

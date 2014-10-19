@@ -91,7 +91,7 @@ public class Drink implements IDrink
     @Override
     public ItemStack createItemStack(ItemDrinkHolder drinkHolder, NBTTagCompound drinkInfo, int timeFermented)
     {
-        return ItemDrinkHolder.createDrinkStack(drinkHolder, 1, DrinkRegistry.getDrinkID(this));
+        return ItemDrinkHolder.createDrinkStack(drinkHolder, 1, new DrinkInformation(DrinkRegistry.getDrinkID(this), 1, drinkInfo));
     }
 
     @Override

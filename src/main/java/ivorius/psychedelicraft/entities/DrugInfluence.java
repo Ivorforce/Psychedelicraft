@@ -8,21 +8,22 @@ package ivorius.psychedelicraft.entities;
 
 import net.minecraft.nbt.NBTTagCompound;
 
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DrugInfluence
 {
-    public static Hashtable<String, Class<? extends DrugInfluence>> keyToClass = new Hashtable<String, Class<? extends DrugInfluence>>();
-    public static Hashtable<Class<? extends DrugInfluence>, String> classToKey = new Hashtable<Class<? extends DrugInfluence>, String>();
+    public static Map<String, Class<? extends DrugInfluence>> keyToClass = new HashMap<>();
+    public static Map<Class<? extends DrugInfluence>, String> classToKey = new HashMap<>();
 
-    public String drugName;
+    private String drugName;
 
-    public int delay;
+    private int delay;
 
-    public double influenceSpeed;
-    public double influenceSpeedPlus;
+    private double influenceSpeed;
+    private double influenceSpeedPlus;
 
-    public double maxInfluence;
+    private double maxInfluence;
 
     public static void registerInfluence(Class<? extends DrugInfluence> clazz, String key)
     {
@@ -45,6 +46,31 @@ public class DrugInfluence
     public DrugInfluence()
     {
 
+    }
+
+    public String getDrugName()
+    {
+        return drugName;
+    }
+
+    public int getDelay()
+    {
+        return delay;
+    }
+
+    public double getInfluenceSpeed()
+    {
+        return influenceSpeed;
+    }
+
+    public double getInfluenceSpeedPlus()
+    {
+        return influenceSpeedPlus;
+    }
+
+    public double getMaxInfluence()
+    {
+        return maxInfluence;
     }
 
     public void update(DrugHelper drugHelper)

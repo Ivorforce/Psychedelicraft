@@ -7,6 +7,7 @@ package ivorius.psychedelicraft.worldgen;
 
 import ivorius.psychedelicraft.PSConfig;
 import ivorius.psychedelicraft.blocks.PSBlocks;
+import ivorius.psychedelicraft.items.DrinkInformation;
 import ivorius.psychedelicraft.items.ItemDrinkHolder;
 import ivorius.psychedelicraft.items.ItemSyringe;
 import net.minecraft.util.WeightedRandomChestContent;
@@ -89,8 +90,8 @@ public class PSWorldGen
             addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(cigarette, 0, 1, 16, 1));
             addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(cigar, 0, 1, 1, 1));
             addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(joint, 0, 1, 1, 1));
-            addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(ItemDrinkHolder.createDrinkStack(woodenMug, 1, "coldCoffee"), 1, 4, 1));
-            addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(ItemDrinkHolder.createDrinkStack(woodenBowlDrug, 1, "peyote"), 1, 1, 1));
+            addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(ItemDrinkHolder.createDrinkStack(woodenMug, 1, new DrinkInformation("coldCoffee", 1)), 1, 4, 1));
+            addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(ItemDrinkHolder.createDrinkStack(woodenBowlDrug, 1, new DrinkInformation("peyote", 1)), 1, 1, 1));
             addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(syringe, ItemSyringe.damageCocaine, 1, 1, 1));
             addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(syringe, ItemSyringe.damageCaffeine, 1, 1, 1));
             addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(hashMuffin, 0, 1, 8, 1));

@@ -59,28 +59,24 @@ public class TileEntityRendererBarrel extends TileEntitySpecialRenderer
 
         if (tileEntity.containedDrink != null)
         {
-            IDrink drink = DrinkRegistry.getDrink(tileEntity.containedDrink);
-            if (drink != null)
+            IIcon drinkIcon = tileEntity.containedDrink.getDrinkIcon();
+            if (drinkIcon != null)
             {
-                IIcon drinkIcon = drink.getDrinkIcon(tileEntity.containedDrinkInfo != null ? tileEntity.containedDrinkInfo : new NBTTagCompound());
-                if (drinkIcon != null)
-                {
-                    this.bindTexture(TextureMap.locationItemsTexture);
-                    Tessellator tessellator = Tessellator.instance;
+                this.bindTexture(TextureMap.locationItemsTexture);
+                Tessellator tessellator = Tessellator.instance;
 
-                    double barrelZ = -0.45;
-                    double iconSize = 1.0;
-                    double centerX = 0.0;
-                    double centerY = 0.0;
+                double barrelZ = -0.45;
+                double iconSize = 1.0;
+                double centerX = 0.0;
+                double centerY = 0.0;
 
-                    GL11.glColor3f(1.0f, 1.0f, 1.0f);
-                    tessellator.startDrawingQuads();
-                    tessellator.addVertexWithUV(centerX - iconSize * 0.5, centerY - iconSize * 0.5, barrelZ, drinkIcon.getMaxU(), drinkIcon.getMaxV());
-                    tessellator.addVertexWithUV(centerX - iconSize * 0.5, centerY + iconSize * 0.5, barrelZ, drinkIcon.getMaxU(), drinkIcon.getMinV());
-                    tessellator.addVertexWithUV(centerX + iconSize * 0.5, centerY + iconSize * 0.5, barrelZ, drinkIcon.getMinU(), drinkIcon.getMinV());
-                    tessellator.addVertexWithUV(centerX + iconSize * 0.5, centerY - iconSize * 0.5, barrelZ, drinkIcon.getMinU(), drinkIcon.getMaxV());
-                    tessellator.draw();
-                }
+                GL11.glColor3f(1.0f, 1.0f, 1.0f);
+                tessellator.startDrawingQuads();
+                tessellator.addVertexWithUV(centerX - iconSize * 0.5, centerY - iconSize * 0.5, barrelZ, drinkIcon.getMaxU(), drinkIcon.getMaxV());
+                tessellator.addVertexWithUV(centerX - iconSize * 0.5, centerY + iconSize * 0.5, barrelZ, drinkIcon.getMaxU(), drinkIcon.getMinV());
+                tessellator.addVertexWithUV(centerX + iconSize * 0.5, centerY + iconSize * 0.5, barrelZ, drinkIcon.getMinU(), drinkIcon.getMinV());
+                tessellator.addVertexWithUV(centerX + iconSize * 0.5, centerY - iconSize * 0.5, barrelZ, drinkIcon.getMinU(), drinkIcon.getMaxV());
+                tessellator.draw();
             }
         }
 

@@ -14,70 +14,34 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lukas on 14.05.14.
  */
 public class ItemDrinkHolder extends Item
 {
-    public static NBTTagCompound getDrinkInfo(ItemStack stack)
+    public static DrinkInformation getDrinkInfo(ItemStack stack)
     {
-        return stack.getTagCompound() != null ? stack.getTagCompound().getCompoundTag("drinkInfo") : new NBTTagCompound();
+        return stack.hasTagCompound() && stack.getTagCompound().hasKey("drinkInfo", Constants.NBT.TAG_COMPOUND) ? new DrinkInformation(stack.getTagCompound().getCompoundTag("drinkInfo")) : null;
     }
 
-    public static String getDrinkIDFromStack(ItemStack stack)
-    {
-        if (!stack.hasTagCompound())
-        {
-            return null;
-        }
-
-        return stack.getTagCompound().getString("drinkID");
-    }
-
-    public static String getDrinkTranslationKey(ItemStack stack)
-    {
-        String drinkKey = getDrinkIDFromStack(stack);
-
-        if (drinkKey != null)
-        {
-            IDrink drink = DrinkRegistry.getDrink(drinkKey);
-
-            if (drink != null)
-                return DrinkRegistry.getDrinkTranslationKey(drink, getDrinkInfo(stack));
-        }
-
-        return null;
-    }
-
-    public static ItemStack createDrinkStack(Item item, int stackSize, String drinkID)
+    public static ItemStack createDrinkStack(Item item, int stackSize, DrinkInformation drinkInformation)
     {
         ItemStack stack = new ItemStack(item, stackSize);
-        stack.setTagInfo("drinkID", new NBTTagString(drinkID));
+        stack.setTagInfo("drinkInfo", drinkInformation.writeToNBT());
         return stack;
     }
 
-    public static IDrink getDrinkFromStack(ItemStack stack)
-    {
-        String drinkID = getDrinkIDFromStack(stack);
-        return drinkID != null ? DrinkRegistry.getDrink(drinkID) : null;
-    }
-
-    public static String getDrinkSpecialIcon(ItemStack stack)
-    {
-        String drinkID = getDrinkIDFromStack(stack);
-        return drinkID != null ? DrinkRegistry.getDrinkSpecialIcon(drinkID, stack.getItem()) : null;
-    }
-
-    public Hashtable<String, IIcon> registeredSpecialIcons = new Hashtable<String, IIcon>();
+    public Map<String, IIcon> registeredSpecialIcons = new HashMap<>();
 
     public boolean addEmptySelfToCreativeMenu;
 
@@ -96,54 +60,52 @@ public class ItemDrinkHolder extends Item
     }
 
     @Override
-    public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onEaten(ItemStack stack, World par2World, EntityPlayer player)
     {
-        IDrink drink = getDrinkFromStack(par1ItemStack);
+        DrinkInformation drinkInfo = getDrinkInfo(stack);
 
-        if (drink != null)
+        if (drinkInfo != null)
         {
-            NBTTagCompound drinkInfo = getDrinkInfo(par1ItemStack);
-
-            DrugHelper drugHelper = DrugHelper.getDrugHelper(par3EntityPlayer);
+            DrugHelper drugHelper = DrugHelper.getDrugHelper(player);
 
             if (drugHelper != null)
             {
-                List<DrugInfluence> drugInfluences = drink.getDrugInfluences(drinkInfo);
+                List<DrugInfluence> drugInfluences = drinkInfo.getDrugInfluences();
                 for (DrugInfluence influence : drugInfluences)
                 {
                     drugHelper.addToDrug(influence.clone());
                 }
             }
 
-            Pair<Integer, Float> foodLevel = drink.getFoodLevel(drinkInfo);
+            Pair<Integer, Float> foodLevel = drinkInfo.getFoodLevel();
             if (foodLevel != null)
             {
-                par3EntityPlayer.getFoodStats().addStats(foodLevel.getLeft(), foodLevel.getRight());
+                player.getFoodStats().addStats(foodLevel.getLeft(), foodLevel.getRight());
             }
 
-            drink.applyToEntity(drinkInfo, par3EntityPlayer, par2World);
+            drinkInfo.applyToEntity(player, par2World);
         }
 
-        par1ItemStack.stackSize--;
-        par3EntityPlayer.inventory.addItemStackToInventory(new ItemStack(this));
+        stack.stackSize--;
+        player.inventory.addItemStackToInventory(new ItemStack(this));
 
-        return super.onEaten(par1ItemStack, par2World, par3EntityPlayer);
+        return super.onEaten(stack, par2World, player);
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        IDrink drink = getDrinkFromStack(par1ItemStack);
+        DrinkInformation drinkInfo = getDrinkInfo(stack);
 
-        if (drink != null)
+        if (drinkInfo != null)
         {
-            if (drink.getFoodLevel(getDrinkInfo(par1ItemStack)) == null || par3EntityPlayer.getFoodStats().needFood())
+            if (drinkInfo.getFoodLevel() == null || player.getFoodStats().needFood())
             {
-                par3EntityPlayer.setItemInUse(par1ItemStack, getMaxItemUseDuration(par1ItemStack));
+                player.setItemInUse(stack, getMaxItemUseDuration(stack));
             }
         }
 
-        return par1ItemStack;
+        return stack;
     }
 
     @Override
@@ -181,11 +143,13 @@ public class ItemDrinkHolder extends Item
     @Override
     public IIcon getIcon(ItemStack stack, int pass)
     {
-        String specialIcon = getDrinkSpecialIcon(stack);
+        DrinkInformation drinkInfo = getDrinkInfo(stack);
 
-        if (specialIcon != null && registeredSpecialIcons.containsKey(specialIcon))
+        if (drinkInfo != null)
         {
-            return registeredSpecialIcons.get(specialIcon);
+            String specialIcon = drinkInfo.getSpecialIcon(this);
+            if (specialIcon != null && registeredSpecialIcons.containsKey(specialIcon))
+                return registeredSpecialIcons.get(specialIcon);
         }
 
         return super.getIcon(stack, pass);
@@ -194,11 +158,13 @@ public class ItemDrinkHolder extends Item
     @Override
     public IIcon getIconIndex(ItemStack stack)
     {
-        String specialIcon = getDrinkSpecialIcon(stack);
+        DrinkInformation drinkInfo = getDrinkInfo(stack);
 
-        if (specialIcon != null && registeredSpecialIcons.containsKey(specialIcon))
+        if (drinkInfo != null)
         {
-            return registeredSpecialIcons.get(specialIcon);
+            String specialIcon = drinkInfo.getSpecialIcon(this);
+            if (specialIcon != null && registeredSpecialIcons.containsKey(specialIcon))
+                return registeredSpecialIcons.get(specialIcon);
         }
 
         return super.getIconIndex(stack);
@@ -215,11 +181,13 @@ public class ItemDrinkHolder extends Item
     {
         super.addInformation(itemStack, player, list, par4);
 
-        String specialKey = getDrinkTranslationKey(itemStack);
+        DrinkInformation drinkInfo = getDrinkInfo(itemStack);
 
-        if (specialKey != null)
+        if (drinkInfo != null)
         {
-            list.add(StatCollector.translateToLocal(specialKey).trim());
+            String translationKey = drinkInfo.getFullTranslationKey();
+            if (translationKey != null)
+                list.add(StatCollector.translateToLocal(translationKey).trim());
         }
     }
 
@@ -233,11 +201,21 @@ public class ItemDrinkHolder extends Item
         {
             for (NBTTagCompound compound : drink.creativeTabInfos(item, tab))
             {
-                ItemStack stack = createDrinkStack(item, 1, DrinkRegistry.getDrinkID(drink));
-                if (compound != null)
-                    stack.setTagInfo("drinkInfo", compound);
+                ItemStack stack = createDrinkStack(item, 1, new DrinkInformation(DrinkRegistry.getDrinkID(drink), 1, compound));
                 list.add(stack);
             }
         }
+    }
+
+    @Override
+    public boolean hasContainerItem(ItemStack stack)
+    {
+        return getDrinkInfo(stack) != null;
+    }
+
+    @Override
+    public ItemStack getContainerItem(ItemStack itemStack)
+    {
+        return new ItemStack(this);
     }
 }

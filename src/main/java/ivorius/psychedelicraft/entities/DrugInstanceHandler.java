@@ -7,14 +7,15 @@ package ivorius.psychedelicraft.entities;
 
 import net.minecraft.entity.Entity;
 
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by lukas on 18.02.14.
  */
 public class DrugInstanceHandler
 {
-    private static Hashtable<Integer, DrugHelper> drugHelpers = new Hashtable<Integer, DrugHelper>();
+    private static Map<Integer, DrugHelper> drugHelpers = new HashMap<>();
 
     public static DrugHelper getDrugHelper(Entity entity)
     {

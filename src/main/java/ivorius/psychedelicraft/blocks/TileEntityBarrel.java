@@ -6,6 +6,7 @@
 package ivorius.psychedelicraft.blocks;
 
 import ivorius.ivtoolkit.blocks.IvTileEntityHelper;
+import ivorius.psychedelicraft.items.DrinkInformation;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -16,9 +17,8 @@ import net.minecraftforge.common.util.Constants;
 public class TileEntityBarrel extends TileEntity
 {
     public int ticksExisted;
-    public String containedDrink;
-    public NBTTagCompound containedDrinkInfo;
-    public int containedFillings;
+
+    public DrinkInformation containedDrink;
 
     public float tapRotation = 0.0f;
     public int timeLeftTapOpen = 0;
@@ -51,10 +51,7 @@ public class TileEntityBarrel extends TileEntity
         nbttagcompound.setInteger("ticksExisted", ticksExisted);
 
         if (containedDrink != null)
-           nbttagcompound.setString("currentContainedDrink", containedDrink);
-        if (containedDrinkInfo != null)
-            nbttagcompound.setTag("containedDrinkInfo", containedDrinkInfo);
-        nbttagcompound.setInteger("currentContainedItems", containedFillings);
+           nbttagcompound.setTag("containedDrink", containedDrink.writeToNBT());
 
         nbttagcompound.setInteger("timeLeftTapOpen", timeLeftTapOpen);
         nbttagcompound.setFloat("tapRotation", tapRotation);
@@ -67,11 +64,8 @@ public class TileEntityBarrel extends TileEntity
 
         ticksExisted = nbttagcompound.getInteger("ticksExisted");
 
-        if (nbttagcompound.hasKey("currentContainedDrink", Constants.NBT.TAG_STRING))
-            containedDrink = nbttagcompound.getString("currentContainedDrink");
-        if (nbttagcompound.hasKey("containedDrinkInfo", Constants.NBT.TAG_COMPOUND))
-            containedDrinkInfo = nbttagcompound.getCompoundTag("containedDrinkInfo");
-        containedFillings = nbttagcompound.getInteger("currentContainedItems");
+        if (nbttagcompound.hasKey("containedDrink", Constants.NBT.TAG_COMPOUND))
+            containedDrink = new DrinkInformation(nbttagcompound.getCompoundTag("containedDrink"));
 
         timeLeftTapOpen = nbttagcompound.getInteger("timeLeftTapOpen");
         tapRotation = nbttagcompound.getFloat("tapRotation");

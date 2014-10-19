@@ -5,11 +5,7 @@
 
 package ivorius.psychedelicraft.blocks;
 
-import ivorius.psychedelicraft.items.DrinkRegistry;
-import ivorius.psychedelicraft.items.IDrink;
-import ivorius.psychedelicraft.items.ItemDrinkHolder;
-import ivorius.psychedelicraft.items.PSItems;
-import net.minecraft.block.Block;
+import ivorius.psychedelicraft.items.*;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -63,13 +59,13 @@ public class BlockBarrel extends BlockContainer
             if (tileEntity instanceof TileEntityBarrel)
             {
                 TileEntityBarrel tileEntityBarrel = (TileEntityBarrel) tileEntity;
-                String drinkID = tileEntityBarrel.containedDrink;
-                if (drinkID != null && tileEntityBarrel.containedFillings > 0)
-                {
-                    ItemStack barrel = PSItems.itemBarrel.createBarrel(drinkID, tileEntityBarrel.containedFillings);
+                DrinkInformation drinkInformation = tileEntityBarrel.containedDrink;
 
-                    if (tileEntityBarrel.containedDrinkInfo != null)
-                        barrel.setTagInfo("drinkInfo", tileEntityBarrel.containedDrinkInfo);
+                if (drinkInformation != null && drinkInformation.getFillings() > 0)
+                {
+                    ItemStack barrel = new ItemStack(this);
+
+                    barrel.setTagInfo("drinkInfo", tileEntityBarrel.containedDrink.writeToNBT());
 
                     dropBlockAsItem(world, x, y, z, barrel);
                 }
@@ -101,29 +97,28 @@ public class BlockBarrel extends BlockContainer
 
             if (heldItem != null && heldItem.getItem() instanceof ItemDrinkHolder)
             {
-                IDrink drink = tileEntityBarrel.containedDrink != null ? DrinkRegistry.getDrink(tileEntityBarrel.containedDrink) : null;
+                DrinkInformation drinkInfo = tileEntityBarrel.containedDrink;
 
-                if (!world.isRemote && drink != null && tileEntityBarrel.containedFillings > 0)
+                if (!world.isRemote && drinkInfo != null && drinkInfo.getFillings() > 0)
                 {
                     int rotation = tileEntityBarrel.getBlockRotation();
                     float xPlus = rotation == 1 ? 1.0f : (rotation == 3 ? -1.0f : 0.0f);
                     float zPlus = rotation == 0 ? -1.0f : (rotation == 2 ? 1.0f : 0.0f);
 
-                    ItemStack itemStack = drink.createItemStack((ItemDrinkHolder) heldItem.getItem(), tileEntityBarrel.containedDrinkInfo, tileEntityBarrel.ticksExisted);
+                    ItemStack itemStack = drinkInfo.createItemStack((ItemDrinkHolder) heldItem.getItem(), tileEntityBarrel.ticksExisted);
 
-                    EntityItem entityItem = new EntityItem(world, x + xPlus + 0.5f, y + 0.5f, z + zPlus + 0.5f, itemStack);
-                    entityItem.delayBeforeCanPickup = 10;
-                    world.spawnEntityInWorld(entityItem);
-
-                    tileEntityBarrel.containedFillings--;
-
-                    if (player.getHeldItem().stackSize > 1)
+                    if (itemStack != null)
                     {
-                        player.getHeldItem().stackSize--;
-                    }
-                    else
-                    {
-                        player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
+                        EntityItem entityItem = new EntityItem(world, x + xPlus + 0.5f, y + 0.5f, z + zPlus + 0.5f, itemStack);
+                        entityItem.delayBeforeCanPickup = 10;
+                        world.spawnEntityInWorld(entityItem);
+
+                        tileEntityBarrel.containedDrink.decrementFillings(1);
+
+                        if (player.getHeldItem().stackSize > 1)
+                            player.getHeldItem().stackSize--;
+                        else
+                            player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
                     }
                 }
 

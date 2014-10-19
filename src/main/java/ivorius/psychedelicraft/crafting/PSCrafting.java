@@ -37,18 +37,13 @@ public class PSCrafting
         GameRegistry.addRecipe(new ItemStack(bong, 1, 3), " P ", "G G", "GGG", 'P', glass_pane, 'G', glass);
 
         GameRegistry.addRecipe(new ItemStack(glassChalice, 4), "# #", " # ", " # ", '#', glass);
-        addShapelessRecipe(itemBarrel.createBarrel("wine", ItemBarrel.DEFAULT_FILLINGS), barrel, wineGrapes, wineGrapes, wineGrapes, wineGrapes, wineGrapes, wineGrapes, wineGrapes, wineGrapes);
+        addShapelessRecipe(itemBarrel.createBarrel(new DrinkInformation("wine", ItemBarrel.DEFAULT_FILLINGS)), barrel, wineGrapes, wineGrapes, wineGrapes, wineGrapes, wineGrapes, wineGrapes, wineGrapes, wineGrapes);
         GameRegistry.addRecipe(new ItemStack(wineGrapeLattice), "###", "###", "O#O", '#', stick, 'O', planks);
 
-        for (int i = 0; i < 16; i++)
-        {
-            GameRegistry.addRecipe(new ItemStack(molotovCocktail, 1, i), "#", "W", '#', paper, 'W', new ItemStack(glassChalice, 1, i + 1));
-        }
-
         GameRegistry.addRecipe(new ItemStack(woodenMug, 8), "# #", "# #", "###", '#', planks);
-        addShapelessRecipe(itemBarrel.createBarrel("beer", ItemBarrel.DEFAULT_FILLINGS), barrel, water_bucket, wheat, wheat, wheat, wheat, wheat, wheat, wheat);
+        addShapelessRecipe(itemBarrel.createBarrel(new DrinkInformation("beer", ItemBarrel.DEFAULT_FILLINGS)), barrel, water_bucket, wheat, wheat, wheat, wheat, wheat, wheat, wheat);
 
-        addShapelessRecipe(itemBarrel.createBarrel("vodka", ItemBarrel.DEFAULT_FILLINGS), barrel, water_bucket, potato, potato, potato, potato, potato, potato, potato);
+        addShapelessRecipe(itemBarrel.createBarrel(new DrinkInformation("vodka", ItemBarrel.DEFAULT_FILLINGS)), barrel, water_bucket, potato, potato, potato, potato, potato, potato, potato);
 
         GameRegistry.addRecipe(new ItemStack(dryingTable), "###", "#R#", '#', planks, 'R', redstone);
 
@@ -72,7 +67,7 @@ public class PSCrafting
         TileEntityDryingTable.addDryingResult(cocaLeaf, new ItemStack(driedCocaLeaves, 3));
 
         GameRegistry.addRecipe(new ItemStack(planks, 4, 1), "#", '#', psycheLog);
-        addShapelessRecipe(itemBarrel.createBarrel("jenever", ItemBarrel.DEFAULT_FILLINGS), barrel, juniperBerries, juniperBerries, juniperBerries, sugar, wineGrapes, wineGrapes, wheat, water_bucket);
+        addShapelessRecipe(itemBarrel.createBarrel(new DrinkInformation("jenever", ItemBarrel.DEFAULT_FILLINGS)), barrel, juniperBerries, juniperBerries, juniperBerries, sugar, wineGrapes, wineGrapes, wheat, water_bucket);
 
         GameRegistry.addSmelting(coffeaCherries, new ItemStack(coffeeBeans), 0.2f);
 
@@ -93,10 +88,13 @@ public class PSCrafting
         {
             Item emptyContainer = itemDrinkHolder == woodenBowlDrug ? bowl : itemDrinkHolder; // Hacky but eh
 
-            addShapelessRecipe(ItemDrinkHolder.createDrinkStack(itemDrinkHolder, 1, "peyote"), driedPeyote, driedPeyote, new ItemStack(emptyContainer));
-            addShapelessRecipe(ItemDrinkHolder.createDrinkStack(itemDrinkHolder, 1, "coldCoffee"), water_bucket, new ItemStack(emptyContainer), coffeeBeans, coffeeBeans);
-            addShapelessRecipe(ItemDrinkHolder.createDrinkStack(itemDrinkHolder, 1, "cocaTea"), water_bucket, new ItemStack(emptyContainer), cocaLeaf, cocaLeaf);
-            addShapelessRecipe(ItemDrinkHolder.createDrinkStack(itemDrinkHolder, 1, "cannabisTea"), water_bucket, new ItemStack(emptyContainer), cannabisLeaf, cannabisLeaf);
+            for (int i = 0; i < 16; i++)
+                GameRegistry.addRecipe(new ItemStack(molotovCocktail, 1, i), "#", "W", '#', paper, 'W', DrinkWine.createWineStack(itemDrinkHolder, 1, i));
+
+            addShapelessRecipe(ItemDrinkHolder.createDrinkStack(itemDrinkHolder, 1, new DrinkInformation("peyote", 1)), driedPeyote, driedPeyote, new ItemStack(emptyContainer));
+            addShapelessRecipe(ItemDrinkHolder.createDrinkStack(itemDrinkHolder, 1, new DrinkInformation("coldCoffee", 1)), water_bucket, new ItemStack(emptyContainer), coffeeBeans, coffeeBeans);
+            addShapelessRecipe(ItemDrinkHolder.createDrinkStack(itemDrinkHolder, 1, new DrinkInformation("cocaTea", 1)), water_bucket, new ItemStack(emptyContainer), cocaLeaf, cocaLeaf);
+            addShapelessRecipe(ItemDrinkHolder.createDrinkStack(itemDrinkHolder, 1, new DrinkInformation("cannabisTea", 1)), water_bucket, new ItemStack(emptyContainer), cannabisLeaf, cannabisLeaf);
             //TODO Add when Forge fixes smelting with NBT
 //        GameRegistry.addSmelting(DrinkRegistry.createDrinkStack(itemDrinkHolder, 1, "coldCoffee"), new ItemStack(emptyContainer, 1, 3), 0.2f);
         }
