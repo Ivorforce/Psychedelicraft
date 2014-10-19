@@ -50,7 +50,8 @@ public class TileEntityBarrel extends TileEntity
 
         nbttagcompound.setInteger("ticksExisted", ticksExisted);
 
-        nbttagcompound.setString("currentContainedDrink", containedDrink);
+        if (containedDrink != null)
+           nbttagcompound.setString("currentContainedDrink", containedDrink);
         if (containedDrinkInfo != null)
             nbttagcompound.setTag("containedDrinkInfo", containedDrinkInfo);
         nbttagcompound.setInteger("currentContainedItems", containedFillings);
@@ -66,7 +67,8 @@ public class TileEntityBarrel extends TileEntity
 
         ticksExisted = nbttagcompound.getInteger("ticksExisted");
 
-        containedDrink = nbttagcompound.getString("currentContainedDrink");
+        if (nbttagcompound.hasKey("currentContainedDrink", Constants.NBT.TAG_STRING))
+            containedDrink = nbttagcompound.getString("currentContainedDrink");
         if (nbttagcompound.hasKey("containedDrinkInfo", Constants.NBT.TAG_COMPOUND))
             containedDrinkInfo = nbttagcompound.getCompoundTag("containedDrinkInfo");
         containedFillings = nbttagcompound.getInteger("currentContainedItems");

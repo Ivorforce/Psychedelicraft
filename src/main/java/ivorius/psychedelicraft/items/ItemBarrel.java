@@ -142,6 +142,8 @@ public class ItemBarrel extends ItemBlock
     @Override
     public void getSubItems(Item item, CreativeTabs tab, List list)
     {
+        super.getSubItems(item, tab, list);
+
         for (IDrink drink : DrinkRegistry.getAllDrinks())
         {
             for (NBTTagCompound compound : drink.creativeTabInfos(item, tab))

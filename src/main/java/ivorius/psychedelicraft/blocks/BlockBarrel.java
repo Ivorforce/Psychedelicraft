@@ -8,6 +8,8 @@ package ivorius.psychedelicraft.blocks;
 import ivorius.psychedelicraft.items.DrinkRegistry;
 import ivorius.psychedelicraft.items.IDrink;
 import ivorius.psychedelicraft.items.ItemDrinkHolder;
+import ivorius.psychedelicraft.items.PSItems;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -53,32 +55,55 @@ public class BlockBarrel extends BlockContainer
     }
 
     @Override
-    public void dropBlockAsItemWithChance(World par1World, int par2, int par3, int par4, int par5, float par6, int par7)
+    public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z, boolean willHarvest)
     {
-        if (!par1World.isRemote)
+        if (willHarvest)
         {
-            for (int i = 0; i < 2; ++i)
+            TileEntity tileEntity = world.getTileEntity(x, y, z);
+            if (tileEntity instanceof TileEntityBarrel)
             {
-                this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(Blocks.planks, 1, 0));
+                TileEntityBarrel tileEntityBarrel = (TileEntityBarrel) tileEntity;
+                String drinkID = tileEntityBarrel.containedDrink;
+                if (drinkID != null && tileEntityBarrel.containedFillings > 0)
+                {
+                    ItemStack barrel = PSItems.itemBarrel.createBarrel(drinkID, tileEntityBarrel.containedFillings);
+
+                    if (tileEntityBarrel.containedDrinkInfo != null)
+                        barrel.setTagInfo("drinkInfo", tileEntityBarrel.containedDrinkInfo);
+
+                    dropBlockAsItem(world, x, y, z, barrel);
+                }
+                else
+                {
+                    dropBlockAsItem(world, x, y, z, new ItemStack(PSItems.itemBarrel));
+                }
             }
         }
+
+        return super.removedByPlayer(world, player, x, y, z, willHarvest);
     }
 
     @Override
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public void dropBlockAsItemWithChance(World p_149690_1_, int p_149690_2_, int p_149690_3_, int p_149690_4_, int p_149690_5_, float p_149690_6_, int p_149690_7_)
     {
-        TileEntity tileEntity = par1World.getTileEntity(par2, par3, par4);
-        if (tileEntity != null && tileEntity instanceof TileEntityBarrel)
+
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float par7, float par8, float par9)
+    {
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        if (tileEntity instanceof TileEntityBarrel)
         {
             TileEntityBarrel tileEntityBarrel = (TileEntityBarrel) tileEntity;
 
-            ItemStack heldItem = par5EntityPlayer.getHeldItem();
+            ItemStack heldItem = player.getHeldItem();
 
             if (heldItem != null && heldItem.getItem() instanceof ItemDrinkHolder)
             {
-                IDrink drink = DrinkRegistry.getDrink(tileEntityBarrel.containedDrink);
+                IDrink drink = tileEntityBarrel.containedDrink != null ? DrinkRegistry.getDrink(tileEntityBarrel.containedDrink) : null;
 
-                if (!par1World.isRemote && drink != null && tileEntityBarrel.containedFillings > 0)
+                if (!world.isRemote && drink != null && tileEntityBarrel.containedFillings > 0)
                 {
                     int rotation = tileEntityBarrel.getBlockRotation();
                     float xPlus = rotation == 1 ? 1.0f : (rotation == 3 ? -1.0f : 0.0f);
@@ -86,19 +111,19 @@ public class BlockBarrel extends BlockContainer
 
                     ItemStack itemStack = drink.createItemStack((ItemDrinkHolder) heldItem.getItem(), tileEntityBarrel.containedDrinkInfo, tileEntityBarrel.ticksExisted);
 
-                    EntityItem entityItem = new EntityItem(par1World, par2 + xPlus + 0.5f, par3 + 0.5f, par4 + zPlus + 0.5f, itemStack);
+                    EntityItem entityItem = new EntityItem(world, x + xPlus + 0.5f, y + 0.5f, z + zPlus + 0.5f, itemStack);
                     entityItem.delayBeforeCanPickup = 10;
-                    par1World.spawnEntityInWorld(entityItem);
+                    world.spawnEntityInWorld(entityItem);
 
                     tileEntityBarrel.containedFillings--;
 
-                    if (par5EntityPlayer.getHeldItem().stackSize > 1)
+                    if (player.getHeldItem().stackSize > 1)
                     {
-                        par5EntityPlayer.getHeldItem().stackSize--;
+                        player.getHeldItem().stackSize--;
                     }
                     else
                     {
-                        par5EntityPlayer.inventory.setInventorySlotContents(par5EntityPlayer.inventory.currentItem, null);
+                        player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
                     }
                 }
 

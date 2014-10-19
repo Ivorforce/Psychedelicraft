@@ -21,6 +21,7 @@ import static ivorius.psychedelicraft.blocks.PSBlocks.*;
 import static ivorius.psychedelicraft.items.PSItems.*;
 import static net.minecraft.init.Blocks.*;
 import static net.minecraft.init.Items.*;
+import static net.minecraft.init.Items.wheat;
 
 /**
  * Created by lukas on 18.10.14.
@@ -29,12 +30,14 @@ public class PSCrafting
 {
     public static void initialize()
     {
+        GameRegistry.addRecipe(new ItemStack(barrel), " I ", "# #", "S#S", '#', planks, 'I', iron_ingot, 'S', stick);
+
         GameRegistry.addRecipe(new ItemStack(syringe), "I", "#", 'I', iron_ingot, '#', glass);
         GameRegistry.addRecipe(new ItemStack(pipe), "  I", " S ", "WS ", 'I', iron_ingot, 'S', stick, 'W', planks);
         GameRegistry.addRecipe(new ItemStack(bong, 1, 3), " P ", "G G", "GGG", 'P', glass_pane, 'G', glass);
 
         GameRegistry.addRecipe(new ItemStack(glassChalice, 4), "# #", " # ", " # ", '#', glass);
-        GameRegistry.addRecipe(itemBarrel.createBarrel("wine", ItemBarrel.DEFAULT_FILLINGS), "###", "###", "W#W", '#', wineGrapes, 'W', planks);
+        addShapelessRecipe(itemBarrel.createBarrel("wine", ItemBarrel.DEFAULT_FILLINGS), barrel, wineGrapes, wineGrapes, wineGrapes, wineGrapes, wineGrapes, wineGrapes, wineGrapes, wineGrapes);
         GameRegistry.addRecipe(new ItemStack(wineGrapeLattice), "###", "###", "O#O", '#', stick, 'O', planks);
 
         for (int i = 0; i < 16; i++)
@@ -43,9 +46,9 @@ public class PSCrafting
         }
 
         GameRegistry.addRecipe(new ItemStack(woodenMug, 8), "# #", "# #", "###", '#', planks);
-        GameRegistry.addRecipe(itemBarrel.createBarrel("beer", ItemBarrel.DEFAULT_FILLINGS), "###", "###", "WUW", '#', Items.wheat, 'U', water_bucket, 'W', planks);
+        addShapelessRecipe(itemBarrel.createBarrel("beer", ItemBarrel.DEFAULT_FILLINGS), barrel, water_bucket, wheat, wheat, wheat, wheat, wheat, wheat, wheat);
 
-        GameRegistry.addRecipe(itemBarrel.createBarrel("vodka", ItemBarrel.DEFAULT_FILLINGS), "###", "###", "WUW", '#', Items.potato, 'U', water_bucket, 'W', planks);
+        addShapelessRecipe(itemBarrel.createBarrel("vodka", ItemBarrel.DEFAULT_FILLINGS), barrel, water_bucket, potato, potato, potato, potato, potato, potato, potato);
 
         GameRegistry.addRecipe(new ItemStack(dryingTable), "###", "#R#", '#', planks, 'R', redstone);
 
@@ -69,7 +72,7 @@ public class PSCrafting
         TileEntityDryingTable.addDryingResult(cocaLeaf, new ItemStack(driedCocaLeaves, 3));
 
         GameRegistry.addRecipe(new ItemStack(planks, 4, 1), "#", '#', psycheLog);
-        GameRegistry.addRecipe(itemBarrel.createBarrel("jenever", ItemBarrel.DEFAULT_FILLINGS), "JSJ", "AGA", "WUW", 'J', juniperBerries, 'S', sugar, 'A', wineGrapes, 'G', Items.wheat, 'U', water_bucket, 'W', planks);
+        addShapelessRecipe(itemBarrel.createBarrel("jenever", ItemBarrel.DEFAULT_FILLINGS), barrel, juniperBerries, juniperBerries, juniperBerries, sugar, wineGrapes, wineGrapes, wheat, water_bucket);
 
         GameRegistry.addSmelting(coffeaCherries, new ItemStack(coffeeBeans), 0.2f);
 
