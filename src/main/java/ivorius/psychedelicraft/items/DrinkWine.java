@@ -5,15 +5,21 @@
 
 package ivorius.psychedelicraft.items;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ivorius.psychedelicraft.entities.DrugInfluence;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagInt;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,28 +30,39 @@ public class DrinkWine implements IDrink
 {
     public static ItemStack createWineStack(Item item, int stackSize, int wineStrength)
     {
-        ItemStack stack = DrinkRegistry.createDrinkStack(item, stackSize, "wine");
-        stack.setTagInfo("wineStrength", new NBTTagInt(wineStrength));
+        ItemStack stack = ItemDrinkHolder.createDrinkStack(item, stackSize, "wine");
+        NBTTagCompound drinkInfo = new NBTTagCompound();
+        drinkInfo.setInteger("wineStrength", wineStrength);
+        stack.setTagInfo("drinkInfo", drinkInfo);
         return stack;
     }
 
-    @Override
-    public List<DrugInfluence> getDrugInfluences(ItemStack stack)
+    public String iconString;
+    @SideOnly(Side.CLIENT)
+    public IIcon icon;
+
+    public DrinkWine(String icon)
     {
-        int wineStrength = stack.getTagCompound().getInteger("wineStrength");
+        this.iconString = icon;
+    }
+
+    @Override
+    public List<DrugInfluence> getDrugInfluences(NBTTagCompound info)
+    {
+        int wineStrength = info.getInteger("wineStrength");
 
         if (wineStrength < 14 && wineStrength > 2)
         {
-            return Arrays.asList(new DrugInfluence("Alcohol", 20, 0.002, 0.001, 0.02 * (stack.getItemDamage() - 2)));
+            return Arrays.asList(new DrugInfluence("Alcohol", 20, 0.002, 0.001, 0.02 * (wineStrength - 2)));
         }
 
         return Arrays.asList();
     }
 
     @Override
-    public Pair<Integer, Float> getFoodLevel(ItemStack stack)
+    public Pair<Integer, Float> getFoodLevel(NBTTagCompound info)
     {
-        int wineStrength = stack.getTagCompound().getInteger("wineStrength");
+        int wineStrength = info.getInteger("wineStrength");
 
         if (wineStrength < 14)
         {
@@ -57,16 +74,48 @@ public class DrinkWine implements IDrink
     }
 
     @Override
-    public void applyToEntity(ItemStack stack, World world, EntityLivingBase entityLivingBase)
+    public void applyToEntity(NBTTagCompound info, EntityLivingBase entityLivingBase, World world)
     {
 
     }
 
     @Override
-    public String getSpecialTranslationKey(ItemStack stack)
+    public String getSpecialTranslationKey(NBTTagCompound info)
     {
-        int wineStrength = stack.getTagCompound().getInteger("wineStrength");
+        return "" + info.getInteger("wineStrength");
+    }
 
-        return "" + wineStrength;
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerItemIcons(IIconRegister iconRegister)
+    {
+        if (iconString != null)
+            icon = iconRegister.registerIcon(iconString);
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public IIcon getDrinkIcon(NBTTagCompound info)
+    {
+        return icon;
+    }
+
+    @Override
+    public ItemStack createItemStack(ItemDrinkHolder drinkHolder, NBTTagCompound drinkInfo, int timeFermented)
+    {
+        return createWineStack(drinkHolder, 1, (timeFermented / (20 * 60 * 15)) + drinkInfo.getInteger("wineStrength"));
+    }
+
+    @Override
+    public List<NBTTagCompound> creativeTabInfos(Item drinkHolder, CreativeTabs tabs)
+    {
+        List<NBTTagCompound> compounds = new ArrayList<>(16);
+        for (int strength = 0; strength < 16; strength += 2)
+        {
+            NBTTagCompound drinkInfo = new NBTTagCompound();
+            drinkInfo.setInteger("wineStrength", strength);
+            compounds.add(drinkInfo);
+        }
+        return compounds;
     }
 }

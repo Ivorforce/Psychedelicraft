@@ -5,9 +5,10 @@
 
 package ivorius.psychedelicraft.items;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagString;
+import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.*;
 
@@ -17,8 +18,18 @@ import java.util.*;
 public class DrinkRegistry
 {
     private static List<ItemDrinkHolder> registeredDrinkHolders = new ArrayList<>();
-    private static Hashtable<String, IDrink> registeredDrinks = new Hashtable<>();
-    private static Hashtable<Item, Hashtable<String, String>> registeredDrinkSpecialIcons = new Hashtable<>();
+    private static BiMap<String, IDrink> registeredDrinks = HashBiMap.create();
+    private static BiMap<Item, Map<String, String>> registeredDrinkSpecialIcons = HashBiMap.create();
+
+    public static IDrink getDrink(String id)
+    {
+        return registeredDrinks.get(id);
+    }
+
+    public static String getDrinkID(IDrink drink)
+    {
+        return registeredDrinks.inverse().get(drink);
+    }
 
     public static void registerDrink(String id, IDrink drink)
     {
@@ -40,89 +51,40 @@ public class DrinkRegistry
         registeredDrinkHolders.add(item);
     }
 
-    public Collection<String> getAllDrinkIDs()
+    public static Collection<String> getAllDrinkIDs()
     {
         return registeredDrinks.keySet();
     }
 
-    public static String getDrinkIDFromStack(ItemStack stack)
+    public static Collection<IDrink> getAllDrinks()
     {
-        if (!stack.hasTagCompound())
-        {
-            return null;
-        }
-
-        return stack.getTagCompound().getString("drinkID");
-    }
-
-    public static IDrink getDrinkFromStack(ItemStack stack)
-    {
-        String drinkID = getDrinkIDFromStack(stack);
-
-        if (drinkID != null)
-        {
-            return registeredDrinks.get(drinkID);
-        }
-
-        return null;
-    }
-
-    public static String getDrinkTranslationKey(ItemStack stack)
-    {
-        String drinkKey = getDrinkIDFromStack(stack);
-
-        if (drinkKey != null)
-        {
-            IDrink drink = registeredDrinks.get(drinkKey);
-
-            if (drink != null)
-            {
-                String specialKey = drink.getSpecialTranslationKey(stack);
-
-                return "psDrink." + drinkKey + (specialKey != null ? ("." + specialKey) : "");
-            }
-        }
-
-        return null;
-    }
-
-    public static String getDrinkSpecialIcon(ItemStack stack)
-    {
-        String drinkID = getDrinkIDFromStack(stack);
-
-        if (drinkID != null)
-        {
-            Hashtable<String, String> iconsForItem = registeredDrinkSpecialIcons.get(stack.getItem());
-
-            if (iconsForItem != null)
-            {
-                return iconsForItem.get(drinkID);
-            }
-        }
-
-        return null;
+        return registeredDrinks.inverse().keySet();
     }
 
     public static Collection<String> getSpecialIcons(Item item)
     {
-        Hashtable<String, String> icons = registeredDrinkSpecialIcons.get(item);
+        Map<String, String> icons = registeredDrinkSpecialIcons.get(item);
         return icons != null ? icons.values() : Collections.<String>emptyList();
+    }
+
+    public static String getDrinkSpecialIcon(String drinkID, Item item)
+    {
+        Map<String, String> iconsForItem = registeredDrinkSpecialIcons.get(item);
+
+        if (iconsForItem != null)
+            return iconsForItem.get(drinkID);
+
+        return null;
+    }
+
+    public static String getDrinkTranslationKey(IDrink drink, NBTTagCompound drinkInfo)
+    {
+        String specialKey = drink.getSpecialTranslationKey(drinkInfo);
+        return "psDrink." + getDrinkID(drink) + (specialKey != null ? ("." + specialKey) : "");
     }
 
     public static List<ItemDrinkHolder> getAllDrinkHolders()
     {
         return registeredDrinkHolders;
-    }
-
-    public static Collection<String> getAllDrinks()
-    {
-        return registeredDrinks.keySet();
-    }
-
-    public static ItemStack createDrinkStack(Item item, int stackSize, String drinkID)
-    {
-        ItemStack stack = new ItemStack(item, stackSize);
-        stack.setTagInfo("drinkID", new NBTTagString(drinkID));
-        return stack;
     }
 }

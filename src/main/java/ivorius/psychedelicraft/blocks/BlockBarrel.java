@@ -6,39 +6,26 @@
 package ivorius.psychedelicraft.blocks;
 
 import ivorius.psychedelicraft.items.DrinkRegistry;
-import ivorius.psychedelicraft.items.DrinkWine;
-import ivorius.psychedelicraft.items.ItemBarrel;
+import ivorius.psychedelicraft.items.IDrink;
 import ivorius.psychedelicraft.items.ItemDrinkHolder;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class BlockBarrel extends BlockContainer
 {
-    public IBarrelEntry[] entries = new IBarrelEntry[50];
-
     public BlockBarrel()
     {
         super(Material.wood);
 
         setStepSound(soundTypeWood);
-    }
-
-    public static void registerBarrelEntry(int id, Block barrel, IBarrelEntry entry, ItemBarrel.BarrelEntry itemEntry)
-    {
-        ((BlockBarrel) barrel).entries[id] = entry;
-        ((ItemBarrel) Item.getItemFromBlock(barrel)).entries[id] = itemEntry;
     }
 
     @Override
@@ -85,23 +72,25 @@ public class BlockBarrel extends BlockContainer
         {
             TileEntityBarrel tileEntityBarrel = (TileEntityBarrel) tileEntity;
 
-            IBarrelEntry barrelType = tileEntityBarrel.getBarrelType();
             ItemStack heldItem = par5EntityPlayer.getHeldItem();
 
             if (heldItem != null && heldItem.getItem() instanceof ItemDrinkHolder)
             {
-                if (!par1World.isRemote && tileEntityBarrel.currentContainedItems > 0)
+                IDrink drink = DrinkRegistry.getDrink(tileEntityBarrel.containedDrink);
+
+                if (!par1World.isRemote && drink != null && tileEntityBarrel.containedFillings > 0)
                 {
                     int rotation = tileEntityBarrel.getBlockRotation();
                     float xPlus = rotation == 1 ? 1.0f : (rotation == 3 ? -1.0f : 0.0f);
                     float zPlus = rotation == 0 ? -1.0f : (rotation == 2 ? 1.0f : 0.0f);
 
-                    ItemStack itemStack = barrelType.createItemStack(par5EntityPlayer, heldItem, tileEntityBarrel);
-                    EntityItem var13 = new EntityItem(par1World, par2 + xPlus + 0.5f, par3 + 0.5f, par4 + zPlus + 0.5f, itemStack);
-                    var13.delayBeforeCanPickup = 10;
-                    par1World.spawnEntityInWorld(var13);
+                    ItemStack itemStack = drink.createItemStack((ItemDrinkHolder) heldItem.getItem(), tileEntityBarrel.containedDrinkInfo, tileEntityBarrel.ticksExisted);
 
-                    tileEntityBarrel.currentContainedItems--;
+                    EntityItem entityItem = new EntityItem(par1World, par2 + xPlus + 0.5f, par3 + 0.5f, par4 + zPlus + 0.5f, itemStack);
+                    entityItem.delayBeforeCanPickup = 10;
+                    par1World.spawnEntityInWorld(entityItem);
+
+                    tileEntityBarrel.containedFillings--;
 
                     if (par5EntityPlayer.getHeldItem().stackSize > 1)
                     {
@@ -129,64 +118,14 @@ public class BlockBarrel extends BlockContainer
     }
 
     @Override
+    public String getItemIconName()
+    {
+        return getTextureName();
+    }
+
+    @Override
     public TileEntity createNewTileEntity(World var1, int var2)
     {
         return new TileEntityBarrel();
-    }
-
-    public static interface IBarrelEntry
-    {
-        public ItemStack createItemStack(EntityLivingBase entity, ItemStack usedItem, TileEntityBarrel tileEntity);
-
-        public ResourceLocation getTexture(TileEntityBarrel tileEntity);
-
-        public int getContainedItems();
-    }
-
-    public static class BarrelEntry implements IBarrelEntry
-    {
-        public ResourceLocation barrelTexture;
-
-        public String containedDrink;
-        public int containedItemQuantity;
-
-        public BarrelEntry(ResourceLocation barrelTexture, String containedDrink, int containedItemQuantity)
-        {
-            this.barrelTexture = barrelTexture;
-            this.containedDrink = containedDrink;
-            this.containedItemQuantity = containedItemQuantity;
-        }
-
-        @Override
-        public ItemStack createItemStack(EntityLivingBase entity, ItemStack usedItem, TileEntityBarrel tileEntity)
-        {
-            return DrinkRegistry.createDrinkStack(usedItem.getItem(), 1, containedDrink);
-        }
-
-        @Override
-        public ResourceLocation getTexture(TileEntityBarrel tileEntity)
-        {
-            return barrelTexture;
-        }
-
-        @Override
-        public int getContainedItems()
-        {
-            return containedItemQuantity;
-        }
-    }
-
-    public static class BarrelEntryWine extends BarrelEntry
-    {
-        public BarrelEntryWine(ResourceLocation barrelTexture, String containedDrink, int containedItemQuantity)
-        {
-            super(barrelTexture, containedDrink, containedItemQuantity);
-        }
-
-        @Override
-        public ItemStack createItemStack(EntityLivingBase entity, ItemStack usedItem, TileEntityBarrel tileEntity)
-        {
-            return DrinkWine.createWineStack(usedItem.getItem(), 1, tileEntity.ticksExisted / (20 * 60 * 15));
-        }
     }
 }

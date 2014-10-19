@@ -11,28 +11,17 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.Constants;
 
 public class TileEntityBarrel extends TileEntity
 {
-    public int barrelType;
-
     public int ticksExisted;
-    public int currentContainedItems;
+    public String containedDrink;
+    public NBTTagCompound containedDrinkInfo;
+    public int containedFillings;
 
     public float tapRotation = 0.0f;
     public int timeLeftTapOpen = 0;
-
-    public TileEntityBarrel()
-    {
-        currentContainedItems = 0;
-    }
-
-    public void setBarrelType(int type)
-    {
-        barrelType = type;
-
-        currentContainedItems = this.getBarrelType().getContainedItems();
-    }
 
     @Override
     public void updateEntity()
@@ -59,11 +48,12 @@ public class TileEntityBarrel extends TileEntity
     {
         super.writeToNBT(nbttagcompound);
 
-        nbttagcompound.setInteger("barrelType", barrelType);
-
         nbttagcompound.setInteger("ticksExisted", ticksExisted);
 
-        nbttagcompound.setInteger("currentContainedItems", currentContainedItems);
+        nbttagcompound.setString("currentContainedDrink", containedDrink);
+        if (containedDrinkInfo != null)
+            nbttagcompound.setTag("containedDrinkInfo", containedDrinkInfo);
+        nbttagcompound.setInteger("currentContainedItems", containedFillings);
 
         nbttagcompound.setInteger("timeLeftTapOpen", timeLeftTapOpen);
         nbttagcompound.setFloat("tapRotation", tapRotation);
@@ -74,11 +64,12 @@ public class TileEntityBarrel extends TileEntity
     {
         super.readFromNBT(nbttagcompound);
 
-        this.setBarrelType(nbttagcompound.getInteger("barrelType"));
-
         ticksExisted = nbttagcompound.getInteger("ticksExisted");
 
-        currentContainedItems = nbttagcompound.getInteger("currentContainedItems");
+        containedDrink = nbttagcompound.getString("currentContainedDrink");
+        if (nbttagcompound.hasKey("containedDrinkInfo", Constants.NBT.TAG_COMPOUND))
+            containedDrinkInfo = nbttagcompound.getCompoundTag("containedDrinkInfo");
+        containedFillings = nbttagcompound.getInteger("currentContainedItems");
 
         timeLeftTapOpen = nbttagcompound.getInteger("timeLeftTapOpen");
         tapRotation = nbttagcompound.getFloat("tapRotation");
@@ -92,11 +83,6 @@ public class TileEntityBarrel extends TileEntity
     public float getTapRotation()
     {
         return tapRotation;
-    }
-
-    public BlockBarrel.IBarrelEntry getBarrelType()
-    {
-        return ((BlockBarrel) PSBlocks.barrel).entries[barrelType];
     }
 
     @Override

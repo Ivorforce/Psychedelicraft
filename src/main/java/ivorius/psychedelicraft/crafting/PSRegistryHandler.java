@@ -74,6 +74,7 @@ public class PSRegistryHandler
         barrel.setCreativeTab(Psychedelicraft.creativeTab);
         PSRegistryHandler.registerBlockDefault(barrel, ItemBarrel.class, "barrel");
         GameRegistry.registerTileEntity(TileEntityBarrel.class, "barrel");
+        itemBarrel = (ItemBarrel) Item.getItemFromBlock(barrel);
 
         //----------------------------------------------------------Wine----------------------------------
 
@@ -268,15 +269,15 @@ public class PSRegistryHandler
         syringe.addEffect(ItemSyringe.damageCocaine, new DrugInfluence[]{new DrugInfluence("Cocaine", 0, 0.005, 0.01, 0.5f)}, 0x55ffffff, "cocaine");
         syringe.addEffect(ItemSyringe.damageCaffeine, new DrugInfluence[]{new DrugInfluence("Caffeine", 0, 0.005, 0.01, 0.85f)}, 0x552e1404, "caffeine");
 
-        DrinkRegistry.registerDrink("beer", new Drink(new DrugInfluence("Alcohol", 20, 0.002, 0.001, 0.06f)));
-        DrinkRegistry.registerDrink("jenever", new Drink(new DrugInfluence("Alcohol", 20, 0.002, 0.001, 0.25f)));
-        DrinkRegistry.registerDrink("coffee", new Drink(new DrugInfluence("Caffeine", 20, 0.002, 0.001, 0.3f), new DrugInfluence("Warmth", 0, 0.00, 0.1, 0.8f)));
-        DrinkRegistry.registerDrink("coldCoffee", new Drink(new DrugInfluence("Caffeine", 20, 0.002, 0.001, 0.25f)));
-        DrinkRegistry.registerDrink("wine", new DrinkWine());
-        DrinkRegistry.registerDrink("peyote", new Drink(new DrugInfluence("Peyote", 15, 0.005, 0.003, 0.9f)));
-        DrinkRegistry.registerDrink("cocaTea", new Drink(new DrugInfluence("Cocaine", 60, 0.005, 0.002, 0.1f)));
-        DrinkRegistry.registerDrink("cannabisTea", new Drink(new DrugInfluence("Cannabis", 60, 0.005, 0.002, 0.15f)));
-        DrinkRegistry.registerDrink("vodka", new Drink(new DrugInfluence("Alcohol", 20, 0.003, 0.002, 0.5f)));
+        DrinkRegistry.registerDrink("beer", new Drink(textureBase + "drinkBeer", new DrugInfluence("Alcohol", 20, 0.002, 0.001, 0.06f)));
+        DrinkRegistry.registerDrink("jenever", new Drink(textureBase + "drinkJenever", new DrugInfluence("Alcohol", 20, 0.002, 0.001, 0.25f)));
+        DrinkRegistry.registerDrink("coffee", new Drink(null, new DrugInfluence("Caffeine", 20, 0.002, 0.001, 0.3f), new DrugInfluence("Warmth", 0, 0.00, 0.1, 0.8f)));
+        DrinkRegistry.registerDrink("coldCoffee", new Drink(null, new DrugInfluence("Caffeine", 20, 0.002, 0.001, 0.25f)));
+        DrinkRegistry.registerDrink("wine", new DrinkWine(textureBase + "drinkWine"));
+        DrinkRegistry.registerDrink("peyote", new Drink(null, new DrugInfluence("Peyote", 15, 0.005, 0.003, 0.9f)));
+        DrinkRegistry.registerDrink("cocaTea", new Drink(null, new DrugInfluence("Cocaine", 60, 0.005, 0.002, 0.1f)));
+        DrinkRegistry.registerDrink("cannabisTea", new Drink(null, new DrugInfluence("Cannabis", 60, 0.005, 0.002, 0.15f)));
+        DrinkRegistry.registerDrink("vodka", new Drink(textureBase + "drinkVodka", new DrugInfluence("Alcohol", 20, 0.003, 0.002, 0.5f)));
 
         registerSpecialIcon("beer", woodenMug, textureBase + "woodenMugBeer");
         registerSpecialIcon("jenever", woodenMug, textureBase + "woodenMugJenever");
@@ -304,18 +305,6 @@ public class PSRegistryHandler
         registerSpecialIcon("peyote", glassChalice, textureBase + "glassChalicePeyote");
         registerSpecialIcon("cocaTea", glassChalice, textureBase + "glassChaliceCocaTea");
         registerSpecialIcon("cannabisTea", glassChalice, textureBase + "glassChaliceCocaTea");
-
-        ResourceLocation beerBarrelTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "barrelTextureBeer.png");
-        BlockBarrel.registerBarrelEntry(BARREL_ID_BEER, barrel, new BlockBarrel.BarrelEntry(beerBarrelTexture, "beer", 15), new ItemBarrel.BarrelEntry("beer", BARREL_ITEM_DAMAGE_BEER, textureBase + "barrelItemBeer"));
-
-        ResourceLocation wineBarrelTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "barrelTextureWine.png");
-        BlockBarrel.registerBarrelEntry(BARREL_ID_WINE, barrel, new BlockBarrel.BarrelEntryWine(wineBarrelTexture, "wine", 15), new ItemBarrel.BarrelEntry("wine", BARREL_ITEM_DAMAGE_WINE, textureBase + "barrelItemWine"));
-
-        ResourceLocation jeneverBarrelTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "barrelTextureJenever.png");
-        BlockBarrel.registerBarrelEntry(BARREL_ID_JENEVER, barrel, new BlockBarrel.BarrelEntry(jeneverBarrelTexture, "jenever", 15), new ItemBarrel.BarrelEntry("jenever", BARREL_ITEM_DAMAGE_JENEVER, textureBase + "barrelItemJenever"));
-
-        ResourceLocation vodkaBarrelTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "barrelTextureVodka.png");
-        BlockBarrel.registerBarrelEntry(BARREL_ID_VODKA, barrel, new BlockBarrel.BarrelEntry(vodkaBarrelTexture, "vodka", 15), new ItemBarrel.BarrelEntry("vodka", BARREL_ITEM_DAMAGE_VODKA, textureBase + "barrelItemJenever"));
     }
 
     public static void load(FMLInitializationEvent event, Psychedelicraft mod)

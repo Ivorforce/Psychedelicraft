@@ -14,16 +14,52 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagInt;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 
 import java.util.List;
 
 public class ItemBarrel extends ItemBlock
 {
-    public BarrelEntry[] entries = new BarrelEntry[50];
+    public static final int DEFAULT_FILLINGS = 16;
+
+    public ItemStack createBarrel(String drinkID, int fillings)
+    {
+        ItemStack stack = new ItemStack(this);
+        stack.setTagInfo("drinkID", new NBTTagString(drinkID));
+        stack.setTagInfo("drinkFillings", new NBTTagInt(fillings));
+        return stack;
+    }
+
+    public static String containedDrinkID(ItemStack stack)
+    {
+        return stack.hasTagCompound() && stack.getTagCompound().hasKey("drinkID", Constants.NBT.TAG_STRING) ? stack.getTagCompound().getString("drinkID") : null;
+    }
+
+    public static IDrink containedDrink(ItemStack stack)
+    {
+        String id = containedDrinkID(stack);
+        return id != null ? DrinkRegistry.getDrink(id) : null;
+    }
+
+    public static int containedFillings(ItemStack stack)
+    {
+        return stack.hasTagCompound() ? stack.getTagCompound().getInteger("drinkFillings") : 0;
+    }
+
+    public static NBTTagCompound getDrinkInfo(ItemStack stack)
+    {
+        return stack.getTagCompound() != null ? stack.getTagCompound().getCompoundTag("drinkInfo") : new NBTTagCompound();
+    }
+
+    private IIcon baseIcon;
 
     public ItemBarrel(Block block)
     {
@@ -47,21 +83,20 @@ public class ItemBarrel extends ItemBlock
 
         par5++;
 
-        int i1 = MathHelper.floor_double((par2EntityPlayer.rotationYaw * 4F) / 360F + 0.5D) & 3;
+        int direction = MathHelper.floor_double((par2EntityPlayer.rotationYaw * 4F) / 360F + 0.5D) & 3;
 
-        if (par1ItemStack.getItemDamage() < entries.length && entries[par1ItemStack.getItemDamage()] != null)
+        par3World.setBlock(par4, par5, par6, field_150939_a, direction, 3);
+
+        TileEntity tileEntity = par3World.getTileEntity(par4, par5, par6);
+        if (tileEntity != null && tileEntity instanceof TileEntityBarrel)
         {
-            par3World.setBlock(par4, par5, par6, field_150939_a, i1, 3);
-
-            TileEntity tileEntity = par3World.getTileEntity(par4, par5, par6);
-            if (tileEntity != null && tileEntity instanceof TileEntityBarrel)
-            {
-                TileEntityBarrel tileEntityBarrel = (TileEntityBarrel) tileEntity;
-                tileEntityBarrel.setBarrelType(entries[par1ItemStack.getItemDamage()].placementType);
-            }
-
-            par1ItemStack.stackSize--;
+            TileEntityBarrel tileEntityBarrel = (TileEntityBarrel) tileEntity;
+            tileEntityBarrel.containedDrink = containedDrinkID(par1ItemStack);
+            tileEntityBarrel.containedDrinkInfo = getDrinkInfo(par1ItemStack);
+            tileEntityBarrel.containedFillings = containedFillings(par1ItemStack);
         }
+
+        par1ItemStack.stackSize--;
 
         return true;
     }
@@ -69,66 +104,66 @@ public class ItemBarrel extends ItemBlock
     @Override
     public void registerIcons(IIconRegister par1IconRegister)
     {
-        for (BarrelEntry entry : entries)
+        super.registerIcons(par1IconRegister);
+        
+        for (IDrink drink : DrinkRegistry.getAllDrinks())
+            drink.registerItemIcons(par1IconRegister);
+    }
+
+    @Override
+    public boolean requiresMultipleRenderPasses()
+    {
+        return true;
+    }
+
+    @Override
+    public int getRenderPasses(int metadata)
+    {
+        return 2;
+    }
+
+    @Override
+    public IIcon getIcon(ItemStack stack, int pass)
+    {
+        if (pass == 0)
+            return super.getIcon(stack, pass);
+
+        IDrink drink = containedDrink(stack);
+        if (drink != null)
         {
-            if (entry != null)
+            IIcon icon = drink.getDrinkIcon(getDrinkInfo(stack));
+            if (icon != null)
+                return icon;
+        }
+
+        return super.getIcon(stack, pass);
+    }
+
+    @Override
+    public void getSubItems(Item item, CreativeTabs tab, List list)
+    {
+        for (IDrink drink : DrinkRegistry.getAllDrinks())
+        {
+            for (NBTTagCompound compound : drink.creativeTabInfos(item, tab))
             {
-                entry.icon = par1IconRegister.registerIcon(entry.iconName);
+                ItemStack stack = createBarrel(DrinkRegistry.getDrinkID(drink), DEFAULT_FILLINGS);
+                if (compound != null)
+                    stack.setTagInfo("drinkInfo", compound);
+                list.add(stack);
             }
         }
     }
 
     @Override
-    public IIcon getIconFromDamage(int par1)
+    public void addInformation(ItemStack stack, EntityPlayer player, List par3List, boolean par4)
     {
-        if (par1 < entries.length && entries[par1] != null)
+        super.addInformation(stack, player, par3List, par4);
+
+        IDrink drink = containedDrink(stack);
+
+        if (drink != null)
         {
-            return entries[par1].icon;
-        }
-
-        return entries[0].icon;
-    }
-
-    @Override
-    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs,
-                            List par3List)
-    {
-        for (int i = 0; i < entries.length; i++)
-        {
-            if (i < entries.length && entries[i] != null)
-            {
-                par3List.add(new ItemStack(par1, 1, i));
-            }
-        }
-    }
-
-    @Override
-    public String getUnlocalizedName(ItemStack par1ItemStack)
-    {
-        if (par1ItemStack.getItemDamage() < entries.length && entries[par1ItemStack.getItemDamage()] != null)
-        {
-            return super.getUnlocalizedName(par1ItemStack) + "." + entries[par1ItemStack.getItemDamage()].displayName;
-        }
-
-        return super.getUnlocalizedName(par1ItemStack);
-    }
-
-    public static class BarrelEntry
-    {
-        public String displayName;
-
-        public int placementType;
-
-        public String iconName;
-        public IIcon icon;
-
-        public BarrelEntry(String displayName, int placementType, String iconName)
-        {
-            this.displayName = displayName;
-
-            this.placementType = placementType;
-
-            this.iconName = iconName;
+            par3List.add(StatCollector.translateToLocal(DrinkRegistry.getDrinkTranslationKey(drink, getDrinkInfo(stack))).trim());
         }
     }
 }

@@ -12,17 +12,11 @@ import net.minecraft.item.Item;
  */
 public class PSItems
 {
-    public static final int BARREL_ID_BEER = 0;
-    public static final int BARREL_ID_WINE = 1;
-    public static final int BARREL_ID_JENEVER = 2;
-    public static final int BARREL_ID_VODKA = 3;
-    public static final int BARREL_ITEM_DAMAGE_BEER = 0;
-    public static final int BARREL_ITEM_DAMAGE_WINE = 1;
-    public static final int BARREL_ITEM_DAMAGE_JENEVER = 2;
-    public static final int BARREL_ITEM_DAMAGE_VODKA = 3;
     public static ItemDrinkHolder woodenMug;
     public static ItemDrinkHolder woodenBowlDrug;
     public static ItemDrinkHolder glassChalice;
+
+    public static ItemBarrel itemBarrel;
 
     public static Item wineGrapes;
     public static Item molotovCocktail;
