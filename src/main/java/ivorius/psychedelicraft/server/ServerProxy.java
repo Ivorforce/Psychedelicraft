@@ -11,12 +11,11 @@ import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.entities.DrugHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Vec3;
-import net.minecraftforge.common.config.Configuration;
 
 public class ServerProxy implements PSProxy
 {
     @Override
-    public void preInit(Configuration config)
+    public void preInit()
     {
         Psychedelicraft.coreHandlerServer = new PSCoreHandlerServer();
         Psychedelicraft.coreHandlerServer.register();

@@ -17,12 +17,10 @@ import ivorius.ivtoolkit.network.PacketExtendedEntityPropertiesData;
 import ivorius.ivtoolkit.network.PacketExtendedEntityPropertiesDataHandler;
 import ivorius.ivtoolkit.network.PacketTileEntityData;
 import ivorius.ivtoolkit.network.PacketTileEntityDataHandler;
-import ivorius.psychedelicraft.blocks.PSBlocks;
 import ivorius.psychedelicraft.crafting.PSCrafting;
 import ivorius.psychedelicraft.crafting.PSRegistryHandler;
 import ivorius.psychedelicraft.entities.DrugInfluence;
 import ivorius.psychedelicraft.entities.DrugInfluenceHarmonium;
-import ivorius.psychedelicraft.entities.PSEntityList;
 import ivorius.psychedelicraft.events.PSEventFMLHandler;
 import ivorius.psychedelicraft.events.PSEventForgeHandler;
 import ivorius.psychedelicraft.gui.PSGuiHandler;
@@ -105,7 +103,7 @@ public class Psychedelicraft
 
         PSRegistryHandler.preInit(event, this);
 
-        proxy.preInit(config);
+        proxy.preInit();
     }
 
     @EventHandler

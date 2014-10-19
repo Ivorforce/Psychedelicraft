@@ -128,5 +128,9 @@ commands.drug.success.unlock=%s's %s unlocked at %s
 commands.drug.nodrug=%s is not a known drug!
 
 psychedelicraft.configgui.title=Psychedelicraft Config
+psychedelicraft.configgui.ctgy.general=General
+psychedelicraft.configgui.ctgy.general.tooltip=General Settings
 psychedelicraft.configgui.ctgy.balancing=Balancing
 psychedelicraft.configgui.ctgy.balancing.tooltip=Settings affecting the mod's balancing
+psychedelicraft.configgui.ctgy.visual=Visual
+psychedelicraft.configgui.ctgy.visual.tooltip=Settings that are purely visual

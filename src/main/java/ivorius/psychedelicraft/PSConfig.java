@@ -18,6 +18,7 @@ import static ivorius.psychedelicraft.Psychedelicraft.config;
 public class PSConfig
 {
     public static final String CATEGORY_BALANCING = "balancing";
+    public static final String CATEGORY_VISUAL = "visual";
 
     public static boolean spawnRifts;
 

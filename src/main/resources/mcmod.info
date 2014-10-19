@@ -11,7 +11,7 @@
   "credits": "Ivorius: Development, TripleHeadedSheep: Visuals",
   "logoFile": "gfx/psychedelicraft/logo.png",
   "screenshots": [],
-  "dependencies": []
+  "dependencies": [],
   "required-after": ["ivtoolkit@[1.0.1,)"]
 }
 ]

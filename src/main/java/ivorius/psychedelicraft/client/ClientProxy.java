@@ -9,6 +9,7 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import ivorius.ivtoolkit.rendering.IvParticleHelper;
+import ivorius.psychedelicraft.PSConfig;
 import ivorius.psychedelicraft.PSCoreHandlerClient;
 import ivorius.psychedelicraft.PSProxy;
 import ivorius.psychedelicraft.Psychedelicraft;
@@ -31,25 +32,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.common.config.Configuration;
 
+import static ivorius.psychedelicraft.PSConfig.CATEGORY_VISUAL;
+import static ivorius.psychedelicraft.Psychedelicraft.config;
+
 public class ClientProxy implements PSProxy
 {
     @Override
-    public void preInit(Configuration config)
+    public void preInit()
     {
-        DrugShaderHelper.setShaderEnabled(config.get("Visual", "shaderEnabled", true).getBoolean(true));
-        DrugShaderHelper.setShader2DEnabled(config.get("Visual", "shader2DEnabled", true).getBoolean(true));
-        DrugShaderHelper.sunFlareIntensity = (float) config.get("Visual", "sunFlareIntensity", 0.25f).getDouble(0.25);
-        DrugShaderHelper.doHeatDistortion = config.get("Visual", "biomeHeatDistortion", true).getBoolean(true);
-        DrugShaderHelper.doWaterDistortion = config.get("Visual", "waterDistortion", true).getBoolean(true);
-//        DrugShaderHelper.doShadows = config.get("Visual", "doShadows", true).getBoolean(true);
-        DrugShaderHelper.doShadows = false;
-
-        DrugHelper.waterOverlayEnabled = config.get("Visual", "waterOverlayEnabled", true).getBoolean(true);
-        DrugHelper.hurtOverlayEnabled = config.get("Visual", "hurtOverlayEnabled", true).getBoolean(true);
-        DrugHelper.digitalEffectPixelRescale = new float[]{(float) config.get("Visual", "digitalEffectPixelRescaleX", 0.05f).getDouble(0.05), (float) config.get("Visual", "digitalEffectPixelRescaleY", 0.05f).getDouble(0.05)};
-        DrugShaderHelper.disableDepthBuffer = config.get("Visual", "disableDepthBuffer", false).getBoolean(false);
-        DrugShaderHelper.bypassPingPongBuffer = config.get("Visual", "bypassPingPongBuffer", false).getBoolean(false);
-
         Psychedelicraft.coreHandlerClient = new PSCoreHandlerClient();
         Psychedelicraft.coreHandlerClient.register();
     }
@@ -90,6 +80,22 @@ public class ClientProxy implements PSProxy
     @Override
     public void loadConfig(String configID)
     {
+        if (configID == null || configID.equals(CATEGORY_VISUAL))
+        {
+            DrugShaderHelper.setShaderEnabled(config.get(CATEGORY_VISUAL, "shaderEnabled", true).getBoolean());
+            DrugShaderHelper.setShader2DEnabled(config.get(CATEGORY_VISUAL, "shader2DEnabled", true).getBoolean());
+            DrugShaderHelper.sunFlareIntensity = (float) config.get(CATEGORY_VISUAL, "sunFlareIntensity", 0.25).getDouble();
+            DrugShaderHelper.doHeatDistortion = config.get(CATEGORY_VISUAL, "biomeHeatDistortion", true).getBoolean();
+            DrugShaderHelper.doWaterDistortion = config.get(CATEGORY_VISUAL, "waterDistortion", true).getBoolean();
+//        DrugShaderHelper.doShadows = config.get(CATEGORY_VISUAL, "doShadows", true).getBoolean(true);
+            DrugShaderHelper.doShadows = false;
 
+            DrugHelper.waterOverlayEnabled = config.get(CATEGORY_VISUAL, "waterOverlayEnabled", true).getBoolean();
+            DrugHelper.hurtOverlayEnabled = config.get(CATEGORY_VISUAL, "hurtOverlayEnabled", true).getBoolean();
+            DrugHelper.digitalEffectPixelRescale = new float[]{(float) config.get(CATEGORY_VISUAL, "digitalEffectPixelRescaleX", 0.05).getDouble(),
+                    (float) config.get(CATEGORY_VISUAL, "digitalEffectPixelRescaleY", 0.05).getDouble()};
+            DrugShaderHelper.disableDepthBuffer = config.get(CATEGORY_VISUAL, "disableDepthBuffer", false).getBoolean();
+            DrugShaderHelper.bypassPingPongBuffer = config.get(CATEGORY_VISUAL, "bypassPingPongBuffer", false).getBoolean();
+        }
     }
 }

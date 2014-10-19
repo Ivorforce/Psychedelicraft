@@ -15,7 +15,7 @@ import net.minecraftforge.common.config.Configuration;
  */
 public interface PSProxy
 {
-    void preInit(Configuration config);
+    void preInit();
 
     void registerRenderers();
 
