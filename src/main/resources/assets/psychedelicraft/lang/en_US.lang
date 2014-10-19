@@ -67,6 +67,7 @@ tile.barrel.name=Barrel
 tile.barrel.wine.name=Wine Barrel
 tile.barrel.beer.name=Beer Barrel
 tile.barrel.jenever.name=Jenever Barrel
+tile.barrel.vodka.name=Vodka Barrel
 
 item.syringe.name=Empty Syringe
 item.syringe.caffeine.name=Caffeine Shot
@@ -102,6 +103,7 @@ psDrink.coldCoffee=Cold Coffee
 psDrink.peyote=Peyote
 psDrink.cocaTea=Coca Tea
 psDrink.cannabisTea=Cannabis Tea
+psDrink.vodka=Vodka
 psDrink.wine.0=Grape juice
 psDrink.wine.1=Grape juice
 psDrink.wine.2=Very Young Wine

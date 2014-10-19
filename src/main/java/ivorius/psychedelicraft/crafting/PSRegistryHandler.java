@@ -19,7 +19,6 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemSeeds;
 import net.minecraft.util.ResourceLocation;
 
@@ -277,6 +276,7 @@ public class PSRegistryHandler
         DrinkRegistry.registerDrink("peyote", new Drink(new DrugInfluence("Peyote", 15, 0.005, 0.003, 0.9f)));
         DrinkRegistry.registerDrink("cocaTea", new Drink(new DrugInfluence("Cocaine", 60, 0.005, 0.002, 0.1f)));
         DrinkRegistry.registerDrink("cannabisTea", new Drink(new DrugInfluence("Cannabis", 60, 0.005, 0.002, 0.15f)));
+        DrinkRegistry.registerDrink("vodka", new Drink(new DrugInfluence("Alcohol", 20, 0.003, 0.002, 0.5f)));
 
         registerSpecialIcon("beer", woodenMug, textureBase + "woodenMugBeer");
         registerSpecialIcon("jenever", woodenMug, textureBase + "woodenMugJenever");
@@ -305,14 +305,17 @@ public class PSRegistryHandler
         registerSpecialIcon("cocaTea", glassChalice, textureBase + "glassChaliceCocaTea");
         registerSpecialIcon("cannabisTea", glassChalice, textureBase + "glassChaliceCocaTea");
 
-        ResourceLocation beerBarrelTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "beerBarrelTexture.png");
-        BlockBarrel.registerBarrelEntry(0, barrel, new BlockBarrel.BarrelEntry(beerBarrelTexture, "beer", 15), new ItemBarrel.BarrelEntry("beer", 0, textureBase + "barrelItemBeer"));
+        ResourceLocation beerBarrelTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "barrelTextureBeer.png");
+        BlockBarrel.registerBarrelEntry(BARREL_ID_BEER, barrel, new BlockBarrel.BarrelEntry(beerBarrelTexture, "beer", 15), new ItemBarrel.BarrelEntry("beer", BARREL_ITEM_DAMAGE_BEER, textureBase + "barrelItemBeer"));
 
-        ResourceLocation wineBarrelTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "wineBarrelTexture.png");
-        BlockBarrel.registerBarrelEntry(1, barrel, new BlockBarrel.BarrelEntryWine(wineBarrelTexture, "wine", 15), new ItemBarrel.BarrelEntry("wine", 1, textureBase + "barrelItemWine"));
+        ResourceLocation wineBarrelTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "barrelTextureWine.png");
+        BlockBarrel.registerBarrelEntry(BARREL_ID_WINE, barrel, new BlockBarrel.BarrelEntryWine(wineBarrelTexture, "wine", 15), new ItemBarrel.BarrelEntry("wine", BARREL_ITEM_DAMAGE_WINE, textureBase + "barrelItemWine"));
 
-        ResourceLocation jeneverBarrelTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "jeneverBarrelTexture.png");
-        BlockBarrel.registerBarrelEntry(2, barrel, new BlockBarrel.BarrelEntry(jeneverBarrelTexture, "jenever", 15), new ItemBarrel.BarrelEntry("jenever", 2, textureBase + "barrelItemJenever"));
+        ResourceLocation jeneverBarrelTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "barrelTextureJenever.png");
+        BlockBarrel.registerBarrelEntry(BARREL_ID_JENEVER, barrel, new BlockBarrel.BarrelEntry(jeneverBarrelTexture, "jenever", 15), new ItemBarrel.BarrelEntry("jenever", BARREL_ITEM_DAMAGE_JENEVER, textureBase + "barrelItemJenever"));
+
+        ResourceLocation vodkaBarrelTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "barrelTextureVodka.png");
+        BlockBarrel.registerBarrelEntry(BARREL_ID_VODKA, barrel, new BlockBarrel.BarrelEntry(vodkaBarrelTexture, "vodka", 15), new ItemBarrel.BarrelEntry("vodka", BARREL_ITEM_DAMAGE_VODKA, textureBase + "barrelItemJenever"));
     }
 
     public static void load(FMLInitializationEvent event, Psychedelicraft mod)

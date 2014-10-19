@@ -36,7 +36,7 @@ public class PSCrafting
         GameRegistry.addRecipe(new ItemStack(bong, 1, 3), " P ", "G G", "GGG", 'P', glass_pane, 'G', glass);
 
         GameRegistry.addRecipe(new ItemStack(glassChalice, 4), "# #", " # ", " # ", '#', glass);
-        GameRegistry.addRecipe(new ItemStack(barrel, 1, 1), "###", "###", "W#W", '#', wineGrapes, 'W', planks);
+        GameRegistry.addRecipe(new ItemStack(barrel, 1, BARREL_ITEM_DAMAGE_WINE), "###", "###", "W#W", '#', wineGrapes, 'W', planks);
         GameRegistry.addRecipe(new ItemStack(wineGrapeLattice), "###", "###", "O#O", '#', stick, 'O', planks);
 
         for (int i = 0; i < 16; i++)
@@ -45,7 +45,9 @@ public class PSCrafting
         }
 
         GameRegistry.addRecipe(new ItemStack(woodenMug, 8), "# #", "# #", "###", '#', planks);
-        GameRegistry.addRecipe(new ItemStack(barrel, 1, 0), "###", "###", "WUW", '#', Items.wheat, 'U', water_bucket, 'W', planks);
+        GameRegistry.addRecipe(new ItemStack(barrel, 1, BARREL_ITEM_DAMAGE_BEER), "###", "###", "WUW", '#', Items.wheat, 'U', water_bucket, 'W', planks);
+
+        GameRegistry.addRecipe(new ItemStack(barrel, 1, BARREL_ITEM_DAMAGE_VODKA), "###", "###", "WUW", '#', Items.potato, 'U', water_bucket, 'W', planks);
 
         GameRegistry.addRecipe(new ItemStack(dryingTable), "###", "#R#", '#', planks, 'R', redstone);
 
@@ -69,7 +71,7 @@ public class PSCrafting
         TileEntityDryingTable.addDryingResult(cocaLeaf, new ItemStack(driedCocaLeaves, 3));
 
         GameRegistry.addRecipe(new ItemStack(planks, 4, 1), "#", '#', psycheLog);
-        GameRegistry.addRecipe(new ItemStack(barrel, 1, 2), "JSJ", "AGA", "WUW", 'J', juniperBerries, 'S', sugar, 'A', wineGrapes, 'G', Items.wheat, 'U', water_bucket, 'W', planks);
+        GameRegistry.addRecipe(new ItemStack(barrel, 1, BARREL_ITEM_DAMAGE_JENEVER), "JSJ", "AGA", "WUW", 'J', juniperBerries, 'S', sugar, 'A', wineGrapes, 'G', Items.wheat, 'U', water_bucket, 'W', planks);
 
         GameRegistry.addSmelting(coffeaCherries, new ItemStack(coffeeBeans), 0.2f);
 
