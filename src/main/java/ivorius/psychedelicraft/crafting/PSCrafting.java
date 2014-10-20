@@ -86,7 +86,7 @@ public class PSCrafting
 
         GameRegistry.addRecipe(new ItemStack(riftJar), "O-O", "GO ", "OIO", 'O', glass, '-', planks, 'G', gold_ingot, 'I', iron_ingot);
 
-//        GameRegistry.addRecipe(new RecipeMolotovCocktail());
+        GameRegistry.addRecipe(new RecipeTransferDrink());
 
         for (ItemDrinkHolder itemDrinkHolder : DrinkRegistry.getAllDrinkHolders())
         {
