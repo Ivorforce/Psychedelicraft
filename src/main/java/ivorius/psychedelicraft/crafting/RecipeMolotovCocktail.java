@@ -83,7 +83,7 @@ public class RecipeMolotovCocktail implements IRecipe
         DrinkInformation drinkInfo = getFirstDrinkInfo(inventory);
 
         if (drinkInfo != null)
-            return ItemMolotovCocktail.createMolotovStack(PSItems.molotovCocktail, 1, drinkInfo);
+            return PSItems.molotovCocktail.createDrinkStack(1, drinkInfo);
 
         return null;
     }

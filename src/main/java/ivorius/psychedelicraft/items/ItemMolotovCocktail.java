@@ -17,11 +17,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants;
 
 import java.util.List;
 
-public class ItemMolotovCocktail extends Item
+public class ItemMolotovCocktail extends ItemDrinkHolder
 {
     public static float getAlcohol(ItemStack stack)
     {
@@ -29,8 +28,6 @@ public class ItemMolotovCocktail extends Item
 
         if (stack.getItem() instanceof ItemDrinkHolder)
             drinkInfo = ((ItemDrinkHolder) stack.getItem()).getDrinkInfo(stack);
-        else if (stack.getItem() instanceof ItemMolotovCocktail)
-            drinkInfo = getDrinkInfo(stack);
 
         if (drinkInfo != null)
         {
@@ -46,18 +43,6 @@ public class ItemMolotovCocktail extends Item
         return 0.0f;
     }
 
-    public static DrinkInformation getDrinkInfo(ItemStack stack)
-    {
-        return stack.hasTagCompound() && stack.getTagCompound().hasKey("drinkInfo", Constants.NBT.TAG_COMPOUND) ? new DrinkInformation(stack.getTagCompound().getCompoundTag("drinkInfo")) : null;
-    }
-
-    public static ItemStack createMolotovStack(Item item, int stackSize, DrinkInformation drinkInformation)
-    {
-        ItemStack stack = new ItemStack(item, stackSize);
-        stack.setTagInfo("drinkInfo", drinkInformation.writeToNBT());
-        return stack;
-    }
-
     public ItemMolotovCocktail()
     {
         super();
@@ -69,7 +54,7 @@ public class ItemMolotovCocktail extends Item
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World world, EntityPlayer player, int timeUsed)
     {
-        float partUsed = MathHelper.clamp_float((float)(getMaxItemUseDuration(stack) - timeUsed) / 30.0f, 0.0f, 1.0f);
+        float partUsed = MathHelper.clamp_float((float) (getMaxItemUseDuration(stack) - timeUsed) / 30.0f, 0.0f, 1.0f);
 
         stack.stackSize--;
         if (stack.stackSize <= 0)
@@ -127,36 +112,6 @@ public class ItemMolotovCocktail extends Item
                 return I18n.format(this.getUnlocalizedNameInefficiently(stack) + ".quality" + quality + ".name");
         }
 
-        return this.getUnlocalizedNameInefficiently(stack) + ".empty.name";
-    }
-
-    @Override
-    public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean par4)
-    {
-        super.addInformation(itemStack, player, list, par4);
-
-        DrinkInformation drinkInfo = getDrinkInfo(itemStack);
-
-        if (drinkInfo != null)
-        {
-            String translationKey = drinkInfo.getFullTranslationKey();
-            if (translationKey != null)
-                list.add(StatCollector.translateToLocal(translationKey).trim());
-        }
-    }
-
-    @Override
-    public void getSubItems(Item item, CreativeTabs tab, List list)
-    {
-        super.getSubItems(item, tab, list);
-
-        for (IDrink drink : DrinkRegistry.getAllDrinks())
-        {
-            for (NBTTagCompound compound : drink.creativeTabInfos(item, tab))
-            {
-                ItemStack stack = createMolotovStack(item, 1, new DrinkInformation(DrinkRegistry.getDrinkID(drink), 1, compound));
-                list.add(stack);
-            }
-        }
+        return I18n.format(this.getUnlocalizedNameInefficiently(stack) + ".empty.name");
     }
 }

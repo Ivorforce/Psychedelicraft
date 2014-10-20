@@ -19,7 +19,7 @@ public class PSItems
     public static ItemBarrel itemBarrel;
 
     public static Item wineGrapes;
-    public static Item molotovCocktail;
+    public static ItemDrinkHolder molotovCocktail;
 
     public static Item cannabisSeeds;
     public static Item cannabisLeaf;

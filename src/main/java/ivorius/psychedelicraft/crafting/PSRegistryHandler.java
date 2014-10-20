@@ -57,6 +57,11 @@ public class PSRegistryHandler
         glassChalice.setCreativeTab(Psychedelicraft.creativeTab);
         DrinkRegistry.registerDrinkHolder(glassChalice);
 
+        molotovCocktail = (ItemDrinkHolder) new ItemMolotovCocktail().setUnlocalizedName("molotovCocktail").setTextureName(textureBase + "molotovCocktail");
+        GameRegistry.registerItem(molotovCocktail, "molotovCocktail", Psychedelicraft.MODID);
+        molotovCocktail.setCreativeTab(Psychedelicraft.creativeTab);
+        DrinkRegistry.registerDrinkHolder(molotovCocktail);
+
         pipe = (ItemSmokingPipe) (new ItemSmokingPipe().setUnlocalizedName("smokingPipe").setTextureName(textureBase + "smokingPipe"));
         GameRegistry.registerItem(pipe, "smokingPipe", Psychedelicraft.MODID);
         pipe.setCreativeTab(Psychedelicraft.creativeTab);
@@ -91,10 +96,6 @@ public class PSRegistryHandler
         int entityMolotovCocktailID = EntityRegistry.findGlobalUniqueEntityId();
         EntityRegistry.registerGlobalEntityID(EntityMolotovCocktail.class, "molotovCocktail", entityMolotovCocktailID);
         EntityRegistry.registerModEntity(EntityMolotovCocktail.class, "molotovCocktail", entityMolotovCocktailID, mod, 64, 10, true);
-
-        molotovCocktail = new ItemMolotovCocktail().setUnlocalizedName("molotovCocktail").setTextureName(textureBase + "molotovCocktail");
-        GameRegistry.registerItem(molotovCocktail, "molotovCocktail", Psychedelicraft.MODID);
-        molotovCocktail.setCreativeTab(Psychedelicraft.creativeTab);
 
         //----------------------------------------------------------Weed----------------------------------
 

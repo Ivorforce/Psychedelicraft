@@ -45,6 +45,8 @@ public class PSCrafting
 
         addShapelessRecipe(itemBarrel.createBarrel(new DrinkInformation("vodka", ItemBarrel.DEFAULT_FILLINGS)), barrel, water_bucket, potato, potato, potato, potato, potato, potato, potato);
 
+        GameRegistry.addRecipe(new ItemStack(molotovCocktail, 4), "P", "#", '#', glass, 'P', paper);
+
         GameRegistry.addRecipe(new ItemStack(dryingTable), "###", "#R#", '#', planks, 'R', redstone);
 
         TileEntityDryingTable.addDryingResult(cannabisLeaf, new ItemStack(driedCannabisLeaves, 3));
@@ -84,7 +86,7 @@ public class PSCrafting
 
         GameRegistry.addRecipe(new ItemStack(riftJar), "O-O", "GO ", "OIO", 'O', glass, '-', planks, 'G', gold_ingot, 'I', iron_ingot);
 
-        GameRegistry.addRecipe(new RecipeMolotovCocktail());
+//        GameRegistry.addRecipe(new RecipeMolotovCocktail());
 
         for (ItemDrinkHolder itemDrinkHolder : DrinkRegistry.getAllDrinkHolders())
         {
