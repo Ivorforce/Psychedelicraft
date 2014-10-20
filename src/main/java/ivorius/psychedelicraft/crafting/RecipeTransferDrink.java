@@ -58,7 +58,9 @@ public class RecipeTransferDrink implements IRecipe
                     {
                         DrinkInformation drinkInfo = ((ItemDrinkHolder) itemstack.getItem()).getDrinkInfo(itemstack);
                         if (drinkInfo != null && full == null)
-                            full = drinkInfo;
+                            full = drinkInfo.clone();
+                        else if (drinkInfo != null && drinkInfo.equals(full))
+                            full.incrementFillings(drinkInfo.getFillings());
                         else if (drinkInfo == null && empty == null)
                             empty = itemstack;
                         else
@@ -70,7 +72,7 @@ public class RecipeTransferDrink implements IRecipe
             }
         }
 
-        return empty != null && full != null ? new ImmutablePair<>(empty, full) : null;
+        return empty != null && full != null && ((ItemDrinkHolder) empty.getItem()).getMaxDrinkFilling() <= full.getFillings() ? new ImmutablePair<>(empty, full) : null;
     }
 
     @Override

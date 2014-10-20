@@ -40,7 +40,7 @@ public interface IDrink
     @SideOnly(Side.CLIENT)
     IIcon getDrinkIcon(NBTTagCompound info);
 
-    ItemStack createItemStack(ItemDrinkHolder drinkHolder, NBTTagCompound drinkInfo, int timeFermented);
+    DrinkInformation createDrinkInfo(ItemDrinkHolder drinkHolder, NBTTagCompound drinkInfo, int fillings, int timeFermented);
 
     List<NBTTagCompound> creativeTabInfos(Item drinkHolder, CreativeTabs tabs);
 }

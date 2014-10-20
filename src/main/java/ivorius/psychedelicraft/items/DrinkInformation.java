@@ -10,7 +10,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ivorius.psychedelicraft.entities.DrugInfluence;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
@@ -70,6 +69,11 @@ public class DrinkInformation
         this.fillings -= fillings;
     }
 
+    public void incrementFillings(int fillings)
+    {
+        this.fillings += fillings;
+    }
+
     public int getFillings()
     {
         return fillings;
@@ -124,10 +128,10 @@ public class DrinkInformation
             drink.applyToEntity(getDrinkInfo(), entityPlayer, world);
     }
 
-    public ItemStack createItemStack(ItemDrinkHolder item, int ticksFermented)
+    public DrinkInformation createDrinkInfo(ItemDrinkHolder item, int fillings, int ticksFermented)
     {
         IDrink drink = getDrink();
-        return drink != null ? drink.createItemStack(item, getDrinkInfo(), ticksFermented) : null;
+        return drink != null ? drink.createDrinkInfo(item, getDrinkInfo(), fillings, ticksFermented) : null;
     }
 
     public NBTTagCompound writeToNBT()
@@ -159,6 +163,14 @@ public class DrinkInformation
         if (drinkInfo != null ? !drinkInfo.equals(that.drinkInfo) : that.drinkInfo != null) return false;
 
         return true;
+    }
+
+    public boolean equalsDrinkType(DrinkInformation info)
+    {
+        if (info == null)
+            return false;
+
+        return info.drinkID.equals(drinkID) && info.drinkInfo.equals(drinkInfo);
     }
 
     @Override

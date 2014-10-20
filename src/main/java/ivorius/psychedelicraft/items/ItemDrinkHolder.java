@@ -45,6 +45,11 @@ public class ItemDrinkHolder extends Item
         return stack;
     }
 
+    public int getMaxDrinkFilling()
+    {
+        return 1;
+    }
+
     @Override
     public void registerIcons(IIconRegister par1IconRegister)
     {

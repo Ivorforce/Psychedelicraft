@@ -20,9 +20,12 @@ import java.util.List;
  */
 public class ItemDrinkable extends ItemDrinkHolder
 {
-    public ItemDrinkable()
+    private int maxFillings;
+
+    public ItemDrinkable(int maxFillings)
     {
         setMaxStackSize(16);
+        this.maxFillings = maxFillings;
     }
 
     @Override
@@ -56,9 +59,12 @@ public class ItemDrinkable extends ItemDrinkHolder
             }
 
             drinkInfo.applyToEntity(player, par2World);
+
+            drinkInfo.decrementFillings(1);
+            if (drinkInfo.getFillings() <= 0)
+                stack.stackSize --;
         }
 
-        stack.stackSize--;
         player.inventory.addItemStackToInventory(new ItemStack(this));
 
         return super.onEaten(stack, par2World, player);
@@ -78,6 +84,12 @@ public class ItemDrinkable extends ItemDrinkHolder
         }
 
         return stack;
+    }
+
+    @Override
+    public int getMaxDrinkFilling()
+    {
+        return maxFillings;
     }
 
     @Override

@@ -12,7 +12,6 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
@@ -89,9 +88,9 @@ public class Drink implements IDrink
     }
 
     @Override
-    public ItemStack createItemStack(ItemDrinkHolder drinkHolder, NBTTagCompound drinkInfo, int timeFermented)
+    public DrinkInformation createDrinkInfo(ItemDrinkHolder drinkHolder, NBTTagCompound drinkInfo, int fillings, int timeFermented)
     {
-        return drinkHolder.createDrinkStack(1, new DrinkInformation(DrinkRegistry.getDrinkID(this), 1, drinkInfo));
+        return new DrinkInformation(DrinkRegistry.getDrinkID(this), 1, drinkInfo);
     }
 
     @Override

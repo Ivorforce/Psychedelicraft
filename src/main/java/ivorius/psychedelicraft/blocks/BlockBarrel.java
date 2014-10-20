@@ -15,6 +15,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class BlockBarrel extends BlockContainer
@@ -97,28 +98,37 @@ public class BlockBarrel extends BlockContainer
 
             if (heldItem != null && heldItem.getItem() instanceof ItemDrinkHolder)
             {
-                DrinkInformation drinkInfo = tileEntityBarrel.containedDrink;
+                DrinkInformation containedDrink = tileEntityBarrel.containedDrink;
 
-                if (!world.isRemote && drinkInfo != null && drinkInfo.getFillings() > 0)
+                if (!world.isRemote && containedDrink != null && containedDrink.getFillings() > 0)
                 {
                     int rotation = tileEntityBarrel.getBlockRotation();
                     float xPlus = rotation == 1 ? 1.0f : (rotation == 3 ? -1.0f : 0.0f);
                     float zPlus = rotation == 0 ? -1.0f : (rotation == 2 ? 1.0f : 0.0f);
 
-                    ItemStack itemStack = drinkInfo.createItemStack((ItemDrinkHolder) heldItem.getItem(), tileEntityBarrel.ticksExisted);
+                    ItemDrinkHolder drinkHolder = (ItemDrinkHolder) heldItem.getItem();
+                    DrinkInformation stackDrinkInfo = drinkHolder.getDrinkInfo(heldItem);
+                    int fillingsFittingIntoItem = drinkHolder.getMaxDrinkFilling() - (stackDrinkInfo != null ? stackDrinkInfo.getFillings() : 0);
+                    int fillingsTransferred = MathHelper.clamp_int(fillingsFittingIntoItem, 0, ((TileEntityBarrel) tileEntity).containedDrink.getFillings());
 
-                    if (itemStack != null)
+                    if (fillingsTransferred > 0)
                     {
-                        EntityItem entityItem = new EntityItem(world, x + xPlus + 0.5f, y + 0.5f, z + zPlus + 0.5f, itemStack);
-                        entityItem.delayBeforeCanPickup = 10;
-                        world.spawnEntityInWorld(entityItem);
+                        DrinkInformation fermentedDrinkInfo = containedDrink.createDrinkInfo(drinkHolder, fillingsTransferred, tileEntityBarrel.ticksExisted);
 
-                        tileEntityBarrel.containedDrink.decrementFillings(1);
+                        if (fermentedDrinkInfo != null)
+                        {
+                            ItemStack fermentedStack = drinkHolder.createDrinkStack(1, fermentedDrinkInfo);
+                            EntityItem entityItem = new EntityItem(world, x + xPlus + 0.5f, y + 0.5f, z + zPlus + 0.5f, fermentedStack);
+                            entityItem.delayBeforeCanPickup = 10;
+                            world.spawnEntityInWorld(entityItem);
 
-                        if (player.getHeldItem().stackSize > 1)
-                            player.getHeldItem().stackSize--;
-                        else
-                            player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
+                            tileEntityBarrel.containedDrink.decrementFillings(fillingsTransferred);
+
+                            if (player.getHeldItem().stackSize > 1)
+                                player.getHeldItem().stackSize--;
+                            else
+                                player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
+                        }
                     }
                 }
 
