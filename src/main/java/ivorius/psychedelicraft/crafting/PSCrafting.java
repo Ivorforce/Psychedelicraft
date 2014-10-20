@@ -84,12 +84,11 @@ public class PSCrafting
 
         GameRegistry.addRecipe(new ItemStack(riftJar), "O-O", "GO ", "OIO", 'O', glass, '-', planks, 'G', gold_ingot, 'I', iron_ingot);
 
+        GameRegistry.addRecipe(new RecipeMolotovCocktail());
+
         for (ItemDrinkHolder itemDrinkHolder : DrinkRegistry.getAllDrinkHolders())
         {
             Item emptyContainer = itemDrinkHolder == woodenBowlDrug ? bowl : itemDrinkHolder; // Hacky but eh
-
-            for (int i = 0; i < 16; i++)
-                GameRegistry.addRecipe(new ItemStack(molotovCocktail, 1, i), "#", "W", '#', paper, 'W', DrinkWine.createWineStack(itemDrinkHolder, 1, i));
 
             addShapelessRecipe(ItemDrinkHolder.createDrinkStack(itemDrinkHolder, 1, new DrinkInformation("peyote", 1)), driedPeyote, driedPeyote, new ItemStack(emptyContainer));
             addShapelessRecipe(ItemDrinkHolder.createDrinkStack(itemDrinkHolder, 1, new DrinkInformation("coldCoffee", 1)), water_bucket, new ItemStack(emptyContainer), coffeeBeans, coffeeBeans);
