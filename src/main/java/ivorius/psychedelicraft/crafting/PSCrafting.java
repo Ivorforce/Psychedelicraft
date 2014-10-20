@@ -90,10 +90,10 @@ public class PSCrafting
         {
             Item emptyContainer = itemDrinkHolder == woodenBowlDrug ? bowl : itemDrinkHolder; // Hacky but eh
 
-            addShapelessRecipe(ItemDrinkHolder.createDrinkStack(itemDrinkHolder, 1, new DrinkInformation("peyote", 1)), driedPeyote, driedPeyote, new ItemStack(emptyContainer));
-            addShapelessRecipe(ItemDrinkHolder.createDrinkStack(itemDrinkHolder, 1, new DrinkInformation("coldCoffee", 1)), water_bucket, new ItemStack(emptyContainer), coffeeBeans, coffeeBeans);
-            addShapelessRecipe(ItemDrinkHolder.createDrinkStack(itemDrinkHolder, 1, new DrinkInformation("cocaTea", 1)), water_bucket, new ItemStack(emptyContainer), cocaLeaf, cocaLeaf);
-            addShapelessRecipe(ItemDrinkHolder.createDrinkStack(itemDrinkHolder, 1, new DrinkInformation("cannabisTea", 1)), water_bucket, new ItemStack(emptyContainer), cannabisLeaf, cannabisLeaf);
+            addShapelessRecipe(itemDrinkHolder.createDrinkStack(1, new DrinkInformation("peyote", 1)), driedPeyote, driedPeyote, new ItemStack(emptyContainer));
+            addShapelessRecipe(itemDrinkHolder.createDrinkStack(1, new DrinkInformation("coldCoffee", 1)), water_bucket, new ItemStack(emptyContainer), coffeeBeans, coffeeBeans);
+            addShapelessRecipe(itemDrinkHolder.createDrinkStack(1, new DrinkInformation("cocaTea", 1)), water_bucket, new ItemStack(emptyContainer), cocaLeaf, cocaLeaf);
+            addShapelessRecipe(itemDrinkHolder.createDrinkStack(1, new DrinkInformation("cannabisTea", 1)), water_bucket, new ItemStack(emptyContainer), cannabisLeaf, cannabisLeaf);
             //TODO Add when Forge fixes smelting with NBT
 //        GameRegistry.addSmelting(DrinkRegistry.createDrinkStack(itemDrinkHolder, 1, "coldCoffee"), new ItemStack(emptyContainer, 1, 3), 0.2f);
         }

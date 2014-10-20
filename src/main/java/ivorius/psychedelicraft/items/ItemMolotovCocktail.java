@@ -28,7 +28,7 @@ public class ItemMolotovCocktail extends Item
         DrinkInformation drinkInfo = null;
 
         if (stack.getItem() instanceof ItemDrinkHolder)
-            drinkInfo = ItemDrinkHolder.getDrinkInfo(stack);
+            drinkInfo = ((ItemDrinkHolder) stack.getItem()).getDrinkInfo(stack);
         else if (stack.getItem() instanceof ItemMolotovCocktail)
             drinkInfo = getDrinkInfo(stack);
 

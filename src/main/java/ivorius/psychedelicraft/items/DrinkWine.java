@@ -28,11 +28,11 @@ import java.util.List;
  */
 public class DrinkWine implements IDrink
 {
-    public static ItemStack createWineStack(Item item, int stackSize, int wineStrength)
+    public static ItemStack createWineStack(ItemDrinkHolder item, int stackSize, int wineStrength)
     {
         NBTTagCompound drinkInfo = new NBTTagCompound();
         drinkInfo.setInteger("wineStrength", wineStrength);
-        ItemStack stack = ItemDrinkHolder.createDrinkStack(item, stackSize, new DrinkInformation("wine", 1, drinkInfo));
+        ItemStack stack = item.createDrinkStack(stackSize, new DrinkInformation("wine", 1, drinkInfo));
         return stack;
     }
 

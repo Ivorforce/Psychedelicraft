@@ -41,18 +41,18 @@ public class PSRegistryHandler
         GameRegistry.registerItem(syringe, "syringe", Psychedelicraft.MODID);
         syringe.setCreativeTab(Psychedelicraft.creativeTab);
 
-        woodenBowlDrug = (ItemDrinkHolder) new ItemDrinkHolder().setUnlocalizedName("woodenBowlDrug").setTextureName("bowl");
+        woodenBowlDrug = (ItemDrinkHolder) new ItemDrinkable().setUnlocalizedName("woodenBowlDrug").setTextureName("bowl");
         woodenBowlDrug.addEmptySelfToCreativeMenu = false;
         GameRegistry.registerItem(woodenBowlDrug, "psycheWoodenBowl", Psychedelicraft.MODID);
         woodenBowlDrug.setCreativeTab(Psychedelicraft.creativeTab);
         DrinkRegistry.registerDrinkHolder(woodenBowlDrug);
 
-        woodenMug = (ItemDrinkHolder) new ItemDrinkHolder().setUnlocalizedName("woodenMug").setTextureName(textureBase + "woodenMug");
+        woodenMug = (ItemDrinkHolder) new ItemDrinkable().setUnlocalizedName("woodenMug").setTextureName(textureBase + "woodenMug");
         GameRegistry.registerItem(woodenMug, "woodenMug", Psychedelicraft.MODID);
         woodenMug.setCreativeTab(Psychedelicraft.creativeTab);
         DrinkRegistry.registerDrinkHolder(woodenMug);
 
-        glassChalice = (ItemDrinkHolder) new ItemDrinkHolder().setUnlocalizedName("glassChalice").setTextureName(textureBase + "glassChalice");
+        glassChalice = (ItemDrinkHolder) new ItemDrinkable().setUnlocalizedName("glassChalice").setTextureName(textureBase + "glassChalice");
         GameRegistry.registerItem(glassChalice, "glassChalice", Psychedelicraft.MODID);
         glassChalice.setCreativeTab(Psychedelicraft.creativeTab);
         DrinkRegistry.registerDrinkHolder(glassChalice);

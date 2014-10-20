@@ -5,20 +5,15 @@
 
 package ivorius.psychedelicraft.items;
 
-import ivorius.psychedelicraft.entities.DrugHelper;
-import ivorius.psychedelicraft.entities.DrugInfluence;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
-import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,89 +24,25 @@ import java.util.Map;
  */
 public class ItemDrinkHolder extends Item
 {
-    public static DrinkInformation getDrinkInfo(ItemStack stack)
-    {
-        return stack.hasTagCompound() && stack.getTagCompound().hasKey("drinkInfo", Constants.NBT.TAG_COMPOUND) ? new DrinkInformation(stack.getTagCompound().getCompoundTag("drinkInfo")) : null;
-    }
-
-    public static ItemStack createDrinkStack(Item item, int stackSize, DrinkInformation drinkInformation)
-    {
-        ItemStack stack = new ItemStack(item, stackSize);
-        stack.setTagInfo("drinkInfo", drinkInformation.writeToNBT());
-        return stack;
-    }
-
     public Map<String, IIcon> registeredSpecialIcons = new HashMap<>();
 
-    public boolean addEmptySelfToCreativeMenu;
+    public boolean addEmptySelfToCreativeMenu = true;
 
     public ItemDrinkHolder()
     {
         setHasSubtypes(true);
-        setMaxStackSize(16);
-
-        addEmptySelfToCreativeMenu = true;
     }
 
-    @Override
-    public EnumAction getItemUseAction(ItemStack par1ItemStack)
+    public DrinkInformation getDrinkInfo(ItemStack stack)
     {
-        return EnumAction.drink;
+        return stack.hasTagCompound() && stack.getTagCompound().hasKey("drinkInfo", Constants.NBT.TAG_COMPOUND) ? new DrinkInformation(stack.getTagCompound().getCompoundTag("drinkInfo")) : null;
     }
 
-    @Override
-    public ItemStack onEaten(ItemStack stack, World par2World, EntityPlayer player)
+    public ItemStack createDrinkStack(int stackSize, DrinkInformation drinkInformation)
     {
-        DrinkInformation drinkInfo = getDrinkInfo(stack);
-
-        if (drinkInfo != null)
-        {
-            DrugHelper drugHelper = DrugHelper.getDrugHelper(player);
-
-            if (drugHelper != null)
-            {
-                List<DrugInfluence> drugInfluences = drinkInfo.getDrugInfluences();
-                for (DrugInfluence influence : drugInfluences)
-                {
-                    drugHelper.addToDrug(influence.clone());
-                }
-            }
-
-            Pair<Integer, Float> foodLevel = drinkInfo.getFoodLevel();
-            if (foodLevel != null)
-            {
-                player.getFoodStats().addStats(foodLevel.getLeft(), foodLevel.getRight());
-            }
-
-            drinkInfo.applyToEntity(player, par2World);
-        }
-
-        stack.stackSize--;
-        player.inventory.addItemStackToInventory(new ItemStack(this));
-
-        return super.onEaten(stack, par2World, player);
-    }
-
-    @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
-    {
-        DrinkInformation drinkInfo = getDrinkInfo(stack);
-
-        if (drinkInfo != null)
-        {
-            if (drinkInfo.getFoodLevel() == null || player.getFoodStats().needFood())
-            {
-                player.setItemInUse(stack, getMaxItemUseDuration(stack));
-            }
-        }
-
+        ItemStack stack = new ItemStack(this, stackSize);
+        stack.setTagInfo("drinkInfo", drinkInformation.writeToNBT());
         return stack;
-    }
-
-    @Override
-    public int getMaxItemUseDuration(ItemStack par1ItemStack)
-    {
-        return 32;
     }
 
     @Override
@@ -171,12 +102,6 @@ public class ItemDrinkHolder extends Item
     }
 
     @Override
-    public IIcon getIconFromDamage(int par1)
-    {
-        return super.getIconFromDamage(par1);
-    }
-
-    @Override
     public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean par4)
     {
         super.addInformation(itemStack, player, list, par4);
@@ -201,7 +126,7 @@ public class ItemDrinkHolder extends Item
         {
             for (NBTTagCompound compound : drink.creativeTabInfos(item, tab))
             {
-                ItemStack stack = createDrinkStack(item, 1, new DrinkInformation(DrinkRegistry.getDrinkID(drink), 1, compound));
+                ItemStack stack = createDrinkStack(1, new DrinkInformation(DrinkRegistry.getDrinkID(drink), 1, compound));
                 list.add(stack);
             }
         }

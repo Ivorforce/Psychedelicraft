@@ -41,7 +41,7 @@ public class RecipeMolotovCocktail implements IRecipe
 
                 if (itemstack != null)
                 {
-                    if (itemstack.getItem() instanceof ItemDrinkHolder && ItemDrinkHolder.getDrinkInfo(itemstack) != null)
+                    if (itemstack.getItem() instanceof ItemDrinkHolder && ((ItemDrinkHolder) itemstack.getItem()).getDrinkInfo(itemstack) != null)
                     {
                         if (hadDrink)
                             return false;
@@ -97,7 +97,7 @@ public class RecipeMolotovCocktail implements IRecipe
                 ItemStack itemstack = inventory.getStackInRowAndColumn(j, i);
                 if (itemstack != null && itemstack.getItem() instanceof ItemDrinkHolder)
                 {
-                    DrinkInformation drinkInfo = ItemDrinkHolder.getDrinkInfo(itemstack);
+                    DrinkInformation drinkInfo = ((ItemDrinkHolder) itemstack.getItem()).getDrinkInfo(itemstack);
                     if (drinkInfo != null)
                         return drinkInfo;
                 }
