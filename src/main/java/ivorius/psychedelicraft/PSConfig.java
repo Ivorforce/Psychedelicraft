@@ -34,6 +34,9 @@ public class PSConfig
 
     public static boolean farmerDrugDeals;
 
+    public static int ticksForFullWineFermentation;
+    public static int ticksUntilWineAcetification;
+
     public static void loadConfig(String configID)
     {
         if (configID == null || configID.equals(Configuration.CATEGORY_GENERAL))
@@ -56,6 +59,10 @@ public class PSConfig
             villageChests = config.get(CATEGORY_BALANCING, "villageChests", true).getBoolean();
 
             farmerDrugDeals = config.get(CATEGORY_BALANCING, "farmerDrugDeals", true).getBoolean();
+
+            int minute = 20 * 60;
+            ticksForFullWineFermentation = config.get(CATEGORY_BALANCING, "ticksForFullWineFermentation", minute * 210, "Time until wine gets the 'perfect' strength").getInt();
+            ticksUntilWineAcetification = config.get(CATEGORY_BALANCING, "ticksUntilWineAcetification", minute * 30, "Time until wine turns to vinegar after it is 'perfect'. Enter a negative number to disable.").getInt();
         }
 
         Psychedelicraft.proxy.loadConfig(configID);
