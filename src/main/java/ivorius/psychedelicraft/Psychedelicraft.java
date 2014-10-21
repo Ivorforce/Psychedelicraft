@@ -61,6 +61,7 @@ public class Psychedelicraft
 
     public static CreativeTabPsyche creativeTab;
     public static CreativeTabPsyche drinksTab;
+    public static CreativeTabPsyche weaponsTab;
 
     public static String filePathTexturesFull = "psychedelicraft:textures/mod/";
     public static String filePathTextures = "textures/mod/";
@@ -87,6 +88,7 @@ public class Psychedelicraft
 
         creativeTab = new CreativeTabPsyche("psychedelicraft");
         drinksTab = new CreativeTabPsyche("psycheDrinks");
+        weaponsTab = new CreativeTabPsyche("psycheWeapons");
 
         guiHandler = new PSGuiHandler();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
@@ -119,6 +121,7 @@ public class Psychedelicraft
 
         creativeTab.tabIcon = PSItems.cannabisLeaf;
         drinksTab.tabIcon = PSItems.itemBarrel;
+        weaponsTab.tabIcon = PSItems.molotovCocktail;
 
         DrugInfluence.registerInfluence(DrugInfluence.class, "default");
         DrugInfluence.registerInfluence(DrugInfluenceHarmonium.class, "harmonium");

@@ -59,7 +59,7 @@ public class PSRegistryHandler
 
         molotovCocktail = (ItemDrinkHolder) new ItemMolotovCocktail().setUnlocalizedName("molotovCocktail").setTextureName(textureBase + "molotovCocktail");
         GameRegistry.registerItem(molotovCocktail, "molotovCocktail", Psychedelicraft.MODID);
-        molotovCocktail.setCreativeTab(Psychedelicraft.creativeTab);
+        molotovCocktail.setCreativeTab(Psychedelicraft.weaponsTab);
         DrinkRegistry.registerDrinkHolder(molotovCocktail);
 
         pipe = (ItemSmokingPipe) (new ItemSmokingPipe().setUnlocalizedName("smokingPipe").setTextureName(textureBase + "smokingPipe"));
