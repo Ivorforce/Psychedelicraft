@@ -57,6 +57,11 @@ public class PSRegistryHandler
         glassChalice.setCreativeTab(Psychedelicraft.drinksTab);
         DrinkRegistry.registerDrinkHolder(glassChalice);
 
+        bottle = (ItemDrinkHolder) new ItemBottle().setUnlocalizedName("ygcBottle").setTextureName(textureBase + "bottle");
+        GameRegistry.registerItem(bottle, "bottle", Psychedelicraft.MODID);
+        bottle.setCreativeTab(Psychedelicraft.drinksTab);
+        DrinkRegistry.registerDrinkHolder(bottle);
+
         molotovCocktail = (ItemDrinkHolder) new ItemMolotovCocktail().setUnlocalizedName("molotovCocktail").setTextureName(textureBase + "molotovCocktail");
         GameRegistry.registerItem(molotovCocktail, "molotovCocktail", Psychedelicraft.MODID);
         molotovCocktail.setCreativeTab(Psychedelicraft.weaponsTab);

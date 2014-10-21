@@ -76,7 +76,7 @@ public class RecipeTransferDrink implements IRecipe
             }
         }
 
-        return empty != null && full != null && ((ItemDrinkHolder) empty.getItem()).getMaxDrinkFilling() <= full.getFillings() ? new ImmutablePair<>(empty, full) : null;
+        return empty != null && full != null && ((ItemDrinkHolder) empty.getItem()).getMaxDrinkFilling() >= full.getFillings() ? new ImmutablePair<>(empty, full) : null;
     }
 
     @Override

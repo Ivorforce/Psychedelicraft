@@ -53,8 +53,14 @@ public class PSCrafting
 
         GameRegistry.addRecipe(new ItemStack(woodenMug, 8), "# #", "# #", "###", '#', planks);
 
+//        for (int color = 0; color < ItemDye.field_150922_c.length; color++)
+//            GameRegistry.addRecipe(new ItemStack(molotovCocktail, 4, color), "P", "#", '#', new ItemStack(stained_glass, 1, 15 - color), 'P', paper);
+
         for (int color = 0; color < ItemDye.field_150922_c.length; color++)
-            GameRegistry.addRecipe(new ItemStack(molotovCocktail, 4, color), "P", "#", '#', new ItemStack(stained_glass, 1, 15 - color), 'P', paper);
+        {
+            GameRegistry.addRecipe(new ItemStack(bottle, 8, color), " # ", "# #", "###", '#', new ItemStack(stained_glass, 1, 15 - color));
+            GameRegistry.addRecipe(new ItemStack(molotovCocktail, 1, color), "P", "G", 'P', paper, 'G', new ItemStack(bottle, 1, color));
+        }
 
         GameRegistry.addRecipe(new ItemStack(dryingTable), "###", "#R#", '#', planks, 'R', redstone);
 

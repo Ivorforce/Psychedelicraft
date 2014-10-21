@@ -6,6 +6,7 @@
 package ivorius.psychedelicraft.items;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -122,7 +123,12 @@ public class ItemDrinkHolder extends Item
         {
             String translationKey = drinkInfo.getFullTranslationKey();
             if (translationKey != null)
-                list.add(StatCollector.translateToLocal(translationKey).trim());
+            {
+                if (drinkInfo.getFillings() != 1)
+                    list.add(String.format("%s (%d)", I18n.format(translationKey).trim(), drinkInfo.getFillings()));
+                else
+                    list.add(I18n.format(translationKey).trim());
+            }
         }
     }
 
@@ -140,7 +146,7 @@ public class ItemDrinkHolder extends Item
         for (IDrink drink : DrinkRegistry.getAllDrinks())
             for (NBTTagCompound compound : drink.creativeTabInfos(item, tab))
             {
-                ItemStack stack = createDrinkStack(1, new DrinkInformation(DrinkRegistry.getDrinkID(drink), 1, compound));
+                ItemStack stack = createDrinkStack(1, new DrinkInformation(DrinkRegistry.getDrinkID(drink), getMaxDrinkFilling(), compound));
                 stack.setItemDamage(damage);
                 list.add(stack);
             }

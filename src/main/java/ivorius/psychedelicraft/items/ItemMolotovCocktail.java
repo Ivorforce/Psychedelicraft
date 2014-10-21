@@ -28,9 +28,13 @@ public class ItemMolotovCocktail extends ItemDrinkHolder
     public static float getAlcohol(ItemStack stack)
     {
         DrinkInformation drinkInfo = null;
+        int maxFillings = 1;
 
         if (stack.getItem() instanceof ItemDrinkHolder)
+        {
             drinkInfo = ((ItemDrinkHolder) stack.getItem()).getDrinkInfo(stack);
+            maxFillings = ((ItemDrinkHolder) stack.getItem()).getMaxDrinkFilling();
+        }
 
         if (drinkInfo != null)
         {
@@ -40,7 +44,7 @@ public class ItemMolotovCocktail extends ItemDrinkHolder
                 if (drugInfluence.getDrugName().equals("Alcohol"))
                     alcohol += drugInfluence.getMaxInfluence();
             }
-            return MathHelper.clamp_float(alcohol, 0.0f, 1.0f);
+            return MathHelper.clamp_float(alcohol * (float)drinkInfo.getFillings() / (float)maxFillings, 0.0f, 1.0f);
         }
 
         return 0.0f;
@@ -54,6 +58,12 @@ public class ItemMolotovCocktail extends ItemDrinkHolder
         maxStackSize = 16;
         setHasSubtypes(true);
         setMaxDamage(0);
+    }
+
+    @Override
+    public int getMaxDrinkFilling()
+    {
+        return 4;
     }
 
     @Override

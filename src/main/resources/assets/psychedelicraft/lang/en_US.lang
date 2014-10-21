@@ -44,6 +44,7 @@ tile.glitched.name=Block $__0
 item.woodenMug.name=Wooden Mug
 item.glassChalice.name=Glass Chalice
 item.woodenBowlDrug.name=Wooden Bowl
+item.ygcBottle.name=Bottle
 
 item.molotovCocktail.name=Molotov Cocktail
 item.molotovCocktail.empty.name=Empty Molotov Cocktail
