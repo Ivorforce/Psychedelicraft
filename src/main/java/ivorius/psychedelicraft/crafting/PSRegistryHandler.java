@@ -41,7 +41,7 @@ public class PSRegistryHandler
         GameRegistry.registerItem(syringe, "syringe", Psychedelicraft.MODID);
         syringe.setCreativeTab(Psychedelicraft.creativeTab);
 
-        woodenBowlDrug = (ItemDrinkHolder) new ItemDrinkable(1).setUnlocalizedName("woodenBowlDrug").setTextureName("bowl");
+        woodenBowlDrug = (ItemDrinkHolder) new ItemWoodenBowlDrug(1).setUnlocalizedName("woodenBowlDrug").setTextureName("bowl");
         woodenBowlDrug.addEmptySelfToCreativeMenu = false;
         GameRegistry.registerItem(woodenBowlDrug, "psycheWoodenBowl", Psychedelicraft.MODID);
         woodenBowlDrug.setCreativeTab(Psychedelicraft.drinksTab);

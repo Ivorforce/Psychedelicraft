@@ -6,11 +6,13 @@
 package ivorius.psychedelicraft.items;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
 
 import java.util.List;
 
@@ -63,6 +65,20 @@ public class ItemBottle extends ItemDrinkHolder
     public int getColorFromItemStack(ItemStack stack, int pass)
     {
         return pass == 0 ? ItemDye.field_150922_c[stack.getItemDamage() % ItemDye.field_150922_c.length] : super.getColorFromItemStack(stack, pass);
+    }
+
+    @Override
+    public String getItemStackDisplayName(ItemStack stack)
+    {
+        DrinkInformation drinkInfo = getDrinkInfo(stack);
+
+        if (drinkInfo != null)
+        {
+            String drinkName = I18n.format(drinkInfo.getFullTranslationKey());
+            return I18n.format(this.getUnlocalizedNameInefficiently(stack) + ".full.name", drinkName);
+        }
+
+        return I18n.format(this.getUnlocalizedNameInefficiently(stack) + ".empty.name");
     }
 
     @Override

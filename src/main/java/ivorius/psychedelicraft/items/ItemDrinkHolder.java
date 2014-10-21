@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -25,6 +26,19 @@ import java.util.Map;
  */
 public class ItemDrinkHolder extends Item
 {
+    public static int maxFillingsTransferred(DrinkInformation src, ItemStack dst)
+    {
+        ItemDrinkHolder dstDH = dst.getItem() == Items.bowl ? PSItems.woodenBowlDrug : (ItemDrinkHolder) dst.getItem();
+
+        DrinkInformation dstInfo = dstDH.getDrinkInfo(dst);
+
+        int srcFillings = src != null ? src.getFillings() : 0;
+        int dstFillings = dstInfo != null ? dstInfo.getFillings() : 0;
+
+        int dstMax = dstDH.getMaxDrinkFilling();
+        return Math.min(srcFillings, dstMax - dstFillings);
+    }
+
     public Map<String, IIcon> registeredSpecialIcons = new HashMap<>();
 
     public boolean addEmptySelfToCreativeMenu = true;
@@ -161,6 +175,16 @@ public class ItemDrinkHolder extends Item
     @Override
     public ItemStack getContainerItem(ItemStack itemStack)
     {
+        DrinkInformation drinkInfo = getDrinkInfo(itemStack);
+        if (drinkInfo != null && drinkInfo.getFillings() > 1)
+        {
+            itemStack = itemStack.copy();
+            drinkInfo = drinkInfo.clone();
+            drinkInfo.decrementFillings(1);
+            setDrinkInfo(itemStack, drinkInfo);
+            return itemStack;
+        }
+
         return new ItemStack(this);
     }
 }

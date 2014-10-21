@@ -99,9 +99,7 @@ public class BlockBarrel extends BlockContainer
                     float zPlus = rotation == 0 ? -1.0f : (rotation == 2 ? 1.0f : 0.0f);
 
                     ItemDrinkHolder drinkHolder = (ItemDrinkHolder) heldItem.getItem();
-                    DrinkInformation stackDrinkInfo = drinkHolder.getDrinkInfo(heldItem);
-                    int fillingsFittingIntoItem = drinkHolder.getMaxDrinkFilling() - (stackDrinkInfo != null ? stackDrinkInfo.getFillings() : 0);
-                    int fillingsTransferred = MathHelper.clamp_int(fillingsFittingIntoItem, 0, ((TileEntityBarrel) tileEntity).containedDrink.getFillings());
+                    int fillingsTransferred = ItemDrinkHolder.maxFillingsTransferred(containedDrink, heldItem);
 
                     if (fillingsTransferred > 0)
                     {

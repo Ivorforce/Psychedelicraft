@@ -65,7 +65,8 @@ public class ItemDrinkable extends ItemDrinkHolder
                 stack.stackSize --;
         }
 
-        player.inventory.addItemStackToInventory(new ItemStack(this));
+        if (hasContainerItem(stack))
+            player.inventory.addItemStackToInventory(getContainerItem(stack));
 
         return super.onEaten(stack, par2World, player);
     }

@@ -7,9 +7,7 @@ package ivorius.psychedelicraft.crafting;
 
 import ivorius.psychedelicraft.items.DrinkInformation;
 import ivorius.psychedelicraft.items.ItemDrinkHolder;
-import ivorius.psychedelicraft.items.ItemMolotovCocktail;
 import ivorius.psychedelicraft.items.PSItems;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
@@ -19,7 +17,6 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -47,28 +44,56 @@ public class RecipeTransferDrink implements IRecipe
 
     public static Pair<ItemStack, DrinkInformation> getEqualDrinkHolders(InventoryCrafting inventory)
     {
-        ItemStack empty = null;
-        DrinkInformation full = null;
+        ItemStack dst = null;
+        DrinkInformation src;
+        int srcRow;
 
-        for (int i = 0; i < 3; ++i)
+        for (srcRow = 0; srcRow < 2; ++srcRow)
         {
-            for (int j = 0; j < 3; ++j)
+            List<ItemStack> row = itemStacksInRow(inventory, srcRow);
+            if (row.size() == 0)
+                continue;
+            else if (row.size() == 1)
             {
-                ItemStack itemstack = inventory.getStackInRowAndColumn(j, i);
+                dst = row.get(0);
+
+                if (dst.getItem() == Items.bowl || dst.getItem() instanceof ItemDrinkHolder)
+                    break;
+            }
+
+            return null;
+        }
+
+        if (dst == null)
+            return null;
+
+        src = ((ItemDrinkHolder) dst.getItem()).getDrinkInfo(dst).clone();
+
+        for (int y = srcRow + 1; y < 3; ++y)
+        {
+            for (int x = 0; x < 3; ++x)
+            {
+                ItemStack itemstack = inventory.getStackInRowAndColumn(x, y);
 
                 if (itemstack != null)
                 {
-                    if (itemstack.getItem() instanceof ItemDrinkHolder)
+                    ItemDrinkHolder drinkHolder = itemstack.getItem() instanceof ItemDrinkHolder ? (ItemDrinkHolder) itemstack.getItem() : null;
+                    if (itemstack.getItem() == Items.bowl)
+                        drinkHolder = PSItems.woodenBowlDrug;
+
+                    if (drinkHolder != null)
                     {
-                        DrinkInformation drinkInfo = ((ItemDrinkHolder) itemstack.getItem()).getDrinkInfo(itemstack);
-                        if (drinkInfo != null && full == null)
-                            full = drinkInfo.clone();
-                        else if (drinkInfo != null && drinkInfo.equals(full))
-                            full.incrementFillings(drinkInfo.getFillings());
-                        else if (drinkInfo == null && empty == null)
-                            empty = itemstack;
-                        else
-                            return null;
+                        DrinkInformation drinkInfo = drinkHolder.getDrinkInfo(itemstack);
+
+                        if (drinkInfo != null)
+                        {
+                            if (src == null)
+                                src = drinkInfo.clone();
+                            else if (drinkInfo.equalsDrinkType(src))
+                                src.incrementFillings(drinkInfo.getFillings());
+                            else
+                                return null;
+                        }
                     }
                     else
                         return null;
@@ -76,7 +101,22 @@ public class RecipeTransferDrink implements IRecipe
             }
         }
 
-        return empty != null && full != null && ((ItemDrinkHolder) empty.getItem()).getMaxDrinkFilling() >= full.getFillings() ? new ImmutablePair<>(empty, full) : null;
+        if (src != null && ItemDrinkHolder.maxFillingsTransferred(src, dst) > 0)
+            return new ImmutablePair<>(dst, src);
+
+        return null;
+    }
+
+    public static List<ItemStack> itemStacksInRow(InventoryCrafting inventory, int y)
+    {
+        List<ItemStack> list = new ArrayList<>();
+        for (int x = 0; x < 3; ++x)
+        {
+            ItemStack itemstack = inventory.getStackInRowAndColumn(x, y);
+            if (itemstack != null)
+                list.add(itemstack);
+        }
+        return list;
     }
 
     @Override
