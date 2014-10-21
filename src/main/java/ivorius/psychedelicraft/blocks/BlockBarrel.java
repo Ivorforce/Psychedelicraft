@@ -63,17 +63,9 @@ public class BlockBarrel extends BlockContainer
                 DrinkInformation drinkInformation = tileEntityBarrel.containedDrink;
 
                 if (drinkInformation != null && drinkInformation.getFillings() > 0)
-                {
-                    ItemStack barrel = new ItemStack(this);
-
-                    barrel.setTagInfo("drinkInfo", tileEntityBarrel.containedDrink.writeToNBT());
-
-                    dropBlockAsItem(world, x, y, z, barrel);
-                }
+                    dropBlockAsItem(world, x, y, z, PSItems.itemBarrel.createBarrel(drinkInformation, tileEntityBarrel.barrelWoodType));
                 else
-                {
-                    dropBlockAsItem(world, x, y, z, new ItemStack(PSItems.itemBarrel));
-                }
+                    dropBlockAsItem(world, x, y, z, PSItems.itemBarrel.createBarrel(null, tileEntityBarrel.barrelWoodType));
             }
         }
 

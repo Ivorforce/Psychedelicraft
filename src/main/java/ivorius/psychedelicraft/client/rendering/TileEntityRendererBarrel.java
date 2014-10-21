@@ -9,6 +9,8 @@ import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.blocks.TileEntityBarrel;
 import ivorius.psychedelicraft.items.DrinkRegistry;
 import ivorius.psychedelicraft.items.IDrink;
+import ivorius.psychedelicraft.items.ItemBarrel;
+import ivorius.psychedelicraft.items.PSItems;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -23,7 +25,10 @@ import org.lwjgl.opengl.GL11;
 public class TileEntityRendererBarrel extends TileEntitySpecialRenderer
 {
     private ModelBarrel barrelModel;
+
     private ResourceLocation barrelTexture;
+    private ResourceLocation barrelTextureSpruce;
+    private ResourceLocation barrelTextureDarkOak;
 
     public TileEntityRendererBarrel()
     {
@@ -31,6 +36,8 @@ public class TileEntityRendererBarrel extends TileEntitySpecialRenderer
 
         this.barrelModel = new ModelBarrel();
         this.barrelTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "barrelTexture.png");
+        this.barrelTextureSpruce = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "barrelTextureSpruce.png");
+        this.barrelTextureDarkOak = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "barrelTextureDarkOak.png");
     }
 
     @Override
@@ -52,7 +59,7 @@ public class TileEntityRendererBarrel extends TileEntitySpecialRenderer
         Entity emptyEntity = new EntityArrow(tileEntity.getWorldObj());
         emptyEntity.ticksExisted = (int) (tileEntity.getTapRotation() * 100.0f);
 
-        this.bindTexture(barrelTexture);
+        this.bindTexture(getBarrelTexture(tileEntity));
         barrelModel.render(emptyEntity, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 
         GL11.glPopMatrix();
@@ -81,5 +88,18 @@ public class TileEntityRendererBarrel extends TileEntitySpecialRenderer
         }
 
         GL11.glPopMatrix();
+    }
+
+    public ResourceLocation getBarrelTexture(TileEntityBarrel barrel)
+    {
+        switch (barrel.barrelWoodType)
+        {
+            case 1:
+                return barrelTextureSpruce;
+            case 5:
+                return barrelTextureDarkOak;
+            default:
+                return barrelTexture;
+        }
     }
 }

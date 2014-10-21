@@ -20,20 +20,24 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
-import java.util.List;
+import java.util.*;
 
 public class ItemBarrel extends ItemBlock
 {
     public static final int DEFAULT_FILLINGS = 16;
 
-    public ItemStack createBarrel(DrinkInformation drinkInformation)
+    public ItemStack createBarrel(DrinkInformation drinkInformation, int woodType)
     {
-        ItemStack stack = new ItemStack(this);
-        stack.setTagInfo("drinkInfo", drinkInformation.writeToNBT());
+        ItemStack stack = new ItemStack(this, 1, woodType);
+
+        if (drinkInformation != null)
+            stack.setTagInfo("drinkInfo", drinkInformation.writeToNBT());
+
         return stack;
     }
 
@@ -42,13 +46,16 @@ public class ItemBarrel extends ItemBlock
         return stack.hasTagCompound() && stack.getTagCompound().hasKey("drinkInfo", Constants.NBT.TAG_COMPOUND) ? new DrinkInformation(stack.getTagCompound().getCompoundTag("drinkInfo")) : null;
     }
 
-    private IIcon baseIcon;
+    private IIcon spruceIcon;
+    private IIcon darkOakIcon;
 
     public ItemBarrel(Block block)
     {
         super(block);
 
         maxStackSize = 16;
+        setHasSubtypes(true);
+        setMaxDamage(0);
     }
 
     @Override
@@ -75,6 +82,7 @@ public class ItemBarrel extends ItemBlock
         {
             TileEntityBarrel tileEntityBarrel = (TileEntityBarrel) tileEntity;
             tileEntityBarrel.containedDrink = getDrinkInfo(stack);
+            tileEntityBarrel.barrelWoodType = stack.getItemDamage();
         }
 
         stack.stackSize--;
@@ -86,7 +94,10 @@ public class ItemBarrel extends ItemBlock
     public void registerIcons(IIconRegister par1IconRegister)
     {
         super.registerIcons(par1IconRegister);
-        
+
+        spruceIcon = par1IconRegister.registerIcon(this.field_150939_a.getItemIconName() + "_spruce");
+        darkOakIcon = par1IconRegister.registerIcon(this.field_150939_a.getItemIconName() + "_darkOak");
+
         for (IDrink drink : DrinkRegistry.getAllDrinks())
             drink.registerItemIcons(par1IconRegister);
     }
@@ -106,16 +117,21 @@ public class ItemBarrel extends ItemBlock
     @Override
     public IIcon getIcon(ItemStack stack, int pass)
     {
-        if (pass == 0)
-            return super.getIcon(stack, pass);
-
-        DrinkInformation drinkInfo = getDrinkInfo(stack);
-        if (drinkInfo != null)
+        if (pass == 1)
         {
-            IIcon icon = drinkInfo.getDrinkIcon();
-            if (icon != null)
-                return icon;
+            DrinkInformation drinkInfo = getDrinkInfo(stack);
+            if (drinkInfo != null)
+            {
+                IIcon icon = drinkInfo.getDrinkIcon();
+                if (icon != null)
+                    return icon;
+            }
         }
+
+        if (stack.getItemDamage() == 1)
+            return spruceIcon;
+        else if (stack.getItemDamage() == 5)
+            return darkOakIcon;
 
         return super.getIcon(stack, pass);
     }
@@ -125,11 +141,18 @@ public class ItemBarrel extends ItemBlock
     {
         super.getSubItems(item, tab, list);
 
+        getSubItems(item, tab, list, 0); // Oak
+        getSubItems(item, tab, list, 1); // Spruce
+        getSubItems(item, tab, list, 5); // Dark oak
+    }
+
+    public void getSubItems(Item item, CreativeTabs tab, List list, int woodType)
+    {
         for (IDrink drink : DrinkRegistry.getAllDrinks())
         {
             for (NBTTagCompound compound : drink.creativeTabInfos(item, tab))
             {
-                ItemStack stack = createBarrel(new DrinkInformation(DrinkRegistry.getDrinkID(drink), DEFAULT_FILLINGS, compound));
+                ItemStack stack = createBarrel(new DrinkInformation(DrinkRegistry.getDrinkID(drink), DEFAULT_FILLINGS, compound), woodType);
                 list.add(stack);
             }
         }
@@ -147,6 +170,37 @@ public class ItemBarrel extends ItemBlock
             String translationKey = drinkInfo.getFullTranslationKey();
             if (translationKey != null)
                 list.add(StatCollector.translateToLocal(translationKey).trim());
+        }
+    }
+
+    public static class BarrelMaterialEntry
+    {
+        private Block block;
+        private int metadata;
+        private String itemIcon;
+        private ResourceLocation barrelTexture;
+
+        public BarrelMaterialEntry(Block block, int metadata, String itemIcon, ResourceLocation barrelTexture)
+        {
+            this.block = block;
+            this.metadata = metadata;
+            this.itemIcon = itemIcon;
+            this.barrelTexture = barrelTexture;
+        }
+
+        public boolean matches(Block block, int metadata)
+        {
+            return this.block == block && this.metadata == metadata;
+        }
+
+        public String getItemIcon()
+        {
+            return itemIcon;
+        }
+
+        public ResourceLocation getBarrelTexture()
+        {
+            return barrelTexture;
         }
     }
 }

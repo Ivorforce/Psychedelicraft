@@ -7,6 +7,7 @@ package ivorius.psychedelicraft.blocks;
 
 import ivorius.ivtoolkit.blocks.IvTileEntityHelper;
 import ivorius.psychedelicraft.items.DrinkInformation;
+import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -19,6 +20,8 @@ public class TileEntityBarrel extends TileEntity
     public int ticksExisted;
 
     public DrinkInformation containedDrink;
+
+    public int barrelWoodType;
 
     public float tapRotation = 0.0f;
     public int timeLeftTapOpen = 0;
@@ -51,7 +54,9 @@ public class TileEntityBarrel extends TileEntity
         nbttagcompound.setInteger("ticksExisted", ticksExisted);
 
         if (containedDrink != null)
-           nbttagcompound.setTag("containedDrink", containedDrink.writeToNBT());
+            nbttagcompound.setTag("containedDrink", containedDrink.writeToNBT());
+
+        nbttagcompound.setInteger("barrelWoodType", barrelWoodType);
 
         nbttagcompound.setInteger("timeLeftTapOpen", timeLeftTapOpen);
         nbttagcompound.setFloat("tapRotation", tapRotation);
@@ -66,6 +71,8 @@ public class TileEntityBarrel extends TileEntity
 
         if (nbttagcompound.hasKey("containedDrink", Constants.NBT.TAG_COMPOUND))
             containedDrink = new DrinkInformation(nbttagcompound.getCompoundTag("containedDrink"));
+
+        barrelWoodType = nbttagcompound.getInteger("barrelWoodType");
 
         timeLeftTapOpen = nbttagcompound.getInteger("timeLeftTapOpen");
         tapRotation = nbttagcompound.getFloat("tapRotation");
