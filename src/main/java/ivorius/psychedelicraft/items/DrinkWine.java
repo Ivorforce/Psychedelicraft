@@ -119,7 +119,9 @@ public class DrinkWine implements IDrink
         float fullStrength = oldStrength + (float) timeFermented / (float) PSConfig.ticksForFullWineFermentation;
         float strength = IvMathHelper.clamp(0.0f, fullStrength, 1.0f);
         int timeFermentedOverMax = Math.max(MathHelper.floor_float(fullStrength * PSConfig.ticksForFullWineFermentation) - PSConfig.ticksForFullWineFermentation, 0);
-        float vinegarProgress = oldVinegarProgress + (float)timeFermentedOverMax / (float)PSConfig.ticksUntilWineAcetification;
+        float vinegarProgress = oldVinegarProgress;
+        if (PSConfig.ticksUntilWineAcetification >= 0)
+            vinegarProgress += (float)timeFermentedOverMax / (float)PSConfig.ticksUntilWineAcetification;
 
         return createWineDrinkInfo(strength, vinegarProgress);
     }
