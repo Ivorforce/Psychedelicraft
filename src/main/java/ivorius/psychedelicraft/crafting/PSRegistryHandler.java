@@ -44,17 +44,17 @@ public class PSRegistryHandler
         woodenBowlDrug = (ItemDrinkHolder) new ItemDrinkable(1).setUnlocalizedName("woodenBowlDrug").setTextureName("bowl");
         woodenBowlDrug.addEmptySelfToCreativeMenu = false;
         GameRegistry.registerItem(woodenBowlDrug, "psycheWoodenBowl", Psychedelicraft.MODID);
-        woodenBowlDrug.setCreativeTab(Psychedelicraft.creativeTab);
+        woodenBowlDrug.setCreativeTab(Psychedelicraft.drinksTab);
         DrinkRegistry.registerDrinkHolder(woodenBowlDrug);
 
         woodenMug = (ItemDrinkHolder) new ItemDrinkable(1).setUnlocalizedName("woodenMug").setTextureName(textureBase + "woodenMug");
         GameRegistry.registerItem(woodenMug, "woodenMug", Psychedelicraft.MODID);
-        woodenMug.setCreativeTab(Psychedelicraft.creativeTab);
+        woodenMug.setCreativeTab(Psychedelicraft.drinksTab);
         DrinkRegistry.registerDrinkHolder(woodenMug);
 
         glassChalice = (ItemDrinkHolder) new ItemDrinkable(1).setUnlocalizedName("glassChalice").setTextureName(textureBase + "glassChalice");
         GameRegistry.registerItem(glassChalice, "glassChalice", Psychedelicraft.MODID);
-        glassChalice.setCreativeTab(Psychedelicraft.creativeTab);
+        glassChalice.setCreativeTab(Psychedelicraft.drinksTab);
         DrinkRegistry.registerDrinkHolder(glassChalice);
 
         molotovCocktail = (ItemDrinkHolder) new ItemMolotovCocktail().setUnlocalizedName("molotovCocktail").setTextureName(textureBase + "molotovCocktail");
@@ -76,7 +76,7 @@ public class PSRegistryHandler
         GameRegistry.registerTileEntity(TileEntityDryingTable.class, "dryingTable");
 
         barrel = new BlockBarrel().setHardness(1.0F);
-        barrel.setCreativeTab(Psychedelicraft.creativeTab);
+        barrel.setCreativeTab(Psychedelicraft.drinksTab);
         PSRegistryHandler.registerBlockDefault(barrel, ItemBarrel.class, "barrel");
         GameRegistry.registerTileEntity(TileEntityBarrel.class, "barrel");
         itemBarrel = (ItemBarrel) Item.getItemFromBlock(barrel);

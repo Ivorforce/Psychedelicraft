@@ -106,6 +106,7 @@ psDrink.wine.quality6=Historical Wine
 psDrink.wine.vinegar=Vinegar
 
 itemGroup.psychedelicraft=Psychedelicraft
+itemGroup.psycheDrinks=Drinks
 
 commands.drug.usage=/drug <player> <drug> <set|lock|unlock> [value]
 commands.drug.success=%s's %s set to %s

@@ -60,6 +60,7 @@ public class Psychedelicraft
     public static PSCoreHandlerServer coreHandlerServer;
 
     public static CreativeTabPsyche creativeTab;
+    public static CreativeTabPsyche drinksTab;
 
     public static String filePathTexturesFull = "psychedelicraft:textures/mod/";
     public static String filePathTextures = "textures/mod/";
@@ -85,6 +86,7 @@ public class Psychedelicraft
         config.save();
 
         creativeTab = new CreativeTabPsyche("psychedelicraft");
+        drinksTab = new CreativeTabPsyche("psycheDrinks");
 
         guiHandler = new PSGuiHandler();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
@@ -116,6 +118,7 @@ public class Psychedelicraft
         proxy.registerRenderers();
 
         creativeTab.tabIcon = PSItems.cannabisLeaf;
+        drinksTab.tabIcon = PSItems.itemBarrel;
 
         DrugInfluence.registerInfluence(DrugInfluence.class, "default");
         DrugInfluence.registerInfluence(DrugInfluenceHarmonium.class, "harmonium");
