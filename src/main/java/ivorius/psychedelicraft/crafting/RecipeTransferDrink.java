@@ -38,7 +38,11 @@ public class RecipeTransferDrink implements IRecipe
     {
         Pair<ItemStack, DrinkInformation> pair = getEqualDrinkHolders(inventory);
 
-        return pair != null ? ((ItemDrinkHolder) pair.getLeft().getItem()).createDrinkStack(1, pair.getRight()) : null;
+        ItemStack left = pair.getLeft().copy();
+        ((ItemDrinkHolder) pair.getLeft().getItem()).setDrinkInfo(left, pair.getRight());
+        left.stackSize = 1;
+
+        return left;
     }
 
     public static Pair<ItemStack, DrinkInformation> getEqualDrinkHolders(InventoryCrafting inventory)
@@ -78,7 +82,7 @@ public class RecipeTransferDrink implements IRecipe
     @Override
     public int getRecipeSize()
     {
-        return 3;
+        return 2;
     }
 
     @Override

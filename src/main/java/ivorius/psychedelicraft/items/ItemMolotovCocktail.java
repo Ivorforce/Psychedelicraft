@@ -7,13 +7,16 @@ package ivorius.psychedelicraft.items;
 
 import ivorius.psychedelicraft.entities.DrugInfluence;
 import ivorius.psychedelicraft.entities.EntityMolotovCocktail;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -42,6 +45,8 @@ public class ItemMolotovCocktail extends ItemDrinkHolder
 
         return 0.0f;
     }
+
+    private IIcon paperIcon;
 
     public ItemMolotovCocktail()
     {
@@ -113,5 +118,49 @@ public class ItemMolotovCocktail extends ItemDrinkHolder
         }
 
         return I18n.format(this.getUnlocalizedNameInefficiently(stack) + ".empty.name");
+    }
+
+    @Override
+    public void registerIcons(IIconRegister par1IconRegister)
+    {
+        super.registerIcons(par1IconRegister);
+        paperIcon = par1IconRegister.registerIcon(getIconString() + "_paper");
+    }
+
+    @Override
+    public boolean requiresMultipleRenderPasses()
+    {
+        return true;
+    }
+
+    @Override
+    public int getRenderPasses(int metadata)
+    {
+        return 2;
+    }
+
+    @Override
+    public IIcon getIcon(ItemStack stack, int pass)
+    {
+        return pass == 0 ? super.getIcon(stack, pass) : paperIcon;
+    }
+
+    @Override
+    public int getColorFromItemStack(ItemStack stack, int pass)
+    {
+        return pass == 0 ? ItemDye.field_150922_c[stack.getItemDamage() % ItemDye.field_150922_c.length] : super.getColorFromItemStack(stack, pass);
+    }
+
+    @Override
+    public ItemStack getContainerItem(ItemStack itemStack)
+    {
+        return new ItemStack(this, 1, itemStack.getItemDamage());
+    }
+
+    @Override
+    public void getSubItems(Item item, CreativeTabs tab, List list)
+    {
+        for (int i = 0; i < 16; i++)
+            getSubItems(item, tab, list, i);
     }
 }

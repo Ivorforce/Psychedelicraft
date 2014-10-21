@@ -38,10 +38,15 @@ public class ItemDrinkHolder extends Item
         return stack.hasTagCompound() && stack.getTagCompound().hasKey("drinkInfo", Constants.NBT.TAG_COMPOUND) ? new DrinkInformation(stack.getTagCompound().getCompoundTag("drinkInfo")) : null;
     }
 
+    public void setDrinkInfo(ItemStack stack, DrinkInformation drinkInformation)
+    {
+        stack.setTagInfo("drinkInfo", drinkInformation.writeToNBT());
+    }
+
     public ItemStack createDrinkStack(int stackSize, DrinkInformation drinkInformation)
     {
         ItemStack stack = new ItemStack(this, stackSize);
-        stack.setTagInfo("drinkInfo", drinkInformation.writeToNBT());
+        setDrinkInfo(stack, drinkInformation);
         return stack;
     }
 
@@ -124,17 +129,21 @@ public class ItemDrinkHolder extends Item
     @Override
     public void getSubItems(Item item, CreativeTabs tab, List list)
     {
+        getSubItems(item, tab, list, 0);
+    }
+
+    public void getSubItems(Item item, CreativeTabs tab, List list, int damage)
+    {
         if (addEmptySelfToCreativeMenu)
-            super.getSubItems(item, tab, list);
+            list.add(new ItemStack(item, 1, damage));
 
         for (IDrink drink : DrinkRegistry.getAllDrinks())
-        {
             for (NBTTagCompound compound : drink.creativeTabInfos(item, tab))
             {
                 ItemStack stack = createDrinkStack(1, new DrinkInformation(DrinkRegistry.getDrinkID(drink), 1, compound));
+                stack.setItemDamage(damage);
                 list.add(stack);
             }
-        }
     }
 
     @Override
