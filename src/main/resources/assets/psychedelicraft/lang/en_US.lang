@@ -93,6 +93,12 @@ entity.molotovCocktail.name=Molotov Cocktail
 tile.bed.onDrugs=The drugs in your body keep you awake
 
 fluid.pscBeer=Beer
+fluid.pscBeer.quality0=Wort
+fluid.pscBeer.quality1=Very Young Beer
+fluid.pscBeer.quality2=Young Beer
+fluid.pscBeer.quality3=Green Beer
+fluid.pscBeer.quality4=Aged Beer
+fluid.pscBeer.quality5=Quality Beer
 fluid.pscJenever=Jenever
 fluid.pscCoffee=Coffee
 fluid.pscCoffee.temperature0=Cold Coffee

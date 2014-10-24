@@ -26,6 +26,11 @@ public class FluidWine extends FluidDrug implements FluidFermentable
 {
     public static final int FERMENTATION_STEPS = 7;
 
+    public static double zeroToOne(double value, double min, double max)
+    {
+        return IvMathHelper.clamp(0.0, (value - min) / (max - min), 1.0);
+    }
+
     public FluidWine(String fluidName)
     {
         super(fluidName);
@@ -38,8 +43,8 @@ public class FluidWine extends FluidDrug implements FluidFermentable
 
         if (!isVinegar(fluidStack))
         {
-            float wineStrength = getFermentation(fluidStack);
-            list.add(new DrugInfluence("Alcohol", 20, 0.002, 0.001, 0.3 * wineStrength));
+            double fermentation = getFermentation(fluidStack);
+            list.add(new DrugInfluence("Alcohol", 20, 0.002, 0.001, 0.3 * fermentation));
         }
     }
 
@@ -49,11 +54,11 @@ public class FluidWine extends FluidDrug implements FluidFermentable
         if (isVinegar(fluidStack))
             return null;
 
-        float wineStrength = getFermentation(fluidStack);
+        double fermentation = getFermentation(fluidStack);
 
-        if (wineStrength < 0.3f)
+        if (fermentation < 0.3f)
         {
-            int foodLevel = MathHelper.floor_float(IvMathHelper.zeroToOne(wineStrength, 0.0f, 0.3f) * 3.0f + 0.5f);
+            int foodLevel = MathHelper.floor_double(zeroToOne(fermentation, 0.0, 0.3) * 3.0 + 0.5);
             return new MutablePair<>(foodLevel, foodLevel * 0.1f);
         }
 
@@ -69,14 +74,14 @@ public class FluidWine extends FluidDrug implements FluidFermentable
         {
             FluidStack fluidStack = new FluidStack(this, 1);
             fluidStack.tag = new NBTTagCompound();
-            fluidStack.tag.setFloat("fermentation", strength / (float)(FERMENTATION_STEPS - 1));
+            fluidStack.tag.setDouble("fermentation", strength / (double)(FERMENTATION_STEPS - 1));
             list.add(fluidStack);
         }
 
         FluidStack fluidStack = new FluidStack(this, 1);
         fluidStack.tag = new NBTTagCompound();
-        fluidStack.tag.setFloat("fermentation", 1.0f);
-        fluidStack.tag.setFloat("acetification", 1.0f);
+        fluidStack.tag.setDouble("fermentation", 1.0);
+        fluidStack.tag.setDouble("acetification", 1.0);
         list.add(fluidStack);
     }
 
@@ -86,19 +91,19 @@ public class FluidWine extends FluidDrug implements FluidFermentable
         if (stack.tag == null)
             stack.tag = new NBTTagCompound();
 
-        float fermentation = getFermentation(stack);
-        if (fermentation < 1.0f)
+        double fermentation = getFermentation(stack);
+        if (fermentation < 1.0)
         {
-            fermentation = IvMathHelper.clamp(0.0f, fermentation + 1.0f / PSConfig.ticksForFullWineFermentation, 1.0f);
-            stack.tag.setFloat("fermentation", fermentation);
+            fermentation = IvMathHelper.clamp(0.0, fermentation + 1.0 / PSConfig.ticksForFullWineFermentation, 1.0);
+            stack.tag.setDouble("fermentation", fermentation);
         }
         else
         {
-            float acetification = stack.tag.getFloat("acetification");
-            if (acetification < 1.0f)
+            double acetification = stack.tag.getDouble("acetification");
+            if (acetification < 1.0)
             {
-                acetification = IvMathHelper.clamp(0.0f, acetification + 1.0f / PSConfig.ticksUntilWineAcetification, 1.0f);
-                stack.tag.setFloat("acetification", acetification);
+                acetification = IvMathHelper.clamp(0.0, acetification + 1.0 / PSConfig.ticksUntilWineAcetification, 1.0);
+                stack.tag.setDouble("acetification", acetification);
             }
         }
     }
@@ -116,17 +121,17 @@ public class FluidWine extends FluidDrug implements FluidFermentable
         if (isVinegar(stack))
             return super.getUnlocalizedName(stack) + ".vinegar";
 
-        float wineStrength = getFermentation(stack);
-        return super.getUnlocalizedName(stack) + ".quality" + (MathHelper.floor_float(wineStrength * (FERMENTATION_STEPS - 1) + 0.5f));
+        double fermentation = getFermentation(stack);
+        return super.getUnlocalizedName(stack) + ".quality" + (MathHelper.floor_double(fermentation * (FERMENTATION_STEPS - 1) + 0.5f));
     }
 
     public boolean isVinegar(FluidStack stack)
     {
-        return stack.tag != null && stack.tag.getFloat("acetification") >= 1.0f;
+        return stack.tag != null && stack.tag.getDouble("acetification") >= 1.0f;
     }
 
-    public float getFermentation(FluidStack stack)
+    public double getFermentation(FluidStack stack)
     {
-        return stack.tag != null ? IvMathHelper.clamp(0.0f, stack.tag.getFloat("fermentation"), 1.0f) : 0.0f;
+        return stack.tag != null ? IvMathHelper.clamp(0.0f, stack.tag.getDouble("fermentation"), 1.0f) : 0.0f;
     }
 }
