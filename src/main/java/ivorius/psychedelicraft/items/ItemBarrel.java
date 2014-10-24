@@ -29,50 +29,15 @@ import java.util.List;
 
 public class ItemBarrel extends ItemBlockFluidContainer
 {
-    public static final int DEFAULT_FILLINGS = 16;
-
     private IIcon spruceIcon;
     private IIcon darkOakIcon;
 
     public ItemBarrel(Block block)
     {
-        super(block);
-
-        maxStackSize = 16;
+        super(block, TileEntityBarrel.BARREL_CAPACITY);
+        setMaxStackSize(1);
         setHasSubtypes(true);
         setMaxDamage(0);
-    }
-
-    @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int u, int size, float par8, float par9, float par10)
-    {
-        if (world.getBlock(x, y, u) == Blocks.snow)
-        {
-            y--;
-        }
-
-        if (size != 1)
-        {
-            return false;
-        }
-
-        y++;
-
-        int direction = MathHelper.floor_double((player.rotationYaw * 4F) / 360F + 0.5D) & 3;
-
-        world.setBlock(x, y, u, field_150939_a, direction, 3);
-
-        TileEntity tileEntity = world.getTileEntity(x, y, u);
-        if (tileEntity != null && tileEntity instanceof TileEntityBarrel)
-        {
-            TileEntityBarrel tileEntityBarrel = (TileEntityBarrel) tileEntity;
-            tileEntityBarrel.fill(ForgeDirection.UP, getFluid(stack), true);
-            tileEntityBarrel.barrelWoodType = stack.getItemDamage();
-        }
-
-        stack.stackSize = 0;
-
-        return true;
     }
 
     @Override

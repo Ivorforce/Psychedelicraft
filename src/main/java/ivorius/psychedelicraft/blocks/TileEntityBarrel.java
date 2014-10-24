@@ -35,8 +35,8 @@ public class TileEntityBarrel extends TileFluidHandler
     public void updateEntity()
     {
         FluidStack fluidStack = tank.getFluid();
-        if (fluidStack instanceof FluidFermentable)
-            ((FluidFermentable) fluidStack).updateFermenting(fluidStack);
+        if (fluidStack != null && fluidStack.getFluid() instanceof FluidFermentable)
+            ((FluidFermentable) fluidStack.getFluid()).updateFermenting(fluidStack);
 
         if (timeLeftTapOpen > 0)
         {
@@ -77,7 +77,7 @@ public class TileEntityBarrel extends TileFluidHandler
 
     public FluidStack containedFluid()
     {
-        return tank.getFluid();
+        return tank.getFluid() != null ? tank.getFluid().copy() : null;
     }
 
     public int getBlockRotation()

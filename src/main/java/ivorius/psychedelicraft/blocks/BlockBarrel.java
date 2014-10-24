@@ -5,15 +5,16 @@
 
 package ivorius.psychedelicraft.blocks;
 
-import ivorius.psychedelicraft.fluids.FluidFermentable;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
@@ -50,6 +51,25 @@ public class BlockBarrel extends BlockContainer
     public IIcon getIcon(int par1, int par2)
     {
         return Blocks.planks.getIcon(0, 0);
+    }
+
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entityLivingBase, ItemStack stack)
+    {
+        int direction = MathHelper.floor_double((entityLivingBase.rotationYaw * 4F) / 360F + 0.5D) & 3;
+        world.setBlockMetadataWithNotify(x, y, z, direction, 3);
+
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        if (tileEntity != null && tileEntity instanceof TileEntityBarrel)
+        {
+            TileEntityBarrel tileEntityBarrel = (TileEntityBarrel) tileEntity;
+
+            FluidStack fluidStack = stack.getItem() instanceof IFluidContainerItem ? ((IFluidContainerItem) stack.getItem()).getFluid(stack) : null;
+            if (fluidStack != null)
+                tileEntityBarrel.fill(ForgeDirection.UP, fluidStack, true);
+
+            tileEntityBarrel.barrelWoodType = stack.getItemDamage();
+        }
     }
 
     @Override
@@ -94,7 +114,7 @@ public class BlockBarrel extends BlockContainer
             {
                 IFluidContainerItem fluidContainerItem = (IFluidContainerItem) heldItem.getItem();
 
-                int maxFill = fluidContainerItem.fill(heldItem, tileEntityBarrel.drain(ForgeDirection.DOWN, 1, false), false);
+                int maxFill = fluidContainerItem.fill(heldItem, tileEntityBarrel.drain(ForgeDirection.DOWN, TileEntityBarrel.BARREL_CAPACITY, false), false);
                 if (maxFill > 0)
                 {
                     if (!world.isRemote)

@@ -63,9 +63,9 @@ public class TileEntityRendererBarrel extends TileEntitySpecialRenderer
         GL11.glPopMatrix();
 
         FluidStack containedFluid = tileEntity.containedFluid();
-        if (containedFluid instanceof FluidWithIconSymbol)
+        if (containedFluid != null && containedFluid.getFluid() instanceof FluidWithIconSymbol)
         {
-            IIcon drinkIcon = ((FluidWithIconSymbol) containedFluid).getIconSymbol(containedFluid, FluidWithIconSymbolRegistering.TEXTURE_TYPE_ITEM);
+            IIcon drinkIcon = ((FluidWithIconSymbol) containedFluid.getFluid()).getIconSymbol(containedFluid, FluidWithIconSymbolRegistering.TEXTURE_TYPE_ITEM);
             if (drinkIcon != null)
             {
                 this.bindTexture(TextureMap.locationItemsTexture);
