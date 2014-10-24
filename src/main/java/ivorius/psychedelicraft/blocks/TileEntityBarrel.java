@@ -6,30 +6,37 @@
 package ivorius.psychedelicraft.blocks;
 
 import ivorius.ivtoolkit.blocks.IvTileEntityHelper;
-import ivorius.psychedelicraft.items.DrinkInformation;
-import net.minecraft.block.Block;
+import ivorius.psychedelicraft.fluids.FluidFermentable;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.TileFluidHandler;
 
-public class TileEntityBarrel extends TileEntity
+import static ivorius.psychedelicraft.fluids.FluidHelper.MILLIBUCKETS_PER_LITER;
+
+public class TileEntityBarrel extends TileFluidHandler
 {
-    public int ticksExisted;
-
-    public DrinkInformation containedDrink;
+    public static final int BARREL_CAPACITY = MILLIBUCKETS_PER_LITER * 16;
 
     public int barrelWoodType;
 
     public float tapRotation = 0.0f;
     public int timeLeftTapOpen = 0;
 
+    public TileEntityBarrel()
+    {
+        tank = new FluidTank(BARREL_CAPACITY);
+    }
+
     @Override
     public void updateEntity()
     {
-        ticksExisted++;
+        FluidStack fluidStack = tank.getFluid();
+        if (fluidStack instanceof FluidFermentable)
+            ((FluidFermentable) fluidStack).updateFermenting(fluidStack);
 
         if (timeLeftTapOpen > 0)
         {
@@ -51,11 +58,6 @@ public class TileEntityBarrel extends TileEntity
     {
         super.writeToNBT(nbttagcompound);
 
-        nbttagcompound.setInteger("ticksExisted", ticksExisted);
-
-        if (containedDrink != null)
-            nbttagcompound.setTag("containedDrink", containedDrink.writeToNBT());
-
         nbttagcompound.setInteger("barrelWoodType", barrelWoodType);
 
         nbttagcompound.setInteger("timeLeftTapOpen", timeLeftTapOpen);
@@ -67,15 +69,15 @@ public class TileEntityBarrel extends TileEntity
     {
         super.readFromNBT(nbttagcompound);
 
-        ticksExisted = nbttagcompound.getInteger("ticksExisted");
-
-        if (nbttagcompound.hasKey("containedDrink", Constants.NBT.TAG_COMPOUND))
-            containedDrink = new DrinkInformation(nbttagcompound.getCompoundTag("containedDrink"));
-
         barrelWoodType = nbttagcompound.getInteger("barrelWoodType");
 
         timeLeftTapOpen = nbttagcompound.getInteger("timeLeftTapOpen");
         tapRotation = nbttagcompound.getFloat("tapRotation");
+    }
+
+    public FluidStack containedFluid()
+    {
+        return tank.getFluid();
     }
 
     public int getBlockRotation()

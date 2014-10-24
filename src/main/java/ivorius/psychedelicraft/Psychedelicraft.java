@@ -21,6 +21,7 @@ import ivorius.psychedelicraft.crafting.PSCrafting;
 import ivorius.psychedelicraft.crafting.PSRegistryHandler;
 import ivorius.psychedelicraft.entities.DrugInfluence;
 import ivorius.psychedelicraft.entities.DrugInfluenceHarmonium;
+import ivorius.psychedelicraft.entities.DrugRegistry;
 import ivorius.psychedelicraft.events.PSEventFMLHandler;
 import ivorius.psychedelicraft.events.PSEventForgeHandler;
 import ivorius.psychedelicraft.gui.PSGuiHandler;
@@ -63,14 +64,10 @@ public class Psychedelicraft
     public static CreativeTabPsyche drinksTab;
     public static CreativeTabPsyche weaponsTab;
 
-    public static String filePathTexturesFull = "psychedelicraft:textures/mod/";
     public static String filePathTextures = "textures/mod/";
     public static String filePathOther = "other/";
     public static String filePathShaders = "shaders/";
-    public static String textureBase = "psychedelicraft:";
-    public static String soundBase = "psychedelicraft:";
-    public static String otherBase = "psychedelicraft:";
-    public static String shaderBase = "psychedelicraft:";
+    public static String modBase = "psychedelicraft:";
 
     public static EntityPlayer.EnumStatus sleepStatusDrugs;
 
@@ -123,8 +120,8 @@ public class Psychedelicraft
         drinksTab.tabIcon = PSItems.itemBarrel;
         weaponsTab.tabIcon = PSItems.molotovCocktail;
 
-        DrugInfluence.registerInfluence(DrugInfluence.class, "default");
-        DrugInfluence.registerInfluence(DrugInfluenceHarmonium.class, "harmonium");
+        DrugRegistry.registerInfluence(DrugInfluence.class, "default");
+        DrugRegistry.registerInfluence(DrugInfluenceHarmonium.class, "harmonium");
 
         PSRegistryHandler.load(event, this);
 

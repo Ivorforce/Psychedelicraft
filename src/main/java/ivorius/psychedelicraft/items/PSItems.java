@@ -12,15 +12,15 @@ import net.minecraft.item.Item;
  */
 public class PSItems
 {
-    public static ItemDrinkHolder woodenMug;
-    public static ItemDrinkHolder woodenBowlDrug;
-    public static ItemDrinkHolder glassChalice;
+    public static ItemCup woodenMug;
+    public static ItemCup woodenBowlDrug;
+    public static ItemCup glassChalice;
 
     public static ItemBarrel itemBarrel;
 
     public static Item wineGrapes;
-    public static ItemDrinkHolder bottle;
-    public static ItemDrinkHolder molotovCocktail;
+    public static ItemBottleDrinkable bottle;
+    public static ItemMolotovCocktail molotovCocktail;
 
     public static Item cannabisSeeds;
     public static Item cannabisLeaf;
@@ -45,7 +45,7 @@ public class PSItems
     public static Item cocaLeaf;
     public static Item driedCocaLeaves;
 
-    public static ItemSyringe syringe;
+    public static ItemInjectable syringe;
 
     public static Item juniperBerries;
 

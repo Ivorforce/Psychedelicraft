@@ -5,18 +5,19 @@
 
 package ivorius.psychedelicraft.blocks;
 
-import ivorius.psychedelicraft.items.*;
+import ivorius.psychedelicraft.fluids.FluidFermentable;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidContainerItem;
 
 public class BlockBarrel extends BlockContainer
 {
@@ -60,12 +61,13 @@ public class BlockBarrel extends BlockContainer
             if (tileEntity instanceof TileEntityBarrel)
             {
                 TileEntityBarrel tileEntityBarrel = (TileEntityBarrel) tileEntity;
-                DrinkInformation drinkInformation = tileEntityBarrel.containedDrink;
+                FluidStack fluidStack = tileEntityBarrel.drain(ForgeDirection.DOWN, TileEntityBarrel.BARREL_CAPACITY, true);
+                ItemStack stack = new ItemStack(this, 1, ((TileEntityBarrel) tileEntity).barrelWoodType);
 
-                if (drinkInformation != null && drinkInformation.getFillings() > 0)
-                    dropBlockAsItem(world, x, y, z, PSItems.itemBarrel.createBarrel(drinkInformation, tileEntityBarrel.barrelWoodType));
-                else
-                    dropBlockAsItem(world, x, y, z, PSItems.itemBarrel.createBarrel(null, tileEntityBarrel.barrelWoodType));
+                if (fluidStack != null && fluidStack.amount > 0)
+                    ((IFluidContainerItem) stack.getItem()).fill(stack, fluidStack, true);
+
+                dropBlockAsItem(world, x, y, z, stack);
             }
         }
 
@@ -88,37 +90,17 @@ public class BlockBarrel extends BlockContainer
 
             ItemStack heldItem = player.getHeldItem();
 
-            if (heldItem != null && heldItem.getItem() instanceof ItemDrinkHolder)
+            if (heldItem != null && heldItem.getItem() instanceof IFluidContainerItem)
             {
-                DrinkInformation containedDrink = tileEntityBarrel.containedDrink;
+                IFluidContainerItem fluidContainerItem = (IFluidContainerItem) heldItem.getItem();
 
-                if (!world.isRemote && containedDrink != null && containedDrink.getFillings() > 0)
+                int maxFill = fluidContainerItem.fill(heldItem, tileEntityBarrel.drain(ForgeDirection.DOWN, 1, false), false);
+                if (maxFill > 0)
                 {
-                    int rotation = tileEntityBarrel.getBlockRotation();
-                    float xPlus = rotation == 1 ? 1.0f : (rotation == 3 ? -1.0f : 0.0f);
-                    float zPlus = rotation == 0 ? -1.0f : (rotation == 2 ? 1.0f : 0.0f);
-
-                    ItemDrinkHolder drinkHolder = (ItemDrinkHolder) heldItem.getItem();
-                    int fillingsTransferred = ItemDrinkHolder.maxFillingsTransferred(containedDrink, heldItem);
-
-                    if (fillingsTransferred > 0)
+                    if (!world.isRemote)
                     {
-                        DrinkInformation fermentedDrinkInfo = containedDrink.createDrinkInfo(drinkHolder, fillingsTransferred, tileEntityBarrel.ticksExisted);
-
-                        if (fermentedDrinkInfo != null)
-                        {
-                            ItemStack fermentedStack = drinkHolder.createDrinkStack(1, fermentedDrinkInfo);
-                            EntityItem entityItem = new EntityItem(world, x + xPlus + 0.5f, y + 0.5f, z + zPlus + 0.5f, fermentedStack);
-                            entityItem.delayBeforeCanPickup = 10;
-                            world.spawnEntityInWorld(entityItem);
-
-                            tileEntityBarrel.containedDrink.decrementFillings(fillingsTransferred);
-
-                            if (player.getHeldItem().stackSize > 1)
-                                player.getHeldItem().stackSize--;
-                            else
-                                player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
-                        }
+                        FluidStack drained = tileEntityBarrel.drain(ForgeDirection.DOWN, maxFill, true);
+                        fluidContainerItem.fill(heldItem, drained, true);
                     }
                 }
 
@@ -132,7 +114,7 @@ public class BlockBarrel extends BlockContainer
     }
 
     @Override
-    public void registerBlockIcons(IIconRegister par1IconRegister)
+    public void registerBlockIcons(IIconRegister iconRegister)
     {
 
     }

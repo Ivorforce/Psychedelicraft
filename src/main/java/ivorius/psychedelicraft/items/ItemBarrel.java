@@ -6,45 +6,30 @@
 package ivorius.psychedelicraft.items;
 
 import ivorius.psychedelicraft.blocks.TileEntityBarrel;
+import ivorius.psychedelicraft.fluids.DrinkableFluid;
+import ivorius.psychedelicraft.fluids.FluidHelper;
+import ivorius.psychedelicraft.fluids.FluidWithIconSymbol;
+import ivorius.psychedelicraft.fluids.FluidWithIconSymbolRegistering;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagInt;
-import net.minecraft.nbt.NBTTagString;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidStack;
 
-import java.util.*;
+import java.util.List;
 
-public class ItemBarrel extends ItemBlock
+public class ItemBarrel extends ItemBlockFluidContainer
 {
     public static final int DEFAULT_FILLINGS = 16;
-
-    public ItemStack createBarrel(DrinkInformation drinkInformation, int woodType)
-    {
-        ItemStack stack = new ItemStack(this, 1, woodType);
-
-        if (drinkInformation != null)
-            stack.setTagInfo("drinkInfo", drinkInformation.writeToNBT());
-
-        return stack;
-    }
-
-    public static DrinkInformation getDrinkInfo(ItemStack stack)
-    {
-        return stack.hasTagCompound() && stack.getTagCompound().hasKey("drinkInfo", Constants.NBT.TAG_COMPOUND) ? new DrinkInformation(stack.getTagCompound().getCompoundTag("drinkInfo")) : null;
-    }
 
     private IIcon spruceIcon;
     private IIcon darkOakIcon;
@@ -81,25 +66,36 @@ public class ItemBarrel extends ItemBlock
         if (tileEntity != null && tileEntity instanceof TileEntityBarrel)
         {
             TileEntityBarrel tileEntityBarrel = (TileEntityBarrel) tileEntity;
-            tileEntityBarrel.containedDrink = getDrinkInfo(stack);
+            tileEntityBarrel.fill(ForgeDirection.UP, getFluid(stack), true);
             tileEntityBarrel.barrelWoodType = stack.getItemDamage();
         }
 
-        stack.stackSize--;
+        stack.stackSize = 0;
 
         return true;
     }
 
     @Override
-    public void registerIcons(IIconRegister par1IconRegister)
+    public String getItemStackDisplayName(ItemStack stack)
     {
-        super.registerIcons(par1IconRegister);
+        FluidStack fluidStack = getFluid(stack);
 
-        spruceIcon = par1IconRegister.registerIcon(this.field_150939_a.getItemIconName() + "_spruce");
-        darkOakIcon = par1IconRegister.registerIcon(this.field_150939_a.getItemIconName() + "_darkOak");
+        if (fluidStack != null)
+        {
+            String fluidName = fluidStack.getLocalizedName();
+            return I18n.format(this.getUnlocalizedNameInefficiently(stack) + ".full.name", fluidName);
+        }
 
-        for (IDrink drink : DrinkRegistry.getAllDrinks())
-            drink.registerItemIcons(par1IconRegister);
+        return super.getItemStackDisplayName(stack);
+    }
+
+    @Override
+    public void registerIcons(IIconRegister iconRegister)
+    {
+        super.registerIcons(iconRegister);
+
+        spruceIcon = iconRegister.registerIcon(this.field_150939_a.getItemIconName() + "_spruce");
+        darkOakIcon = iconRegister.registerIcon(this.field_150939_a.getItemIconName() + "_darkOak");
     }
 
     @Override
@@ -119,12 +115,12 @@ public class ItemBarrel extends ItemBlock
     {
         if (pass == 1)
         {
-            DrinkInformation drinkInfo = getDrinkInfo(stack);
-            if (drinkInfo != null)
+            FluidStack fluidStack = getFluid(stack);
+            if (fluidStack != null && fluidStack.getFluid() instanceof FluidWithIconSymbol)
             {
-                IIcon icon = drinkInfo.getDrinkIcon();
-                if (icon != null)
-                    return icon;
+                IIcon iconSymbol = ((FluidWithIconSymbol) fluidStack.getFluid()).getIconSymbol(fluidStack, FluidWithIconSymbolRegistering.TEXTURE_TYPE_ITEM);
+                if (iconSymbol != null)
+                    return iconSymbol;
             }
         }
 
@@ -148,59 +144,13 @@ public class ItemBarrel extends ItemBlock
 
     public void getSubItems(Item item, CreativeTabs tab, List list, int woodType)
     {
-        for (IDrink drink : DrinkRegistry.getAllDrinks())
+        list.add(new ItemStack(item, 1, woodType));
+
+        for (FluidStack fluidStack : FluidHelper.allFluids(DrinkableFluid.SUBTYPE, capacity))
         {
-            for (NBTTagCompound compound : drink.creativeTabInfos(item, tab))
-            {
-                ItemStack stack = createBarrel(new DrinkInformation(DrinkRegistry.getDrinkID(drink), DEFAULT_FILLINGS, compound), woodType);
-                list.add(stack);
-            }
-        }
-    }
-
-    @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
-    {
-        super.addInformation(stack, player, list, par4);
-
-        DrinkInformation drinkInfo = getDrinkInfo(stack);
-
-        if (drinkInfo != null)
-        {
-            String translationKey = drinkInfo.getFullTranslationKey();
-            if (translationKey != null)
-                list.add(StatCollector.translateToLocal(translationKey).trim());
-        }
-    }
-
-    public static class BarrelMaterialEntry
-    {
-        private Block block;
-        private int metadata;
-        private String itemIcon;
-        private ResourceLocation barrelTexture;
-
-        public BarrelMaterialEntry(Block block, int metadata, String itemIcon, ResourceLocation barrelTexture)
-        {
-            this.block = block;
-            this.metadata = metadata;
-            this.itemIcon = itemIcon;
-            this.barrelTexture = barrelTexture;
-        }
-
-        public boolean matches(Block block, int metadata)
-        {
-            return this.block == block && this.metadata == metadata;
-        }
-
-        public String getItemIcon()
-        {
-            return itemIcon;
-        }
-
-        public ResourceLocation getBarrelTexture()
-        {
-            return barrelTexture;
+            ItemStack stack = new ItemStack(item, 1, woodType);
+            fill(stack, fluidStack, true);
+            list.add(stack);
         }
     }
 }

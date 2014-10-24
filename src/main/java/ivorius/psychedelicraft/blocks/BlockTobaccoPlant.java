@@ -10,7 +10,6 @@ import ivorius.psychedelicraft.items.PSItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -169,14 +168,14 @@ public class BlockTobaccoPlant extends Block implements IvBonemealCompatibleBloc
         super.registerBlockIcons(par1IconRegister);
 
         icons[0] = blockIcon;
-        icons[1] = par1IconRegister.registerIcon(Psychedelicraft.textureBase + "tobaccoPlant1");
-        icons[2] = par1IconRegister.registerIcon(Psychedelicraft.textureBase + "tobaccoPlant2");
-        icons[3] = par1IconRegister.registerIcon(Psychedelicraft.textureBase + "tobaccoPlant3");
+        icons[1] = par1IconRegister.registerIcon(Psychedelicraft.modBase + "tobaccoPlant1");
+        icons[2] = par1IconRegister.registerIcon(Psychedelicraft.modBase + "tobaccoPlant2");
+        icons[3] = par1IconRegister.registerIcon(Psychedelicraft.modBase + "tobaccoPlant3");
 
-        icons[4] = par1IconRegister.registerIcon(Psychedelicraft.textureBase + "tobaccoPlantTop");
-        icons[5] = par1IconRegister.registerIcon(Psychedelicraft.textureBase + "tobaccoPlant1Top");
-        icons[6] = par1IconRegister.registerIcon(Psychedelicraft.textureBase + "tobaccoPlant2Top");
-        icons[7] = par1IconRegister.registerIcon(Psychedelicraft.textureBase + "tobaccoPlant3Top");
+        icons[4] = par1IconRegister.registerIcon(Psychedelicraft.modBase + "tobaccoPlantTop");
+        icons[5] = par1IconRegister.registerIcon(Psychedelicraft.modBase + "tobaccoPlant1Top");
+        icons[6] = par1IconRegister.registerIcon(Psychedelicraft.modBase + "tobaccoPlant2Top");
+        icons[7] = par1IconRegister.registerIcon(Psychedelicraft.modBase + "tobaccoPlant3Top");
     }
 
     @Override

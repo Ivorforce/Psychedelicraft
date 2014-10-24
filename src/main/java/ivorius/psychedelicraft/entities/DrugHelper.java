@@ -7,7 +7,6 @@ package ivorius.psychedelicraft.entities;
 
 import cpw.mods.fml.common.network.ByteBufUtils;
 import io.netty.buffer.ByteBuf;
-import ivorius.ivtoolkit.network.IvNetworkHelperServer;
 import ivorius.ivtoolkit.network.PartialUpdateHandler;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
@@ -335,7 +334,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
                     speed += getDrugValue("Caffeine") * 0.2f;
 
                     delayUntilHeartbeat = (int) (35.0f - (speed - 1.0f) * 80.0f);
-                    entity.worldObj.playSound(entity.posX, entity.posY, entity.posZ, Psychedelicraft.soundBase + "heartBeat", heartbeatVolume, speed, false);
+                    entity.worldObj.playSound(entity.posX, entity.posY, entity.posZ, Psychedelicraft.modBase + "heartBeat", heartbeatVolume, speed, false);
                 }
             }
             if (getDrugValue("Cocaine") > 0.4f && delayUntilBreath == 0)
@@ -343,7 +342,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
                 delayUntilBreath = (int) (30.0f - getDrugValue("Cocaine") * 10.0f);
                 breathDeep = !breathDeep;
 
-                entity.worldObj.playSound(entity.posX, entity.posY, entity.posZ, Psychedelicraft.soundBase + "breath", (getDrugValue("Cocaine") - 0.4f) * 1.5f, 1.0f + getDrugValue("Cocaine") * 0.1f + (breathDeep ? 0.15f : 0.0f), false);
+                entity.worldObj.playSound(entity.posX, entity.posY, entity.posZ, Psychedelicraft.modBase + "breath", (getDrugValue("Cocaine") - 0.4f) * 1.5f, 1.0f + getDrugValue("Cocaine") * 0.1f + (breathDeep ? 0.15f : 0.0f), false);
             }
 
             if (getDrugValue("Caffeine") > 0.0f)
@@ -481,7 +480,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
         {
             NBTTagCompound compound = influenceTagList.getCompoundTagAt(i);
 
-            Class<? extends DrugInfluence> influenceClass = DrugInfluence.keyToClass.get(compound.getString("influenceClass"));
+            Class<? extends DrugInfluence> influenceClass = DrugRegistry.getClass(compound.getString("influenceClass"));
 
             if (influenceClass != null)
             {
@@ -530,7 +529,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
         {
             NBTTagCompound compound = new NBTTagCompound();
             influence.writeToNBT(compound);
-            compound.setString("influenceClass", DrugInfluence.classToKey.get(influence.getClass()));
+            compound.setString("influenceClass", DrugRegistry.getID(influence.getClass()));
             influenceTagList.appendTag(compound);
         }
         par1NBTTagCompound.setTag("drugInfluences", influenceTagList);

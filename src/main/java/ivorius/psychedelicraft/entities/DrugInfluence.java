@@ -13,23 +13,15 @@ import java.util.Map;
 
 public class DrugInfluence
 {
-    public static Map<String, Class<? extends DrugInfluence>> keyToClass = new HashMap<>();
-    public static Map<Class<? extends DrugInfluence>, String> classToKey = new HashMap<>();
 
-    private String drugName;
+    protected String drugName;
 
-    private int delay;
+    protected int delay;
 
-    private double influenceSpeed;
-    private double influenceSpeedPlus;
+    protected double influenceSpeed;
+    protected double influenceSpeedPlus;
 
-    private double maxInfluence;
-
-    public static void registerInfluence(Class<? extends DrugInfluence> clazz, String key)
-    {
-        keyToClass.put(key, clazz);
-        classToKey.put(clazz, key);
-    }
+    protected double maxInfluence;
 
     public DrugInfluence(String drugName, int delay, double influenceSpeed, double influenceSpeedPlus, double maxInfluence)
     {
@@ -58,9 +50,19 @@ public class DrugInfluence
         return delay;
     }
 
+    public void setDelay(int delay)
+    {
+        this.delay = delay;
+    }
+
     public double getInfluenceSpeed()
     {
         return influenceSpeed;
+    }
+
+    public void setInfluenceSpeed(double influenceSpeed)
+    {
+        this.influenceSpeed = influenceSpeed;
     }
 
     public double getInfluenceSpeedPlus()
@@ -68,9 +70,19 @@ public class DrugInfluence
         return influenceSpeedPlus;
     }
 
+    public void setInfluenceSpeedPlus(double influenceSpeedPlus)
+    {
+        this.influenceSpeedPlus = influenceSpeedPlus;
+    }
+
     public double getMaxInfluence()
     {
         return maxInfluence;
+    }
+
+    public void setMaxInfluence(double maxInfluence)
+    {
+        this.maxInfluence = maxInfluence;
     }
 
     public void update(DrugHelper drugHelper)

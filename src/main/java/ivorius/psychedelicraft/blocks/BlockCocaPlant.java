@@ -174,9 +174,9 @@ public class BlockCocaPlant extends Block implements IvBonemealCompatibleBlock, 
     {
         super.registerBlockIcons(par1IconRegister);
 
-        icons[0] = par1IconRegister.registerIcon(Psychedelicraft.textureBase + "cocaPlant1");
-        icons[1] = par1IconRegister.registerIcon(Psychedelicraft.textureBase + "cocaPlant2");
-        icons[2] = par1IconRegister.registerIcon(Psychedelicraft.textureBase + "cocaPlant3");
+        icons[0] = par1IconRegister.registerIcon(Psychedelicraft.modBase + "cocaPlant1");
+        icons[1] = par1IconRegister.registerIcon(Psychedelicraft.modBase + "cocaPlant2");
+        icons[2] = par1IconRegister.registerIcon(Psychedelicraft.modBase + "cocaPlant3");
     }
 
     @Override

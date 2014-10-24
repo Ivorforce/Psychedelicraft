@@ -7,10 +7,12 @@ package ivorius.psychedelicraft.worldgen;
 
 import ivorius.psychedelicraft.PSConfig;
 import ivorius.psychedelicraft.blocks.PSBlocks;
-import ivorius.psychedelicraft.items.DrinkInformation;
-import ivorius.psychedelicraft.items.ItemSyringe;
+import ivorius.psychedelicraft.fluids.PSFluids;
+import ivorius.psychedelicraft.items.ItemInjectable;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.fluids.FluidStack;
 
 import static cpw.mods.fml.common.registry.GameRegistry.registerWorldGenerator;
 import static ivorius.psychedelicraft.items.PSItems.*;
@@ -89,10 +91,23 @@ public class PSWorldGen
             addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(cigarette, 0, 1, 16, 1));
             addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(cigar, 0, 1, 1, 1));
             addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(joint, 0, 1, 1, 1));
-            addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(woodenMug.createDrinkStack(1, new DrinkInformation("coldCoffee", 1)), 1, 4, 1));
-            addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(woodenBowlDrug.createDrinkStack(1, new DrinkInformation("peyote", 1)), 1, 1, 1));
-            addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(syringe, ItemSyringe.damageCocaine, 1, 1, 1));
-            addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(syringe, ItemSyringe.damageCaffeine, 1, 1, 1));
+
+            ItemStack coffeeStack = new ItemStack(woodenMug);
+            woodenMug.fill(coffeeStack, new FluidStack(PSFluids.coffee, 1), true);
+            addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(coffeeStack, 1, 4, 1));
+
+            ItemStack peyoteStack = new ItemStack(woodenBowlDrug);
+            woodenBowlDrug.fill(coffeeStack, new FluidStack(PSFluids.peyoteJuice, 1), true);
+            addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(peyoteStack, 1, 1, 1));
+
+            ItemStack cocaineStack = new ItemStack(syringe);
+            syringe.fill(coffeeStack, new FluidStack(PSFluids.cocaineFluid, 1), true);
+            addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(cocaineStack, 1, 1, 1));
+
+            ItemStack caffeineStack = new ItemStack(syringe);
+            syringe.fill(coffeeStack, new FluidStack(PSFluids.caffeineFluid, 1), true);
+            addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(caffeineStack, 1, 1, 1));
+
             addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(hashMuffin, 0, 1, 8, 1));
         }
     }

@@ -139,10 +139,10 @@ public class BlockWineGrapeLattice extends Block implements IvBonemealCompatible
     {
         super.registerBlockIcons(par1IconRegister);
 
-        leavesIcons[0] = par1IconRegister.registerIcon(Psychedelicraft.textureBase + "grapeLeaves0");
-        leavesIcons[1] = par1IconRegister.registerIcon(Psychedelicraft.textureBase + "grapeLeaves1");
-        leavesIcons[2] = par1IconRegister.registerIcon(Psychedelicraft.textureBase + "grapeLeaves2");
-        leavesIcons[3] = par1IconRegister.registerIcon(Psychedelicraft.textureBase + "grapeLeaves3");
+        leavesIcons[0] = par1IconRegister.registerIcon(Psychedelicraft.modBase + "grapeLeaves0");
+        leavesIcons[1] = par1IconRegister.registerIcon(Psychedelicraft.modBase + "grapeLeaves1");
+        leavesIcons[2] = par1IconRegister.registerIcon(Psychedelicraft.modBase + "grapeLeaves2");
+        leavesIcons[3] = par1IconRegister.registerIcon(Psychedelicraft.modBase + "grapeLeaves3");
 
         currentIcon = getDefaultBlockIcon();
     }

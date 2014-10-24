@@ -145,12 +145,12 @@ public class BlockCoffea extends Block implements IvBonemealCompatibleBlock, IvT
         bottomIcons[0] = blockIcon;
         for (int i = 1; i < 8; i++)
         {
-            bottomIcons[i] = par1IconRegister.registerIcon(Psychedelicraft.textureBase + "coffea" + i);
+            bottomIcons[i] = par1IconRegister.registerIcon(Psychedelicraft.modBase + "coffea" + i);
         }
 
         for (int i = 0; i < 4; i++)
         {
-            topIcons[i] = par1IconRegister.registerIcon(Psychedelicraft.textureBase + "coffeaTop" + i);
+            topIcons[i] = par1IconRegister.registerIcon(Psychedelicraft.modBase + "coffeaTop" + i);
         }
     }
 

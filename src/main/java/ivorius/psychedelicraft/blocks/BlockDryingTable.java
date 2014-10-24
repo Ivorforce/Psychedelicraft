@@ -39,8 +39,8 @@ public class BlockDryingTable extends BlockContainer
     {
         super.registerBlockIcons(par1IconRegister);
 
-        bottomIcon = par1IconRegister.registerIcon(Psychedelicraft.textureBase + "dryingTableBottom");
-        topIcon = par1IconRegister.registerIcon(Psychedelicraft.textureBase + "dryingTableTop");
+        bottomIcon = par1IconRegister.registerIcon(Psychedelicraft.modBase + "dryingTableBottom");
+        topIcon = par1IconRegister.registerIcon(Psychedelicraft.modBase + "dryingTableTop");
     }
 
     @Override

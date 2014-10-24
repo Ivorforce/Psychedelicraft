@@ -5,8 +5,6 @@
 
 package ivorius.psychedelicraft.crafting;
 
-import ivorius.psychedelicraft.items.DrinkInformation;
-import ivorius.psychedelicraft.items.ItemDrinkHolder;
 import ivorius.psychedelicraft.items.PSItems;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
@@ -15,6 +13,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidContainerItem;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -29,19 +29,19 @@ public class RecipeFillDrink implements IRecipe
     /**
      * Is the ItemStack that you get when craft the recipe.
      */
-    private final DrinkInformation recipeOutput;
+    private final FluidStack recipeOutput;
     /**
      * Is a List of ItemStack that composes the recipe.
      */
     public final List<ItemStack> recipeItems;
 
-    public RecipeFillDrink(DrinkInformation recipeOutput, List<ItemStack> items)
+    public RecipeFillDrink(FluidStack recipeOutput, List<ItemStack> items)
     {
         this.recipeOutput = recipeOutput;
         this.recipeItems = items;
     }
 
-    public RecipeFillDrink(DrinkInformation recipeOutput, Object... items)
+    public RecipeFillDrink(FluidStack recipeOutput, Object... items)
     {
         this(recipeOutput, stacks(items));
     }
@@ -75,7 +75,7 @@ public class RecipeFillDrink implements IRecipe
     {
         ArrayList<ItemStack> arraylist = new ArrayList<>(this.recipeItems);
 
-        ItemStack drinkHolder = getFirstDrinkHolder(inventoryCrafting, recipeOutput.getFillings());
+        ItemStack drinkHolder = getFirstDrinkHolder(inventoryCrafting, recipeOutput);
         if (drinkHolder == null)
             return false;
         arraylist.add(drinkHolder);
@@ -119,7 +119,7 @@ public class RecipeFillDrink implements IRecipe
      */
     public ItemStack getCraftingResult(InventoryCrafting inventoryCrafting)
     {
-        ItemStack drinkHolder = getFirstDrinkHolder(inventoryCrafting, recipeOutput.getFillings());
+        ItemStack drinkHolder = getFirstDrinkHolder(inventoryCrafting, recipeOutput);
 
         ItemStack result;
 
@@ -131,11 +131,11 @@ public class RecipeFillDrink implements IRecipe
             result.stackSize = 1;
         }
 
-        ((ItemDrinkHolder) result.getItem()).setDrinkInfo(result, recipeOutput.clone());
+        ((IFluidContainerItem) result.getItem()).fill(result, recipeOutput, true);
         return result;
     }
 
-    public ItemStack getFirstDrinkHolder(InventoryCrafting inventoryCrafting, int neededFillings)
+    public ItemStack getFirstDrinkHolder(InventoryCrafting inventoryCrafting, FluidStack fluidStack)
     {
         for (int i = 0; i < 3; ++i)
         {
@@ -143,10 +143,8 @@ public class RecipeFillDrink implements IRecipe
             {
                 ItemStack itemstack = inventoryCrafting.getStackInRowAndColumn(j, i);
 
-                if (itemstack != null && (itemstack.getItem() instanceof ItemDrinkHolder && ((ItemDrinkHolder) itemstack.getItem()).getMaxDrinkFilling() >= neededFillings))
+                if (itemstack != null && (itemstack.getItem() instanceof IFluidContainerItem && ((IFluidContainerItem) itemstack.getItem()).fill(itemstack, fluidStack, false) >= fluidStack.amount))
                     return itemstack;
-                if (itemstack != null && itemstack.getItem() == Items.bowl && neededFillings <= PSItems.woodenBowlDrug.getMaxDrinkFilling())
-                    return itemstack; // Hacky but eh
             }
         }
 

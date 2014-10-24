@@ -41,34 +41,35 @@ item.riftJar.halfFilled=Half Full
 item.riftJar.full=Full
 item.riftJar.overflowing=Overflowing
 tile.glitched.name=Block $__0
-item.woodenMug.name=Wooden Mug
-item.glassChalice.name=Glass Chalice
-item.woodenBowlDrug.name=Wooden Bowl
 
-item.ygcBottle.name=Bottle
-item.ygcBottle.full.name=Bottle of %s
-item.ygcBottle.empty.name=Empty Bottle
+item.woodenMug.name=Wooden Mug
+item.woodenMug.full.name=Wooden Mug of %s
+
+item.glassChalice.name=Glass Chalice
+item.glassChalice.full.name=Glass Chalice of %s
+
+item.woodenBowlDrug.name=Wooden Bowl
+item.woodenBowlDrug.full.name=Wooden Bowl of %s
+
+item.pscBottle.name=Bottle
+item.pscBottle.full.name=Bottle of %s
 
 item.molotovCocktail.name=Molotov Cocktail
 item.molotovCocktail.empty.name=Empty Molotov Cocktail
-item.molotovCocktail.quality0.name=Bottle of %s
-item.molotovCocktail.quality1.name=Useless Molotov Cocktail
+item.molotovCocktail.quality0.name=Useless Molotov Cocktail
+item.molotovCocktail.quality1.name=Horrible Molotov Cocktail
 item.molotovCocktail.quality2.name=Bad Molotov Cocktail
 item.molotovCocktail.quality3.name=Decent Molotov Cocktail
 item.molotovCocktail.quality4.name=Good Molotov Cocktail
 item.molotovCocktail.quality5.name=Excellent Molotov Cocktail
 item.molotovCocktail.quality6.name=Perfect Molotov Cocktail
+item.molotovCocktail.quality7.name=Unreal Molotov Cocktail
 
 tile.barrel.name=Barrel
-tile.barrel.wine.name=Wine Barrel
-tile.barrel.beer.name=Beer Barrel
-tile.barrel.jenever.name=Jenever Barrel
-tile.barrel.vodka.name=Vodka Barrel
+tile.barrel.full.name=%s Barrel
 
-item.syringe.name=Empty Syringe
-item.syringe.caffeine.name=Caffeine Shot
-item.syringe.cocaine.name=Cocaine Shot
-item.syringe.zero.name=0
+item.syringe.name=Syringe
+item.syringe.full.name=Syringe - %s
 
 item.harmonium.dye0.name=Black Harmonium
 item.harmonium.dye1.name=Red Harmonium
@@ -92,22 +93,24 @@ entity.molotovCocktail.name=Molotov Cocktail
 
 tile.bed.onDrugs=The drugs in your body keep you awake
 
-psDrink.beer=Beer
-psDrink.jenever=Jenever
-psDrink.coffee=Warm Coffee
-psDrink.coldCoffee=Cold Coffee
-psDrink.peyote=Peyote
-psDrink.cocaTea=Coca Tea
-psDrink.cannabisTea=Cannabis Tea
-psDrink.vodka=Vodka
-psDrink.wine.quality0=Grape juice
-psDrink.wine.quality1=Very Young Wine
-psDrink.wine.quality2=Young Wine
-psDrink.wine.quality3=Intermediate Wine
-psDrink.wine.quality4=Aged Wine
-psDrink.wine.quality5=Quality Wine
-psDrink.wine.quality6=Historical Wine
-psDrink.wine.vinegar=Vinegar
+fluid.pscBeer=Beer
+fluid.pscJenever=Jenever
+fluid.pscCoffee=Warm Coffee
+fluid.pscPeyoteJuice=Peyote
+fluid.pscCocaTea=Coca Tea
+fluid.pscCannabisTea=Cannabis Tea
+fluid.pscVodka=Vodka
+fluid.pscCocaineFluid=Cocaine
+fluid.pscCaffeineFluid=Caffeine
+fluid.pscWine=Wine
+fluid.pscWine.quality0=Grape juice
+fluid.pscWine.quality1=Very Young Wine
+fluid.pscWine.quality2=Young Wine
+fluid.pscWine.quality3=Intermediate Wine
+fluid.pscWine.quality4=Aged Wine
+fluid.pscWine.quality5=Quality Wine
+fluid.pscWine.quality6=Historical Wine
+fluid.pscWine.vinegar=Vinegar
 
 itemGroup.psychedelicraft=Psychedelicraft
 itemGroup.psycheDrinks=Drinks

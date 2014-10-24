@@ -7,19 +7,17 @@ package ivorius.psychedelicraft.client.rendering;
 
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.blocks.TileEntityBarrel;
-import ivorius.psychedelicraft.items.DrinkRegistry;
-import ivorius.psychedelicraft.items.IDrink;
-import ivorius.psychedelicraft.items.ItemBarrel;
-import ivorius.psychedelicraft.items.PSItems;
+import ivorius.psychedelicraft.fluids.FluidWithIconSymbol;
+import ivorius.psychedelicraft.fluids.FluidWithIconSymbolRegistering;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
 
 public class TileEntityRendererBarrel extends TileEntitySpecialRenderer
@@ -64,9 +62,10 @@ public class TileEntityRendererBarrel extends TileEntitySpecialRenderer
 
         GL11.glPopMatrix();
 
-        if (tileEntity.containedDrink != null)
+        FluidStack containedFluid = tileEntity.containedFluid();
+        if (containedFluid instanceof FluidWithIconSymbol)
         {
-            IIcon drinkIcon = tileEntity.containedDrink.getDrinkIcon();
+            IIcon drinkIcon = ((FluidWithIconSymbol) containedFluid).getIconSymbol(containedFluid, FluidWithIconSymbolRegistering.TEXTURE_TYPE_ITEM);
             if (drinkIcon != null)
             {
                 this.bindTexture(TextureMap.locationItemsTexture);

@@ -168,9 +168,9 @@ public class BlockCannabisPlant extends Block implements IvBonemealCompatibleBlo
     {
         super.registerBlockIcons(par1IconRegister);
 
-        textures[0] = par1IconRegister.registerIcon(Psychedelicraft.textureBase + "cannabisPlant1");
-        textures[1] = par1IconRegister.registerIcon(Psychedelicraft.textureBase + "cannabisPlant2");
-        textures[2] = par1IconRegister.registerIcon(Psychedelicraft.textureBase + "cannabisPlant3");
+        textures[0] = par1IconRegister.registerIcon(Psychedelicraft.modBase + "cannabisPlant1");
+        textures[1] = par1IconRegister.registerIcon(Psychedelicraft.modBase + "cannabisPlant2");
+        textures[2] = par1IconRegister.registerIcon(Psychedelicraft.modBase + "cannabisPlant3");
     }
 
     @Override

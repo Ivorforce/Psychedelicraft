@@ -5,44 +5,70 @@
 
 package ivorius.psychedelicraft.items;
 
+import ivorius.psychedelicraft.client.rendering.RenderPassesCustom;
+import ivorius.psychedelicraft.fluids.FluidHelper;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
-
-import java.util.List;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.ItemFluidContainer;
 
 /**
  * Created by lukas on 21.10.14.
  */
-public class ItemBottle extends ItemDrinkHolder
+public class ItemBottle extends ItemFluidContainer implements RenderPassesCustom
 {
-    private IIcon corkIcon;
+    private IIcon liquidIcon;
+    private IIcon overlayIcon;
 
-    public ItemBottle()
+    public ItemBottle(int capacity)
     {
-        maxStackSize = 16;
+        super(0, capacity);
+        setMaxStackSize(1);
         setHasSubtypes(true);
         setMaxDamage(0);
-    }
-
-    @Override
-    public int getMaxDrinkFilling()
-    {
-        return 4;
     }
 
     @Override
     public void registerIcons(IIconRegister par1IconRegister)
     {
         super.registerIcons(par1IconRegister);
-        corkIcon = par1IconRegister.registerIcon(getIconString() + "_cork");
+        liquidIcon = par1IconRegister.registerIcon(getIconString() + "_liquid");
+        overlayIcon = par1IconRegister.registerIcon(getIconString() + "_overlay");
     }
 
+    @Override
+    public IIcon getIcon(ItemStack stack, int pass)
+    {
+        if (getFluid(stack) == null)
+            pass ++;
+
+        return pass == 0 ? liquidIcon : pass == 1 ? super.getIcon(stack, pass) : overlayIcon;
+    }
+
+    @Override
+    public String getItemStackDisplayName(ItemStack stack)
+    {
+        FluidStack fluidStack = getFluid(stack);
+
+        if (fluidStack != null)
+        {
+            String fluidName = fluidStack.getLocalizedName();
+            return I18n.format(this.getUnlocalizedNameInefficiently(stack) + ".full.name", fluidName);
+        }
+
+        return super.getItemStackDisplayName(stack);
+    }
+
+    @Override
+    public ItemStack getContainerItem(ItemStack itemStack)
+    {
+        return new ItemStack(this, 1, itemStack.getItemDamage());
+    }
+
+    // Required because otherwise, stack is not passed for icon query
     @Override
     public boolean requiresMultipleRenderPasses()
     {
@@ -52,45 +78,32 @@ public class ItemBottle extends ItemDrinkHolder
     @Override
     public int getRenderPasses(int metadata)
     {
-        return 2;
+        return 1;
     }
 
     @Override
-    public IIcon getIcon(ItemStack stack, int pass)
+    public boolean hasAlphaCustom(ItemStack stack, int pass)
     {
-        return pass == 0 ? super.getIcon(stack, pass) : corkIcon;
+        return true;
+    }
+
+    @Override
+    public int getRenderPassesCustom(ItemStack stack)
+    {
+        return getFluid(stack) != null ? 3 : 2;
     }
 
     @Override
     public int getColorFromItemStack(ItemStack stack, int pass)
     {
-        return pass == 0 ? ItemDye.field_150922_c[stack.getItemDamage() % ItemDye.field_150922_c.length] : super.getColorFromItemStack(stack, pass);
-    }
+        if (getFluid(stack) == null)
+            pass ++;
 
-    @Override
-    public String getItemStackDisplayName(ItemStack stack)
-    {
-        DrinkInformation drinkInfo = getDrinkInfo(stack);
-
-        if (drinkInfo != null)
-        {
-            String drinkName = I18n.format(drinkInfo.getFullTranslationKey());
-            return I18n.format(this.getUnlocalizedNameInefficiently(stack) + ".full.name", drinkName);
-        }
-
-        return I18n.format(this.getUnlocalizedNameInefficiently(stack) + ".empty.name");
-    }
-
-    @Override
-    public ItemStack getContainerItem(ItemStack itemStack)
-    {
-        return new ItemStack(this, 1, itemStack.getItemDamage());
-    }
-
-    @Override
-    public void getSubItems(Item item, CreativeTabs tab, List list)
-    {
-        for (int i = 0; i < 16; i++)
-            getSubItems(item, tab, list, i);
+        if (pass == 0)
+            return FluidHelper.getTranslucentFluidColor(stack);
+        else if (pass == 1)
+            return ItemDye.field_150922_c[stack.getItemDamage() % ItemDye.field_150922_c.length] | 0xff000000;
+        else
+            return super.getColorFromItemStack(stack, pass) | 0xff000000;
     }
 }

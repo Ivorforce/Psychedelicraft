@@ -26,7 +26,7 @@ import java.util.Random;
 
 public class BlockPsycheLeaves extends BlockLeaves
 {
-    public static final String[][] field_150130_N = new String[][]{{Psychedelicraft.textureBase + "psycheLeaves_juniper", Psychedelicraft.textureBase + "psycheLeaves_juniperBerries"}, {Psychedelicraft.textureBase + "psycheLeaves_juniper_opaque", Psychedelicraft.textureBase + "psycheLeaves_juniperBerries_opaque"}};
+    public static final String[][] field_150130_N = new String[][]{{Psychedelicraft.modBase + "psycheLeaves_juniper", Psychedelicraft.modBase + "psycheLeaves_juniperBerries"}, {Psychedelicraft.modBase + "psycheLeaves_juniper_opaque", Psychedelicraft.modBase + "psycheLeaves_juniperBerries_opaque"}};
     public static final String[] field_150131_O = new String[]{"psycheLeaves_juniper", "psycheLeaves_juniperBerries"};
 
     @SideOnly(Side.CLIENT)
