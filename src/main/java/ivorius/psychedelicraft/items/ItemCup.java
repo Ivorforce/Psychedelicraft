@@ -87,4 +87,18 @@ public class ItemCup extends ItemFluidContainer
             list.add(stack);
         }
     }
+
+    @Override
+    public boolean showDurabilityBar(ItemStack stack)
+    {
+        FluidStack fluidStack = getFluid(stack);
+        return fluidStack != null && fluidStack.amount < capacity;
+    }
+
+    @Override
+    public double getDurabilityForDisplay(ItemStack stack)
+    {
+        FluidStack fluidStack = getFluid(stack);
+        return fluidStack != null ? 1.0 - ((double) fluidStack.amount / (double) capacity) : 0.0;
+    }
 }

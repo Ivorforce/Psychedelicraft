@@ -37,6 +37,7 @@ public class ItemInjectable extends ItemFluidContainer implements RenderPassesCu
         super(0, capacity);
 
         this.setHasSubtypes(true);
+        setMaxDamage(0);
         setMaxStackSize(1);
     }
 
@@ -167,5 +168,19 @@ public class ItemInjectable extends ItemFluidContainer implements RenderPassesCu
             return FluidHelper.getTranslucentFluidColor(stack);
         else
             return super.getColorFromItemStack(stack, pass) | 0xff000000;
+    }
+
+    @Override
+    public boolean showDurabilityBar(ItemStack stack)
+    {
+        FluidStack fluidStack = getFluid(stack);
+        return fluidStack != null && fluidStack.amount < capacity;
+    }
+
+    @Override
+    public double getDurabilityForDisplay(ItemStack stack)
+    {
+        FluidStack fluidStack = getFluid(stack);
+        return fluidStack != null ? 1.0 - ((double) fluidStack.amount / (double) capacity) : 0.0;
     }
 }

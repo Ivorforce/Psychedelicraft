@@ -106,4 +106,18 @@ public class ItemBottle extends ItemFluidContainer implements RenderPassesCustom
         else
             return super.getColorFromItemStack(stack, pass) | 0xff000000;
     }
+
+    @Override
+    public boolean showDurabilityBar(ItemStack stack)
+    {
+        FluidStack fluidStack = getFluid(stack);
+        return fluidStack != null && fluidStack.amount < capacity;
+    }
+
+    @Override
+    public double getDurabilityForDisplay(ItemStack stack)
+    {
+        FluidStack fluidStack = getFluid(stack);
+        return fluidStack != null ? 1.0 - ((double) fluidStack.amount / (double) capacity) : 0.0;
+    }
 }
