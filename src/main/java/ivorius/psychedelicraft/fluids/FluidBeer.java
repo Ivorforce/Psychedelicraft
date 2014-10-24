@@ -22,9 +22,10 @@ public class FluidBeer extends FluidDrug implements FluidFermentable
     }
 
     @Override
-    public List<DrugInfluence> getDrugInfluences(FluidStack fluidStack)
+    public void getDrugInfluencesPerLiter(FluidStack fluidStack, List<DrugInfluence> list)
     {
-        return Arrays.asList(new DrugInfluence("Alcohol", 20, 0.002, 0.001, 0.25f));
+        super.getDrugInfluencesPerLiter(fluidStack, list);
+        list.add(new DrugInfluence("Alcohol", 20, 0.002, 0.001, 0.25f));
     }
 
     @Override

@@ -88,9 +88,22 @@ public class FluidDrug extends Fluid implements FluidWithIconSymbolRegistering, 
         this.foodLevel = foodLevel;
     }
 
-    public List<DrugInfluence> getDrugInfluences(FluidStack fluidStack)
+    public void getDrugInfluences(FluidStack fluidStack, List<DrugInfluence> list)
     {
-        return drugInfluences;
+        List<DrugInfluence> influencesPerLiter = new ArrayList<>();
+        getDrugInfluencesPerLiter(fluidStack, influencesPerLiter);
+
+        for (DrugInfluence influence : influencesPerLiter)
+        {
+            DrugInfluence clone = influence.clone();
+            clone.setMaxInfluence(clone.getMaxInfluence() * (double) fluidStack.amount / (double) FluidHelper.MILLIBUCKETS_PER_LITER);
+            list.add(clone);
+        }
+    }
+
+    public void getDrugInfluencesPerLiter(FluidStack fluidStack, List<DrugInfluence> list)
+    {
+        list.addAll(drugInfluences);
     }
 
     @Override
@@ -155,13 +168,11 @@ public class FluidDrug extends Fluid implements FluidWithIconSymbolRegistering, 
 
         if (drugHelper != null)
         {
-            List<DrugInfluence> drugInfluences = getDrugInfluences(fluidStack);
+            List<DrugInfluence> drugInfluences = new ArrayList<>();
+            getDrugInfluences(fluidStack, drugInfluences);
+
             for (DrugInfluence influence : drugInfluences)
-            {
-                DrugInfluence clone = influence.clone();
-                clone.setMaxInfluence(clone.getMaxInfluence() * (double) fluidStack.amount / (double) FluidHelper.MILLIBUCKETS_PER_LITER);
-                drugHelper.addToDrug(clone);
-            }
+                drugHelper.addToDrug(influence);
         }
 
         if (foodLevel != null && entity instanceof EntityPlayer)
@@ -181,7 +192,9 @@ public class FluidDrug extends Fluid implements FluidWithIconSymbolRegistering, 
 
         if (drugHelper != null)
         {
-            List<DrugInfluence> drugInfluences = getDrugInfluences(fluidStack);
+            List<DrugInfluence> drugInfluences = new ArrayList<>();
+            getDrugInfluences(fluidStack, drugInfluences);
+
             for (DrugInfluence influence : drugInfluences)
             {
                 DrugInfluence clone = influence.clone();
@@ -206,7 +219,11 @@ public class FluidDrug extends Fluid implements FluidWithIconSymbolRegistering, 
     public float getAlcohol(FluidStack fluidStack)
     {
         float alcohol = 0.0f;
-        for (DrugInfluence drugInfluence : getDrugInfluences(fluidStack))
+
+        List<DrugInfluence> drugInfluences = new ArrayList<>();
+        getDrugInfluences(fluidStack, drugInfluences);
+
+        for (DrugInfluence drugInfluence : drugInfluences)
         {
             if (drugInfluence.getDrugName().equals("Alcohol"))
                 alcohol += drugInfluence.getMaxInfluence();
