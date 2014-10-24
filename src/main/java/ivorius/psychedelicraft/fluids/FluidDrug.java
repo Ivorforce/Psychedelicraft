@@ -207,13 +207,13 @@ public class FluidDrug extends Fluid implements FluidWithIconSymbolRegistering, 
     @Override
     public float fireStrength(FluidStack fluidStack)
     {
-        return getAlcohol(fluidStack) * fluidStack.amount / FluidHelper.MILLIBUCKETS_PER_LITER * 5.0f;
+        return getAlcohol(fluidStack) * fluidStack.amount / FluidHelper.MILLIBUCKETS_PER_LITER * 2.0f;
     }
 
     @Override
     public float explosionStrength(FluidStack fluidStack)
     {
-        return getAlcohol(fluidStack) * fluidStack.amount / FluidHelper.MILLIBUCKETS_PER_LITER * 1.0f;
+        return getAlcohol(fluidStack) * fluidStack.amount / FluidHelper.MILLIBUCKETS_PER_LITER * 0.6f;
     }
 
     public float getAlcohol(FluidStack fluidStack)
