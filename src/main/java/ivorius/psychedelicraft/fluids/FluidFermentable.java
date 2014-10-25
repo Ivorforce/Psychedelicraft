@@ -8,9 +8,25 @@ package ivorius.psychedelicraft.fluids;
 import net.minecraftforge.fluids.FluidStack;
 
 /**
- * Created by lukas on 22.10.14.
+ * A fluid that can ferment in the correct container, e.g. fermentation barrels.
  */
 public interface FluidFermentable
 {
-    void updateFermenting(FluidStack stack);
+    /**
+     * Tick value indicating that the fluid is currently unfermentable.
+     */
+    public static final int UNFERMENTABLE = -1;
+
+    /**
+     * Returns the ticks needed for the fluid to ferment. Return {@link #UNFERMENTABLE} if the fluid is curently unfermentable.
+     * @param stack The fluid currently fermenting.
+     * @return The time it needs to ferment, in ticks.
+     */
+    int fermentationTime(FluidStack stack);
+
+    /**
+     * Notifies the fluid that the stack has fermented, and is expected to apply this change to the stack.
+     * @param stack The fluid currently fermenting.
+     */
+    void fermentStep(FluidStack stack);
 }

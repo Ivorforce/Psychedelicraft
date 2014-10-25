@@ -32,11 +32,10 @@ public class PSConfig
 
     public static boolean farmerDrugDeals;
 
-    public static int ticksForFullWineFermentation;
+    public static int ticksPerWineFermentation;
     public static int ticksUntilWineAcetification;
 
-    public static double beerFermentationHalfTimeTicks;
-    private static double beerFermentationTickImprovement;
+    public static double ticksPerBeerFermentation;
 
     public static void loadConfig(String configID)
     {
@@ -62,27 +61,12 @@ public class PSConfig
             farmerDrugDeals = config.get(CATEGORY_BALANCING, "farmerDrugDeals", true).getBoolean();
 
             int minute = 20 * 60;
-            ticksForFullWineFermentation = config.get(CATEGORY_BALANCING, "ticksForFullWineFermentation", minute * 300, "Time until wine gets the 'perfect' strength").getInt();
+            ticksPerWineFermentation = config.get(CATEGORY_BALANCING, "ticksPerWineFermentation", minute * 40, "Time until wine ferments to the next step.").getInt();
             ticksUntilWineAcetification = config.get(CATEGORY_BALANCING, "ticksUntilWineAcetification", minute * 30, "Time until wine turns to vinegar after it is 'perfect'. Enter a negative number to disable.").getInt();
 
-            beerFermentationHalfTimeTicks = config.get(CATEGORY_BALANCING, "beerFermentationHalfTimeTicks", minute * 180.0, "Beer gets continuously better; this determines the time until beer is deemed 'half finished'").getDouble();
-
-            // f(x) = 1 - (1 - speed)^x
-            // 0.5  = 1.0 - (1.0 - speed)^beerFermentationHalfTimeTicks
-            // 1 - beerFermentationHalfTimeTicks'th root (0.5) = speed
-            beerFermentationTickImprovement = 1.0 - root (0.5, beerFermentationHalfTimeTicks);
+            ticksPerBeerFermentation = config.get(CATEGORY_BALANCING, "ticksPerBeerFermentation", minute * 30, "Time until beer ferments to the next step.").getDouble();
         }
 
         Psychedelicraft.proxy.loadConfig(configID);
-    }
-
-    public static double root(double num, double root)
-    {
-        return Math.pow(Math.E, Math.log(num) / root);
-    }
-
-    public static double getBeerFermentationTickImprovement()
-    {
-        return beerFermentationTickImprovement;
     }
 }

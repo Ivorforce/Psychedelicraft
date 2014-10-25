@@ -7,6 +7,7 @@ package ivorius.psychedelicraft.fluids;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -46,6 +47,12 @@ public class FluidHelper
             fluidStack.amount = capacity;
 
         return fluidStacks;
+    }
+
+    public static void ensureTag(FluidStack stack)
+    {
+        if (stack.tag == null)
+            stack.tag = new NBTTagCompound();
     }
 
     public static int getTranslucentFluidColor(ItemStack stack)

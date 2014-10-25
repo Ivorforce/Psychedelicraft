@@ -31,37 +31,36 @@ public class FluidBeer extends FluidDrug implements FluidFermentable
     public void getDrugInfluencesPerLiter(FluidStack fluidStack, List<DrugInfluence> list)
     {
         super.getDrugInfluencesPerLiter(fluidStack, list);
-        double fermentation = getFermentation(fluidStack);
+        double fermentation = (double) getFermentation(fluidStack) / (double) (FERMENTATION_STEPS - 1);
         list.add(new DrugInfluence("Alcohol", 20, 0.002, 0.001, 0.2f * fermentation));
     }
 
     @Override
     public void addCreativeSubtypes(List<FluidStack> list)
     {
-        super.addCreativeSubtypes(list);
-
-        for (int strength = 1; strength < FERMENTATION_STEPS; strength++)
+        for (int strength = 0; strength < FERMENTATION_STEPS; strength++)
         {
             FluidStack fluidStack = new FluidStack(this, 1);
-            fluidStack.tag = new NBTTagCompound();
-            fluidStack.tag.setDouble("fermentation", strength / (double) (FERMENTATION_STEPS - 1));
+            setFermentation(fluidStack, strength);
             list.add(fluidStack);
         }
     }
 
     @Override
-    public void updateFermenting(FluidStack stack)
+    public int fermentationTime(FluidStack stack)
     {
-        if (stack.tag == null)
-            stack.tag = new NBTTagCompound();
+        if (getFermentation(stack) < FERMENTATION_STEPS - 1)
+            return PSConfig.ticksPerWineFermentation;
 
-        double fermentation = getFermentation(stack);
-        if (fermentation < 1.0f)
-        {
-            double addFermentation = (1.0f - fermentation) * PSConfig.getBeerFermentationTickImprovement();
-            fermentation = IvMathHelper.clamp(0.0f, fermentation + addFermentation, 1.0f);
-            stack.tag.setDouble("fermentation", fermentation);
-        }
+        return UNFERMENTABLE;
+    }
+
+    @Override
+    public void fermentStep(FluidStack stack)
+    {
+        int fermentation = getFermentation(stack);
+        if (fermentation < FERMENTATION_STEPS - 1)
+            setFermentation(stack, fermentation + 1);
     }
 
     @Override
@@ -74,12 +73,18 @@ public class FluidBeer extends FluidDrug implements FluidFermentable
     @Override
     public String getUnlocalizedName(FluidStack stack)
     {
-        double fermentation = getFermentation(stack);
-        return super.getUnlocalizedName(stack) + ".quality" + (MathHelper.floor_double(fermentation * (FERMENTATION_STEPS - 1) + 0.5f));
+        int fermentation = getFermentation(stack);
+        return super.getUnlocalizedName(stack) + ".quality" + fermentation;
     }
 
-    public double getFermentation(FluidStack stack)
+    public int getFermentation(FluidStack stack)
     {
-        return stack.tag != null ? IvMathHelper.clamp(0.0f, stack.tag.getDouble("fermentation"), 1.0f) : 0.0f;
+        return stack.tag != null ? MathHelper.clamp_int(stack.tag.getInteger("fermentation"), 0, FERMENTATION_STEPS - 1) : 0;
+    }
+
+    public void setFermentation(FluidStack stack, int fermentation)
+    {
+        FluidHelper.ensureTag(stack);
+        stack.tag.setInteger("fermentation", fermentation);
     }
 }
