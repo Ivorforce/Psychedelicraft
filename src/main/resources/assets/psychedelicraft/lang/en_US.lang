@@ -92,6 +92,11 @@ entity.molotovCocktail.name=Molotov Cocktail
 
 tile.bed.onDrugs=The drugs in your body keep you awake
 
+death.attack.alcoholPoisoning=%1$s died of alcohol poisoning
+death.attack.stroke=%1$s's had a stroke
+death.attack.heartFailure=%1$s's heart stopped beating
+death.attack.respiratoryFailure=%1$s's had a respiratory failure
+
 fluid.pscBeer=Beer
 fluid.pscBeer.quality0=Wort
 fluid.pscBeer.quality1=Very Young Beer

@@ -28,6 +28,7 @@ import ivorius.psychedelicraft.gui.PSGuiHandler;
 import ivorius.psychedelicraft.items.*;
 import ivorius.psychedelicraft.worldgen.PSWorldGen;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 import org.apache.logging.log4j.Logger;
@@ -70,6 +71,10 @@ public class Psychedelicraft
     public static String modBase = "psychedelicraft:";
 
     public static EntityPlayer.EnumStatus sleepStatusDrugs;
+    public static DamageSource alcoholPoisoning = (new DamageSource("alcoholPoisoning")).setDamageBypassesArmor().setDamageIsAbsolute();
+    public static DamageSource respiratoryFailure = (new DamageSource("respiratoryFailure")).setDamageBypassesArmor().setDamageIsAbsolute();
+    public static DamageSource stroke = (new DamageSource("stroke")).setDamageBypassesArmor().setDamageIsAbsolute();
+    public static DamageSource heartFailure = (new DamageSource("heartFailure")).setDamageBypassesArmor().setDamageIsAbsolute();
 
     public static int blockWineGrapeLatticeRenderType;
 
