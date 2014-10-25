@@ -547,9 +547,10 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
     public void wakeUp(EntityLivingBase entity)
     {
         for (String key : drugs.keySet())
-        {
             drugs.get(key).resetDrugValue();
-        }
+        influences.clear();
+
+        hasChanges = true;
     }
 
     public void receiveChatMessage(EntityLivingBase entity, String message)
