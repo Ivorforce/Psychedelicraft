@@ -196,11 +196,7 @@ public class FluidDrug extends Fluid implements FluidWithIconSymbolRegistering, 
             getDrugInfluences(fluidStack, drugInfluences);
 
             for (DrugInfluence influence : drugInfluences)
-            {
-                DrugInfluence clone = influence.clone();
-                clone.setMaxInfluence(clone.getMaxInfluence() * (double) fluidStack.amount / (double) FluidHelper.MILLIBUCKETS_PER_LITER);
-                drugHelper.addToDrug(clone);
-            }
+                drugHelper.addToDrug(influence);
         }
     }
 

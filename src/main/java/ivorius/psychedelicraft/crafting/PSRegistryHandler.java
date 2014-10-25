@@ -299,12 +299,12 @@ public class PSRegistryHandler
         peyoteJuice.setSymbolIconName(modBase + "drinkPeyote");
         FluidRegistry.registerFluid(peyoteJuice);
 
-        cocaineFluid = new FluidDrug("pscCocaineFluid", new DrugInfluence("Cocaine", 0, 0.005, 0.01, 0.5f));
+        cocaineFluid = new FluidDrug("pscCocaineFluid", new DrugInfluence("Cocaine", 0, 0.005, 0.01, 50.0f));
         cocaineFluid.setInjectable(true);
         cocaineFluid.setColor(0x44e8f4f8);
         FluidRegistry.registerFluid(cocaineFluid);
 
-        caffeineFluid = new FluidDrug("pscCaffeineFluid", new DrugInfluence("Caffeine", 0, 0.005, 0.01, 0.85f));
+        caffeineFluid = new FluidDrug("pscCaffeineFluid", new DrugInfluence("Caffeine", 0, 0.005, 0.01, 85.0f));
         caffeineFluid.setInjectable(true);
         caffeineFluid.setColor(0x66eee2d3);
         FluidRegistry.registerFluid(caffeineFluid);
