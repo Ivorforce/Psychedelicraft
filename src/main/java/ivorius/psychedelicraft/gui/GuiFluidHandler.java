@@ -21,7 +21,10 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.*;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.IFluidHandler;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
@@ -66,44 +69,47 @@ public class GuiFluidHandler extends GuiContainer
 
         FluidTankInfo tankInfo = getTankInfo(0);
         if (tankInfo != null)
+            drawTank(tankInfo, baseX + 60, baseY + 14 + 57, 108, 57, 4.0f, 4.0f);
+    }
+
+    public void drawTank(FluidTankInfo tankInfo, int x, int y, int width, int height, float repeatTextureX, float repeatTextureY)
+    {
+        FluidStack containedFluidStack = containerFluidHandler.fluidHandler.drain(containerFluidHandler.side, tankInfo.capacity, false);
+        if (containedFluidStack != null)
         {
-            FluidStack containedFluidStack = containerFluidHandler.fluidHandler.drain(containerFluidHandler.side, tankInfo.capacity, false);
-            if (containedFluidStack != null)
+            Fluid containedFluid = containedFluidStack.getFluid();
+            IIcon icon = containedFluid.getIcon(containedFluidStack);
+            float fluidHeight = IvMathHelper.clamp(0.0f, (float) containedFluidStack.amount / (float) tankInfo.capacity, 1.0f);
+            int fluidHeightPixels = MathHelper.floor_float(fluidHeight * height + 0.5f);
+
+            float texX0, texX1, texY0, texY1;
+
+            GL11.glEnable(GL11.GL_BLEND);
+            GL11.glAlphaFunc(GL11.GL_GREATER, 0.001f);
+            OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
+
+            if (icon == null)
             {
-                Fluid containedFluid = containedFluidStack.getFluid();
-                IIcon icon = containedFluid.getIcon(containedFluidStack);
-                float fluidHeight = IvMathHelper.clamp(0.0f, (float) containedFluidStack.amount / (float) tankInfo.capacity, 1.0f);
-                int fluidHeightPixels = MathHelper.floor_float(fluidHeight * 57 + 0.5f);
-
-                float texX0, texX1, texY0, texY1;
-
-                GL11.glEnable(GL11.GL_BLEND);
-                GL11.glAlphaFunc(GL11.GL_GREATER, 0.001f);
-                OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
-
-                if (icon == null)
-                {
-                    MCColorHelper.setColor(containedFluid.getColor(containedFluidStack), containedFluid instanceof TranslucentFluid);
-                    texX0 = texX1 = texY0 = texY1 = 0.0f;
-                    GL11.glDisable(GL11.GL_TEXTURE_2D);
-                }
-                else
-                {
-                    GL11.glColor3f(1.0f, 1.0f, 1.0f);
-                    texX0 = icon.getMinU();
-                    texX1 = icon.getMaxU();
-                    texY0 = icon.getMinV();
-                    texY1 = icon.getMaxV();
-                    mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
-                }
-
-                drawRepeatingTexture(baseX + 60, baseY + 14 + 57 - fluidHeightPixels, 108, fluidHeightPixels, texX0, texX1, texY0, texY1, 4.0f, 4.0f);
-
-                if (icon == null)
-                    GL11.glEnable(GL11.GL_TEXTURE_2D);
-
-                GL11.glDisable(GL11.GL_BLEND);
+                MCColorHelper.setColor(containedFluid.getColor(containedFluidStack), containedFluid instanceof TranslucentFluid);
+                texX0 = texX1 = texY0 = texY1 = 0.0f;
+                GL11.glDisable(GL11.GL_TEXTURE_2D);
             }
+            else
+            {
+                GL11.glColor3f(1.0f, 1.0f, 1.0f);
+                texX0 = icon.getMinU();
+                texX1 = icon.getMaxU();
+                texY0 = icon.getMinV();
+                texY1 = icon.getMaxV();
+                mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+            }
+
+            drawRepeatingTexture(x, y - fluidHeightPixels, width, fluidHeightPixels, texX0, texX1, texY0, texY1, repeatTextureX, repeatTextureY);
+
+            if (icon == null)
+                GL11.glEnable(GL11.GL_TEXTURE_2D);
+
+            GL11.glDisable(GL11.GL_BLEND);
         }
     }
 
