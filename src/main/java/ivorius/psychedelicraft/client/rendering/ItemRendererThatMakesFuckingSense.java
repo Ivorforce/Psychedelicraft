@@ -96,20 +96,9 @@ public class ItemRendererThatMakesFuckingSense implements IItemRenderer
         }
     }
 
-    public void setColor(ItemStack stack, boolean isAlpha, int pass)
+    public static void setColor(ItemStack stack, boolean isAlpha, int pass)
     {
-        int color = stack.getItem().getColorFromItemStack(stack, pass);
-        float f10 = (float) (color >> 16 & 255) / 255.0F;
-        float f11 = (float) (color >> 8 & 255) / 255.0F;
-        float f12 = (float) (color & 255) / 255.0F;
-
-        if (isAlpha)
-        {
-            float alpha = (float) (color >> 24 & 255) / 255.0F;
-            GL11.glColor4f(1.0F * f10, 1.0F * f11, 1.0F * f12, alpha);
-        }
-        else
-            GL11.glColor3f(1.0F * f10, 1.0F * f11, 1.0F * f12);
+        MCColorHelper.setColor(stack.getItem().getColorFromItemStack(stack, pass), isAlpha);
     }
 
     private void renderItem(Entity entity, ItemStack item, int pass, ItemRenderType renderType)

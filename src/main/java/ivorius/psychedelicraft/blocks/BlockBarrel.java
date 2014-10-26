@@ -5,6 +5,9 @@
 
 package ivorius.psychedelicraft.blocks;
 
+import ivorius.psychedelicraft.Psychedelicraft;
+import ivorius.psychedelicraft.fluids.FluidHelper;
+import ivorius.psychedelicraft.gui.PSGuiHandler;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -22,6 +25,8 @@ import net.minecraftforge.fluids.IFluidContainerItem;
 
 public class BlockBarrel extends BlockContainer
 {
+    public static final int MAX_TAP_AMOUNT = FluidHelper.MILLIBUCKETS_PER_LITER;
+
     public BlockBarrel()
     {
         super(Material.wood);
@@ -60,7 +65,7 @@ public class BlockBarrel extends BlockContainer
         world.setBlockMetadataWithNotify(x, y, z, direction, 3);
 
         TileEntity tileEntity = world.getTileEntity(x, y, z);
-        if (tileEntity != null && tileEntity instanceof TileEntityBarrel)
+        if (tileEntity instanceof TileEntityBarrel)
         {
             TileEntityBarrel tileEntityBarrel = (TileEntityBarrel) tileEntity;
 
@@ -114,7 +119,7 @@ public class BlockBarrel extends BlockContainer
             {
                 IFluidContainerItem fluidContainerItem = (IFluidContainerItem) heldItem.getItem();
 
-                int maxFill = fluidContainerItem.fill(heldItem, tileEntityBarrel.drain(ForgeDirection.DOWN, TileEntityBarrel.BARREL_CAPACITY, false), false);
+                int maxFill = fluidContainerItem.fill(heldItem, tileEntityBarrel.drain(ForgeDirection.DOWN, MAX_TAP_AMOUNT, false), false);
                 if (maxFill > 0)
                 {
                     if (!world.isRemote)
@@ -125,6 +130,13 @@ public class BlockBarrel extends BlockContainer
                 }
 
                 tileEntityBarrel.timeLeftTapOpen = 20;
+
+                return true;
+            }
+            else
+            {
+                if (!world.isRemote)
+                    player.openGui(Psychedelicraft.instance, PSGuiHandler.fluidHandlerContainerID_UP, world, x, y, z);
 
                 return true;
             }

@@ -75,13 +75,25 @@ public class PSRegistryHandler
         dryingTable = new BlockDryingTable().setHardness(1.0f);
         dryingTable.setCreativeTab(Psychedelicraft.creativeTab);
         PSRegistryHandler.registerBlockDefault(dryingTable, "dryingTable");
-        GameRegistry.registerTileEntity(TileEntityDryingTable.class, "dryingTable");
+        GameRegistry.registerTileEntityWithAlternatives(TileEntityDryingTable.class, "ygcDryingTable", "dryingTable");
 
         barrel = new BlockBarrel().setHardness(1.0F);
         barrel.setCreativeTab(Psychedelicraft.drinksTab);
         PSRegistryHandler.registerBlockDefault(barrel, ItemBarrel.class, "barrel");
-        GameRegistry.registerTileEntity(TileEntityBarrel.class, "barrel");
+        GameRegistry.registerTileEntityWithAlternatives(TileEntityBarrel.class, "ygcBarrel", "barrel");
         itemBarrel = (ItemBarrel) Item.getItemFromBlock(barrel);
+
+        flask = new BlockFlask().setHardness(1.0F);
+        flask.setCreativeTab(Psychedelicraft.creativeTab);
+        PSRegistryHandler.registerBlockDefault(flask, ItemFlask.class, "flask");
+        GameRegistry.registerTileEntity(TileEntityFlask.class, "ygcFlask");
+        itemFlask = (ItemFlask) Item.getItemFromBlock(flask);
+
+        distillery = new BlockDistillery().setHardness(1.0F);
+        distillery.setCreativeTab(Psychedelicraft.creativeTab);
+        PSRegistryHandler.registerBlockDefault(distillery, ItemDistillery.class, "distillery");
+        GameRegistry.registerTileEntity(TileEntityDistillery.class, "ygcDistillery");
+        itemDistillery = (ItemDistillery) Item.getItemFromBlock(distillery);
 
         //----------------------------------------------------------Wine----------------------------------
 
@@ -271,7 +283,7 @@ public class PSRegistryHandler
 
         beer = new FluidBeer("pscBeer");
         beer.setDrinkable(true);
-        beer.setColor(0x88ffcd18);
+        beer.setColor(0xaaffcd18);
         beer.setSymbolIconName(modBase + "drinkBeer");
         FluidRegistry.registerFluid(beer);
 
@@ -283,13 +295,13 @@ public class PSRegistryHandler
 
         coffee = new FluidCoffee("pscCoffee");
         coffee.setDrinkable(true);
-        coffee.setColor(0xbba77d55);
+        coffee.setColor(0xffa77d55);
         coffee.setSymbolIconName(modBase + "drinkCoffee");
         FluidRegistry.registerFluid(coffee);
 
         wine = new FluidWine("pscWine");
         wine.setDrinkable(true);
-        wine.setColor(0xaa3f0822);
+        wine.setColor(0xee3f0822);
         wine.setSymbolIconName(modBase + "drinkWine");
         FluidRegistry.registerFluid(wine);
 

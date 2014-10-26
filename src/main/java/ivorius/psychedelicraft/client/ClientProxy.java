@@ -8,15 +8,13 @@ package ivorius.psychedelicraft.client;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
+import ivorius.ivtoolkit.items.IvItemRendererModel;
 import ivorius.ivtoolkit.rendering.IvParticleHelper;
 import ivorius.psychedelicraft.PSConfig;
 import ivorius.psychedelicraft.PSCoreHandlerClient;
 import ivorius.psychedelicraft.PSProxy;
 import ivorius.psychedelicraft.Psychedelicraft;
-import ivorius.psychedelicraft.blocks.TileEntityBarrel;
-import ivorius.psychedelicraft.blocks.TileEntityDryingTable;
-import ivorius.psychedelicraft.blocks.TileEntityPeyote;
-import ivorius.psychedelicraft.blocks.TileEntityRiftJar;
+import ivorius.psychedelicraft.blocks.*;
 import ivorius.psychedelicraft.client.rendering.*;
 import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import ivorius.psychedelicraft.entities.DrugHelper;
@@ -34,7 +32,9 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.config.Configuration;
 
 import static ivorius.psychedelicraft.PSConfig.CATEGORY_VISUAL;
+import static ivorius.psychedelicraft.Psychedelicraft.MODID;
 import static ivorius.psychedelicraft.Psychedelicraft.config;
+import static ivorius.psychedelicraft.Psychedelicraft.filePathTextures;
 
 public class ClientProxy implements PSProxy
 {
@@ -51,12 +51,18 @@ public class ClientProxy implements PSProxy
         Psychedelicraft.blockWineGrapeLatticeRenderType = RenderingRegistry.getNextAvailableRenderId();
         RenderingRegistry.registerBlockHandler(Psychedelicraft.blockWineGrapeLatticeRenderType, new RenderWineGrapeLattice());
 
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDistillery.class, new TileEntityRendererDistillery());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFlask.class, new TileEntityRendererFlask());
+
         MinecraftForgeClient.registerItemRenderer(PSItems.bottle, new ItemRendererThatMakesFuckingSense());
         MinecraftForgeClient.registerItemRenderer(PSItems.molotovCocktail, new ItemRendererThatMakesFuckingSense());
         MinecraftForgeClient.registerItemRenderer(PSItems.woodenMug, new ItemRendererThatMakesFuckingSense());
         MinecraftForgeClient.registerItemRenderer(PSItems.woodenBowlDrug, new ItemRendererThatMakesFuckingSense());
         MinecraftForgeClient.registerItemRenderer(PSItems.glassChalice, new ItemRendererThatMakesFuckingSense());
         MinecraftForgeClient.registerItemRenderer(PSItems.syringe, new ItemRendererThatMakesFuckingSense());
+
+        MinecraftForgeClient.registerItemRenderer(PSItems.itemDistillery, new IvItemRendererModel(new ModelDistillery(), new ResourceLocation(MODID, filePathTextures + "distillery.png"), 0.75f, new float[]{0.0f, 0.0f, -0.3f}, new float[]{0.0f, 0.0f, 0.0f}));
+        MinecraftForgeClient.registerItemRenderer(PSItems.itemFlask, new IvItemRendererModel(new ModelFlask(), new ResourceLocation(MODID, filePathTextures + "flask.png"), 0.6f, new float[]{0.0f, 0.7f, 0.0f}, new float[]{0.0f, 0.0f, 0.0f}));
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBarrel.class, new TileEntityRendererBarrel());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDryingTable.class, new TileEntityRendererDryingTable());

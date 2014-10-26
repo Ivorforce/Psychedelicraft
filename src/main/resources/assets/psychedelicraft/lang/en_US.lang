@@ -40,6 +40,10 @@ item.riftJar.halfFilled=Half Full
 item.riftJar.full=Full
 item.riftJar.overflowing=Overflowing
 tile.glitched.name=Block $__0
+tile.flask.name=Flask
+tile.flask.full.name=Flask of %s
+tile.distillery.name=Distillery
+tile.distillery.full.name=Distillery (Filled with %s)
 
 item.woodenMug.name=Wooden Mug
 item.woodenMug.full.name=Wooden Mug of %s

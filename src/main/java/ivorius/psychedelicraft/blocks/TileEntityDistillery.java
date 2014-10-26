@@ -6,33 +6,36 @@
 package ivorius.psychedelicraft.blocks;
 
 import ivorius.ivtoolkit.blocks.IvTileEntityHelper;
+import ivorius.ivtoolkit.tools.IvGsonHelper;
+import ivorius.psychedelicraft.fluids.FluidDistillable;
 import ivorius.psychedelicraft.fluids.FluidFermentable;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fluids.TileFluidHandler;
 
 import static ivorius.psychedelicraft.fluids.FluidHelper.MILLIBUCKETS_PER_LITER;
 
-public class TileEntityBarrel extends TileFluidHandler
+/**
+ * Created by lukas on 25.10.14.
+ */
+public class TileEntityDistillery extends TileFluidHandler
 {
-    public static final int BARREL_CAPACITY = MILLIBUCKETS_PER_LITER * 16;
+    public static final int DISTILLERY_CAPACITY = TileEntityFlask.FLASK_CAPACITY;
 
-    public int barrelWoodType;
+    public int direction;
+    public int timeDistilled;
 
-    public int timeFermented;
-
-    public float tapRotation = 0.0f;
-    public int timeLeftTapOpen = 0;
-
-    public TileEntityBarrel()
+    public TileEntityDistillery()
     {
-        tank = new FluidTank(BARREL_CAPACITY);
+        tank = new FluidTank(DISTILLERY_CAPACITY);
     }
 
     @Override
@@ -41,37 +44,57 @@ public class TileEntityBarrel extends TileFluidHandler
         FluidStack fluidStack = tank.getFluid();
         if (fluidStack != null && fluidStack.getFluid() instanceof FluidFermentable)
         {
-            FluidFermentable fluidFermentable = (FluidFermentable) fluidStack.getFluid();
-            int neededFermentationTime = fluidFermentable.fermentationTime(fluidStack);
+            IFluidHandler destination = getDestinationFluidHandler();
 
-            if (neededFermentationTime >= 0 && timeFermented >= neededFermentationTime)
+            FluidDistillable fluidFermentable = (FluidDistillable) fluidStack.getFluid();
+            int neededDistillationTime = fluidFermentable.distillationTime(fluidStack);
+
+            if (neededDistillationTime >= 0 && destination != null)
             {
-                if (!worldObj.isRemote)
+                if (timeDistilled >= neededDistillationTime)
                 {
-                    fluidFermentable.fermentStep(fluidStack);
-                    timeFermented = 0;
+                    if (!worldObj.isRemote)
+                    {
+                        FluidStack leftover = fluidFermentable.distillStep(fluidStack);
 
-                    worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-                    markDirty();
+                        FluidStack distilled = drain(ForgeDirection.EAST, fluidStack, true);
+                        fill(ForgeDirection.EAST, leftover, true);
+                        int spilled = destination.fill(getDestinationOrientation().getOpposite(), distilled, true);
+
+                        timeDistilled = 0;
+
+                        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                        markDirty();
+                    }
                 }
+                else
+                    timeDistilled ++;
             }
-            else
-                timeFermented ++;
         }
+    }
 
-        if (timeLeftTapOpen > 0)
+    public ForgeDirection getDestinationOrientation()
+    {
+        switch (direction)
         {
-            timeLeftTapOpen--;
+            case 0:
+                return ForgeDirection.SOUTH;
+            case 1:
+                return ForgeDirection.WEST;
+            case 2:
+                return ForgeDirection.NORTH;
+            case 3:
+                return ForgeDirection.EAST;
+            default:
+                return ForgeDirection.EAST;
         }
+    }
 
-        if (timeLeftTapOpen > 0 && tapRotation < 3.141f * 0.5f)
-        {
-            tapRotation += 3.141f * 0.1f;
-        }
-        if (timeLeftTapOpen == 0 && tapRotation > 0.0f)
-        {
-            tapRotation -= 3.141f * 0.1f;
-        }
+    public IFluidHandler getDestinationFluidHandler()
+    {
+        ForgeDirection to = getDestinationOrientation();
+        TileEntity tileEntity = worldObj.getTileEntity(xCoord + to.offsetX, yCoord + to.offsetY, zCoord + to.offsetZ);
+        return tileEntity instanceof IFluidHandler ? (IFluidHandler) tileEntity : null;
     }
 
     @Override
@@ -82,7 +105,7 @@ public class TileEntityBarrel extends TileFluidHandler
         if (doFill)
         {
             double amountFilled = (double)fill / (double)tank.getFluidAmount();
-            timeFermented = MathHelper.floor_double(timeFermented * (1.0 - amountFilled));
+            timeDistilled = MathHelper.floor_double(timeDistilled * (1.0 - amountFilled));
 
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
             markDirty();
@@ -99,7 +122,7 @@ public class TileEntityBarrel extends TileFluidHandler
         if (doDrain)
         {
             if (tank.getFluidAmount() == 0)
-                timeFermented = 0;
+                timeDistilled = 0;
 
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
             markDirty();
@@ -116,7 +139,7 @@ public class TileEntityBarrel extends TileFluidHandler
         if (doDrain)
         {
             if (tank.getFluidAmount() == 0)
-                timeFermented = 0;
+                timeDistilled = 0;
 
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
             markDirty();
@@ -130,12 +153,8 @@ public class TileEntityBarrel extends TileFluidHandler
     {
         super.writeToNBT(nbttagcompound);
 
-        nbttagcompound.setInteger("barrelWoodType", barrelWoodType);
-
-        nbttagcompound.setInteger("timeFermented", timeFermented);
-
-        nbttagcompound.setInteger("timeLeftTapOpen", timeLeftTapOpen);
-        nbttagcompound.setFloat("tapRotation", tapRotation);
+        nbttagcompound.setInteger("direction", direction);
+        nbttagcompound.setInteger("timeDistilled", timeDistilled);
     }
 
     @Override
@@ -143,12 +162,8 @@ public class TileEntityBarrel extends TileFluidHandler
     {
         super.readFromNBT(nbttagcompound);
 
-        barrelWoodType = nbttagcompound.getInteger("barrelWoodType");
-
-        timeFermented = nbttagcompound.getInteger("timeFermented");
-
-        timeLeftTapOpen = nbttagcompound.getInteger("timeLeftTapOpen");
-        tapRotation = nbttagcompound.getFloat("tapRotation");
+        direction = nbttagcompound.getInteger("direction");
+        timeDistilled = nbttagcompound.getInteger("timeDistilled");
     }
 
     public FluidStack containedFluid()
@@ -156,14 +171,9 @@ public class TileEntityBarrel extends TileFluidHandler
         return tank.getFluid() != null ? tank.getFluid().copy() : null;
     }
 
-    public int getBlockRotation()
+    public int tankCapacity()
     {
-        return getBlockMetadata();
-    }
-
-    public float getTapRotation()
-    {
-        return tapRotation;
+        return tank.getCapacity();
     }
 
     @Override

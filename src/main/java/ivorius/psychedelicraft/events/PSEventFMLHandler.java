@@ -18,8 +18,10 @@ import ivorius.psychedelicraft.client.rendering.SmoothCameraHelper;
 import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import ivorius.psychedelicraft.entities.DrugHelper;
 import ivorius.psychedelicraft.entities.EntityRealityRift;
+import ivorius.psychedelicraft.gui.UpdatableContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 
 /**
  * Created by lukas on 18.02.14.
@@ -71,6 +73,10 @@ public class PSEventFMLHandler
                     spawnRiftAtPlayer(event.player);
                 }
             }
+
+            Container container = event.player.openContainer;
+            if (container instanceof UpdatableContainer)
+                ((UpdatableContainer) container).updateAsCustomContainer();
         }
     }
 
