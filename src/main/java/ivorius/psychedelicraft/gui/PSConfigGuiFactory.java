@@ -9,7 +9,7 @@ import cpw.mods.fml.client.IModGuiFactory;
 import cpw.mods.fml.client.config.GuiConfig;
 import cpw.mods.fml.client.config.GuiConfigEntries;
 import cpw.mods.fml.client.config.IConfigElement;
-import ivorius.psychedelicraft.PSConfig;
+import ivorius.psychedelicraft.config.PSConfig;
 import ivorius.psychedelicraft.Psychedelicraft;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;

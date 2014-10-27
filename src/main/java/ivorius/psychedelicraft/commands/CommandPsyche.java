@@ -3,7 +3,7 @@
  *  * http://lukas.axxim.net
  */
 
-package ivorius.psychedelicraft;
+package ivorius.psychedelicraft.commands;
 
 import ivorius.psychedelicraft.entities.EntityRealityRift;
 import net.minecraft.command.CommandBase;

@@ -3,13 +3,12 @@
  *  * http://lukas.axxim.net
  */
 
-package ivorius.psychedelicraft.client.rendering;
+package ivorius.psychedelicraft.client.rendering.blocks;
 
 import ivorius.ivtoolkit.math.IvMathHelper;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.blocks.TileEntityDistillery;
-import ivorius.psychedelicraft.blocks.TileEntityFlask;
-import ivorius.psychedelicraft.fluids.PSFluids;
+import ivorius.psychedelicraft.client.rendering.MCColorHelper;
 import ivorius.psychedelicraft.fluids.TranslucentFluid;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -22,8 +21,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
-
-import static ivorius.psychedelicraft.client.rendering.TileEntityRendererFlask.renderFluid;
 
 /**
  * Created by lukas on 25.10.14.
@@ -91,11 +88,11 @@ public class TileEntityRendererDistillery extends TileEntitySpecialRenderer
             Tessellator tessellator = Tessellator.instance;
 
             tessellator.startDrawingQuads();
-            renderFluid(-1.9f, -8.0f, -3.9f, 3.8f, fluidHeight, 0.9f, texX0, texX1, texY0, texY1, ForgeDirection.NORTH, ForgeDirection.UP);
-            renderFluid(-1.9f, -8.0f, 3.0f, 3.8f, fluidHeight, 0.9f, texX0, texX1, texY0, texY1, ForgeDirection.SOUTH, ForgeDirection.UP);
-            renderFluid(-3.9f, -8.0f, -1.9f, 0.9f, fluidHeight, 3.8f, texX0, texX1, texY0, texY1, ForgeDirection.EAST, ForgeDirection.UP);
-            renderFluid(3.0f, -8.0f, -1.9f, 0.9f, fluidHeight, 3.8f, texX0, texX1, texY0, texY1, ForgeDirection.WEST, ForgeDirection.UP);
-            renderFluid(-3.0f, -8.0f, -3.0f, 6.0f, fluidHeight, 6.0f, texX0, texX1, texY0, texY1, ForgeDirection.UP);
+            TileEntityRendererFlask.renderFluid(-1.9f, -8.0f, -3.9f, 3.8f, fluidHeight, 0.9f, texX0, texX1, texY0, texY1, ForgeDirection.NORTH, ForgeDirection.UP);
+            TileEntityRendererFlask.renderFluid(-1.9f, -8.0f, 3.0f, 3.8f, fluidHeight, 0.9f, texX0, texX1, texY0, texY1, ForgeDirection.SOUTH, ForgeDirection.UP);
+            TileEntityRendererFlask.renderFluid(-3.9f, -8.0f, -1.9f, 0.9f, fluidHeight, 3.8f, texX0, texX1, texY0, texY1, ForgeDirection.EAST, ForgeDirection.UP);
+            TileEntityRendererFlask.renderFluid(3.0f, -8.0f, -1.9f, 0.9f, fluidHeight, 3.8f, texX0, texX1, texY0, texY1, ForgeDirection.WEST, ForgeDirection.UP);
+            TileEntityRendererFlask.renderFluid(-3.0f, -8.0f, -3.0f, 6.0f, fluidHeight, 6.0f, texX0, texX1, texY0, texY1, ForgeDirection.UP);
             tessellator.draw();
 
             if (icon == null)

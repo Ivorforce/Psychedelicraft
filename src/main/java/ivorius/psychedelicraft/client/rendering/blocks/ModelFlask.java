@@ -10,7 +10,7 @@
 // - ZeuX
 
 
-package ivorius.psychedelicraft.client.rendering;
+package ivorius.psychedelicraft.client.rendering.blocks;
 
 import ivorius.ivtoolkit.items.IvItemRendererModel;
 import net.minecraft.client.model.ModelBase;

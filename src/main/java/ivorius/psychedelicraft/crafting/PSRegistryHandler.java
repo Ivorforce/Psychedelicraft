@@ -10,7 +10,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
-import ivorius.psychedelicraft.PSConfig;
+import ivorius.psychedelicraft.config.PSConfig;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.blocks.*;
 import ivorius.psychedelicraft.entities.*;
@@ -23,7 +23,6 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemSeeds;
 import net.minecraftforge.fluids.FluidRegistry;
 
-import static ivorius.psychedelicraft.Psychedelicraft.filePathTextures;
 import static ivorius.psychedelicraft.Psychedelicraft.modBase;
 import static ivorius.psychedelicraft.blocks.PSBlocks.*;
 import static ivorius.psychedelicraft.fluids.FluidHelper.MILLIBUCKETS_PER_LITER;

@@ -5,10 +5,9 @@
 
 package ivorius.psychedelicraft.worldgen;
 
-import ivorius.psychedelicraft.PSConfig;
+import ivorius.psychedelicraft.config.PSConfig;
 import ivorius.psychedelicraft.blocks.PSBlocks;
 import ivorius.psychedelicraft.fluids.PSFluids;
-import ivorius.psychedelicraft.items.ItemInjectable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.biome.BiomeGenBase;

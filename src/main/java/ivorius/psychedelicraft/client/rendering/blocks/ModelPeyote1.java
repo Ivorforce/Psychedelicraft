@@ -9,7 +9,7 @@
 // Keep in mind that you still need to fill in some blanks
 // - ZeuX
 
-package ivorius.psychedelicraft.client.rendering;
+package ivorius.psychedelicraft.client.rendering.blocks;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;

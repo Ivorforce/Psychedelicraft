@@ -3,12 +3,12 @@
  *  * http://lukas.axxim.net
  */
 
-package ivorius.psychedelicraft.client.rendering;
+package ivorius.psychedelicraft.client.rendering.blocks;
 
 import ivorius.ivtoolkit.math.IvMathHelper;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.blocks.TileEntityFlask;
-import ivorius.psychedelicraft.fluids.PSFluids;
+import ivorius.psychedelicraft.client.rendering.MCColorHelper;
 import ivorius.psychedelicraft.fluids.TranslucentFluid;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;

@@ -6,17 +6,14 @@
 package ivorius.psychedelicraft.fluids;
 
 import ivorius.ivtoolkit.math.IvMathHelper;
-import ivorius.psychedelicraft.PSConfig;
+import ivorius.psychedelicraft.config.PSConfig;
 import ivorius.psychedelicraft.entities.DrugInfluence;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**

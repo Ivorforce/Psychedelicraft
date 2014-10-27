@@ -5,7 +5,7 @@
 
 package ivorius.psychedelicraft.server;
 
-import ivorius.psychedelicraft.PSCoreHandlerServer;
+import ivorius.psychedelicraft.events.PSCoreHandlerServer;
 import ivorius.psychedelicraft.PSProxy;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.entities.DrugHelper;

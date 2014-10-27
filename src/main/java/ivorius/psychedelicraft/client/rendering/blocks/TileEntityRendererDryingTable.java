@@ -3,7 +3,7 @@
  *  * http://lukas.axxim.net
  */
 
-package ivorius.psychedelicraft.client.rendering;
+package ivorius.psychedelicraft.client.rendering.blocks;
 
 import ivorius.psychedelicraft.blocks.TileEntityDryingTable;
 import net.minecraft.client.Minecraft;

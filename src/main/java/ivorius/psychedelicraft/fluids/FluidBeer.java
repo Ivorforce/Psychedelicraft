@@ -5,10 +5,8 @@
 
 package ivorius.psychedelicraft.fluids;
 
-import ivorius.ivtoolkit.math.IvMathHelper;
-import ivorius.psychedelicraft.PSConfig;
+import ivorius.psychedelicraft.config.PSConfig;
 import ivorius.psychedelicraft.entities.DrugInfluence;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;

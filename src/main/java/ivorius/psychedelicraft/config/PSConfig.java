@@ -3,8 +3,9 @@
  *  * http://lukas.axxim.net
  */
 
-package ivorius.psychedelicraft;
+package ivorius.psychedelicraft.config;
 
+import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.entities.PSEntityList;
 import net.minecraftforge.common.config.Configuration;
 

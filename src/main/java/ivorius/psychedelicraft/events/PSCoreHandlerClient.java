@@ -3,7 +3,7 @@
  *  * http://lukas.axxim.net
  */
 
-package ivorius.psychedelicraft;
+package ivorius.psychedelicraft.events;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;

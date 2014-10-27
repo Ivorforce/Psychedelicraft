@@ -3,7 +3,7 @@
  *  * http://lukas.axxim.net
  */
 
-package ivorius.psychedelicraft;
+package ivorius.psychedelicraft.events;
 
 import ivorius.psychedelicraftcore.PsycheCoreBusCommon;
 
