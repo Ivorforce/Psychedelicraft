@@ -7,12 +7,14 @@ package ivorius.psychedelicraft.blocks;
 
 import ivorius.ivtoolkit.blocks.IvTileEntityHelper;
 import ivorius.psychedelicraft.fluids.FluidFermentable;
+import ivorius.psychedelicraft.fluids.PSFluids;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.TileFluidHandler;
@@ -143,9 +145,38 @@ public class TileEntityBarrel extends TileFluidHandler
     {
         super.readFromNBT(nbttagcompound);
 
-        barrelWoodType = nbttagcompound.getInteger("barrelWoodType");
+        if (nbttagcompound.hasKey("barrelType")) // Legacy
+        {
+            int legacyBarrelType = nbttagcompound.getInteger("barrelType");
+//            int legacyTimeFermented = nbttagcompound.getInteger("ticksExisted");
+            int legacyContainedItems = nbttagcompound.getInteger("currentContainedItems");
+            Fluid containedFluid;
 
-        timeFermented = nbttagcompound.getInteger("timeFermented");
+            switch (legacyBarrelType)
+            {
+                case 1:
+                    barrelWoodType = 5;
+                    containedFluid = PSFluids.wine;
+                    break;
+                case 2:
+                    barrelWoodType = 1;
+                    containedFluid = PSFluids.jenever;
+                    break;
+                default:
+                    barrelWoodType = 0;
+                    containedFluid = PSFluids.beer;
+                    break;
+            }
+
+            if (legacyContainedItems > 0)
+                fill(ForgeDirection.UP, new FluidStack(containedFluid, legacyContainedItems * 1000), true);
+        }
+        else
+        {
+            barrelWoodType = nbttagcompound.getInteger("barrelWoodType");
+
+            timeFermented = nbttagcompound.getInteger("timeFermented");
+        }
 
         timeLeftTapOpen = nbttagcompound.getInteger("timeLeftTapOpen");
         tapRotation = nbttagcompound.getFloat("tapRotation");
