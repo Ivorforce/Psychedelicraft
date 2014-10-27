@@ -7,6 +7,7 @@ package ivorius.psychedelicraft.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -15,7 +16,7 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockPeyote extends BlockContainer implements IvBonemealCompatibleBlock
+public class BlockPeyote extends BlockContainer implements IGrowable
 {
     public BlockPeyote()
     {
@@ -27,14 +28,12 @@ public class BlockPeyote extends BlockContainer implements IvBonemealCompatibleB
     }
 
     @Override
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(World world, int x, int y, int z, Random random)
     {
-        this.checkFlowerChange(par1World, par2, par3, par4);
+        this.checkFlowerChange(world, x, y, z);
 
-        if (par5Random.nextInt(15) == 0)
-        {
-            this.growStep(par1World, par2, par3, par4, false);
-        }
+        if (random.nextInt(15) == 0)
+            this.growStep(world, random, x, y, z, false);
     }
 
     @Override
@@ -97,13 +96,6 @@ public class BlockPeyote extends BlockContainer implements IvBonemealCompatibleB
     }
 
     @Override
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
-    {
-        return IvBonemealHelper.tryGrowing(par1World, par2, par3, par4, par5EntityPlayer, this);
-
-    }
-
-    @Override
     public void dropBlockAsItemWithChance(World par1World, int x, int y, int z, int meta, float par6, int par7)
     {
         if (!par1World.isRemote)
@@ -115,10 +107,9 @@ public class BlockPeyote extends BlockContainer implements IvBonemealCompatibleB
         }
     }
 
-    @Override
-    public void growStep(World par1World, int x, int y, int z, boolean bonemeal)
+    public void growStep(World world, Random random, int x, int y, int z, boolean bonemeal)
     {
-        int meta = par1World.getBlockMetadata(x, y, z);
+        int meta = world.getBlockMetadata(x, y, z);
 
         if (meta >= 3)
         {
@@ -127,38 +118,52 @@ public class BlockPeyote extends BlockContainer implements IvBonemealCompatibleB
             int var9;
             int var10;
 
-            var8 = x + par1World.rand.nextInt(3) - 1;
-            var9 = y + par1World.rand.nextInt(2) - par1World.rand.nextInt(2);
-            var10 = z + par1World.rand.nextInt(3) - 1;
+            var8 = x + random.nextInt(3) - 1;
+            var9 = y + random.nextInt(2) - random.nextInt(2);
+            var10 = z + random.nextInt(3) - 1;
 
             for (int var11 = 0; var11 < 4; ++var11)
             {
-                if (par1World.isAirBlock(var8, var9, var10) && this.canBlockStay(par1World, var8, var9, var10))
+                if (world.isAirBlock(var8, var9, var10) && this.canBlockStay(world, var8, var9, var10))
                 {
                     x = var8;
                     y = var9;
                     z = var10;
                 }
 
-                var8 = x + par1World.rand.nextInt(3) - 1;
-                var9 = y + par1World.rand.nextInt(2) - par1World.rand.nextInt(2);
-                var10 = z + par1World.rand.nextInt(3) - 1;
+                var8 = x + random.nextInt(3) - 1;
+                var9 = y + random.nextInt(2) - random.nextInt(2);
+                var10 = z + random.nextInt(3) - 1;
             }
 
-            if (par1World.isAirBlock(var8, var9, var10) && this.canBlockStay(par1World, var8, var9, var10))
+            if (world.isAirBlock(var8, var9, var10) && this.canBlockStay(world, var8, var9, var10))
             {
-                par1World.setBlock(var8, var9, var10, this, 0, 3);
+                world.setBlock(var8, var9, var10, this, 0, 3);
             }
         }
         else
         {
-            par1World.setBlockMetadataWithNotify(x, y, z, meta + 1, 3);
+            world.setBlockMetadataWithNotify(x, y, z, meta + 1, 3);
         }
     }
 
     @Override
-    public boolean canGrow(World par1World, int x, int y, int z)
+    public boolean func_149851_a(World world, int x, int y, int z, boolean isRemote)
     {
         return true;
+    }
+
+    @Override
+    public boolean func_149852_a(World world, Random random, int x, int y, int z)
+    {
+        // shouldGrow
+        return true;
+    }
+
+    @Override
+    public void func_149853_b(World world, Random random, int x, int y, int z)
+    {
+        // grow
+        growStep(world, random, x, y, z, true);
     }
 }

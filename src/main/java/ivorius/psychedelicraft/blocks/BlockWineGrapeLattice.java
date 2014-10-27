@@ -8,6 +8,7 @@ package ivorius.psychedelicraft.blocks;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.items.PSItems;
 import net.minecraft.block.Block;
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
@@ -22,7 +23,7 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockWineGrapeLattice extends Block implements IvBonemealCompatibleBlock
+public class BlockWineGrapeLattice extends Block implements IGrowable
 {
     public IIcon currentIcon;
 
@@ -53,28 +54,27 @@ public class BlockWineGrapeLattice extends Block implements IvBonemealCompatible
     }
 
     @Override
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLiving, ItemStack par6ItemStack)
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entityLivingBase, ItemStack heldItem)
     {
-        int l = MathHelper.floor_double((par5EntityLiving.rotationYaw * 4F) / 360F + 0.5D) & 3;
+        int dir = MathHelper.floor_double((entityLivingBase.rotationYaw * 4F) / 360F + 0.5D) & 3;
 
-        if (l == 0)
+        switch (dir)
         {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 0, 3);
-        }
-        if (l == 1)
-        {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 1, 3);
-        }
-        if (l == 2)
-        {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 0, 3);
-        }
-        if (l == 3)
-        {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 1, 3);
+            case 0:
+                world.setBlockMetadataWithNotify(x, y, z, 0, 3);
+                break;
+            case 1:
+                world.setBlockMetadataWithNotify(x, y, z, 1, 3);
+                break;
+            case 2:
+                world.setBlockMetadataWithNotify(x, y, z, 0, 3);
+                break;
+            case 3:
+                world.setBlockMetadataWithNotify(x, y, z, 1, 3);
+                break;
         }
 
-        super.onBlockPlacedBy(par1World, par2, par3, par4, par5EntityLiving, par6ItemStack);
+        super.onBlockPlacedBy(world, x, y, z, entityLivingBase, heldItem);
     }
 
     @Override
@@ -115,22 +115,22 @@ public class BlockWineGrapeLattice extends Block implements IvBonemealCompatible
     }
 
     @Override
-    public void harvestBlock(World world, EntityPlayer entityplayer, int i, int j, int k, int l)
+    public void harvestBlock(World world, EntityPlayer entityplayer, int x, int y, int z, int meta)
     {
-        if (!world.isRemote && l >> 1 > 0 && entityplayer.getCurrentEquippedItem() != null && entityplayer.getCurrentEquippedItem().getItem() == Items.shears)
+        if (!world.isRemote && meta >> 1 > 0 && entityplayer.getCurrentEquippedItem() != null && entityplayer.getCurrentEquippedItem().getItem() == Items.shears)
         {
-            if (l >> 1 == 4)
+            if (meta >> 1 == 4)
             {
-                dropBlockAsItem(world, i, j, k, new ItemStack(PSItems.wineGrapes, world.rand.nextInt(3) + 1));
+                dropBlockAsItem(world, x, y, z, new ItemStack(PSItems.wineGrapes, world.rand.nextInt(3) + 1));
             }
 
-            world.setBlock(i, j, k, this, (l & 1 | 2 << 1), 3);
+            world.setBlock(x, y, z, this, (meta & 1 | 2 << 1), 3);
 
             entityplayer.getCurrentEquippedItem().damageItem(1, entityplayer);
         }
         else
         {
-            super.harvestBlock(world, entityplayer, i, j, k, l);
+            super.harvestBlock(world, entityplayer, x, y, z, meta);
         }
     }
 
@@ -159,32 +159,22 @@ public class BlockWineGrapeLattice extends Block implements IvBonemealCompatible
     }
 
     @Override
-    public void updateTick(World world, int i, int j, int k, Random random)
+    public void updateTick(World world, int x, int y, int z, Random random)
     {
-        super.updateTick(world, i, j, k, random);
+        super.updateTick(world, x, y, z, random);
 
-        if (world.getBlockLightValue(i, j + 1, k) >= 9)
+        if (world.getBlockLightValue(x, y + 1, z) >= 9)
         {
-            if (this.canGrow(world, i, j, k) && random.nextInt(35) == 0)
-            {
-                this.growStep(world, i, j, k, false);
-            }
+            if (this.func_149851_a(world, x, y, z, world.isRemote) && random.nextInt(35) == 0)
+                this.growStep(world, random, x, y, z, false);
         }
     }
 
-    @Override
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public void growStep(World world, Random random, int x, int y, int z, boolean bonemeal)
     {
-        return IvBonemealHelper.tryGrowing(par1World, par2, par3, par4, par5EntityPlayer, this);
-
-    }
-
-    @Override
-    public void growStep(World par1World, int x, int y, int z, boolean bonemeal)
-    {
-        if (!bonemeal || par1World.rand.nextInt(2) == 0)
+        if (!bonemeal || random.nextInt(2) == 0)
         {
-            int m = par1World.getBlockMetadata(x, y, z);
+            int m = world.getBlockMetadata(x, y, z);
 
             int d = m & 1;
             int g = m >> 1;
@@ -193,18 +183,18 @@ public class BlockWineGrapeLattice extends Block implements IvBonemealCompatible
             {
                 g++;
 
-                par1World.setBlockMetadataWithNotify(x, y, z, d | (g << 1), 3);
+                world.setBlockMetadataWithNotify(x, y, z, d | (g << 1), 3);
             }
         }
     }
 
     @Override
-    public boolean canGrow(World par1World, int x, int y, int z)
+    public boolean func_149851_a(World world, int x, int y, int z, boolean isRemote)
     {
-        int m = par1World.getBlockMetadata(x, y, z);
+        int meta = world.getBlockMetadata(x, y, z);
 
-        int d = m & 1;
-        int g = m >> 1;
+        int d = meta & 1;
+        int g = meta >> 1;
 
         if (g < 4 && g > 0)
         {
@@ -212,5 +202,19 @@ public class BlockWineGrapeLattice extends Block implements IvBonemealCompatible
         }
 
         return false;
+    }
+
+    @Override
+    public boolean func_149852_a(World world, Random random, int x, int y, int z)
+    {
+        // shouldGrow
+        return true;
+    }
+
+    @Override
+    public void func_149853_b(World world, Random random, int x, int y, int z)
+    {
+        // grow
+        growStep(world, random, x, y, z, true);
     }
 }

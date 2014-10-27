@@ -8,10 +8,12 @@ package ivorius.psychedelicraft.blocks;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.items.PSItems;
 import net.minecraft.block.Block;
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
@@ -19,7 +21,7 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockCoffea extends Block implements IvBonemealCompatibleBlock, IvTilledFieldPlant
+public class BlockCoffea extends Block implements IGrowable, IvTilledFieldPlant
 {
     IIcon[] bottomIcons = new IIcon[8];
     IIcon[] topIcons = new IIcon[4];
@@ -36,15 +38,15 @@ public class BlockCoffea extends Block implements IvBonemealCompatibleBlock, IvT
     }
 
     @Override
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(World world, int x, int y, int z, Random random)
     {
-        if (!par1World.isRemote)
+        if (!world.isRemote)
         {
-            if (par1World.getBlockLightValue(par2, par3 + 1, par4) >= 9 && par5Random.nextFloat() < 0.1f)
+            if (world.getBlockLightValue(x, y + 1, z) >= 9 && random.nextFloat() < 0.1f)
             {
-                if (this.canGrow(par1World, par2, par3, par4))
+                if (this.func_149851_a(world, x, y, z, world.isRemote))
                 {
-                    this.growStep(par1World, par2, par3, par4, false);
+                    this.growStep(world, random, x, y, z, false);
                 }
             }
         }
@@ -163,67 +165,62 @@ public class BlockCoffea extends Block implements IvBonemealCompatibleBlock, IvT
         return above ? topIcons[stage] : bottomIcons[stage];
     }
 
-    @Override
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public void growStep(World world, Random random, int x, int y, int z, boolean bonemeal)
     {
-        return IvBonemealHelper.tryGrowing(par1World, par2, par3, par4, par5EntityPlayer, this);
-
-    }
-
-    @Override
-    public void growStep(World par1World, int x, int y, int z, boolean bonemeal)
-    {
-        int number = bonemeal ? par1World.rand.nextInt(2) + 1 : 1;
+        int number = bonemeal ? random.nextInt(2) + 1 : 1;
 
         for (int i = 0; i < number; i++)
         {
-            int var6;
+            int plantSize = 1;
+            while (y > 0 && world.getBlock(x, y - plantSize, z) == this)
+                ++plantSize;
 
-            for (var6 = 1; par1World.getBlock(x, y - var6, z) == this; ++var6)
-            {
-
-            }
-
-            int meta = par1World.getBlockMetadata(x, y, z);
+            int meta = world.getBlockMetadata(x, y, z);
             int stage = (meta >> 1);
             boolean above = (meta & 1) == 1;
-            boolean freeOver = par1World.isAirBlock(x, y + 1, z) && var6 < 2;
+            boolean freeOver = world.isAirBlock(x, y + 1, z) && plantSize < 2;
 
             if ((!above && stage < 7) || (above && stage < 3))
             {
-                par1World.setBlockMetadataWithNotify(x, y, z, ((stage + 1) << 1) | (meta & 1), 3);
+                world.setBlockMetadataWithNotify(x, y, z, ((stage + 1) << 1) | (meta & 1), 3);
             }
             if (freeOver && !above && stage >= 3)
             {
-                par1World.setBlock(x, y + 1, z, this, (0 << 1) | (1), 3);
+                world.setBlock(x, y + 1, z, this, (0 << 1) | (1), 3);
             }
         }
     }
 
     @Override
-    public boolean canGrow(World par1World, int x, int y, int z)
+    public boolean func_149851_a(World world, int x, int y, int z, boolean isRemote)
     {
-        int var6;
+        // canGrow
+        int plantSize = 1;
+        while (y > 0 && world.getBlock(x, y - plantSize, z) == this)
+            ++plantSize;
 
-        for (var6 = 1; par1World.getBlock(x, y - var6, z) == this; ++var6)
-        {
-
-        }
-
-        int meta = par1World.getBlockMetadata(x, y, z);
+        int meta = world.getBlockMetadata(x, y, z);
         int stage = (meta >> 1);
         boolean above = (meta & 1) == 1;
-        boolean freeOver = par1World.isAirBlock(x, y + 1, z) && var6 < 2;
+        boolean freeOver = world.isAirBlock(x, y + 1, z) && plantSize < 2;
 
         if ((!above && stage < 7) || (above && stage < 3))
-        {
             return true;
-        }
-        if (freeOver && !above && stage >= 3)
-        {
-            return true;
-        }
 
-        return false;
+        return freeOver && !above && stage >= 3;
+    }
+
+    @Override
+    public boolean func_149852_a(World world, Random random, int x, int y, int z)
+    {
+        // shouldGrow
+        return true;
+    }
+
+    @Override
+    public void func_149853_b(World world, Random random, int x, int y, int z)
+    {
+        // grow
+        growStep(world, random, x, y, z, true);
     }
 }

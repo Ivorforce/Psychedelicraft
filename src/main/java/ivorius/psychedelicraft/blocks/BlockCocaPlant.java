@@ -8,6 +8,7 @@ package ivorius.psychedelicraft.blocks;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.items.PSItems;
 import net.minecraft.block.Block;
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +20,7 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockCocaPlant extends Block implements IvBonemealCompatibleBlock, IvTilledFieldPlant
+public class BlockCocaPlant extends Block implements IGrowable, IvTilledFieldPlant
 {
     IIcon[] icons = new IIcon[3];
 
@@ -38,24 +39,20 @@ public class BlockCocaPlant extends Block implements IvBonemealCompatibleBlock, 
      * Ticks the block if it's been scheduled
      */
     @Override
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(World world, int x, int y, int z, Random random)
     {
-        if (!par1World.isRemote)
+        if (!world.isRemote)
         {
-            Block belowID = par1World.getBlock(par2, par3 - 1, par4);
-            if (!((belowID == Blocks.farmland && par1World.getBlockMetadata(par2, par3 - 1, par4) > 0) || belowID == this))
+            Block belowID = world.getBlock(x, y - 1, z);
+            if (!((belowID == Blocks.farmland && world.getBlockMetadata(x, y - 1, z) > 0) || belowID == this))
             {
-                if (par5Random.nextInt(2) == 0)
-                {
-                    par1World.setBlock(par2, par3, par4, Blocks.air, 0, 3);
-                }
+                if (random.nextInt(2) == 0)
+                    world.setBlock(x, y, z, Blocks.air, 0, 3);
             }
-            else if (par1World.getBlockLightValue(par2, par3 + 1, par4) >= 9 && par5Random.nextFloat() < 0.1f)
+            else if (world.getBlockLightValue(x, y + 1, z) >= 9 && random.nextFloat() < 0.1f)
             {
-                if (this.canGrow(par1World, par2, par3, par4))
-                {
-                    this.growStep(par1World, par2, par3, par4, false);
-                }
+                if (this.func_149851_a(world, x, y, z, world.isRemote))
+                    this.growStep(world, random, x, y, z, false);
             }
         }
     }
@@ -151,20 +148,20 @@ public class BlockCocaPlant extends Block implements IvBonemealCompatibleBlock, 
     }
 
     @Override
-    public void dropBlockAsItemWithChance(World par1World, int par2, int par3, int par4, int par5, float par6, int par7)
+    public void dropBlockAsItemWithChance(World world, int x, int y, int z, int meta, float par6, int par7)
     {
-        if (!par1World.isRemote)
+        if (!world.isRemote)
         {
-            int countL = par1World.rand.nextInt(par5 / 3 + 1) + par5 / 5;
+            int countL = world.rand.nextInt(meta / 3 + 1) + meta / 5;
             for (int i = 0; i < countL; i++)
             {
-                this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(PSItems.cocaLeaf, 1, 0));
+                this.dropBlockAsItem(world, x, y, z, new ItemStack(PSItems.cocaLeaf, 1, 0));
             }
 
-            int countS = par5 / 8;
+            int countS = meta / 8;
             for (int i = 0; i < countS; i++)
             {
-                this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(PSItems.cocaSeeds, 1, 0));
+                this.dropBlockAsItem(world, x, y, z, new ItemStack(PSItems.cocaSeeds, 1, 0));
             }
         }
     }
@@ -202,59 +199,41 @@ public class BlockCocaPlant extends Block implements IvBonemealCompatibleBlock, 
         return super.getIcon(par1, par2);
     }
 
-    @Override
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public void growStep(World world, Random random, int x, int y, int z, boolean bonemeal)
     {
-        return IvBonemealHelper.tryGrowing(par1World, par2, par3, par4, par5EntityPlayer, this);
-
-    }
-
-    @Override
-    public void growStep(World par1World, int x, int y, int z, boolean bonemeal)
-    {
-        int number = bonemeal ? par1World.rand.nextInt(4) + 1 : 1;
+        int number = bonemeal ? random.nextInt(4) + 1 : 1;
 
         for (int i = 0; i < number; i++)
         {
-            int var6;
+            int plantSize = 1;
+            while (world.getBlock(x, y - plantSize, z) == this)
+                ++plantSize;
 
-            for (var6 = 1; par1World.getBlock(x, y - var6, z) == this; ++var6)
-            {
-
-            }
-
-            int m = par1World.getBlockMetadata(x, y, z);
-            boolean freeOver = par1World.isAirBlock(x, y + 1, z) && var6 < 3;
+            int m = world.getBlockMetadata(x, y, z);
+            boolean freeOver = world.isAirBlock(x, y + 1, z) && plantSize < 3;
 
             if ((m < 12 && freeOver) || (!freeOver && m < 11))
-            {
-                par1World.setBlockMetadataWithNotify(x, y, z, m + 1, 3);
-            }
+                world.setBlockMetadataWithNotify(x, y, z, m + 1, 3);
 
             if (freeOver && m + 1 >= 12)
             {
-                par1World.setBlock(x, y + 1, z, this, 0, 3);
+                world.setBlock(x, y + 1, z, this, 0, 3);
 
                 if (m < 12)
-                {
-                    par1World.setBlockMetadataWithNotify(x, y, z, m + 1, 3);
-                }
+                    world.setBlockMetadataWithNotify(x, y, z, m + 1, 3);
             }
         }
     }
 
     @Override
-    public boolean canGrow(World par1World, int x, int y, int z)
+    public boolean func_149851_a(World world, int x, int y, int z, boolean isRemote)
     {
-        int var6;
+        int plantSize = 1;
+        while (world.getBlock(x, y - plantSize, z) == this)
+            ++plantSize;
 
-        for (var6 = 1; par1World.getBlock(x, y - var6, z) == this; ++var6)
-        {
-
-        }
-
-        int m = par1World.getBlockMetadata(x, y, z);
-        boolean freeOver = par1World.isAirBlock(x, y + 1, z) && var6 < 3;
+        int m = world.getBlockMetadata(x, y, z);
+        boolean freeOver = world.isAirBlock(x, y + 1, z) && plantSize < 3;
 
         if ((m < 12 && freeOver) || (!freeOver && m < 11))
         {
@@ -267,5 +246,19 @@ public class BlockCocaPlant extends Block implements IvBonemealCompatibleBlock, 
         }
 
         return false;
+    }
+
+    @Override
+    public boolean func_149852_a(World world, Random random, int x, int y, int z)
+    {
+        // shouldGrow
+        return true;
+    }
+
+    @Override
+    public void func_149853_b(World world, Random random, int x, int y, int z)
+    {
+        // grow
+        growStep(world, random, x, y, z, true);
     }
 }

@@ -8,6 +8,7 @@ package ivorius.psychedelicraft.blocks;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.items.PSItems;
 import net.minecraft.block.Block;
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +20,7 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockCannabisPlant extends Block implements IvBonemealCompatibleBlock, IvTilledFieldPlant
+public class BlockCannabisPlant extends Block implements IGrowable, IvTilledFieldPlant
 {
     public IIcon[] textures = new IIcon[3];
 
@@ -38,15 +39,15 @@ public class BlockCannabisPlant extends Block implements IvBonemealCompatibleBlo
      * Ticks the block if it's been scheduled
      */
     @Override
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(World world, int x, int y, int z, Random random)
     {
-        if (!par1World.isRemote)
+        if (!world.isRemote)
         {
-            if (par1World.getBlockLightValue(par2, par3 + 1, par4) >= 9 && par5Random.nextFloat() < 0.12f)
+            if (world.getBlockLightValue(x, y + 1, z) >= 9 && random.nextFloat() < 0.12f)
             {
-                if (this.canGrow(par1World, par2, par3, par4))
+                if (this.func_149851_a(world, x, y, z, world.isRemote))
                 {
-                    this.growStep(par1World, par2, par3, par4, false);
+                    this.growStep(world, random, x, y, z, false);
                 }
             }
         }
@@ -139,26 +140,26 @@ public class BlockCannabisPlant extends Block implements IvBonemealCompatibleBlo
     }
 
     @Override
-    public void dropBlockAsItemWithChance(World par1World, int par2, int par3, int par4, int par5, float par6, int par7)
+    public void dropBlockAsItemWithChance(World world, int x, int y, int z, int meta, float par6, int par7)
     {
-        if (!par1World.isRemote)
+        if (!world.isRemote)
         {
-            int countB = par1World.rand.nextInt(par5 / 6 + 1);
+            int countB = world.rand.nextInt(meta / 6 + 1);
             for (int i = 0; i < countB; i++)
             {
-                this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(PSItems.cannabisBuds, 1, 0));
+                this.dropBlockAsItem(world, x, y, z, new ItemStack(PSItems.cannabisBuds, 1, 0));
             }
 
-            int countL = par1World.rand.nextInt(par5 / 5 + 1) + par5 / 6;
+            int countL = world.rand.nextInt(meta / 5 + 1) + meta / 6;
             for (int i = 0; i < countL; i++)
             {
-                this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(PSItems.cannabisLeaf, 1, 0));
+                this.dropBlockAsItem(world, x, y, z, new ItemStack(PSItems.cannabisLeaf, 1, 0));
             }
 
-            int countS = par5 / 8;
+            int countS = meta / 8;
             for (int i = 0; i < countS; i++)
             {
-                this.dropBlockAsItem(par1World, par2, par3, par4, new ItemStack(PSItems.cannabisSeeds, 1, 0));
+                this.dropBlockAsItem(world, x, y, z, new ItemStack(PSItems.cannabisSeeds, 1, 0));
             }
         }
     }
@@ -196,17 +197,9 @@ public class BlockCannabisPlant extends Block implements IvBonemealCompatibleBlo
         return super.getIcon(par1, par2);
     }
 
-    @Override
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public void growStep(World par1World, Random random, int x, int y, int z, boolean bonemeal)
     {
-        return IvBonemealHelper.tryGrowing(par1World, par2, par3, par4, par5EntityPlayer, this);
-
-    }
-
-    @Override
-    public void growStep(World par1World, int x, int y, int z, boolean bonemeal)
-    {
-        int number = bonemeal ? par1World.rand.nextInt(4) + 1 : 1;
+        int number = bonemeal ? random.nextInt(4) + 1 : 1;
 
         for (int i = 0; i < number; i++)
         {
@@ -235,23 +228,20 @@ public class BlockCannabisPlant extends Block implements IvBonemealCompatibleBlo
     }
 
     @Override
-    public boolean canGrow(World par1World, int x, int y, int z)
+    public boolean func_149851_a(World world, int x, int y, int z, boolean isRemote)
     {
-        int var6;
+        int plantSize = 1;
+        while (world.getBlock(x, y - plantSize, z) == this)
+            ++plantSize;
 
-        for (var6 = 1; par1World.getBlock(x, y - var6, z) == this; ++var6)
-        {
-
-        }
-
-        int m = par1World.getBlockMetadata(x, y, z);
-        boolean freeOver = var6 < 3;
+        int m = world.getBlockMetadata(x, y, z);
+        boolean freeOver = plantSize < 3;
 
         if ((m < 15 && freeOver) || (!freeOver && m < 11))
         {
             return true;
         }
-        else if (par1World.isAirBlock(x, y + 1, z))
+        else if (world.isAirBlock(x, y + 1, z))
         {
             if (freeOver && m == 15)
             {
@@ -260,5 +250,19 @@ public class BlockCannabisPlant extends Block implements IvBonemealCompatibleBlo
         }
 
         return false;
+    }
+
+    @Override
+    public boolean func_149852_a(World world, Random random, int x, int y, int z)
+    {
+        // shouldGrow
+        return true;
+    }
+
+    @Override
+    public void func_149853_b(World world, Random random, int x, int y, int z)
+    {
+        // grow
+        growStep(world, random, x, y, z, true);
     }
 }
