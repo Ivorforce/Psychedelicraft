@@ -7,27 +7,16 @@ package ivorius.psychedelicraft.client.rendering.blocks;
 
 import ivorius.ivtoolkit.math.IvMathHelper;
 import ivorius.psychedelicraft.Psychedelicraft;
-import ivorius.psychedelicraft.blocks.TileEntityBarrel;
 import ivorius.psychedelicraft.blocks.TileEntityMashTub;
-import ivorius.psychedelicraft.client.rendering.MCColorHelper;
-import ivorius.psychedelicraft.fluids.FluidWithIconSymbol;
-import ivorius.psychedelicraft.fluids.FluidWithIconSymbolRegistering;
-import ivorius.psychedelicraft.fluids.TranslucentFluid;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureMap;
+import ivorius.psychedelicraft.client.rendering.FluidBoxRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
-
-import static ivorius.psychedelicraft.client.rendering.blocks.TileEntityRendererFlask.renderFluid;
 
 public class TileEntityRendererMashTub extends TileEntitySpecialRenderer
 {
@@ -69,44 +58,14 @@ public class TileEntityRendererMashTub extends TileEntitySpecialRenderer
         FluidStack fluidStack = tileEntity.containedFluid();
         if (fluidStack != null)
         {
-            GL11.glEnable(GL11.GL_BLEND);
-            GL11.glAlphaFunc(GL11.GL_GREATER, 0.001f);
-            OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
+            float fluidHeight = 16.0f * IvMathHelper.clamp(0.0f, (float) fluidStack.amount / (float) tileEntity.tankCapacity(), 1.0f);
 
-            GL11.glScalef(1.0f / 16.0f, 1.0f / 16.0f, 1.0f / 16.0f);
+            FluidBoxRenderer fluidBoxRenderer = new FluidBoxRenderer(1.0f / 16.0f);
+            fluidBoxRenderer.prepare(fluidStack);
 
-            Fluid fluid = fluidStack.getFluid();
-            IIcon icon = fluid.getIcon(fluidStack);
-            float fluidHeight = IvMathHelper.clamp(0.0f, (float) fluidStack.amount / (float) tileEntity.tankCapacity(), 1.0f);
+            fluidBoxRenderer.renderFluid(-8.0f, -8.0f, -8.0f, 16.0f, fluidHeight, 16.0f, ForgeDirection.NORTH, ForgeDirection.EAST, ForgeDirection.SOUTH, ForgeDirection.WEST, ForgeDirection.UP);
 
-            float texX0, texX1, texY0, texY1;
-
-            if (icon == null)
-            {
-                MCColorHelper.setColor(fluid.getColor(fluidStack), fluid instanceof TranslucentFluid);
-                texX0 = texX1 = texY0 = texY1 = 0.0f;
-                GL11.glDisable(GL11.GL_TEXTURE_2D);
-            }
-            else
-            {
-                GL11.glColor3f(1.0f, 1.0f, 1.0f);
-                texX0 = icon.getMinU();
-                texX1 = icon.getMaxU();
-                texY0 = icon.getMinV();
-                texY1 = icon.getMaxV();
-                bindTexture(TextureMap.locationBlocksTexture);
-            }
-
-            Tessellator tessellator = Tessellator.instance;
-
-            tessellator.startDrawingQuads();
-            renderFluid(-8.0f, -8.0f, -8.0f, 16.0f, fluidHeight * 16.0f, 16.0f, texX0, texX1, texY0, texY1, ForgeDirection.NORTH, ForgeDirection.EAST, ForgeDirection.SOUTH, ForgeDirection.WEST, ForgeDirection.UP);
-            tessellator.draw();
-
-            if (icon == null)
-                GL11.glEnable(GL11.GL_TEXTURE_2D);
-
-            GL11.glDisable(GL11.GL_BLEND);
+            fluidBoxRenderer.cleanUp();
         }
 
         GL11.glPopMatrix();
