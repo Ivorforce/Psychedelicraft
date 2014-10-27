@@ -21,6 +21,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemSeeds;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 
 import static ivorius.psychedelicraft.Psychedelicraft.modBase;
@@ -337,6 +338,9 @@ public class PSRegistryHandler
         vodka.setColor(0x44e8f4f8);
         vodka.setSymbolIconName(modBase + "drinkVodka");
         FluidRegistry.registerFluid(vodka);
+
+        slurry = new FluidSlurry("pscSlurry");
+        FluidRegistry.registerFluid(slurry);
 
 //        syringe.addEffect(ItemSyringe.damageCocaine, new DrugInfluence[]{new DrugInfluence("Cocaine", 0, 0.005, 0.01, 0.5f)}, 0x55ffffff, "cocaine");
 //        syringe.addEffect(ItemSyringe.damageCaffeine, new DrugInfluence[]{new DrugInfluence("Caffeine", 0, 0.005, 0.01, 0.85f)}, 0x552e1404, "caffeine");

@@ -14,12 +14,16 @@ public class PSFluids
 {
     public static FluidDrug beer;
     public static FluidDrug jenever;
-    public static FluidDrug coffee;
     public static FluidDrug wine;
-    public static FluidDrug peyoteJuice;
+    public static FluidDrug vodka;
+
+    public static FluidDrug coffee;
     public static FluidDrug cocaTea;
     public static FluidDrug cannabisTea;
-    public static FluidDrug vodka;
+    public static FluidDrug peyoteJuice;
+
     public static FluidDrug cocaineFluid;
     public static FluidDrug caffeineFluid;
+
+    public static Fluid slurry;
 }
