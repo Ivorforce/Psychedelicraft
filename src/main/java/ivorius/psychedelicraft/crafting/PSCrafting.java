@@ -6,11 +6,10 @@
 package ivorius.psychedelicraft.crafting;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import ivorius.psychedelicraft.blocks.TileEntityBarrel;
 import ivorius.psychedelicraft.blocks.TileEntityDryingTable;
+import ivorius.psychedelicraft.blocks.TileEntityMashTub;
 import ivorius.psychedelicraft.entities.DrugInfluence;
 import ivorius.psychedelicraft.entities.DrugInfluenceHarmonium;
-import ivorius.psychedelicraft.fluids.PSFluids;
 import ivorius.psychedelicraft.items.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWood;
@@ -43,23 +42,23 @@ public class PSCrafting
         for (int type = 0; type < BlockWood.field_150096_a.length; type++)
         {
             GameRegistry.addRecipe(new ItemStack(itemBarrel, 1, type), " I ", "# #", "S#S", '#', new ItemStack(planks, 1, type), 'I', iron_ingot, 'S', stick);
-
-            ItemStack wineBarrel = new ItemStack(itemBarrel, 1, type);
-            itemBarrel.fill(wineBarrel, new FluidStack(wine, TileEntityBarrel.BARREL_CAPACITY), true);
-            addShapelessRecipe(wineBarrel, new ItemStack(itemBarrel, 1, type), wineGrapes, wineGrapes, wineGrapes, wineGrapes, wineGrapes, wineGrapes, wineGrapes, wineGrapes);
-
-            ItemStack beerBarrel = new ItemStack(itemBarrel, 1, type);
-            itemBarrel.fill(beerBarrel, new FluidStack(beer, TileEntityBarrel.BARREL_CAPACITY), true);
-            addShapelessRecipe(beerBarrel, new ItemStack(itemBarrel, 1, type), water_bucket, wheat, wheat, wheat, wheat, wheat, wheat, wheat);
-
-            ItemStack vodkaBarrel = new ItemStack(itemBarrel, 1, type);
-            itemBarrel.fill(vodkaBarrel, new FluidStack(vodka, TileEntityBarrel.BARREL_CAPACITY), true);
-            addShapelessRecipe(vodkaBarrel, new ItemStack(itemBarrel, 1, type), water_bucket, potato, potato, potato, potato, potato, potato, potato);
-
-            ItemStack jeneverBarrel = new ItemStack(itemBarrel, 1, type);
-            itemBarrel.fill(jeneverBarrel, new FluidStack(jenever, TileEntityBarrel.BARREL_CAPACITY), true);
-            addShapelessRecipe(jeneverBarrel, new ItemStack(itemBarrel, 1, type), juniperBerries, juniperBerries, juniperBerries, juniperBerries, sugar, wineGrapes, wineGrapes, wheat);
         }
+
+        ItemStack wineMash = new ItemStack(itemMashTub);
+        itemMashTub.fill(wineMash, new FluidStack(wine, TileEntityMashTub.MASH_TUB_CAPACITY), true);
+        addShapelessRecipe(wineMash, new ItemStack(itemMashTub), wineGrapes, wineGrapes, wineGrapes, wineGrapes, wineGrapes, wineGrapes, wineGrapes, wineGrapes);
+
+        ItemStack wortMash = new ItemStack(itemMashTub);
+        itemMashTub.fill(wortMash, new FluidStack(beer, TileEntityMashTub.MASH_TUB_CAPACITY), true);
+        addShapelessRecipe(wortMash, new ItemStack(itemMashTub), water_bucket, wheat, wheat, wheat, wheat, wheat, wheat, wheat);
+
+        ItemStack vodkaMash = new ItemStack(itemMashTub);
+        itemMashTub.fill(vodkaMash, new FluidStack(vodka, TileEntityMashTub.MASH_TUB_CAPACITY), true);
+        addShapelessRecipe(vodkaMash, new ItemStack(itemMashTub), water_bucket, potato, potato, potato, potato, potato, potato, potato);
+
+        ItemStack jeneverMash = new ItemStack(itemMashTub);
+        itemMashTub.fill(jeneverMash, new FluidStack(jenever, TileEntityMashTub.MASH_TUB_CAPACITY), true);
+        addShapelessRecipe(jeneverMash, new ItemStack(itemMashTub), juniperBerries, juniperBerries, juniperBerries, juniperBerries, sugar, wineGrapes, wineGrapes, wheat);
 
         GameRegistry.addRecipe(new ItemStack(glassChalice, 4), "# #", " # ", " # ", '#', glass);
         GameRegistry.addRecipe(new ItemStack(wineGrapeLattice), "###", "###", "O#O", '#', stick, 'O', planks);

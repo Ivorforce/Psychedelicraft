@@ -54,13 +54,13 @@ public class TileEntityRendererFlask extends TileEntitySpecialRenderer
         GL11.glPopMatrix();
         GL11.glEnable(GL11.GL_CULL_FACE);
 
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glAlphaFunc(GL11.GL_GREATER, 0.001f);
-        OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
-
         FluidStack fluidStack = flask.containedFluid();
         if (fluidStack != null)
         {
+            GL11.glEnable(GL11.GL_BLEND);
+            GL11.glAlphaFunc(GL11.GL_GREATER, 0.001f);
+            OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
+
             GL11.glScalef(1.0f / 16.0f, 1.0f / 16.0f, 1.0f / 16.0f);
 
             Fluid fluid = fluidStack.getFluid();
@@ -97,9 +97,10 @@ public class TileEntityRendererFlask extends TileEntitySpecialRenderer
 
             if (icon == null)
                 GL11.glEnable(GL11.GL_TEXTURE_2D);
+
+            GL11.glDisable(GL11.GL_BLEND);
         }
 
-        GL11.glDisable(GL11.GL_BLEND);
         GL11.glPopMatrix();
     }
 

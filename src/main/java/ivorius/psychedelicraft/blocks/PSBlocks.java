@@ -11,6 +11,7 @@ public class PSBlocks
 {
     public static Block wineGrapeLattice;
 
+    public static Block mashTub;
     public static Block barrel;
     public static Block flask;
     public static Block distillery;

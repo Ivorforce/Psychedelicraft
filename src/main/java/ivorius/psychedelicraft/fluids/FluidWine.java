@@ -21,7 +21,8 @@ import java.util.List;
  */
 public class FluidWine extends FluidDrug implements FluidFermentable
 {
-    public static final int FERMENTATION_STEPS = 7;
+    public static final int FERMENTATION_STEPS = 2;
+    public static final int MATURATION_STEPS = 4;
 
     public static double zeroToOne(double value, double min, double max)
     {
@@ -40,8 +41,13 @@ public class FluidWine extends FluidDrug implements FluidFermentable
 
         if (!isVinegar(fluidStack))
         {
-            double fermentation = (double) getFermentation(fluidStack) / (double) (FERMENTATION_STEPS - 1);
-            list.add(new DrugInfluence("Alcohol", 20, 0.002, 0.001, 0.3 * fermentation));
+            int fermentation = getFermentation(fluidStack);
+            int maturation = getMaturation(fluidStack);
+
+            double alcohol = (double)fermentation / (double)FERMENTATION_STEPS * 0.25
+                    + (double)maturation / (double)MATURATION_STEPS * 0.1;
+
+            list.add(new DrugInfluence("Alcohol", 20, 0.002, 0.001, alcohol));
         }
     }
 
@@ -64,38 +70,58 @@ public class FluidWine extends FluidDrug implements FluidFermentable
     @Override
     public void addCreativeSubtypes(List<FluidStack> list)
     {
-        for (int fermentation = 0; fermentation < FERMENTATION_STEPS; fermentation++)
+        super.addCreativeSubtypes(list);
+
+        for (int fermentation = 1; fermentation <= FERMENTATION_STEPS; fermentation++)
         {
             FluidStack fluidStack = new FluidStack(this, 1);
             setFermentation(fluidStack, fermentation);
             list.add(fluidStack);
         }
 
-        FluidStack fluidStack = new FluidStack(this, 1);
-        setFermentation(fluidStack, FERMENTATION_STEPS - 1);
-        setIsVinegar(fluidStack, true);
-        list.add(fluidStack);
+        for (int maturation = 1; maturation <= MATURATION_STEPS; maturation++)
+        {
+            FluidStack fluidStack = new FluidStack(this, 1);
+            setFermentation(fluidStack, FERMENTATION_STEPS);
+            setMaturation(fluidStack, maturation);
+            list.add(fluidStack);
+        }
     }
 
     @Override
-    public int fermentationTime(FluidStack stack)
+    public int fermentationTime(FluidStack stack, boolean openContainer)
     {
-        if (getFermentation(stack) < FERMENTATION_STEPS - 1)
-            return PSConfig.ticksPerWineFermentation;
-        else if (PSConfig.ticksUntilWineAcetification >= 0 && !isVinegar(stack))
+        int fermentation = getFermentation(stack);
+        int maturation = getMaturation(stack);
+
+        if (fermentation < FERMENTATION_STEPS)
+        {
+            if (openContainer)
+                return PSConfig.ticksPerWineFermentation;
+        }
+        else if (openContainer)
             return PSConfig.ticksUntilWineAcetification;
+        else if (maturation < MATURATION_STEPS)
+            return PSConfig.ticksPerWineMaturation;
 
         return UNFERMENTABLE;
     }
 
     @Override
-    public void fermentStep(FluidStack stack)
+    public void fermentStep(FluidStack stack, boolean openContainer)
     {
         int fermentation = getFermentation(stack);
-        if (fermentation < FERMENTATION_STEPS - 1)
-            setFermentation(stack, fermentation + 1);
-        else if (!isVinegar(stack))
+        int maturation = getMaturation(stack);
+
+        if (fermentation < FERMENTATION_STEPS)
+        {
+            if (openContainer)
+                setFermentation(stack, fermentation + 1);
+        }
+        else if (openContainer)
             setIsVinegar(stack, true);
+        else if (maturation < MATURATION_STEPS)
+            setMaturation(stack, maturation + 1);
     }
 
     @Override
@@ -112,7 +138,12 @@ public class FluidWine extends FluidDrug implements FluidFermentable
             return super.getUnlocalizedName(stack) + ".vinegar";
 
         int fermentation = getFermentation(stack);
-        return super.getUnlocalizedName(stack) + ".quality" + fermentation;
+        int maturation = getMaturation(stack);
+
+        if (maturation == 0)
+            return super.getUnlocalizedName(stack) + ".ferment" + fermentation;
+        else
+            return super.getUnlocalizedName(stack) + ".mature" + maturation;
     }
 
     public boolean isVinegar(FluidStack stack)
@@ -128,12 +159,23 @@ public class FluidWine extends FluidDrug implements FluidFermentable
 
     public int getFermentation(FluidStack stack)
     {
-        return stack.tag != null ? MathHelper.clamp_int(stack.tag.getInteger("fermentation"), 0, FERMENTATION_STEPS - 1) : 0;
+        return stack.tag != null ? MathHelper.clamp_int(stack.tag.getInteger("fermentation"), 0, FERMENTATION_STEPS) : 0;
     }
 
     public void setFermentation(FluidStack stack, int fermentation)
     {
         FluidHelper.ensureTag(stack);
         stack.tag.setInteger("fermentation", fermentation);
+    }
+
+    public int getMaturation(FluidStack stack)
+    {
+        return stack.tag != null ? MathHelper.clamp_int(stack.tag.getInteger("maturation"), 0, MATURATION_STEPS) : 0;
+    }
+
+    public void setMaturation(FluidStack stack, int maturation)
+    {
+        FluidHelper.ensureTag(stack);
+        stack.tag.setInteger("maturation", maturation);
     }
 }

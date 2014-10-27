@@ -34,9 +34,11 @@ public class PSConfig
     public static boolean farmerDrugDeals;
 
     public static int ticksPerWineFermentation;
+    public static int ticksPerWineMaturation;
     public static int ticksUntilWineAcetification;
 
-    public static double ticksPerBeerFermentation;
+    public static int ticksPerBeerFermentation;
+    public static int ticksPerBeerMaturation;
 
     public static void loadConfig(String configID)
     {
@@ -63,9 +65,11 @@ public class PSConfig
 
             int minute = 20 * 60;
             ticksPerWineFermentation = config.get(CATEGORY_BALANCING, "ticksPerWineFermentation", minute * 40, "Time until wine ferments to the next step.").getInt();
+            ticksPerWineMaturation = config.get(CATEGORY_BALANCING, "ticksPerWineMaturation", minute * 40, "Time until wine matures to the next step.").getInt();
             ticksUntilWineAcetification = config.get(CATEGORY_BALANCING, "ticksUntilWineAcetification", minute * 30, "Time until wine turns to vinegar after it is 'perfect'. Enter a negative number to disable.").getInt();
 
-            ticksPerBeerFermentation = config.get(CATEGORY_BALANCING, "ticksPerBeerFermentation", minute * 30, "Time until beer ferments to the next step.").getDouble();
+            ticksPerBeerFermentation = config.get(CATEGORY_BALANCING, "ticksPerBeerFermentation", minute * 30, "Time until beer wort ferments to the next step.").getInt();
+            ticksPerBeerMaturation = config.get(CATEGORY_BALANCING, "ticksPerBeerMaturation", minute * 60, "Time until beer matures to the next step.").getInt();
         }
 
         Psychedelicraft.proxy.loadConfig(configID);

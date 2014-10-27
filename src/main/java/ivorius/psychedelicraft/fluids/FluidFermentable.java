@@ -20,13 +20,15 @@ public interface FluidFermentable
     /**
      * Returns the ticks needed for the fluid to ferment. Return {@link #UNFERMENTABLE} if the fluid is curently unfermentable.
      * @param stack The fluid currently fermenting.
+     * @param openContainer
      * @return The time it needs to ferment, in ticks.
      */
-    int fermentationTime(FluidStack stack);
+    int fermentationTime(FluidStack stack, boolean openContainer);
 
     /**
      * Notifies the fluid that the stack has fermented, and is expected to apply this change to the stack.
      * @param stack The fluid currently fermenting.
+     * @param openContainer
      */
-    void fermentStep(FluidStack stack);
+    void fermentStep(FluidStack stack, boolean openContainer);
 }

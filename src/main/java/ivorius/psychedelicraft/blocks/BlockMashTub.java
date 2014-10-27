@@ -6,7 +6,6 @@
 package ivorius.psychedelicraft.blocks;
 
 import ivorius.psychedelicraft.Psychedelicraft;
-import ivorius.psychedelicraft.fluids.FluidHelper;
 import ivorius.psychedelicraft.gui.PSGuiHandler;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -23,11 +22,12 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidContainerItem;
 
-public class BlockBarrel extends BlockContainer
+/**
+ * Created by lukas on 27.10.14.
+ */
+public class BlockMashTub extends BlockContainer
 {
-    public static final int MAX_TAP_AMOUNT = FluidHelper.MILLIBUCKETS_PER_LITER;
-
-    public BlockBarrel()
+    public BlockMashTub()
     {
         super(Material.wood);
 
@@ -65,15 +65,13 @@ public class BlockBarrel extends BlockContainer
         world.setBlockMetadataWithNotify(x, y, z, direction, 3);
 
         TileEntity tileEntity = world.getTileEntity(x, y, z);
-        if (tileEntity instanceof TileEntityBarrel)
+        if (tileEntity instanceof TileEntityMashTub)
         {
-            TileEntityBarrel tileEntityBarrel = (TileEntityBarrel) tileEntity;
+            TileEntityMashTub tileEntityMashTub = (TileEntityMashTub) tileEntity;
 
             FluidStack fluidStack = stack.getItem() instanceof IFluidContainerItem ? ((IFluidContainerItem) stack.getItem()).getFluid(stack) : null;
             if (fluidStack != null)
-                tileEntityBarrel.fill(ForgeDirection.UP, fluidStack, true);
-
-            tileEntityBarrel.barrelWoodType = stack.getItemDamage();
+                tileEntityMashTub.fill(ForgeDirection.UP, fluidStack, true);
         }
     }
 
@@ -83,11 +81,11 @@ public class BlockBarrel extends BlockContainer
         if (willHarvest)
         {
             TileEntity tileEntity = world.getTileEntity(x, y, z);
-            if (tileEntity instanceof TileEntityBarrel)
+            if (tileEntity instanceof TileEntityMashTub)
             {
-                TileEntityBarrel tileEntityBarrel = (TileEntityBarrel) tileEntity;
-                FluidStack fluidStack = tileEntityBarrel.drain(ForgeDirection.DOWN, TileEntityBarrel.BARREL_CAPACITY, true);
-                ItemStack stack = new ItemStack(this, 1, tileEntityBarrel.barrelWoodType);
+                TileEntityMashTub tileEntityMashTub = (TileEntityMashTub) tileEntity;
+                FluidStack fluidStack = tileEntityMashTub.drain(ForgeDirection.DOWN, TileEntityMashTub.MASH_TUB_CAPACITY, true);
+                ItemStack stack = new ItemStack(this);
 
                 if (fluidStack != null && fluidStack.amount > 0)
                     ((IFluidContainerItem) stack.getItem()).fill(stack, fluidStack, true);
@@ -109,37 +107,10 @@ public class BlockBarrel extends BlockContainer
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float par7, float par8, float par9)
     {
         TileEntity tileEntity = world.getTileEntity(x, y, z);
-        if (tileEntity instanceof TileEntityBarrel)
+        if (tileEntity instanceof TileEntityMashTub)
         {
-            TileEntityBarrel tileEntityBarrel = (TileEntityBarrel) tileEntity;
-
-            ItemStack heldItem = player.getHeldItem();
-
-            if (heldItem != null && heldItem.getItem() instanceof IFluidContainerItem)
-            {
-                IFluidContainerItem fluidContainerItem = (IFluidContainerItem) heldItem.getItem();
-
-                int maxFill = fluidContainerItem.fill(heldItem, tileEntityBarrel.drain(ForgeDirection.DOWN, MAX_TAP_AMOUNT, false), false);
-                if (maxFill > 0)
-                {
-                    if (!world.isRemote)
-                    {
-                        FluidStack drained = tileEntityBarrel.drain(ForgeDirection.DOWN, maxFill, true);
-                        fluidContainerItem.fill(heldItem, drained, true);
-                    }
-                }
-
-                tileEntityBarrel.timeLeftTapOpen = 20;
-
-                return true;
-            }
-            else
-            {
-                if (!world.isRemote)
-                    player.openGui(Psychedelicraft.instance, PSGuiHandler.fluidHandlerContainerID_UP, world, x, y, z);
-
-                return true;
-            }
+            if (!world.isRemote)
+                player.openGui(Psychedelicraft.instance, PSGuiHandler.fluidHandlerContainerID_UP, world, x, y, z);
         }
 
         return false;
@@ -160,6 +131,6 @@ public class BlockBarrel extends BlockContainer
     @Override
     public TileEntity createNewTileEntity(World var1, int var2)
     {
-        return new TileEntityBarrel();
+        return new TileEntityMashTub();
     }
 }

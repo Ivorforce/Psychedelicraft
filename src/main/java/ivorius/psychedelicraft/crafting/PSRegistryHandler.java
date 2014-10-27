@@ -80,8 +80,16 @@ public class PSRegistryHandler
         barrel = new BlockBarrel().setHardness(1.0F);
         barrel.setCreativeTab(Psychedelicraft.drinksTab);
         PSRegistryHandler.registerBlockDefault(barrel, ItemBarrel.class, "barrel");
+        barrel.setBlockName("ygcBarrel");
         GameRegistry.registerTileEntityWithAlternatives(TileEntityBarrel.class, "ygcBarrel", "barrel");
         itemBarrel = (ItemBarrel) Item.getItemFromBlock(barrel);
+
+        mashTub = new BlockMashTub().setHardness(1.0F);
+        mashTub.setCreativeTab(Psychedelicraft.creativeTab);
+        PSRegistryHandler.registerBlockDefault(mashTub, ItemMashTub.class, "mash_tub");
+        mashTub.setBlockName("ygcMashTub");
+        GameRegistry.registerTileEntityWithAlternatives(TileEntityMashTub.class, "ygcMashTub");
+        itemMashTub = (ItemMashTub) Item.getItemFromBlock(mashTub);
 
         flask = new BlockFlask().setHardness(1.0F);
         flask.setCreativeTab(Psychedelicraft.creativeTab);

@@ -17,6 +17,7 @@ public class PSItems
     public static ItemCup glassChalice;
 
     public static ItemBarrel itemBarrel;
+    public static ItemMashTub itemMashTub;
     public static ItemFlask itemFlask;
     public static ItemDistillery itemDistillery;
 

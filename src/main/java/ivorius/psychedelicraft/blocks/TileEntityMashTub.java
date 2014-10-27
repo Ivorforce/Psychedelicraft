@@ -7,34 +7,30 @@ package ivorius.psychedelicraft.blocks;
 
 import ivorius.ivtoolkit.blocks.IvTileEntityHelper;
 import ivorius.psychedelicraft.fluids.FluidFermentable;
-import ivorius.psychedelicraft.fluids.PSFluids;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.TileFluidHandler;
 
 import static ivorius.psychedelicraft.fluids.FluidHelper.MILLIBUCKETS_PER_LITER;
 
-public class TileEntityBarrel extends TileFluidHandler
+/**
+ * Created by lukas on 27.10.14.
+ */
+public class TileEntityMashTub extends TileFluidHandler
 {
-    public static final int BARREL_CAPACITY = MILLIBUCKETS_PER_LITER * 16;
-
-    public int barrelWoodType;
+    public static final int MASH_TUB_CAPACITY = MILLIBUCKETS_PER_LITER * 16;
 
     public int timeFermented;
 
-    public float tapRotation = 0.0f;
-    public int timeLeftTapOpen = 0;
-
-    public TileEntityBarrel()
+    public TileEntityMashTub()
     {
-        tank = new FluidTank(BARREL_CAPACITY);
+        tank = new FluidTank(MASH_TUB_CAPACITY);
     }
 
     @Override
@@ -44,7 +40,7 @@ public class TileEntityBarrel extends TileFluidHandler
         if (fluidStack != null && fluidStack.getFluid() instanceof FluidFermentable)
         {
             FluidFermentable fluidFermentable = (FluidFermentable) fluidStack.getFluid();
-            int neededFermentationTime = fluidFermentable.fermentationTime(fluidStack, false);
+            int neededFermentationTime = fluidFermentable.fermentationTime(fluidStack, true);
 
             if (neededFermentationTime >= 0)
             {
@@ -52,7 +48,7 @@ public class TileEntityBarrel extends TileFluidHandler
                 {
                     if (!worldObj.isRemote)
                     {
-                        fluidFermentable.fermentStep(fluidStack, false);
+                        fluidFermentable.fermentStep(fluidStack, true);
                         timeFermented = 0;
 
                         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
@@ -63,20 +59,6 @@ public class TileEntityBarrel extends TileFluidHandler
                     timeFermented++;
             }
         }
-
-        if (timeLeftTapOpen > 0)
-        {
-            timeLeftTapOpen--;
-        }
-
-        if (timeLeftTapOpen > 0 && tapRotation < 3.141f * 0.5f)
-        {
-            tapRotation += 3.141f * 0.1f;
-        }
-        if (timeLeftTapOpen == 0 && tapRotation > 0.0f)
-        {
-            tapRotation -= 3.141f * 0.1f;
-        }
     }
 
     @Override
@@ -86,7 +68,7 @@ public class TileEntityBarrel extends TileFluidHandler
 
         if (doFill)
         {
-            double amountFilled = (double)fill / (double)tank.getFluidAmount();
+            double amountFilled = (double) fill / (double) tank.getFluidAmount();
             timeFermented = MathHelper.floor_double(timeFermented * (1.0 - amountFilled));
 
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
@@ -135,12 +117,7 @@ public class TileEntityBarrel extends TileFluidHandler
     {
         super.writeToNBT(nbttagcompound);
 
-        nbttagcompound.setInteger("barrelWoodType", barrelWoodType);
-
         nbttagcompound.setInteger("timeFermented", timeFermented);
-
-        nbttagcompound.setInteger("timeLeftTapOpen", timeLeftTapOpen);
-        nbttagcompound.setFloat("tapRotation", tapRotation);
     }
 
     @Override
@@ -148,41 +125,7 @@ public class TileEntityBarrel extends TileFluidHandler
     {
         super.readFromNBT(nbttagcompound);
 
-        if (nbttagcompound.hasKey("barrelType")) // Legacy
-        {
-            int legacyBarrelType = nbttagcompound.getInteger("barrelType");
-//            int legacyTimeFermented = nbttagcompound.getInteger("ticksExisted");
-            int legacyContainedItems = nbttagcompound.getInteger("currentContainedItems");
-            Fluid containedFluid;
-
-            switch (legacyBarrelType)
-            {
-                case 1:
-                    barrelWoodType = 5;
-                    containedFluid = PSFluids.wine;
-                    break;
-                case 2:
-                    barrelWoodType = 1;
-                    containedFluid = PSFluids.jenever;
-                    break;
-                default:
-                    barrelWoodType = 0;
-                    containedFluid = PSFluids.beer;
-                    break;
-            }
-
-            if (legacyContainedItems > 0)
-                fill(ForgeDirection.UP, new FluidStack(containedFluid, legacyContainedItems * 1000), true);
-        }
-        else
-        {
-            barrelWoodType = nbttagcompound.getInteger("barrelWoodType");
-
-            timeFermented = nbttagcompound.getInteger("timeFermented");
-        }
-
-        timeLeftTapOpen = nbttagcompound.getInteger("timeLeftTapOpen");
-        tapRotation = nbttagcompound.getFloat("tapRotation");
+        timeFermented = nbttagcompound.getInteger("timeFermented");
     }
 
     public FluidStack containedFluid()
@@ -195,11 +138,6 @@ public class TileEntityBarrel extends TileFluidHandler
         return getBlockMetadata();
     }
 
-    public float getTapRotation()
-    {
-        return tapRotation;
-    }
-
     @Override
     public Packet getDescriptionPacket()
     {
@@ -210,5 +148,10 @@ public class TileEntityBarrel extends TileFluidHandler
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
     {
         readFromNBT(pkt.func_148857_g());
+    }
+
+    public int tankCapacity()
+    {
+        return tank.getCapacity();
     }
 }
