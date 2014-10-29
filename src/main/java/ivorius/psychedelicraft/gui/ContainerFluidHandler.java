@@ -43,7 +43,7 @@ public class ContainerFluidHandler extends Container implements UpdatableContain
     public IFluidHandler fluidHandler;
     public ForgeDirection side;
 
-    public int drainSpeedPerTick = 30;
+    public int drainSpeedPerTick = 100;
     public boolean currentlyDrainingItem;
 
     public ContainerFluidHandler(InventoryPlayer inventoryPlayer, TileEntity tileEntity, IFluidHandler fluidHandler, ForgeDirection side)
