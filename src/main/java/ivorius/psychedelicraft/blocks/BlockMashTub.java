@@ -119,6 +119,8 @@ public class BlockMashTub extends BlockContainer
         {
             if (!world.isRemote)
                 player.openGui(Psychedelicraft.instance, PSGuiHandler.fluidHandlerContainerID_UP, world, x, y, z);
+
+            return true;
         }
 
         return false;
