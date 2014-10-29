@@ -6,6 +6,7 @@
 package ivorius.psychedelicraft.client.rendering.blocks;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import ivorius.ivtoolkit.rendering.IvRenderHelper;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.blocks.BlockWineGrapeLattice;
 import net.minecraft.block.Block;
@@ -22,71 +23,29 @@ public class RenderWineGrapeLattice implements ISimpleBlockRenderingHandler
     @Override
     public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer)
     {
-        Tessellator tessellator = Tessellator.instance;
-
-        block.setBlockBoundsForItemRender();
-        renderer.setRenderBoundsFromBlock(block);
-
-        GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-        float f1 = 0.0625F;
-        tessellator.startDrawingQuads();
-        tessellator.setNormal(0.0F, -1.0F, 0.0F);
-        renderer.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSide(block, 0));
-        tessellator.draw();
-        tessellator.startDrawingQuads();
-        tessellator.setNormal(0.0F, 1.0F, 0.0F);
-        renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSide(block, 1));
-        tessellator.draw();
-        tessellator.startDrawingQuads();
-        tessellator.setNormal(0.0F, 0.0F, -1.0F);
-        tessellator.addTranslation(0.0F, 0.0F, f1);
-        renderer.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSide(block, 2));
-        tessellator.addTranslation(0.0F, 0.0F, -f1);
-        tessellator.draw();
-        tessellator.startDrawingQuads();
-        tessellator.setNormal(0.0F, 0.0F, 1.0F);
-        tessellator.addTranslation(0.0F, 0.0F, -f1);
-        renderer.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSide(block, 3));
-        tessellator.addTranslation(0.0F, 0.0F, f1);
-        tessellator.draw();
-        tessellator.startDrawingQuads();
-        tessellator.setNormal(-1.0F, 0.0F, 0.0F);
-        tessellator.addTranslation(f1, 0.0F, 0.0F);
-        renderer.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSide(block, 4));
-        tessellator.addTranslation(-f1, 0.0F, 0.0F);
-        tessellator.draw();
-        tessellator.startDrawingQuads();
-        tessellator.setNormal(1.0F, 0.0F, 0.0F);
-        tessellator.addTranslation(-f1, 0.0F, 0.0F);
-        renderer.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSide(block, 5));
-        tessellator.addTranslation(f1, 0.0F, 0.0F);
-        tessellator.draw();
-        GL11.glTranslatef(0.5F, 0.5F, 0.5F);
+        IvRenderHelper.renderCubeInvBlock(renderer, block, metadata);
     }
 
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer)
     {
-        int m = world.getBlockMetadata(x, y, z);
-        int rotation = m & 1;
-        int grapesGrownState = m >> 1;
+        int meta = world.getBlockMetadata(x, y, z);
+        int rotation = meta & 1;
+        int grapesGrownState = meta >> 1;
 
-        Tessellator tessellator = Tessellator.instance;
         BlockWineGrapeLattice latticeBlock = ((BlockWineGrapeLattice) block);
-
-        tessellator.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
-        tessellator.setColorOpaque_F(1.0F, 1.0F, 1.0F);
 
         latticeBlock.currentIcon = latticeBlock.getDefaultBlockIcon();
 
         float d = 0.1F;
-        if (rotation == 0)
+        switch (rotation)
         {
-            renderer.setRenderBounds(0.01f, 0.01f, 0.5f - d, 0.99f, 0.99f, 0.5f + d);
-        }
-        if (rotation == 1)
-        {
-            renderer.setRenderBounds(0.5f - d, 0.01f, 0.01F, 0.5F + d, 0.99f, 0.99f);
+            case 0:
+                renderer.setRenderBounds(0.01f, 0.01f, 0.5f - d, 0.99f, 0.99f, 0.5f + d);
+                break;
+            case 1:
+                renderer.setRenderBounds(0.5f - d, 0.01f, 0.01F, 0.5F + d, 0.99f, 0.99f);
+                break;
         }
         renderer.renderStandardBlock(block, x, y, z);
 
@@ -95,13 +54,14 @@ public class RenderWineGrapeLattice implements ISimpleBlockRenderingHandler
             latticeBlock.currentIcon = latticeBlock.leavesIcons[grapesGrownState - 1];
 
             float f1 = 0.11f + (grapesGrownState - 1) * 0.06f;
-            if (rotation == 0)
+            switch (rotation)
             {
-                renderer.setRenderBounds(0.0F, 0.0F, 0.5F - f1, 1.0F, 1.0F, 0.5F + f1);
-            }
-            if (rotation == 1)
-            {
-                renderer.setRenderBounds(0.5F - f1, 0.0F, 0.0F, 0.5F + f1, 1.0F, 1.0F);
+                case 0:
+                    renderer.setRenderBounds(0.0F, 0.0F, 0.5F - f1, 1.0F, 1.0F, 0.5F + f1);
+                    break;
+                case 1:
+                    renderer.setRenderBounds(0.5F - f1, 0.0F, 0.0F, 0.5F + f1, 1.0F, 1.0F);
+                    break;
             }
 
             renderer.renderStandardBlock(block, x, y, z);

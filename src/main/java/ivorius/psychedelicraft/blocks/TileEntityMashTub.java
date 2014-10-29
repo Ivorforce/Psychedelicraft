@@ -133,11 +133,6 @@ public class TileEntityMashTub extends TileFluidHandler
         return tank.getFluid() != null ? tank.getFluid().copy() : null;
     }
 
-    public int getBlockRotation()
-    {
-        return getBlockMetadata();
-    }
-
     @Override
     public Packet getDescriptionPacket()
     {

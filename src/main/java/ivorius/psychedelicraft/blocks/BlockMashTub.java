@@ -15,8 +15,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
@@ -32,6 +34,12 @@ public class BlockMashTub extends BlockContainer
         super(Material.wood);
 
         setStepSound(soundTypeWood);
+
+        float size = 6.0f / 16.0f;
+        float borderWidth = 1.0f / 16.0f;
+        float height = 12.0f / 16.0f;
+
+        this.setBlockBounds(0.5f - size - borderWidth, 0.0f, 0.5f - size - borderWidth, 0.5f + size + borderWidth, height, 0.5f + size + borderWidth);
     }
 
     @Override
@@ -49,7 +57,7 @@ public class BlockMashTub extends BlockContainer
     @Override
     public int getRenderType()
     {
-        return -1;
+        return Psychedelicraft.blockMashTubRenderType;
     }
 
     @Override
@@ -120,12 +128,6 @@ public class BlockMashTub extends BlockContainer
     public void registerBlockIcons(IIconRegister iconRegister)
     {
 
-    }
-
-    @Override
-    public String getItemIconName()
-    {
-        return getTextureName();
     }
 
     @Override
