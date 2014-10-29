@@ -25,5 +25,5 @@ public class PSFluids
     public static FluidDrug cocaineFluid;
     public static FluidDrug caffeineFluid;
 
-    public static Fluid slurry;
+    public static FluidSimple slurry;
 }

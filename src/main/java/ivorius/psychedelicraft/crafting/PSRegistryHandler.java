@@ -10,9 +10,9 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
-import ivorius.psychedelicraft.config.PSConfig;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.blocks.*;
+import ivorius.psychedelicraft.config.PSConfig;
 import ivorius.psychedelicraft.entities.*;
 import ivorius.psychedelicraft.fluids.*;
 import ivorius.psychedelicraft.items.*;
@@ -21,15 +21,14 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemSeeds;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 
 import static ivorius.psychedelicraft.Psychedelicraft.modBase;
 import static ivorius.psychedelicraft.blocks.PSBlocks.*;
+import static ivorius.psychedelicraft.entities.PSEntityList.*;
 import static ivorius.psychedelicraft.fluids.FluidHelper.MILLIBUCKETS_PER_LITER;
 import static ivorius.psychedelicraft.fluids.PSFluids.*;
 import static ivorius.psychedelicraft.items.PSItems.*;
-import static ivorius.psychedelicraft.entities.PSEntityList.*;
 
 /**
  * Created by lukas on 18.10.14.
@@ -293,61 +292,84 @@ public class PSRegistryHandler
         beer.setDrinkable(true);
         beer.setColor(0xaaffcd18);
         beer.setSymbolIconName(modBase + "drinkBeer");
+        beer.setStillIconName(modBase + "beer_still");
+        beer.setFlowingIconName(modBase + "beer_flow");
         FluidRegistry.registerFluid(beer);
 
         jenever = new FluidJenever("pscJenever");
         jenever.setDrinkable(true);
         jenever.setColor(0x44e8f4f8);
         jenever.setSymbolIconName(modBase + "drinkJenever");
+        jenever.setStillIconName(modBase + "clear_still");
+        jenever.setFlowingIconName(modBase + "clear_flow");
         FluidRegistry.registerFluid(jenever);
 
         coffee = new FluidCoffee("pscCoffee");
         coffee.setDrinkable(true);
         coffee.setColor(0xffa77d55);
         coffee.setSymbolIconName(modBase + "drinkCoffee");
+        coffee.setStillIconName(modBase + "coffee_still");
+        coffee.setFlowingIconName(modBase + "coffee_flow");
         FluidRegistry.registerFluid(coffee);
 
         wine = new FluidWine("pscWine");
         wine.setDrinkable(true);
         wine.setColor(0xee3f0822);
         wine.setSymbolIconName(modBase + "drinkWine");
+        wine.setStillIconName(modBase + "wine_still");
+        wine.setFlowingIconName(modBase + "wine_flow");
         FluidRegistry.registerFluid(wine);
 
         peyoteJuice = new FluidDrug("pscPeyoteJuice", new DrugInfluence("Peyote", 15, 0.005, 0.003, 0.9f));
         peyoteJuice.setDrinkable(true);
         peyoteJuice.setColor(0x779bab62);
         peyoteJuice.setSymbolIconName(modBase + "drinkPeyote");
+        peyoteJuice.setStillIconName(modBase + "tea_still");
+        peyoteJuice.setFlowingIconName(modBase + "tea_flow");
         FluidRegistry.registerFluid(peyoteJuice);
 
         cocaineFluid = new FluidDrug("pscCocaineFluid", new DrugInfluence("Cocaine", 0, 0.005, 0.01, 50.0f));
         cocaineFluid.setInjectable(true);
         cocaineFluid.setColor(0x44e8f4f8);
+        cocaineFluid.setStillIconName(modBase + "clear_still");
+        cocaineFluid.setFlowingIconName(modBase + "clear_flow");
         FluidRegistry.registerFluid(cocaineFluid);
 
         caffeineFluid = new FluidDrug("pscCaffeineFluid", new DrugInfluence("Caffeine", 0, 0.005, 0.01, 85.0f));
         caffeineFluid.setInjectable(true);
         caffeineFluid.setColor(0x66eee2d3);
+        caffeineFluid.setStillIconName(modBase + "clear_still");
+        caffeineFluid.setFlowingIconName(modBase + "clear_flow");
         FluidRegistry.registerFluid(caffeineFluid);
 
         cocaTea = new FluidDrug("pscCocaTea", new DrugInfluence("Cocaine", 60, 0.005, 0.002, 0.1f));
         cocaTea.setDrinkable(true);
         cocaTea.setColor(0x44787a36);
         cocaTea.setSymbolIconName(modBase + "drinkCocaTea");
+        cocaTea.setStillIconName(modBase + "tea_still");
+        cocaTea.setFlowingIconName(modBase + "tea_flow");
         FluidRegistry.registerFluid(cocaTea);
 
         cannabisTea = new FluidDrug("pscCannabisTea", new DrugInfluence("Cannabis", 60, 0.005, 0.002, 0.15f));
         cannabisTea.setDrinkable(true);
         cannabisTea.setColor(0x446d6f3c);
         cannabisTea.setSymbolIconName(modBase + "drinkCannabisTea");
+        cannabisTea.setStillIconName(modBase + "tea_still");
+        cannabisTea.setFlowingIconName(modBase + "tea_flow");
         FluidRegistry.registerFluid(cannabisTea);
 
         vodka = new FluidVodka("pscVodka");
         vodka.setDrinkable(true);
         vodka.setColor(0x44e8f4f8);
         vodka.setSymbolIconName(modBase + "drinkVodka");
+        vodka.setStillIconName(modBase + "clear_still");
+        vodka.setFlowingIconName(modBase + "clear_flow");
         FluidRegistry.registerFluid(vodka);
 
         slurry = new FluidSlurry("pscSlurry");
+        slurry.setColor(0xcc704E21);
+        slurry.setStillIconName(modBase + "slurry_still");
+        slurry.setFlowingIconName(modBase + "slurry_flow");
         FluidRegistry.registerFluid(slurry);
 
 //        syringe.addEffect(ItemSyringe.damageCocaine, new DrugInfluence[]{new DrugInfluence("Cocaine", 0, 0.005, 0.01, 0.5f)}, 0x55ffffff, "cocaine");

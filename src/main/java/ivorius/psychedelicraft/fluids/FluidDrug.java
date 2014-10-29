@@ -5,37 +5,28 @@
 
 package ivorius.psychedelicraft.fluids;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import ivorius.psychedelicraft.entities.DrugHelper;
 import ivorius.psychedelicraft.entities.DrugInfluence;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by lukas on 22.10.14.
  */
-public class FluidDrug extends Fluid implements FluidWithIconSymbolRegistering, FluidWithTypes, DrinkableFluid, InjectableFluid, ExplodingFluid, TranslucentFluid
+public class FluidDrug extends FluidSimple implements FluidWithTypes, DrinkableFluid, InjectableFluid, ExplodingFluid, TranslucentFluid
 {
     protected final List<DrugInfluence> drugInfluences = new ArrayList<>();
     protected Pair<Integer, Float> foodLevel;
 
-    protected String symbolIconName;
-    @SideOnly(Side.CLIENT)
-    protected IIcon symbolIcon;
-
     protected boolean drinkable;
     protected boolean injectable;
-
-    protected int color;
 
     public FluidDrug(String fluidName)
     {
@@ -46,16 +37,6 @@ public class FluidDrug extends Fluid implements FluidWithIconSymbolRegistering, 
     {
         super(fluidName);
         Collections.addAll(drugInfluences, influences);
-    }
-
-    public String getSymbolIconName()
-    {
-        return symbolIconName;
-    }
-
-    public void setSymbolIconName(String symbolIconName)
-    {
-        this.symbolIconName = symbolIconName;
     }
 
     public boolean isDrinkable()
@@ -104,30 +85,6 @@ public class FluidDrug extends Fluid implements FluidWithIconSymbolRegistering, 
     public void getDrugInfluencesPerLiter(FluidStack fluidStack, List<DrugInfluence> list)
     {
         list.addAll(drugInfluences);
-    }
-
-    @Override
-    public int getColor()
-    {
-        return color;
-    }
-
-    public void setColor(int color)
-    {
-        this.color = color;
-    }
-
-    @Override
-    public IIcon getIconSymbol(FluidStack fluidStack, int textureType)
-    {
-        return textureType == TEXTURE_TYPE_ITEM ? symbolIcon : null;
-    }
-
-    @Override
-    public void registerIcons(IIconRegister iconRegister, int textureType)
-    {
-        if (textureType == TEXTURE_TYPE_ITEM && symbolIconName != null)
-            symbolIcon = iconRegister.registerIcon(symbolIconName);
     }
 
     @Override
