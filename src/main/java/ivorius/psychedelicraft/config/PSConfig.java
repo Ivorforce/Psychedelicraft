@@ -43,6 +43,9 @@ public class PSConfig
     public static int ticksPerVodkaFermentation;
     public static int ticksPerVodkaDistillation;
 
+    public static int ticksPerJeneverFermentation;
+    public static int ticksPerJeneverDistillation;
+
     public static void loadConfig(String configID)
     {
         if (configID == null || configID.equals(Configuration.CATEGORY_GENERAL))
@@ -76,6 +79,9 @@ public class PSConfig
 
             ticksPerVodkaFermentation = config.get(CATEGORY_BALANCING, "ticksPerVodkaFermentation", minute * 30, "Time until vodka wort ferments to the next step.").getInt();
             ticksPerVodkaDistillation = config.get(CATEGORY_BALANCING, "ticksPerVodkaDistillation", minute * 10, "Time until vodka distills to the next step.").getInt();
+
+            ticksPerJeneverFermentation = config.get(CATEGORY_BALANCING, "ticksPerJeneverFermentation", minute * 30, "Time until jenever wort ferments to the next step.").getInt();
+            ticksPerJeneverDistillation = config.get(CATEGORY_BALANCING, "ticksPerJeneverDistillation", minute * 10, "Time until jenever distills to the next step.").getInt();
         }
 
         Psychedelicraft.proxy.loadConfig(configID);

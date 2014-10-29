@@ -295,7 +295,7 @@ public class PSRegistryHandler
         beer.setSymbolIconName(modBase + "drinkBeer");
         FluidRegistry.registerFluid(beer);
 
-        jenever = new FluidDrug("pscJenever", new DrugInfluence("Alcohol", 20, 0.002, 0.001, 0.25f));
+        jenever = new FluidJenever("pscJenever");
         jenever.setDrinkable(true);
         jenever.setColor(0x44e8f4f8);
         jenever.setSymbolIconName(modBase + "drinkJenever");
