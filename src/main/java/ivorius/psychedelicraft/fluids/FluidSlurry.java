@@ -10,7 +10,7 @@ import net.minecraftforge.fluids.Fluid;
 /**
  * Created by lukas on 27.10.14.
  */
-public class FluidSlurry extends Fluid
+public class FluidSlurry extends Fluid implements TranslucentFluid
 {
     public FluidSlurry(String fluidName)
     {
@@ -20,6 +20,6 @@ public class FluidSlurry extends Fluid
     @Override
     public int getColor()
     {
-        return 0x704E21;
+        return 0xcc704E21;
     }
 }

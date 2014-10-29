@@ -103,6 +103,7 @@ death.attack.stroke=%1$s had a stroke
 death.attack.heartFailure=%1$s's heart stopped beating
 death.attack.respiratoryFailure=%1$s had a respiratory failure
 
+fluid.pscSlurry=Slurry
 fluid.pscBeer=Beer
 fluid.pscBeer.ferment0=Wort
 fluid.pscBeer.ferment1=Half-Wash
@@ -115,6 +116,7 @@ fluid.pscCoffee.temperature0=Cold Coffee
 fluid.pscCoffee.temperature1=Warm Coffee
 fluid.pscCoffee.temperature2=Hot Coffee
 fluid.pscVodka=Vodka
+fluid.pscVodka.distill=Vodka (%d times distilled)
 fluid.pscVodka.ferment0=Wort
 fluid.pscVodka.ferment1=Half-Wash
 fluid.pscVodka.ferment2=Wash

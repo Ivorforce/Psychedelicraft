@@ -341,7 +341,7 @@ public class PSRegistryHandler
         cannabisTea.setSymbolIconName(modBase + "drinkCannabisTea");
         FluidRegistry.registerFluid(cannabisTea);
 
-        vodka = new FluidDrug("pscVodka", new DrugInfluence("Alcohol", 20, 0.003, 0.002, 0.5f));
+        vodka = new FluidVodka("pscVodka");
         vodka.setDrinkable(true);
         vodka.setColor(0x44e8f4f8);
         vodka.setSymbolIconName(modBase + "drinkVodka");
