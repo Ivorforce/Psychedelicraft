@@ -148,7 +148,7 @@ public class FluidJenever extends FluidDrug implements FluidFermentable, FluidDi
         else if (distillation < DISTILLATION_STEPS)
         {
             setDistillation(stack, distillation + 1);
-            int distilledAmount = MathHelper.floor_float(stack.amount * ((float)distillation / (float)DISTILLATION_STEPS + 0.5f) / 1.5f);
+            int distilledAmount = MathHelper.floor_float(stack.amount * (1.0f - 0.5f / ((float)distillation + 1.0f)));
 
             FluidStack slurry = new FluidStack(PSFluids.slurry, stack.amount - distilledAmount);
             stack.amount = distilledAmount;

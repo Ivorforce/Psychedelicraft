@@ -71,7 +71,7 @@ item.molotovCocktail.quality7.name=Unreal Molotov Cocktail
 tile.ygcBarrel.name=Barrel
 tile.ygcBarrel.full.name=%s Barrel
 tile.ygcMashTub.name=Wooden Vat
-tile.ygcMashTuv.full.name=Wooden Vat (%s)
+tile.ygcMashTub.full.name=Wooden Vat (%s)
 
 item.syringe.name=Syringe
 item.syringe.full.name=Syringe - %s
