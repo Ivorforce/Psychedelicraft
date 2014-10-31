@@ -5,10 +5,15 @@
 
 package ivorius.psychedelicraft.fluids;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.MCColorHelper;
 import ivorius.psychedelicraft.config.PSConfig;
 import ivorius.psychedelicraft.entities.DrugInfluence;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
@@ -22,6 +27,15 @@ public class FluidJenever extends FluidDrug implements FluidFermentable, FluidDi
 {
     public static final int FERMENTATION_STEPS = 2;
     public static final int DISTILLATION_STEPS = 8;
+
+    @SideOnly(Side.CLIENT)
+    private IIcon iconWortStill;
+    @SideOnly(Side.CLIENT)
+    private IIcon iconWortFlow;
+    @SideOnly(Side.CLIENT)
+    private IIcon iconSemiWortStill;
+    @SideOnly(Side.CLIENT)
+    private IIcon iconSemiWortFlow;
 
     public FluidJenever(String fluidName)
     {
@@ -60,6 +74,27 @@ public class FluidJenever extends FluidDrug implements FluidFermentable, FluidDi
             setFermentation(fluidStack, FERMENTATION_STEPS);
             setDistillation(fluidStack, distillation);
             list.add(fluidStack);
+        }
+    }
+
+    @Override
+    public IIcon getIcon(FluidStack stack)
+    {
+        int distillation = getDistillation(stack);
+        return distillation > 3 ? super.getIcon(stack) : distillation > 0 ? iconSemiWortStill : iconWortStill;
+    }
+
+    @Override
+    public void registerIcons(IIconRegister iconRegister, int textureType)
+    {
+        super.registerIcons(iconRegister, textureType);
+
+        if (textureType == TEXTURE_TYPE_BLOCK)
+        {
+            iconWortStill = iconRegister.registerIcon(Psychedelicraft.modBase + "slurry_still");
+            iconWortFlow = iconRegister.registerIcon(Psychedelicraft.modBase + "slurry_flow");
+            iconSemiWortStill = iconRegister.registerIcon(Psychedelicraft.modBase + "semi_slurry_still");
+            iconSemiWortFlow = iconRegister.registerIcon(Psychedelicraft.modBase + "semi_slurry_flow");
         }
     }
 
