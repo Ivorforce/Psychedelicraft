@@ -5,6 +5,7 @@
 
 package ivorius.psychedelicraft.client.rendering.blocks;
 
+import ivorius.ivtoolkit.blocks.IvMultiBlockRenderHelper;
 import ivorius.ivtoolkit.math.IvMathHelper;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.blocks.TileEntityMashTub;
@@ -35,40 +36,43 @@ public class TileEntityRendererMashTub extends TileEntitySpecialRenderer
     @Override
     public void renderTileEntityAt(TileEntity tileentity, double d, double d1, double d2, float f)
     {
-        renderTileEntityStatueAt((TileEntityMashTub) tileentity, d, d1, d2, f);
+        renderTileEntityMashTub((TileEntityMashTub) tileentity, d, d1, d2, f);
     }
 
-    public void renderTileEntityStatueAt(TileEntityMashTub tileEntity, double x, double y, double z, float partialTicks)
+    public void renderTileEntityMashTub(TileEntityMashTub tileEntity, double x, double y, double z, float partialTicks)
     {
-        GL11.glPushMatrix();
-        GL11.glTranslated(x + 0.5f, y + 0.502f, z + 0.5f);
-
-        GL11.glPushMatrix();
-        GL11.glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
-        GL11.glTranslatef(0f, -.5f, 0f);
-        GL11.glScalef(0.5f, 1.0f, 0.5f);
-        GL11.glColor3f(1.0f, 1.0f, 1.0f);
-        this.bindTexture(texture);
-        model.renderAll();
-        GL11.glPopMatrix();
-
-        FluidStack fluidStack = tileEntity.containedFluid();
-        if (fluidStack != null)
+        if (tileEntity.isParent())
         {
-            float size = 7.0f / 16.0f;
-            float borderWidth = 1.0f / 16.0f;
-            float height = 12.0f / 16.0f;
+            GL11.glPushMatrix();
+            IvMultiBlockRenderHelper.transformFor(tileEntity, x, y, z);
+            GL11.glTranslated(0.0f, 0.002f, 0.0f);
 
-            float fluidHeight = (height - borderWidth - 1.0f / 16.0f) * IvMathHelper.clamp(0.0f, (float) fluidStack.amount / (float) tileEntity.tankCapacity(), 1.0f);
+            GL11.glPushMatrix();
+            GL11.glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
+            GL11.glTranslatef(0f, -.5f, 0f);
+            GL11.glColor3f(1.0f, 1.0f, 1.0f);
+            this.bindTexture(texture);
+            model.renderAll();
+            GL11.glPopMatrix();
 
-            FluidBoxRenderer fluidBoxRenderer = new FluidBoxRenderer(1.0f);
-            fluidBoxRenderer.prepare(fluidStack);
+            FluidStack fluidStack = tileEntity.tank.getFluid();
+            if (fluidStack != null)
+            {
+                float size = 15.0f / 16.0f;
+                float borderWidth = 1.0f / 16.0f;
+                float height = 12.0f / 16.0f;
 
-            fluidBoxRenderer.renderFluid(-size, borderWidth, -size, size * 2, fluidHeight, size * 2, ForgeDirection.UP);
+                float fluidHeight = (height - borderWidth - 1.0f / 16.0f) * IvMathHelper.clamp(0.0f, (float) fluidStack.amount / (float) tileEntity.tank.getCapacity(), 1.0f);
 
-            fluidBoxRenderer.cleanUp();
+                FluidBoxRenderer fluidBoxRenderer = new FluidBoxRenderer(1.0f);
+                fluidBoxRenderer.prepare(fluidStack);
+
+                fluidBoxRenderer.renderFluid(-size, -.5f + borderWidth, -size, size * 2, fluidHeight, size * 2, ForgeDirection.UP);
+
+                fluidBoxRenderer.cleanUp();
+            }
+
+            GL11.glPopMatrix();
         }
-
-        GL11.glPopMatrix();
     }
 }

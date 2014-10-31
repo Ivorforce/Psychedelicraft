@@ -5,11 +5,16 @@
 
 package ivorius.psychedelicraft.blocks;
 
+import ivorius.ivtoolkit.blocks.IvBlockMultiblock;
+import ivorius.ivtoolkit.blocks.IvTileEntityMultiBlock;
+import ivorius.psychedelicraft.PSMultiBlockHelper;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.gui.PSGuiHandler;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -24,22 +29,18 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidContainerItem;
 
+import java.util.List;
+
 /**
  * Created by lukas on 27.10.14.
  */
-public class BlockMashTub extends BlockContainer
+public class BlockMashTub extends IvBlockMultiblock
 {
     public BlockMashTub()
     {
         super(Material.wood);
 
         setStepSound(soundTypeWood);
-
-        float size = 7.0f / 16.0f;
-        float borderWidth = 1.0f / 16.0f;
-        float height = 16.0f / 16.0f;
-
-        this.setBlockBounds(0.5f - size - borderWidth, 0.0f, 0.5f - size - borderWidth, 0.5f + size + borderWidth, height, 0.5f + size + borderWidth);
     }
 
     @Override
@@ -67,54 +68,25 @@ public class BlockMashTub extends BlockContainer
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entityLivingBase, ItemStack stack)
+    public void parentBlockHarvestItem(World world, IvTileEntityMultiBlock tileEntity, int x, int y, int z, Block block, int metadata)
     {
-        int direction = MathHelper.floor_double((entityLivingBase.rotationYaw * 4F) / 360F + 0.5D) & 3;
-        world.setBlockMetadataWithNotify(x, y, z, direction, 3);
-
-        TileEntity tileEntity = world.getTileEntity(x, y, z);
         if (tileEntity instanceof TileEntityMashTub)
         {
             TileEntityMashTub tileEntityMashTub = (TileEntityMashTub) tileEntity;
+            FluidStack fluidStack = tileEntityMashTub.drain(ForgeDirection.DOWN, TileEntityMashTub.MASH_TUB_CAPACITY, true);
+            ItemStack stack = new ItemStack(this);
 
-            FluidStack fluidStack = stack.getItem() instanceof IFluidContainerItem ? ((IFluidContainerItem) stack.getItem()).getFluid(stack) : null;
-            if (fluidStack != null)
-                tileEntityMashTub.fill(ForgeDirection.UP, fluidStack, true);
+            if (fluidStack != null && fluidStack.amount > 0)
+                ((IFluidContainerItem) stack.getItem()).fill(stack, fluidStack, true);
+
+            dropBlockAsItem(world, x, y, z, stack);
         }
-    }
-
-    @Override
-    public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z, boolean willHarvest)
-    {
-        if (willHarvest)
-        {
-            TileEntity tileEntity = world.getTileEntity(x, y, z);
-            if (tileEntity instanceof TileEntityMashTub)
-            {
-                TileEntityMashTub tileEntityMashTub = (TileEntityMashTub) tileEntity;
-                FluidStack fluidStack = tileEntityMashTub.drain(ForgeDirection.DOWN, TileEntityMashTub.MASH_TUB_CAPACITY, true);
-                ItemStack stack = new ItemStack(this);
-
-                if (fluidStack != null && fluidStack.amount > 0)
-                    ((IFluidContainerItem) stack.getItem()).fill(stack, fluidStack, true);
-
-                dropBlockAsItem(world, x, y, z, stack);
-            }
-        }
-
-        return super.removedByPlayer(world, player, x, y, z, willHarvest);
-    }
-
-    @Override
-    public void dropBlockAsItemWithChance(World p_149690_1_, int p_149690_2_, int p_149690_3_, int p_149690_4_, int p_149690_5_, float p_149690_6_, int p_149690_7_)
-    {
-
     }
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float par7, float par8, float par9)
     {
-        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        TileEntity tileEntity = getValidatedTotalParent(this, world, x, y, z);
         if (tileEntity instanceof TileEntityMashTub)
         {
             if (!world.isRemote)
@@ -124,6 +96,33 @@ public class BlockMashTub extends BlockContainer
         }
 
         return false;
+    }
+
+    @Override
+    public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB entityBB, List list, Entity entity)
+    {
+        IvTileEntityMultiBlock tileEntity = getValidatedTotalParent(this, world, x, y, z);
+        if (tileEntity instanceof TileEntityMashTub)
+        {
+            float size = 15.0f / 16.0f;
+            float borderWidth = 1.0f / 16.0f;
+            float height = 16.0f / 16.0f;
+
+            addIntersectingCollisionBox(-size - borderWidth, -.5f, -size - borderWidth, size * 2 + borderWidth * 2, height, borderWidth, tileEntity, entityBB, list, x, y, z);
+            addIntersectingCollisionBox(-size - borderWidth, -.5f, size, size * 2 + borderWidth * 2, height, borderWidth, tileEntity, entityBB, list, x, y, z);
+
+            addIntersectingCollisionBox(-size - borderWidth, -.5f, -size - borderWidth, borderWidth, height, size * 2 + borderWidth * 2, tileEntity, entityBB, list, x, y, z);
+            addIntersectingCollisionBox(size, -.5f, -size - borderWidth, borderWidth, height, size * 2 + borderWidth * 2, tileEntity, entityBB, list, x, y, z);
+
+            addIntersectingCollisionBox(-size - borderWidth, -.5f, -size - borderWidth, size * 2 + borderWidth * 2, borderWidth, size * 2 + borderWidth * 2, tileEntity, entityBB, list, x, y, z);
+        }
+    }
+
+    private void addIntersectingCollisionBox(double bbX, double bbY, double bbZ, double width, double height, double depth, IvTileEntityMultiBlock te, AxisAlignedBB entityBB, List list, int x, int y, int z)
+    {
+        AxisAlignedBB bb = PSMultiBlockHelper.intersection(te.getRotatedBB(bbX, bbY, bbZ, width, height, depth), x, y, z);
+        if (entityBB.intersectsWith(bb))
+            list.add(bb);
     }
 
     @Override

@@ -6,6 +6,7 @@
 package ivorius.psychedelicraft.blocks;
 
 import ivorius.ivtoolkit.blocks.IvTileEntityHelper;
+import ivorius.psychedelicraft.client.rendering.blocks.TileEntityMultiblockFluidHandler;
 import ivorius.psychedelicraft.fluids.FluidFermentable;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -22,7 +23,7 @@ import static ivorius.psychedelicraft.fluids.FluidHelper.MILLIBUCKETS_PER_LITER;
 /**
  * Created by lukas on 27.10.14.
  */
-public class TileEntityMashTub extends TileFluidHandler
+public class TileEntityMashTub extends TileEntityMultiblockFluidHandler
 {
     public static final int MASH_TUB_CAPACITY = MILLIBUCKETS_PER_LITER * 16;
 
@@ -34,7 +35,7 @@ public class TileEntityMashTub extends TileFluidHandler
     }
 
     @Override
-    public void updateEntity()
+    public void updateEntityParent()
     {
         FluidStack fluidStack = tank.getFluid();
         if (fluidStack != null && fluidStack.getFluid() instanceof FluidFermentable)
@@ -66,7 +67,7 @@ public class TileEntityMashTub extends TileFluidHandler
     {
         int fill = super.fill(from, resource, doFill);
 
-        if (doFill)
+        if (isParent() && doFill)
         {
             double amountFilled = (double) fill / (double) tank.getFluidAmount();
             timeFermented = MathHelper.floor_double(timeFermented * (1.0 - amountFilled));
@@ -83,7 +84,7 @@ public class TileEntityMashTub extends TileFluidHandler
     {
         FluidStack drain = super.drain(from, resource, doDrain);
 
-        if (doDrain)
+        if (isParent() && doDrain)
         {
             if (tank.getFluidAmount() == 0)
                 timeFermented = 0;
@@ -100,7 +101,7 @@ public class TileEntityMashTub extends TileFluidHandler
     {
         FluidStack drain = super.drain(from, maxDrain, doDrain);
 
-        if (doDrain)
+        if (isParent() && doDrain)
         {
             if (tank.getFluidAmount() == 0)
                 timeFermented = 0;
@@ -128,11 +129,6 @@ public class TileEntityMashTub extends TileFluidHandler
         timeFermented = nbttagcompound.getInteger("timeFermented");
     }
 
-    public FluidStack containedFluid()
-    {
-        return tank.getFluid() != null ? tank.getFluid().copy() : null;
-    }
-
     @Override
     public Packet getDescriptionPacket()
     {
@@ -143,10 +139,5 @@ public class TileEntityMashTub extends TileFluidHandler
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
     {
         readFromNBT(pkt.func_148857_g());
-    }
-
-    public int tankCapacity()
-    {
-        return tank.getCapacity();
     }
 }
