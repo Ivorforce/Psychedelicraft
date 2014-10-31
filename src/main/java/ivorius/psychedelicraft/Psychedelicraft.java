@@ -69,6 +69,7 @@ public class Psychedelicraft
     public static CreativeTabPsyche weaponsTab;
 
     public static String filePathTextures = "textures/mod/";
+    public static String filePathModels = "models/";
     public static String filePathOther = "other/";
     public static String filePathShaders = "shaders/";
     public static String modBase = "psychedelicraft:";
@@ -80,7 +81,6 @@ public class Psychedelicraft
     public static DamageSource heartFailure = (new DamageSource("heartFailure")).setDamageBypassesArmor().setDamageIsAbsolute();
 
     public static int blockWineGrapeLatticeRenderType;
-    public static int blockMashTubRenderType;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)

@@ -50,9 +50,6 @@ public class ClientProxy implements PSProxy
         Psychedelicraft.blockWineGrapeLatticeRenderType = RenderingRegistry.getNextAvailableRenderId();
         RenderingRegistry.registerBlockHandler(Psychedelicraft.blockWineGrapeLatticeRenderType, new RenderWineGrapeLattice());
 
-        Psychedelicraft.blockMashTubRenderType = RenderingRegistry.getNextAvailableRenderId();
-        RenderingRegistry.registerBlockHandler(Psychedelicraft.blockMashTubRenderType, new RenderMashTub());
-
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDistillery.class, new TileEntityRendererDistillery());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFlask.class, new TileEntityRendererFlask());
 
@@ -63,7 +60,8 @@ public class ClientProxy implements PSProxy
         MinecraftForgeClient.registerItemRenderer(PSItems.glassChalice, new ItemRendererThatMakesFuckingSense());
         MinecraftForgeClient.registerItemRenderer(PSItems.syringe, new ItemRendererThatMakesFuckingSense());
 
-        MinecraftForgeClient.registerItemRenderer(PSItems.itemDistillery, new IvItemRendererModel(new ModelDistillery(), new ResourceLocation(MODID, filePathTextures + "distillery.png"), 0.75f, new float[]{0.0f, 0.0f, -0.3f}, new float[]{0.0f, 0.0f, 0.0f}));
+        MinecraftForgeClient.registerItemRenderer(PSItems.itemMashTub, new ItemRendererModelCustom(new ItemRendererModelCustom.ItemModelRendererSimple(TileEntityRendererMashTub.modelWoodenVat), new ResourceLocation(MODID, filePathTextures + "woodenVat.png"), 2.0f, new float[]{0f, -1.5f, 0f}, new float[]{0.0f, 0.0f, 0.0f}));
+        MinecraftForgeClient.registerItemRenderer(PSItems.itemDistillery, new ItemRendererModelCustom(new ItemRendererModelCustom.ItemModelRendererSimple(TileEntityRendererDistillery.modelDistillery), new ResourceLocation(MODID, filePathTextures + "distillery.png"), 0.75f, new float[]{-.5f, -1.8f, .5f}, new float[]{0.0f, 0.0f, 0.0f}));
         MinecraftForgeClient.registerItemRenderer(PSItems.itemFlask, new IvItemRendererModel(new ModelFlask(), new ResourceLocation(MODID, filePathTextures + "flask.png"), 0.6f, new float[]{0.0f, 0.7f, 0.0f}, new float[]{0.0f, 0.0f, 0.0f}));
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMashTub.class, new TileEntityRendererMashTub());

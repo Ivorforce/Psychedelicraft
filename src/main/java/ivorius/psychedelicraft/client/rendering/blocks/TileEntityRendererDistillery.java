@@ -18,6 +18,8 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.AdvancedModelLoader;
+import net.minecraftforge.client.model.IModelCustom;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -28,12 +30,14 @@ import org.lwjgl.opengl.GL11;
  */
 public class TileEntityRendererDistillery extends TileEntitySpecialRenderer
 {
-    private ModelDistillery model;
+    public static IModelCustom modelDistillery = AdvancedModelLoader.loadModel(new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathModels + "distillery.obj"));
+
+    private IModelCustom model;
     private ResourceLocation texture;
 
     public TileEntityRendererDistillery()
     {
-        model = new ModelDistillery();
+        model = modelDistillery;
         texture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "distillery.png");
     }
 
@@ -47,11 +51,11 @@ public class TileEntityRendererDistillery extends TileEntitySpecialRenderer
 
         GL11.glDisable(GL11.GL_CULL_FACE);
         GL11.glPushMatrix();
-        GL11.glTranslatef(0.0f, 1.0f, 0.0f);
-        GL11.glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
+        GL11.glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
+        GL11.glTranslatef(-.5f, -.5f, .5f);
         GL11.glColor3f(1.0f, 1.0f, 1.0f);
         this.bindTexture(texture);
-        model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+        model.renderAll();
         GL11.glPopMatrix();
         GL11.glEnable(GL11.GL_CULL_FACE);
 

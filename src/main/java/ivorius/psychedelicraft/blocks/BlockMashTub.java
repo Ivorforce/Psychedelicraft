@@ -35,9 +35,9 @@ public class BlockMashTub extends BlockContainer
 
         setStepSound(soundTypeWood);
 
-        float size = 6.0f / 16.0f;
+        float size = 7.0f / 16.0f;
         float borderWidth = 1.0f / 16.0f;
-        float height = 12.0f / 16.0f;
+        float height = 16.0f / 16.0f;
 
         this.setBlockBounds(0.5f - size - borderWidth, 0.0f, 0.5f - size - borderWidth, 0.5f + size + borderWidth, height, 0.5f + size + borderWidth);
     }
@@ -57,7 +57,7 @@ public class BlockMashTub extends BlockContainer
     @Override
     public int getRenderType()
     {
-        return Psychedelicraft.blockMashTubRenderType;
+        return -1;
     }
 
     @Override
