@@ -290,7 +290,7 @@ public class PSRegistryHandler
 
         beer = new FluidBeer("pscBeer");
         beer.setDrinkable(true);
-        beer.setColor(0xaaffcd18);
+        beer.setColor(0xaafeaa08);
         beer.setSymbolIconName(modBase + "drinkBeer");
         beer.setStillIconName(modBase + "beer_still");
         beer.setFlowingIconName(modBase + "beer_flow");
