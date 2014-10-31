@@ -104,7 +104,7 @@ public class GuiFluidHandler extends GuiContainer
                 mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
             }
 
-            drawRepeatingTexture(x, y - fluidHeightPixels, width, fluidHeightPixels, texX0, texX1, texY0, texY1, repeatTextureX, repeatTextureY);
+            drawRepeatingTexture(x, y - fluidHeightPixels, width, fluidHeightPixels, texX0, texX1, texY0, texY1, repeatTextureX, repeatTextureY * fluidHeight);
 
             if (icon == null)
                 GL11.glEnable(GL11.GL_TEXTURE_2D);
@@ -125,7 +125,7 @@ public class GuiFluidHandler extends GuiContainer
                 float curHeightPartial = IvMathHelper.clamp(0.0f, repeatY - curY, 1.0f);
 
                 float origX = curX * width / repeatX + x;
-                float origY = curY * height / repeatX + y;
+                float origY = curY * height / repeatY + y;
 
                 float curWidth = curWidthPartial * width / repeatX;
                 float curHeight = curHeightPartial * height / repeatY;
