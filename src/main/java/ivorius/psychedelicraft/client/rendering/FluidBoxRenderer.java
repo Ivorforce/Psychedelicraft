@@ -28,6 +28,8 @@ public class FluidBoxRenderer
 
         for (ForgeDirection direction : directions)
         {
+            tessellator.setNormal(direction.offsetX, direction.offsetY, direction.offsetZ);
+
             switch (direction)
             {
                 case DOWN:

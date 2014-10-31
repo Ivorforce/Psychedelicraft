@@ -78,6 +78,7 @@ public class TileEntityRendererBarrel extends TileEntitySpecialRenderer
 
                 GL11.glColor3f(1.0f, 1.0f, 1.0f);
                 tessellator.startDrawingQuads();
+                tessellator.setNormal(0.0f, 0.0f, -1.0f);
                 tessellator.addVertexWithUV(centerX - iconSize * 0.5, centerY - iconSize * 0.5, barrelZ, drinkIcon.getMaxU(), drinkIcon.getMaxV());
                 tessellator.addVertexWithUV(centerX - iconSize * 0.5, centerY + iconSize * 0.5, barrelZ, drinkIcon.getMaxU(), drinkIcon.getMinV());
                 tessellator.addVertexWithUV(centerX + iconSize * 0.5, centerY + iconSize * 0.5, barrelZ, drinkIcon.getMinU(), drinkIcon.getMinV());
