@@ -150,9 +150,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
         for (String s : drugs.keySet())
         {
             if (drugs.get(s).isVisible())
-            {
                 visibleDrugs.add(s);
-            }
         }
 
         String[] returnArray = new String[visibleDrugs.size()];
@@ -183,15 +181,13 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
         }
     }
 
-    public int getNumberOfHallucinations(Class aClass)
+    public int getNumberOfHallucinations(Class<? extends DrugHallucination> aClass)
     {
         int count = 0;
         for (DrugHallucination hallucination : hallucinations)
         {
             if (aClass.isAssignableFrom(hallucination.getClass()))
-            {
                 count++;
-            }
         }
 
         return count;
@@ -200,13 +196,9 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
     public void startBreathingSmoke(int time, float[] color)
     {
         if (color != null)
-        {
             this.breathSmokeColor = color;
-        }
         else
-        {
             this.breathSmokeColor = new float[]{1.0f, 1.0f, 1.0f};
-        }
 
         this.timeBreathingSmoke = time + 10; //10 is the time spent breathing in
     }
@@ -217,17 +209,13 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
 
         if (ticksExisted % 5 == 0) //4 times / sec is enough
         {
-            Iterator<DrugInfluence> influenceIterator = influences.iterator();
-
-            while (influenceIterator.hasNext())
+            for (Iterator<DrugInfluence> iterator = influences.iterator(); iterator.hasNext(); )
             {
-                DrugInfluence influence = influenceIterator.next();
+                DrugInfluence influence = iterator.next();
                 influence.update(this);
 
                 if (influence.isDone())
-                {
-                    influenceIterator.remove();
-                }
+                    iterator.remove();
             }
         }
 
@@ -369,7 +357,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
 
     public void readFromNBT(NBTTagCompound tagCompound, boolean fromPacket)
     {
-        NBTTagCompound drugData = tagCompound.hasKey("drugData", Constants.NBT.TAG_COMPOUND) ? tagCompound.getCompoundTag("drugData")
+        NBTTagCompound drugData = tagCompound.hasKey("Drugs", Constants.NBT.TAG_COMPOUND) ? tagCompound.getCompoundTag("drugData")
                 : tagCompound; // legacy
         for (String key : drugs.keySet())
         {
@@ -416,26 +404,28 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
         }
     }
 
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeToNBT(NBTTagCompound compound)
     {
+        NBTTagCompound drugsComp = new NBTTagCompound();
         for (String key : drugs.keySet())
         {
             NBTTagCompound cmp = new NBTTagCompound();
             drugs.get(key).writeToNBT(cmp);
-            par1NBTTagCompound.setTag(key, cmp);
+            drugsComp.setTag(key, cmp);
         }
+        compound.setTag("Drugs", drugsComp);
 
         NBTTagList influenceTagList = new NBTTagList();
         for (DrugInfluence influence : influences)
         {
-            NBTTagCompound compound = new NBTTagCompound();
-            influence.writeToNBT(compound);
-            compound.setString("influenceClass", DrugRegistry.getID(influence.getClass()));
-            influenceTagList.appendTag(compound);
+            NBTTagCompound infCompound = new NBTTagCompound();
+            influence.writeToNBT(infCompound);
+            infCompound.setString("influenceClass", DrugRegistry.getID(influence.getClass()));
+            influenceTagList.appendTag(infCompound);
         }
-        par1NBTTagCompound.setTag("drugInfluences", influenceTagList);
+        compound.setTag("drugInfluences", influenceTagList);
 
-        par1NBTTagCompound.setInteger("drugsTicksExisted", ticksExisted);
+        compound.setInteger("drugsTicksExisted", ticksExisted);
     }
 
     public NBTTagCompound createNBTTagCompound()
@@ -516,10 +506,10 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
     {
         IAttributeInstance speedInstance = entity.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
         AttributeModifier oldModifier = speedInstance.getModifier(DrugHelper.drugUUID);
+
         if (oldModifier != null)
-        {
             speedInstance.removeModifier(oldModifier);
-        }
+
         AttributeModifier newModifier = new AttributeModifier(DrugHelper.drugUUID, "Drug Effects", value, mode);
         speedInstance.applyModifier(newModifier);
     }
