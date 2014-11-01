@@ -34,7 +34,7 @@ public class ServerProxy implements PSProxy
     }
 
     @Override
-    public void createDrugRender(DrugHelper drugHelper)
+    public void createDrugRenderer(DrugHelper drugHelper)
     {
 
     }

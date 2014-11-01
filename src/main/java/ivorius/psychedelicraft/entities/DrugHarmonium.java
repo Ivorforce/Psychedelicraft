@@ -9,7 +9,7 @@ import ivorius.ivtoolkit.rendering.IvShaderInstance;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class DrugHarmonium extends Drug
+public class DrugHarmonium extends DrugSimple
 {
     public float[] currentColor;
 

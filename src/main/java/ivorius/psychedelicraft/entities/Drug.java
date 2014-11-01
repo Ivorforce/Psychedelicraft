@@ -5,130 +5,32 @@
 
 package ivorius.psychedelicraft.entities;
 
-import ivorius.ivtoolkit.math.IvMathHelper;
 import ivorius.ivtoolkit.rendering.IvShaderInstance;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class Drug
+public interface Drug
 {
-    private double effect;
-    private double effectActive;
-    private boolean locked = false;
+    void update(EntityLivingBase entity, DrugHelper drugHelper);
 
-    private final double decreaseSpeed;
-    private final double decreaseSpeedPlus;
-    private final boolean invisible;
+    void reset(EntityLivingBase entity, DrugHelper drugHelper);
 
-    private boolean shouldApplyToShader;
+    void writeToNBT(NBTTagCompound compound);
 
-    public Drug(double decSpeed, double decSpeedPlus)
-    {
-        this(decSpeed, decSpeedPlus, false);
-    }
+    void readFromNBT(NBTTagCompound compound);
 
-    public Drug(double decSpeed, double decSpeedPlus, boolean invisible)
-    {
-        decreaseSpeed = decSpeed;
-        decreaseSpeedPlus = decSpeedPlus;
+    double getActiveValue();
 
-        this.invisible = invisible;
-    }
+    void addToDesiredValue(double effect);
 
-    public void updateValues()
-    {
-        if (!locked)
-        {
-            effect *= decreaseSpeed;
-            effect -= decreaseSpeedPlus;
-        }
+    void setDesiredValue(double effect);
 
-        effect = IvMathHelper.clamp(0.0, effect, 1.0);
+    boolean isVisible();
 
-        effectActive = IvMathHelper.nearValue(effectActive, effect, 0.05, 0.005);
-    }
+    void setLocked(boolean drugLocked);
 
-    public void setActiveValue(double value)
-    {
-        effectActive = value;
-    }
+    boolean isLocked();
 
-    public double getActiveValue()
-    {
-        return effectActive;
-    }
-
-    public double getDesiredValue()
-    {
-        return effect;
-    }
-
-    public void setDesiredValue(double value)
-    {
-        effect = value;
-    }
-
-    public void addToDesiredValue(double value)
-    {
-        if (!locked)
-        {
-            effect += value;
-        }
-    }
-
-    public void resetDrugValue()
-    {
-        if (!locked)
-        {
-            effect = 0.0;
-        }
-    }
-
-    public void applyToShader(IvShaderInstance shaderInstance, String key, Minecraft mc, DrugHelper drugHelper)
-    {
-        if (shouldApplyToShader())
-        {
-            shaderInstance.setUniformFloats(key.toLowerCase(), (float) getActiveValue());
-        }
-    }
-
-    public void setLocked(boolean locked)
-    {
-        this.locked = locked;
-    }
-
-    public boolean isLocked()
-    {
-        return locked;
-    }
-
-    public boolean isVisible()
-    {
-        return !invisible;
-    }
-
-    public boolean shouldApplyToShader()
-    {
-        return shouldApplyToShader;
-    }
-
-    public Drug setShouldApplyToShader(boolean apply)
-    {
-        shouldApplyToShader = apply;
-        return this;
-    }
-
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
-    {
-        par1NBTTagCompound.setDouble("effect", getDesiredValue());
-        par1NBTTagCompound.setDouble("effectActive", getActiveValue());
-        par1NBTTagCompound.setBoolean("locked", isLocked());
-    }
-
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
-    {
-        setDesiredValue(par1NBTTagCompound.getDouble("effect"));
-        setActiveValue(par1NBTTagCompound.getDouble("effectActive"));
-        setLocked(par1NBTTagCompound.getBoolean("locked"));
-    }
+    void applyToShader(IvShaderInstance shaderWorld, String drugID, Minecraft mc, DrugHelper drugHelper);
 }

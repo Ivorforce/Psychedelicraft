@@ -21,7 +21,7 @@ public interface PSProxy
 
     void spawnColoredParticle(Entity entity, float[] color, Vec3 direction, float speed, float size);
 
-    void createDrugRender(DrugHelper drugHelper);
+    void createDrugRenderer(DrugHelper drugHelper);
 
     void loadConfig(String configID);
 }

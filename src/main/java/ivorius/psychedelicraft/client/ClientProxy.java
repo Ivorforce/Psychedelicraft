@@ -87,7 +87,7 @@ public class ClientProxy implements PSProxy
     }
 
     @Override
-    public void createDrugRender(DrugHelper drugHelper)
+    public void createDrugRenderer(DrugHelper drugHelper)
     {
         drugHelper.drugRenderer = new DrugRenderer();
     }

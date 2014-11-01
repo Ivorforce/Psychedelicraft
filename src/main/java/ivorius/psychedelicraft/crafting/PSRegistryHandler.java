@@ -37,6 +37,8 @@ public class PSRegistryHandler
 {
     public static void preInit(FMLPreInitializationEvent event, Psychedelicraft mod)
     {
+        DrugRegistry.registerFactory(new DrugFactoryPsychedelicraft());
+
         //----------------------------------------------------------Containers----------------------------------
 
         syringe = (ItemInjectable) new ItemInjectable(MILLIBUCKETS_PER_LITER / 100).setUnlocalizedName("syringe").setTextureName(modBase + "syringe");

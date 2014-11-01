@@ -27,6 +27,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 import net.minecraftforge.common.util.Constants;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.*;
 
@@ -57,46 +58,34 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
     public int delayUntilBreath;
     public boolean breathDeep;
 
-    public DrugHelper()
+    public DrugHelper(EntityLivingBase entity)
     {
         drugs = new HashMap<>();
         influences = new ArrayList<>();
 
         drugMessageDistorter = new DrugMessageDistorter();
 
-        addDrug("Alcohol", new Drug(1, 0.0002d));
-        addDrug("Cannabis", new Drug(1, 0.0002d));
-        addDrug("BrownShrooms", new Drug(1, 0.0002d).setShouldApplyToShader(true));
-        addDrug("RedShrooms", new Drug(1, 0.0002d).setShouldApplyToShader(true));
-        addDrug("Tobacco", new Drug(1, 0.003d));
-        addDrug("Cocaine", new Drug(1, 0.0003d));
-        addDrug("Caffeine", new Drug(1, 0.0002d));
-        addDrug("Warmth", new Drug(1, 0.004d, true));
-        addDrug("Peyote", new Drug(1, 0.0002d).setShouldApplyToShader(true));
-        addDrug("Zero", new Drug(1, 0.0001d));
-        addDrug("Power", new Drug(0.95, 0.0001d, true));
-
-        addDrug("Harmonium", new DrugHarmonium(1, 0.0003d));
+        for (Pair<String, Drug> pair : DrugRegistry.createDrugs(entity))
+            drugs.put(pair.getKey(), pair.getValue());
     }
 
     public static DrugHelper getDrugHelper(Entity entity)
     {
         if (entity != null)
-        {
             return (DrugHelper) entity.getExtendedProperties("DrugHelper");
-        }
 
         return null;
     }
 
     public static void initInEntity(Entity entity)
     {
-        entity.registerExtendedProperties("DrugHelper", new DrugHelper());
-        DrugHelper drugHelper = getDrugHelper(entity);
-
-        if (drugHelper != null)
+        if (entity instanceof EntityLivingBase)
         {
-            Psychedelicraft.proxy.createDrugRender(drugHelper);
+            entity.registerExtendedProperties("DrugHelper", new DrugHelper((EntityLivingBase) entity));
+            DrugHelper drugHelper = getDrugHelper(entity);
+
+            if (drugHelper != null)
+                Psychedelicraft.proxy.createDrugRenderer(drugHelper);
         }
     }
 
@@ -107,11 +96,6 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
 
     public Drug getDrug(String drugName)
     {
-        if (!drugs.containsKey(drugName))
-        {
-            return null;
-        }
-
         return drugs.get(drugName);
     }
 
@@ -251,7 +235,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
         for (String key : drugs.keySet())
         {
             Drug drug = drugs.get(key);
-            drug.updateValues();
+            drug.update(entity, this);
         }
 
         if (getDrugValue("Alcohol") > 0.0f)
@@ -470,20 +454,20 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
         }
     }
 
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound, boolean fromPacket)
+    public void readFromNBT(NBTTagCompound tagCompound, boolean fromPacket)
     {
+        NBTTagCompound drugData = tagCompound.hasKey("drugData", Constants.NBT.TAG_COMPOUND) ? tagCompound.getCompoundTag("drugData")
+                : tagCompound; // legacy
         for (String key : drugs.keySet())
         {
-            NBTTagCompound cmp = par1NBTTagCompound.getCompoundTag(key);
+            NBTTagCompound cmp = tagCompound.getCompoundTag(key);
 
             if (cmp != null)
-            {
                 drugs.get(key).readFromNBT(cmp);
-            }
         }
 
         influences.clear();
-        NBTTagList influenceTagList = par1NBTTagCompound.getTagList("drugInfluences", Constants.NBT.TAG_COMPOUND);
+        NBTTagList influenceTagList = tagCompound.getTagList("drugInfluences", Constants.NBT.TAG_COMPOUND);
         for (int i = 0; i < influenceTagList.tagCount(); i++)
         {
             NBTTagCompound compound = influenceTagList.getCompoundTagAt(i);
@@ -515,7 +499,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
             }
         }
 
-        this.ticksExisted = par1NBTTagCompound.getInteger("drugsTicksExisted");
+        this.ticksExisted = tagCompound.getInteger("drugsTicksExisted");
 
         if (fromPacket)
         {
@@ -555,7 +539,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
     public void wakeUp(EntityLivingBase entity)
     {
         for (String key : drugs.keySet())
-            drugs.get(key).resetDrugValue();
+            drugs.get(key).reset(entity, this);
         influences.clear();
 
         hasChanges = true;
