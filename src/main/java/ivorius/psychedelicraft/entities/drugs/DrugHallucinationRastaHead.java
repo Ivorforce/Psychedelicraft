@@ -147,7 +147,7 @@ public class DrugHallucinationRastaHead extends DrugHallucination
             modelRastaHead.render(dummyEntity, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 
             DrugShaderHelper.setLightmapEnabled(true);
-            DrugShaderHelper.setOverrideColor((float[])null);
+            DrugShaderHelper.setOverrideColor((float[]) null);
 
             GL11.glPopMatrix();
         }

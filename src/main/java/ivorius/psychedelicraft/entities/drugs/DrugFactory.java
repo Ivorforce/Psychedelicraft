@@ -5,7 +5,6 @@
 
 package ivorius.psychedelicraft.entities.drugs;
 
-import ivorius.psychedelicraft.entities.drugs.Drug;
 import net.minecraft.entity.EntityLivingBase;
 import org.apache.commons.lang3.tuple.Pair;
 

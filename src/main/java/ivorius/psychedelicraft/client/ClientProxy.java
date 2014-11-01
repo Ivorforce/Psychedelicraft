@@ -10,17 +10,20 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import ivorius.ivtoolkit.items.IvItemRendererModel;
 import ivorius.ivtoolkit.rendering.IvParticleHelper;
-import ivorius.psychedelicraft.events.PSCoreHandlerClient;
 import ivorius.psychedelicraft.PSProxy;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.blocks.*;
-import ivorius.psychedelicraft.client.rendering.*;
+import ivorius.psychedelicraft.client.rendering.DrugRenderer;
+import ivorius.psychedelicraft.client.rendering.ItemRendererModelCustom;
+import ivorius.psychedelicraft.client.rendering.ItemRendererThatMakesFuckingSense;
+import ivorius.psychedelicraft.client.rendering.RenderRealityRift;
 import ivorius.psychedelicraft.client.rendering.blocks.*;
 import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import ivorius.psychedelicraft.entities.EntityMolotovCocktail;
 import ivorius.psychedelicraft.entities.EntityRealityRift;
 import ivorius.psychedelicraft.entities.PSEntityList;
+import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.events.PSCoreHandlerClient;
 import ivorius.psychedelicraft.items.PSItems;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.particle.EntitySmokeFX;
@@ -30,10 +33,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.MinecraftForgeClient;
 
+import static ivorius.psychedelicraft.Psychedelicraft.*;
 import static ivorius.psychedelicraft.config.PSConfig.CATEGORY_VISUAL;
-import static ivorius.psychedelicraft.Psychedelicraft.MODID;
-import static ivorius.psychedelicraft.Psychedelicraft.config;
-import static ivorius.psychedelicraft.Psychedelicraft.filePathTextures;
 
 public class ClientProxy implements PSProxy
 {

@@ -28,7 +28,7 @@ public interface InjectableFluid
      * Called when the entity has injected the fluid.
      *
      * @param fluidStack The fluid stack.
-     * @param entity The entity injecting the fluid.
+     * @param entity     The entity injecting the fluid.
      */
     void inject(FluidStack fluidStack, EntityLivingBase entity);
 }

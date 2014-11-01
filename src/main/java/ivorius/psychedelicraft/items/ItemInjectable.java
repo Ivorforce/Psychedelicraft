@@ -5,7 +5,6 @@
 
 package ivorius.psychedelicraft.items;
 
-import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.RenderPassesCustom;
 import ivorius.psychedelicraft.fluids.FluidHelper;
 import ivorius.psychedelicraft.fluids.InjectableFluid;
@@ -16,11 +15,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.ItemFluidContainer;
 
@@ -118,7 +115,7 @@ public class ItemInjectable extends ItemFluidContainer implements RenderPassesCu
     public IIcon getIcon(ItemStack stack, int pass)
     {
         if (getFluid(stack) == null)
-            pass ++;
+            pass++;
 
         if (pass == 0)
             return iconLiquid;
@@ -162,7 +159,7 @@ public class ItemInjectable extends ItemFluidContainer implements RenderPassesCu
     public int getColorFromItemStack(ItemStack stack, int pass)
     {
         if (getFluid(stack) == null)
-            pass ++;
+            pass++;
 
         if (pass == 0)
             return FluidHelper.getTranslucentFluidColor(stack);

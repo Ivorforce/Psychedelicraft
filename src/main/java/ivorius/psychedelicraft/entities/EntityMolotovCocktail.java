@@ -18,7 +18,6 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidContainerItem;
 
 public class EntityMolotovCocktail extends EntityThrowable
 {
@@ -68,7 +67,7 @@ public class EntityMolotovCocktail extends EntityThrowable
         {
             if (par1MovingObjectPosition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, getThrower()), 4))
             {
-                 // TODO Implement hit damage
+                // TODO Implement hit damage
             }
         }
 

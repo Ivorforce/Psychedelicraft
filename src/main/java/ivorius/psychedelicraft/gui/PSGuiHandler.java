@@ -7,7 +7,6 @@ package ivorius.psychedelicraft.gui;
 
 import cpw.mods.fml.common.network.IGuiHandler;
 import ivorius.psychedelicraft.blocks.TileEntityDryingTable;
-import ivorius.psychedelicraft.blocks.TileEntityFlask;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -38,7 +37,7 @@ public class PSGuiHandler implements IGuiHandler
             ForgeDirection forgeDirection = ForgeDirection.getOrientation(id - 1);
 
             TileEntity tileEntity = world.getTileEntity(x, y, z);
-            if (tileEntity instanceof  IFluidHandler)
+            if (tileEntity instanceof IFluidHandler)
                 return new ContainerFluidHandler(player.inventory, tileEntity, (IFluidHandler) tileEntity, forgeDirection);
         }
 
@@ -55,7 +54,7 @@ public class PSGuiHandler implements IGuiHandler
             ForgeDirection forgeDirection = ForgeDirection.getOrientation(id - 1);
 
             TileEntity tileEntity = world.getTileEntity(x, y, z);
-            if (tileEntity instanceof  IFluidHandler)
+            if (tileEntity instanceof IFluidHandler)
                 return new GuiFluidHandler(player.inventory, tileEntity, (IFluidHandler) tileEntity, forgeDirection);
         }
 

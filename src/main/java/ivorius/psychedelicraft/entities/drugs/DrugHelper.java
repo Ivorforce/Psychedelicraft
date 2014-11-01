@@ -43,7 +43,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
 
     public boolean hasChanges;
 
-    public ArrayList<DrugHallucination> hallucinations = new ArrayList<DrugHallucination>();
+    public List<DrugHallucination> hallucinations = new ArrayList<>();
 
     public IDrugRenderer drugRenderer;
     public DrugMessageDistorter drugMessageDistorter;
@@ -145,7 +145,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
 
     public String[] getAllVisibleDrugNames()
     {
-        ArrayList<String> visibleDrugs = new ArrayList<>();
+        List<String> visibleDrugs = new ArrayList<>();
 
         for (String s : drugs.keySet())
         {
@@ -357,24 +357,13 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
             }
         }
 
-        ArrayList<DrugHallucination> toRemove = null;
-        for (DrugHallucination h : hallucinations)
+        for (Iterator<DrugHallucination> iterator = hallucinations.iterator(); iterator.hasNext(); )
         {
-            h.update();
+            DrugHallucination hallucination = iterator.next();
+            hallucination.update();
 
-            if (h.isDead())
-            {
-                if (toRemove == null)
-                {
-                    toRemove = new ArrayList<>();
-                }
-                toRemove.add(h);
-            }
-        }
-
-        if (toRemove != null)
-        {
-            hallucinations.removeAll(toRemove);
+            if (hallucination.isDead())
+                iterator.remove();
         }
     }
 

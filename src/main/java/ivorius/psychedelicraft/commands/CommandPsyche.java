@@ -66,7 +66,7 @@ public class CommandPsyche extends CommandBase
         {
             String[] values = new String[]{"spawnRift"};
 
-            ArrayList list = new ArrayList<String>();
+            List list = new ArrayList<String>();
             Collections.addAll(list, values);
 
             return list;

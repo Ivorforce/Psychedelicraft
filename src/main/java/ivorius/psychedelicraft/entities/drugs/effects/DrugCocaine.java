@@ -52,13 +52,13 @@ public class DrugCocaine extends DrugSimple
     @Override
     public float heartbeatVolume()
     {
-        return IvMathHelper.zeroToOne((float)getActiveValue(), 0.4f, 1.0f) * 1.2f;
+        return IvMathHelper.zeroToOne((float) getActiveValue(), 0.4f, 1.0f) * 1.2f;
     }
 
     @Override
     public float heartbeatSpeed()
     {
-        return (float)getActiveValue() * 0.1f;
+        return (float) getActiveValue() * 0.1f;
     }
 
     @Override
@@ -70,7 +70,7 @@ public class DrugCocaine extends DrugSimple
     @Override
     public float breathSpeed()
     {
-        return (float)getActiveValue() * 0.8f;
+        return (float) getActiveValue() * 0.8f;
     }
 
     @Override
@@ -82,19 +82,19 @@ public class DrugCocaine extends DrugSimple
     @Override
     public float randomPunchChance()
     {
-        return IvMathHelper.zeroToOne((float)getActiveValue(), 0.5f, 1.0f) * 0.02f;
+        return IvMathHelper.zeroToOne((float) getActiveValue(), 0.5f, 1.0f) * 0.02f;
     }
 
     @Override
     public float speedModifier()
     {
-        return 1.0F + (float)getActiveValue() * 0.15F;
+        return 1.0F + (float) getActiveValue() * 0.15F;
     }
 
     @Override
     public float digSpeedModifier()
     {
-        return 1.0F + (float)getActiveValue() * 0.15F;
+        return 1.0F + (float) getActiveValue() * 0.15F;
     }
 
     @Override

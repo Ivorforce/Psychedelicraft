@@ -43,7 +43,7 @@ public class ItemBottle extends ItemFluidContainer implements RenderPassesCustom
     public IIcon getIcon(ItemStack stack, int pass)
     {
         if (getFluid(stack) == null)
-            pass ++;
+            pass++;
 
         return pass == 0 ? liquidIcon : pass == 1 ? super.getIcon(stack, pass) : overlayIcon;
     }
@@ -97,7 +97,7 @@ public class ItemBottle extends ItemFluidContainer implements RenderPassesCustom
     public int getColorFromItemStack(ItemStack stack, int pass)
     {
         if (getFluid(stack) == null)
-            pass ++;
+            pass++;
 
         if (pass == 0)
             return FluidHelper.getTranslucentFluidColor(stack);

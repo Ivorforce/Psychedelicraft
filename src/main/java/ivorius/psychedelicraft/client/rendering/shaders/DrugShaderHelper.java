@@ -60,9 +60,9 @@ public class DrugShaderHelper
 
     }
 
-    public static ArrayList<String> getRenderPasses(float partialTicks)
+    public static List<String> getRenderPasses(float partialTicks)
     {
-        ArrayList<String> passes = new ArrayList<String>();
+        List<String> passes = new ArrayList<String>();
 
         passes.add("Default");
 

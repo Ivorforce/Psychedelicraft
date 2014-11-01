@@ -16,6 +16,7 @@ public interface ExplodingFluid
 
     /**
      * Determines the flame distance of the explosion.
+     *
      * @param fluidStack The fluid stack.
      * @return The flame distance in blocks.
      */
@@ -23,6 +24,7 @@ public interface ExplodingFluid
 
     /**
      * Determines the explosion size.
+     *
      * @param fluidStack The fluid stack.
      * @return The explosion size in blocks.
      */

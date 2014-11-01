@@ -5,14 +5,9 @@
 
 package ivorius.psychedelicraft.entities.drugs.effects;
 
-import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
-
-import java.util.Random;
 
 /**
  * Created by lukas on 01.11.14.
@@ -32,19 +27,19 @@ public class DrugCannabis extends DrugSimple
         if (getActiveValue() > 0.0)
         {
             if (entity instanceof EntityPlayer)
-                ((EntityPlayer) entity).addExhaustion(0.03F * (float)getActiveValue());
+                ((EntityPlayer) entity).addExhaustion(0.03F * (float) getActiveValue());
         }
     }
 
     @Override
     public float speedModifier()
     {
-        return (1.0F - (float)getActiveValue()) * 0.5F + 0.5F;
+        return (1.0F - (float) getActiveValue()) * 0.5F + 0.5F;
     }
 
     @Override
     public float digSpeedModifier()
     {
-        return (1.0F - (float)getActiveValue()) * 0.5F + 0.5F;
+        return (1.0F - (float) getActiveValue()) * 0.5F + 0.5F;
     }
 }

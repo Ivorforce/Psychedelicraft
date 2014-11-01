@@ -45,7 +45,7 @@ public class FluidCoffee extends FluidDrug
         {
             FluidStack fluidStack = new FluidStack(this, 1);
             fluidStack.tag = new NBTTagCompound();
-            fluidStack.tag.setFloat("temperature", warmth / (float)(WARMTH_STEPS - 1));
+            fluidStack.tag.setFloat("temperature", warmth / (float) (WARMTH_STEPS - 1));
             list.add(fluidStack);
         }
     }

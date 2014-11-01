@@ -5,8 +5,6 @@
 
 package ivorius.psychedelicraft.fluids;
 
-import net.minecraftforge.fluids.Fluid;
-
 /**
  * Created by lukas on 22.10.14.
  */

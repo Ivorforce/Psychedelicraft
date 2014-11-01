@@ -6,12 +6,12 @@
 package ivorius.psychedelicraft.events;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import ivorius.pscoreutils.events.*;
 import ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
 import ivorius.psychedelicraft.client.rendering.SmoothCameraHelper;
 import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import ivorius.psychedelicraftcore.PsycheCoreBusCommon;
-import ivorius.pscoreutils.events.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.EntityLivingBase;

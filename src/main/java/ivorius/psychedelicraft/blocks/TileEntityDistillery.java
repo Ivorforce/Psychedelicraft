@@ -6,7 +6,6 @@
 package ivorius.psychedelicraft.blocks;
 
 import ivorius.ivtoolkit.blocks.IvTileEntityHelper;
-import ivorius.ivtoolkit.tools.IvGsonHelper;
 import ivorius.psychedelicraft.fluids.FluidDistillable;
 import ivorius.psychedelicraft.fluids.FluidFermentable;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,8 +19,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fluids.TileFluidHandler;
-
-import static ivorius.psychedelicraft.fluids.FluidHelper.MILLIBUCKETS_PER_LITER;
 
 /**
  * Created by lukas on 25.10.14.
@@ -68,7 +65,7 @@ public class TileEntityDistillery extends TileFluidHandler
                     }
                 }
                 else
-                    timeDistilled ++;
+                    timeDistilled++;
             }
         }
     }
@@ -104,7 +101,7 @@ public class TileEntityDistillery extends TileFluidHandler
 
         if (doFill)
         {
-            double amountFilled = (double)fill / (double)tank.getFluidAmount();
+            double amountFilled = (double) fill / (double) tank.getFluidAmount();
             timeDistilled = MathHelper.floor_double(timeDistilled * (1.0 - amountFilled));
 
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);

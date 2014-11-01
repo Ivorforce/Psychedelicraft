@@ -5,8 +5,8 @@
 
 package ivorius.psychedelicraft.worldgen;
 
-import ivorius.psychedelicraft.config.PSConfig;
 import ivorius.psychedelicraft.blocks.PSBlocks;
+import ivorius.psychedelicraft.config.PSConfig;
 import ivorius.psychedelicraft.fluids.PSFluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandomChestContent;

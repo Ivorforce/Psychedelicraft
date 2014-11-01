@@ -28,7 +28,7 @@ public interface DrinkableFluid
      * Called when the entity has drunk one unit of the fluid.
      *
      * @param fluidStack The fluid stack.
-     * @param entity The entity drinking the fluid.
+     * @param entity     The entity drinking the fluid.
      */
     void drink(FluidStack fluidStack, EntityLivingBase entity);
 }

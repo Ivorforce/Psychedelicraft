@@ -66,7 +66,7 @@ public class ItemRendererThatMakesFuckingSense implements IItemRenderer
             int neededPasses = item.getItem() instanceof RenderPassesCustom ? ((RenderPassesCustom) item.getItem()).getRenderPassesCustom(item) : 1;
             boolean isAlpha = false;
 
-            RenderPassesCustom passesCustom = item.getItem() instanceof RenderPassesCustom ? (RenderPassesCustom) item.getItem(): null;
+            RenderPassesCustom passesCustom = item.getItem() instanceof RenderPassesCustom ? (RenderPassesCustom) item.getItem() : null;
 
             for (int pass = 0; pass < neededPasses; pass++)
             {
@@ -184,8 +184,8 @@ public class ItemRendererThatMakesFuckingSense implements IItemRenderer
         Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
         tessellator.setColorOpaque_I(-1);
-        tessellator.addVertex((double)(p_77015_4_ - 2), (double)(p_77015_5_ + 18), (double)this.zLevel);
-        tessellator.addVertex((double)(p_77015_4_ + 18), (double)(p_77015_5_ + 18), (double)this.zLevel);
+        tessellator.addVertex((double) (p_77015_4_ - 2), (double) (p_77015_5_ + 18), (double) this.zLevel);
+        tessellator.addVertex((double) (p_77015_4_ + 18), (double) (p_77015_5_ + 18), (double) this.zLevel);
         tessellator.addVertex((double) (p_77015_4_ + 18), (double) (p_77015_5_ - 2), (double) this.zLevel);
         tessellator.addVertex((double) (p_77015_4_ - 2), (double) (p_77015_5_ - 2), (double) this.zLevel);
         tessellator.draw();

@@ -5,10 +5,10 @@
 
 package ivorius.psychedelicraft.server;
 
-import ivorius.psychedelicraft.events.PSCoreHandlerServer;
 import ivorius.psychedelicraft.PSProxy;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.events.PSCoreHandlerServer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Vec3;
 

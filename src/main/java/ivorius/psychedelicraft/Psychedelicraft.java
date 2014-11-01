@@ -28,7 +28,7 @@ import ivorius.psychedelicraft.entities.drugs.DrugRegistry;
 import ivorius.psychedelicraft.events.*;
 import ivorius.psychedelicraft.gui.CreativeTabPsyche;
 import ivorius.psychedelicraft.gui.PSGuiHandler;
-import ivorius.psychedelicraft.items.*;
+import ivorius.psychedelicraft.items.PSItems;
 import ivorius.psychedelicraft.worldgen.PSWorldGen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;

@@ -87,6 +87,6 @@ public class TileEntityMultiblockFluidHandler extends IvTileEntityMultiBlock imp
         if (!isParent())
             return ((TileEntityMultiblockFluidHandler) getParent()).getTankInfo(from);
 
-        return new FluidTankInfo[] { tank.getInfo() };
+        return new FluidTankInfo[]{tank.getInfo()};
     }
 }

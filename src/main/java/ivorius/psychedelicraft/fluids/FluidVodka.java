@@ -50,8 +50,8 @@ public class FluidVodka extends FluidDrug implements FluidFermentable, FluidDist
         int fermentation = getFermentation(fluidStack);
         int distillation = getDistillation(fluidStack);
 
-        double alcohol = (double)fermentation / (double)FERMENTATION_STEPS * 0.15
-                + (double)distillation / (double)DISTILLATION_STEPS * 0.8;
+        double alcohol = (double) fermentation / (double) FERMENTATION_STEPS * 0.15
+                + (double) distillation / (double) DISTILLATION_STEPS * 0.8;
 
         list.add(new DrugInfluence("Alcohol", 20, 0.003, 0.002, alcohol));
     }
@@ -132,7 +132,7 @@ public class FluidVodka extends FluidDrug implements FluidFermentable, FluidDist
             return UNDISTILLABLE;
         else if (distillation < DISTILLATION_STEPS)
             return
-            PSConfig.ticksPerVodkaDistillation;
+                    PSConfig.ticksPerVodkaDistillation;
 
         return UNDISTILLABLE;
     }
@@ -148,7 +148,7 @@ public class FluidVodka extends FluidDrug implements FluidFermentable, FluidDist
         else if (distillation < DISTILLATION_STEPS)
         {
             setDistillation(stack, distillation + 1);
-            int distilledAmount = MathHelper.floor_float(stack.amount * (1.0f - 0.5f / ((float)distillation + 1.0f)));
+            int distilledAmount = MathHelper.floor_float(stack.amount * (1.0f - 0.5f / ((float) distillation + 1.0f)));
 
             FluidStack slurry = new FluidStack(PSFluids.slurry, stack.amount - distilledAmount);
             stack.amount = distilledAmount;
@@ -190,7 +190,7 @@ public class FluidVodka extends FluidDrug implements FluidFermentable, FluidDist
         int clearColor = super.getColor(stack);
         int distillation = getDistillation(stack);
 
-        return MCColorHelper.mixColors(slurryColor, clearColor, (float)distillation / (float)DISTILLATION_STEPS);
+        return MCColorHelper.mixColors(slurryColor, clearColor, (float) distillation / (float) DISTILLATION_STEPS);
     }
 
     public int getFermentation(FluidStack stack)

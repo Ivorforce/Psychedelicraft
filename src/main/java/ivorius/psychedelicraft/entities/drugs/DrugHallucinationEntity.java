@@ -151,7 +151,7 @@ public class DrugHallucinationEntity extends DrugHallucination
             var10.doRender(this.entity, 0.0F, 0.0F, 0.0F, 0.0F, 1.0f);
 
             DrugShaderHelper.setLightmapEnabled(true);
-            DrugShaderHelper.setOverrideColor((float[])null);
+            DrugShaderHelper.setOverrideColor((float[]) null);
 
             GL11.glPopMatrix();
         }

@@ -86,7 +86,7 @@ public class TileEntityBarrel extends TileFluidHandler
 
         if (doFill)
         {
-            double amountFilled = (double)fill / (double)tank.getFluidAmount();
+            double amountFilled = (double) fill / (double) tank.getFluidAmount();
             timeFermented = MathHelper.floor_double(timeFermented * (1.0 - amountFilled));
 
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);

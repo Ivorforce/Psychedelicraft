@@ -18,6 +18,6 @@ public class DrugPower extends DrugSimple
     @Override
     public float soundVolumeModifier()
     {
-        return 1.0f - (float)getActiveValue();
+        return 1.0f - (float) getActiveValue();
     }
 }

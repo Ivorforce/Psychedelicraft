@@ -18,7 +18,7 @@ public interface FluidWithTypes
      * Adds the desired fluid stacks to the list for the given type.
      *
      * @param listType A string identifier for a type.
-     * @param list The list to add the stacks to.
+     * @param list     The list to add the stacks to.
      */
     void addCreativeSubtypes(String listType, List<FluidStack> list);
 }

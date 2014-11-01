@@ -6,7 +6,10 @@
 package ivorius.psychedelicraft.commands;
 
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
-import net.minecraft.command.*;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.CommandException;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
@@ -40,7 +43,7 @@ public class CommandDrug extends CommandBase
 
         DrugHelper drugHelper = DrugHelper.getDrugHelper(player);
         if (drugHelper == null)
-            return ;
+            return;
 
         if (drugHelper.doesDrugExist(drugName))
         {

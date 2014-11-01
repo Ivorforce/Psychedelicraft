@@ -19,6 +19,7 @@ public interface FluidDistillable
 
     /**
      * Returns the ticks needed for the fluid to distill. Return {@link #UNDISTILLABLE} if the fluid is curently not distillable.
+     *
      * @param stack The fluid currently being distilled.
      * @return The time it needs to distill, in ticks.
      */
@@ -26,6 +27,7 @@ public interface FluidDistillable
 
     /**
      * Notifies the fluid that the stack has distilled, and is expected to apply this change to the stack.
+     *
      * @param stack The fluid currently being distilled.
      * @return The stack left over in the distillery.
      */

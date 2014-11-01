@@ -5,23 +5,12 @@
 
 package ivorius.psychedelicraft.items;
 
-import ivorius.psychedelicraft.blocks.TileEntityBarrel;
 import ivorius.psychedelicraft.blocks.TileEntityDistillery;
-import ivorius.psychedelicraft.blocks.TileEntityFlask;
-import ivorius.psychedelicraft.fluids.DrinkableFluid;
-import ivorius.psychedelicraft.fluids.FluidHelper;
-import ivorius.psychedelicraft.fluids.FluidWithIconSymbol;
-import ivorius.psychedelicraft.fluids.FluidWithIconSymbolRegistering;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.FluidStack;
-
-import java.util.List;
 
 /**
  * Created by lukas on 25.10.14.

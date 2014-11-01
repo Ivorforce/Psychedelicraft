@@ -5,7 +5,6 @@
 
 package ivorius.psychedelicraft.client.rendering;
 
-import ivorius.ivtoolkit.math.IvMathHelper;
 import ivorius.psychedelicraft.fluids.TranslucentFluid;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;

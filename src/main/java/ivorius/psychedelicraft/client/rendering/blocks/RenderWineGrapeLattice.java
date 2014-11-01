@@ -11,9 +11,7 @@ import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.blocks.BlockWineGrapeLattice;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.world.IBlockAccess;
-import org.lwjgl.opengl.GL11;
 
 /**
  * Created by lukas on 17.02.14.
