@@ -69,7 +69,7 @@ public class GuiFluidHandler extends GuiContainer
 
         FluidTankInfo tankInfo = getTankInfo(0);
         if (tankInfo != null)
-            drawTank(tankInfo, baseX + 60, baseY + 14 + 57, 108, 57, 4.0f, 4.0f);
+            drawTank(tankInfo, baseX + 60, baseY + 14 + 57, 108, 57, 4.0f, 2.1111f);
     }
 
     public void drawTank(FluidTankInfo tankInfo, int x, int y, int width, int height, float repeatTextureX, float repeatTextureY)
@@ -104,7 +104,7 @@ public class GuiFluidHandler extends GuiContainer
                 mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
             }
 
-            drawRepeatingTexture(x, y - fluidHeightPixels, width, fluidHeightPixels, texX0, texX1, texY0, texY1, repeatTextureX, repeatTextureY * fluidHeight);
+            drawRepeatingTexture(x, y, width, fluidHeightPixels, texX0, texX1, texY0, texY1, repeatTextureX, repeatTextureY * fluidHeight, true);
 
             if (icon == null)
                 GL11.glEnable(GL11.GL_TEXTURE_2D);
@@ -113,9 +113,17 @@ public class GuiFluidHandler extends GuiContainer
         }
     }
 
-    public void drawRepeatingTexture(int x, int y, int width, int height, float texX0, float texX1, float texY0, float texY1, float repeatX, float repeatY)
+    public void drawRepeatingTexture(int x, int y, int width, int height, float texX0, float texX1, float texY0, float texY1, float repeatX, float repeatY, boolean fromBelow)
     {
         Tessellator tessellator = Tessellator.instance;
+
+        if (fromBelow)
+        {
+            height = -height;
+            // Flip for correct vertex order
+            x = x + width;
+            width = -width;
+        }
 
         tessellator.startDrawingQuads();
         for (int curX = 0; curX < MathHelper.ceiling_float_int(repeatX); curX++)
@@ -124,11 +132,11 @@ public class GuiFluidHandler extends GuiContainer
                 float curWidthPartial = IvMathHelper.clamp(0.0f, repeatX - curX, 1.0f);
                 float curHeightPartial = IvMathHelper.clamp(0.0f, repeatY - curY, 1.0f);
 
-                float origX = curX * width / repeatX + x;
-                float origY = curY * height / repeatY + y;
-
                 float curWidth = curWidthPartial * width / repeatX;
                 float curHeight = curHeightPartial * height / repeatY;
+
+                float origX = curX * width / repeatX + x;
+                float origY = curY * height / repeatY + y;
 
                 float curTexX1 = texX0 + (texX1 - texX0) * curWidthPartial;
                 float curTexY1 = texY0 + (texY1 - texY0) * curHeightPartial;
