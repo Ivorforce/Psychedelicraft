@@ -18,10 +18,11 @@ import java.util.Set;
 /**
  * Created by lukas on 21.02.14.
  */
-@IFMLLoadingPlugin.Name(value = PsychedelicraftLoadingPlugin.NAME)
-@IFMLLoadingPlugin.MCVersion(value = "1.7.10")
-@IFMLLoadingPlugin.TransformerExclusions(value = {"ivorius.psychedelicraftcore.", "ivorius.ivtoolkit.asm."})
-@IFMLLoadingPlugin.SortingIndex(value = 0)
+@IFMLLoadingPlugin.Name(PsychedelicraftLoadingPlugin.NAME)
+@IFMLLoadingPlugin.MCVersion("1.7.10")
+@IFMLLoadingPlugin.TransformerExclusions({"ivorius.psychedelicraftcore.", "ivorius.ivtoolkit.asm."})
+@IFMLLoadingPlugin.SortingIndex(2050)
+@IFMLLoadingPlugin.DependsOn("ivtoolkit")
 public class PsychedelicraftLoadingPlugin implements IFMLLoadingPlugin
 {
     public static final String NAME = "Psychedelicraft Core";

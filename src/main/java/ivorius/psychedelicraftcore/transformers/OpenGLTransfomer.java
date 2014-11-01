@@ -50,7 +50,7 @@ public class OpenGLTransfomer extends IvClassTransformerGeneral
         {
             InsnList listBefore = new InsnList();
             listBefore.add(new InsnNode(DUP));
-            listBefore.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLEnable", getMethodDescriptor(Type.VOID_TYPE, Type.INT_TYPE)));
+            listBefore.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLEnable", getMethodDescriptor(Type.VOID_TYPE, Type.INT_TYPE), false));
             methodNode.instructions.insertBefore(callListNode, listBefore);
 
             caught++;
@@ -60,7 +60,7 @@ public class OpenGLTransfomer extends IvClassTransformerGeneral
         {
             InsnList listBefore = new InsnList();
             listBefore.add(new InsnNode(DUP));
-            listBefore.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLDisable", getMethodDescriptor(Type.VOID_TYPE, Type.INT_TYPE)));
+            listBefore.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLDisable", getMethodDescriptor(Type.VOID_TYPE, Type.INT_TYPE), false));
             methodNode.instructions.insertBefore(callListNode, listBefore);
 
             caught++;
@@ -78,7 +78,7 @@ public class OpenGLTransfomer extends IvClassTransformerGeneral
         for (AbstractInsnNode callListNode : glClearNodes)
         {
             InsnList listBefore = new InsnList();
-            listBefore.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLClear", getMethodDescriptor(Type.INT_TYPE, Type.INT_TYPE)));
+            listBefore.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLClear", getMethodDescriptor(Type.INT_TYPE, Type.INT_TYPE), false));
             methodNode.instructions.insertBefore(callListNode, listBefore);
 
             caught++;
@@ -99,7 +99,7 @@ public class OpenGLTransfomer extends IvClassTransformerGeneral
         {
             InsnList listBefore = new InsnList();
             IvInsnHelper.insertDUP3(listBefore);
-            listBefore.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLTranslatef", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE, Type.FLOAT_TYPE, Type.FLOAT_TYPE)));
+            listBefore.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLTranslatef", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE, Type.FLOAT_TYPE, Type.FLOAT_TYPE), false));
             methodNode.instructions.insertBefore(callListNode, listBefore);
 
             caught++;
@@ -109,7 +109,7 @@ public class OpenGLTransfomer extends IvClassTransformerGeneral
         {
             InsnList listBefore = new InsnList();
             IvInsnHelper.insertDUP4(listBefore);
-            listBefore.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLRotatef", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE, Type.FLOAT_TYPE, Type.FLOAT_TYPE, Type.FLOAT_TYPE)));
+            listBefore.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLRotatef", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE, Type.FLOAT_TYPE, Type.FLOAT_TYPE, Type.FLOAT_TYPE), false));
             methodNode.instructions.insertBefore(callListNode, listBefore);
 
             caught++;
@@ -119,7 +119,7 @@ public class OpenGLTransfomer extends IvClassTransformerGeneral
         {
             InsnList listBefore = new InsnList();
             IvInsnHelper.insertDUP3(listBefore);
-            listBefore.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLScalef", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE, Type.FLOAT_TYPE, Type.FLOAT_TYPE)));
+            listBefore.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLScalef", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE, Type.FLOAT_TYPE, Type.FLOAT_TYPE), false));
             methodNode.instructions.insertBefore(callListNode, listBefore);
 
             caught++;

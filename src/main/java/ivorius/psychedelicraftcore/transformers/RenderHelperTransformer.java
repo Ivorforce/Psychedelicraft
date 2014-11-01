@@ -33,7 +33,7 @@ public class RenderHelperTransformer extends IvClassTransformerClass
         if (methodID.equals("disableStandardItemLighting"))
         {
             InsnList list = new InsnList();
-            list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "disableStandardItemLighting", getMethodDescriptor(Type.VOID_TYPE)));
+            list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "disableStandardItemLighting", getMethodDescriptor(Type.VOID_TYPE), false));
             methodNode.instructions.insert(methodNode.instructions.get(0), list);
 
             return true;
@@ -41,7 +41,7 @@ public class RenderHelperTransformer extends IvClassTransformerClass
         if (methodID.equals("enableStandardItemLighting"))
         {
             InsnList list = new InsnList();
-            list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "enableStandardItemLighting", getMethodDescriptor(Type.VOID_TYPE)));
+            list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "enableStandardItemLighting", getMethodDescriptor(Type.VOID_TYPE), false));
             methodNode.instructions.insert(methodNode.instructions.get(0), list);
 
             return true;

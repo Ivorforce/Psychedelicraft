@@ -36,7 +36,7 @@ public class EntityPlayerTransformer extends IvClassTransformerClass
             list.add(new VarInsnNode(ILOAD, 1));
             list.add(new VarInsnNode(ILOAD, 2));
             list.add(new VarInsnNode(ILOAD, 3));
-            list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusCommon", "wakeUpPlayer", getMethodDescriptor(Type.VOID_TYPE, "net/minecraft/entity/player/EntityPlayer", Type.BOOLEAN_TYPE, Type.BOOLEAN_TYPE, Type.BOOLEAN_TYPE)));
+            list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusCommon", "wakeUpPlayer", getMethodDescriptor(Type.VOID_TYPE, "net/minecraft/entity/player/EntityPlayer", Type.BOOLEAN_TYPE, Type.BOOLEAN_TYPE, Type.BOOLEAN_TYPE), false));
             methodNode.instructions.insert(methodNode.instructions.get(0), list);
 
             return true;

@@ -39,7 +39,7 @@ public class RenderGlobalTransformer extends IvClassTransformerClass
             {
                 InsnList list = new InsnList();
                 list.add(new VarInsnNode(FLOAD, 3));
-                list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "renderEntities", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE)));
+                list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "renderEntities", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE), false));
                 methodNode.instructions.insert(entitiesNode, list);
 
                 return true;

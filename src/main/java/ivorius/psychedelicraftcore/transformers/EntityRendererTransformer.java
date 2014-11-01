@@ -51,7 +51,7 @@ public class EntityRendererTransformer extends IvClassTransformerClass
             {
                 InsnList list = new InsnList();
                 list.add(new VarInsnNode(FLOAD, 1));
-                list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "preWorldRender", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE)));
+                list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "preWorldRender", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE), false));
                 methodNode.instructions.insert(preNode, list);
             }
 
@@ -63,7 +63,7 @@ public class EntityRendererTransformer extends IvClassTransformerClass
             {
                 InsnList list = new InsnList();
                 list.add(new VarInsnNode(FLOAD, 1));
-                list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "postWorldRender", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE)));
+                list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "postWorldRender", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE), false));
                 methodNode.instructions.insertBefore(postNode, list);
             }
 
@@ -73,7 +73,7 @@ public class EntityRendererTransformer extends IvClassTransformerClass
         {
             InsnList list = new InsnList();
             list.add(new VarInsnNode(FLOAD, 1));
-            list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "orientCamera", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE)));
+            list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "orientCamera", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE), false));
             methodNode.instructions.insert(methodNode.instructions.get(0), list);
 
             return true;
@@ -81,7 +81,7 @@ public class EntityRendererTransformer extends IvClassTransformerClass
         else if (methodID.equals("enableLightmap"))
         {
             InsnList list = new InsnList();
-            list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "enableLightmap", getMethodDescriptor(Type.VOID_TYPE)));
+            list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "enableLightmap", getMethodDescriptor(Type.VOID_TYPE), false));
             methodNode.instructions.insert(methodNode.instructions.get(0), list);
 
             return true;
@@ -89,14 +89,14 @@ public class EntityRendererTransformer extends IvClassTransformerClass
         else if (methodID.equals("disableLightmap"))
         {
             InsnList list = new InsnList();
-            list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "enableLightmap", getMethodDescriptor(Type.VOID_TYPE)));
+            list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "enableLightmap", getMethodDescriptor(Type.VOID_TYPE), false));
             methodNode.instructions.insert(methodNode.instructions.get(0), list);
 
             return true;
         }
         else if (methodID.equals("renderHand"))
         {
-            AbstractInsnNode transformMatrixNode = IvNodeFinder.findNode(new IvNodeMatcherMethodSRG(INVOKESTATIC, "glPushMatrix", "org/lwjgl/opengl/GL11", null), methodNode);
+            AbstractInsnNode transformMatrixNode = IvNodeFinder.findNode(new IvNodeMatcherMethod(INVOKESTATIC, "glPushMatrix", "org/lwjgl/opengl/GL11", null), methodNode);
             AbstractInsnNode skipOverlayNode = IvNodeFinder.findNode(new IvNodeMatcherMethodSRG(INVOKEVIRTUAL, "func_78447_b" /* renderOverlays */, "net/minecraft/client/renderer/ItemRenderer", Type.VOID_TYPE, Type.FLOAT_TYPE), methodNode);
 
             if (transformMatrixNode == null)
@@ -107,7 +107,7 @@ public class EntityRendererTransformer extends IvClassTransformerClass
             {
                 InsnList list = new InsnList();
                 list.add(new VarInsnNode(FLOAD, 1));
-                list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "renderHeldItem", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE)));
+                list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "renderHeldItem", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE), false));
                 methodNode.instructions.insert(transformMatrixNode, list);
             }
 
@@ -122,7 +122,7 @@ public class EntityRendererTransformer extends IvClassTransformerClass
 
                 InsnList preList = new InsnList();
                 preList.add(new VarInsnNode(FLOAD, 1));
-                preList.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "renderBlockOverlay", getMethodDescriptor(Type.BOOLEAN_TYPE, Type.FLOAT_TYPE)));
+                preList.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "renderBlockOverlay", getMethodDescriptor(Type.BOOLEAN_TYPE, Type.FLOAT_TYPE), false));
                 preList.add(new JumpInsnNode(IFNE, skipRenderOverlayNode));
                 methodNode.instructions.insertBefore(skipOverlayNode.getPrevious().getPrevious().getPrevious(), preList);
 
@@ -134,7 +134,7 @@ public class EntityRendererTransformer extends IvClassTransformerClass
         }
         else if (methodID.equals("renderWorld"))
         {
-            AbstractInsnNode transformNode = IvNodeFinder.findNode(new IvNodeMatcherMethodSRG(INVOKESPECIAL, "func_78476_b" /* renderHand */, "net/minecraft/client/renderer/EntityRenderer", Type.VOID_TYPE, Type.FLOAT_TYPE, Type.INT_TYPE), methodNode);
+            AbstractInsnNode transformNode = IvNodeFinder.findNode(new IvNodeMatcherMethod(INVOKESPECIAL, "func_78476_b" /* renderHand */, "net/minecraft/client/renderer/EntityRenderer", Type.VOID_TYPE, Type.FLOAT_TYPE, Type.INT_TYPE), methodNode);
 
             if (transformNode != null)
             {
@@ -147,13 +147,13 @@ public class EntityRendererTransformer extends IvClassTransformerClass
 
                     InsnList preList = new InsnList();
                     preList.add(new VarInsnNode(FLOAD, 1));
-                    preList.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "preRenderHand", getMethodDescriptor(Type.BOOLEAN_TYPE, Type.FLOAT_TYPE)));
+                    preList.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "preRenderHand", getMethodDescriptor(Type.BOOLEAN_TYPE, Type.FLOAT_TYPE), false));
                     preList.add(new JumpInsnNode(IFNE, skipGLClearNode));
                     methodNode.instructions.insertBefore(glClearNode.getPrevious(), preList);
 
                     InsnList postList = new InsnList();
                     postList.add(new VarInsnNode(FLOAD, 1));
-                    postList.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "postRenderHand", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE)));
+                    postList.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "postRenderHand", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE), false));
                     methodNode.instructions.insert(transformNode, postList);
 
                     return true;
@@ -168,7 +168,7 @@ public class EntityRendererTransformer extends IvClassTransformerClass
             {
                 InsnList listBefore = new InsnList();
                 listBefore.add(new InsnNode(DUP2));
-                listBefore.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLFogi", getMethodDescriptor(Type.VOID_TYPE, Type.INT_TYPE, Type.INT_TYPE)));
+                listBefore.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLFogi", getMethodDescriptor(Type.VOID_TYPE, Type.INT_TYPE, Type.INT_TYPE), false));
                 methodNode.instructions.insertBefore(callListNode, listBefore);
             }
 
@@ -180,7 +180,7 @@ public class EntityRendererTransformer extends IvClassTransformerClass
 
             InsnList list = new InsnList();
             list.add(new VarInsnNode(FLOAD, 1));
-            list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "setupCameraTransform", getMethodDescriptor(Type.BOOLEAN_TYPE, Type.FLOAT_TYPE)));
+            list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "setupCameraTransform", getMethodDescriptor(Type.BOOLEAN_TYPE, Type.FLOAT_TYPE), false));
             list.add(new JumpInsnNode(IFEQ, realMethodStartNode));
             list.add(new InsnNode(RETURN));
             list.add(realMethodStartNode);
@@ -198,7 +198,7 @@ public class EntityRendererTransformer extends IvClassTransformerClass
             for (AbstractInsnNode node : valuepatchNodes)
             {
                 InsnList listBefore = new InsnList();
-                listBefore.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "fixGLState", getMethodDescriptor(Type.VOID_TYPE)));
+                listBefore.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "fixGLState", getMethodDescriptor(Type.VOID_TYPE), false));
                 methodNode.instructions.insert(node, listBefore);
             }
 

@@ -39,7 +39,7 @@ public class OpenGLHelperTransformer extends IvClassTransformerClass
             list.add(new VarInsnNode(ILOAD, 1));
             list.add(new VarInsnNode(ILOAD, 2));
             list.add(new VarInsnNode(ILOAD, 3));
-            list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLBlendFunc", getMethodDescriptor(Type.VOID_TYPE, Type.INT_TYPE, Type.INT_TYPE, Type.INT_TYPE, Type.INT_TYPE)));
+            list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLBlendFunc", getMethodDescriptor(Type.VOID_TYPE, Type.INT_TYPE, Type.INT_TYPE, Type.INT_TYPE, Type.INT_TYPE), false));
             methodNode.instructions.insert(methodNode.instructions.get(0), list);
 
             return true;
@@ -48,7 +48,7 @@ public class OpenGLHelperTransformer extends IvClassTransformerClass
         {
             InsnList list = new InsnList();
             list.add(new VarInsnNode(ILOAD, 0));
-            list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLActiveTexture", getMethodDescriptor(Type.VOID_TYPE, Type.INT_TYPE)));
+            list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLActiveTexture", getMethodDescriptor(Type.VOID_TYPE, Type.INT_TYPE), false));
             methodNode.instructions.insert(methodNode.instructions.get(0), list);
 
             return true;

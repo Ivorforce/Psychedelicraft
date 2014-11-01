@@ -36,12 +36,12 @@ public class SoundManagerTransformer extends IvClassTransformerClass
             if (returnNode != null)
             {
                 InsnList list = new InsnList();
-//            list.add(new InsnNode(DUP)); // Already on top of stack :>
+//                list.add(new InsnNode(DUP)); // Already on top of stack :>
                 list.add(new VarInsnNode(ALOAD, 1));
                 list.add(new VarInsnNode(ALOAD, 2));
                 list.add(new VarInsnNode(ALOAD, 3));
                 list.add(new VarInsnNode(ALOAD, 0));
-                list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "getSoundVolume", getMethodDescriptor(Type.FLOAT_TYPE, Type.FLOAT_TYPE, "net/minecraft/client/audio/ISound", "net/minecraft/client/audio/SoundPoolEntry", "net/minecraft/client/audio/SoundCategory", "net/minecraft/client/audio/SoundManager")));
+                list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "getSoundVolume", getMethodDescriptor(Type.FLOAT_TYPE, Type.FLOAT_TYPE, "net/minecraft/client/audio/ISound", "net/minecraft/client/audio/SoundPoolEntry", "net/minecraft/client/audio/SoundCategory", "net/minecraft/client/audio/SoundManager"), false));
                 methodNode.instructions.insertBefore(returnNode, list);
 
                 return true;
