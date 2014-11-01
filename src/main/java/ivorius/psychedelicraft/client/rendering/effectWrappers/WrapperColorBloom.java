@@ -7,8 +7,8 @@ package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.shaders.ShaderColorBloom;
-import ivorius.psychedelicraft.entities.DrugHarmonium;
-import ivorius.psychedelicraft.entities.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.effects.DrugHarmonium;
+import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.client.Minecraft;
 
 /**

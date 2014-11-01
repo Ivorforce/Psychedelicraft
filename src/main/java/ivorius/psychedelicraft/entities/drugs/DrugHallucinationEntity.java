@@ -3,7 +3,7 @@
  *  * http://lukas.axxim.net
  */
 
-package ivorius.psychedelicraft.entities;
+package ivorius.psychedelicraft.entities.drugs;
 
 import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import net.minecraft.client.renderer.entity.Render;

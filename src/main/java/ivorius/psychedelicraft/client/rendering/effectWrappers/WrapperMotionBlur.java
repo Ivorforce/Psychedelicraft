@@ -6,7 +6,7 @@
 package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
 import ivorius.psychedelicraft.client.rendering.EffectMotionBlur;
-import ivorius.psychedelicraft.entities.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.client.Minecraft;
 
 /**

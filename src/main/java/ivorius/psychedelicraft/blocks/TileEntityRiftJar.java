@@ -9,7 +9,7 @@ import io.netty.buffer.ByteBuf;
 import ivorius.ivtoolkit.network.IvNetworkHelperServer;
 import ivorius.ivtoolkit.network.PartialUpdateHandler;
 import ivorius.psychedelicraft.Psychedelicraft;
-import ivorius.psychedelicraft.entities.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import ivorius.psychedelicraft.entities.EntityRealityRift;
 import ivorius.ivtoolkit.bezier.IvBezierPath3D;
 import ivorius.ivtoolkit.blocks.IvTileEntityHelper;

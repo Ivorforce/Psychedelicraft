@@ -5,7 +5,7 @@
 
 package ivorius.psychedelicraft.client.rendering;
 
-import ivorius.psychedelicraft.entities.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.entity.EntityLivingBase;
 
 /**

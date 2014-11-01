@@ -3,9 +3,11 @@
  *  * http://lukas.axxim.net
  */
 
-package ivorius.psychedelicraft.entities;
+package ivorius.psychedelicraft.entities.drugs.effects;
 
 import ivorius.ivtoolkit.rendering.IvShaderInstance;
+import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.effects.DrugSimple;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 

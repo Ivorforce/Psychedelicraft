@@ -3,25 +3,25 @@
  *  * http://lukas.axxim.net
  */
 
-package ivorius.psychedelicraft.entities;
+package ivorius.psychedelicraft.entities.drugs.effects;
 
 import ivorius.ivtoolkit.math.IvMathHelper;
 import ivorius.ivtoolkit.rendering.IvShaderInstance;
+import ivorius.psychedelicraft.entities.drugs.Drug;
+import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class DrugSimple implements Drug
 {
-    private double effect;
-    private double effectActive;
-    private boolean locked = false;
+    protected double effect;
+    protected double effectActive;
+    protected boolean locked = false;
 
     private final double decreaseSpeed;
     private final double decreaseSpeedPlus;
     private final boolean invisible;
-
-    private boolean shouldApplyToShader;
 
     public DrugSimple(double decSpeed, double decSpeedPlus)
     {
@@ -85,17 +85,6 @@ public class DrugSimple implements Drug
         return !invisible;
     }
 
-    public boolean shouldApplyToShader()
-    {
-        return shouldApplyToShader;
-    }
-
-    public DrugSimple setShouldApplyToShader(boolean apply)
-    {
-        shouldApplyToShader = apply;
-        return this;
-    }
-
     @Override
     public void update(EntityLivingBase entity, DrugHelper drugHelper)
     {
@@ -136,7 +125,6 @@ public class DrugSimple implements Drug
     @Override
     public void applyToShader(IvShaderInstance shaderInstance, String key, Minecraft mc, DrugHelper drugHelper)
     {
-        if (shouldApplyToShader())
-            shaderInstance.setUniformFloats(key.toLowerCase(), (float) getActiveValue());
+
     }
 }

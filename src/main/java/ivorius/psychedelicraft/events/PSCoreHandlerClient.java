@@ -9,7 +9,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
 import ivorius.psychedelicraft.client.rendering.SmoothCameraHelper;
 import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
-import ivorius.psychedelicraft.entities.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import ivorius.psychedelicraftcore.PsycheCoreBusCommon;
 import ivorius.pscoreutils.events.*;
 import net.minecraft.client.Minecraft;
@@ -20,8 +20,6 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.MinecraftForgeClient;
 import org.lwjgl.opengl.GL11;
-
-import java.lang.reflect.Method;
 
 /**
  * Created by lukas on 21.02.14.

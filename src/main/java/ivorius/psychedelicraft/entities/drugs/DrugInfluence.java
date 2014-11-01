@@ -3,13 +3,10 @@
  *  * http://lukas.axxim.net
  */
 
-package ivorius.psychedelicraft.entities;
+package ivorius.psychedelicraft.entities.drugs;
 
 
 import net.minecraft.nbt.NBTTagCompound;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class DrugInfluence
 {

@@ -10,7 +10,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.MCColorHelper;
 import ivorius.psychedelicraft.config.PSConfig;
-import ivorius.psychedelicraft.entities.DrugInfluence;
+import ivorius.psychedelicraft.entities.drugs.DrugInfluence;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.IIcon;

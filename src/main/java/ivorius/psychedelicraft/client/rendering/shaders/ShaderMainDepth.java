@@ -6,7 +6,7 @@
 package ivorius.psychedelicraft.client.rendering.shaders;
 
 import ivorius.ivtoolkit.rendering.IvShaderInstance3D;
-import ivorius.psychedelicraft.entities.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import org.apache.logging.log4j.Logger;

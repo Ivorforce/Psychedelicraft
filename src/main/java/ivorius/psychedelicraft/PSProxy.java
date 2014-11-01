@@ -5,10 +5,9 @@
 
 package ivorius.psychedelicraft;
 
-import ivorius.psychedelicraft.entities.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Vec3;
-import net.minecraftforge.common.config.Configuration;
 
 /**
  * Created by lukas on 24.05.14.

@@ -17,7 +17,7 @@ import ivorius.psychedelicraft.blocks.*;
 import ivorius.psychedelicraft.client.rendering.*;
 import ivorius.psychedelicraft.client.rendering.blocks.*;
 import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
-import ivorius.psychedelicraft.entities.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import ivorius.psychedelicraft.entities.EntityMolotovCocktail;
 import ivorius.psychedelicraft.entities.EntityRealityRift;
 import ivorius.psychedelicraft.entities.PSEntityList;

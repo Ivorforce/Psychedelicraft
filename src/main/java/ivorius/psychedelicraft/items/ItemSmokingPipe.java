@@ -6,8 +6,8 @@
 package ivorius.psychedelicraft.items;
 
 import ivorius.ivtoolkit.tools.IvInventoryHelper;
-import ivorius.psychedelicraft.entities.DrugHelper;
-import ivorius.psychedelicraft.entities.DrugInfluence;
+import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugInfluence;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;

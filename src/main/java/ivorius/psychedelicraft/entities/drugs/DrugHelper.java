@@ -3,7 +3,7 @@
  *  * http://lukas.axxim.net
  */
 
-package ivorius.psychedelicraft.entities;
+package ivorius.psychedelicraft.entities.drugs;
 
 import cpw.mods.fml.common.network.ByteBufUtils;
 import io.netty.buffer.ByteBuf;
@@ -21,7 +21,6 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -238,86 +237,22 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
             drug.update(entity, this);
         }
 
-        if (getDrugValue("Alcohol") > 0.0f)
-        {
-            if ((ticksExisted % 20) == 0)
-            {
-                float damageChance = (getDrugValue("Alcohol") - 0.9f) * 2.0f;
-
-                if (ticksExisted % 20 == 0 && random.nextFloat() < damageChance)
-                {
-                    DamageSource damageSource = Psychedelicraft.alcoholPoisoning;
-                    entity.attackEntityFrom(damageSource, (int) ((getDrugValue("Alcohol") - 0.9f) * 50.0f + 4.0f));
-                }
-            }
-
-            float d = getDrugValue("Alcohol");
-            if (d > 0.8F)
-            {
-                d = 0.8F;
-            }
-
-//            player.motionX += MathHelper.sin(ticksExisted / 10.0F * (float) Math.PI) / 40.0F * d * (random.nextFloat() + 0.5F);
-//            player.motionZ += MathHelper.cos(ticksExisted / 10.0F * (float) Math.PI) / 40.0F * d * (random.nextFloat() + 0.5F);
-//
-//            player.motionX *= (random.nextFloat() - 0.5F) * 2 * d + 1.0F;
-//            player.motionZ *= (random.nextFloat() - 0.5F) * 2 * d + 1.0F;
-
-            entity.rotationPitch += MathHelper.sin(ticksExisted / 600.0F * (float) Math.PI) / 2.0F * d * (random.nextFloat() + 0.5F);
-            entity.rotationYaw += MathHelper.cos(ticksExisted / 500.0F * (float) Math.PI) / 1.3F * d * (random.nextFloat() + 0.5F);
-
-            entity.rotationPitch += MathHelper.sin(ticksExisted / 180.0F * (float) Math.PI) / 3.0F * d * (random.nextFloat() + 0.5F);
-            entity.rotationYaw += MathHelper.cos(ticksExisted / 150.0F * (float) Math.PI) / 2.0F * d * (random.nextFloat() + 0.5F);
-        }
-
-        if (getDrugValue("Cannabis") > 0.0f)
-        {
-            if (entity instanceof EntityPlayer)
-            {
-                ((EntityPlayer) entity).addExhaustion(0.03F * getDrugValue("Cannabis"));
-            }
-        }
-
-        if (getDrugValue("Cocaine") > 0.0f)
-        {
-            if (!entity.worldObj.isRemote)
-            {
-                float chance = (getDrugValue("Cocaine") - 0.8f) * 0.1f;
-
-                if (ticksExisted % 20 == 0 && random.nextFloat() < chance)
-                {
-                    DamageSource damageSource = random.nextFloat() < 0.4f ? Psychedelicraft.stroke
-                            : random.nextFloat() < 0.5f ? Psychedelicraft.heartFailure
-                            : Psychedelicraft.respiratoryFailure;
-                    entity.attackEntityFrom(damageSource, 1000);
-                }
-            }
-        }
-
         if (entity.worldObj.isRemote)
         {
             updateHallucinations(entity);
 
             if (delayUntilHeartbeat > 0)
-            {
                 delayUntilHeartbeat--;
-            }
             if (delayUntilBreath > 0)
-            {
                 delayUntilBreath--;
-            }
 
             if (delayUntilHeartbeat == 0)
             {
                 float heartbeatVolume = 0.0f;
                 if (getDrugValue("Cocaine") > 0.4f)
-                {
                     heartbeatVolume += (getDrugValue("Cocaine") - 0.4f) * 2.0f;
-                }
                 if (getDrugValue("Caffeine") > 0.6f)
-                {
                     heartbeatVolume += (getDrugValue("Caffeine") - 0.6f) * 0.5f;
-                }
 
                 if (heartbeatVolume > 0.0f)
                 {
@@ -343,19 +278,15 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
                 {
                     float jumpChance = 0.0f;
                     if (getDrugValue("Cocaine") > 0.6f)
-                    {
                         jumpChance += (getDrugValue("Cocaine") - 0.6f) * 0.03f;
-                    }
                     if (getDrugValue("Caffeine") > 0.6f)
-                    {
                         jumpChance += (getDrugValue("Caffeine") - 0.6f) * 0.07f;
-                    }
 
                     if (entity instanceof EntityPlayer)
                     {
                         if (random.nextFloat() < jumpChance)
                         {
-                            ((EntityPlayer) entity).jump(); // Also do this with EntityLivingBase, but that has protected access
+                            ((EntityPlayer) entity).jump(); // TODO Also do this with EntityLivingBase, but that has protected access
                         }
                     }
                 }
@@ -364,18 +295,12 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
                 {
                     float punchChance = 0.0f;
                     if (getDrugValue("Cocaine") > 0.3f)
-                    {
                         punchChance += (getDrugValue("Cocaine") - 0.5f) * 0.02f;
-                    }
                     if (getDrugValue("Caffeine") > 0.3f)
-                    {
                         punchChance += (getDrugValue("Caffeine") - 0.3f) * 0.05f;
-                    }
 
                     if (random.nextFloat() < punchChance)
-                    {
                         entity.swingItem();
-                    }
                 }
             }
         }

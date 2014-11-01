@@ -5,15 +5,12 @@
 
 package ivorius.psychedelicraft.commands;
 
-import ivorius.psychedelicraft.entities.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.command.*;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class CommandDrug extends CommandBase

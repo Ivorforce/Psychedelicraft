@@ -6,7 +6,7 @@
 package ivorius.psychedelicraft.fluids;
 
 import ivorius.psychedelicraft.config.PSConfig;
-import ivorius.psychedelicraft.entities.DrugInfluence;
+import ivorius.psychedelicraft.entities.drugs.DrugInfluence;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;

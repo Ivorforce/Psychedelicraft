@@ -9,7 +9,7 @@ import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.ivtoolkit.rendering.IvShaderInstance3D;
 import ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
 import ivorius.psychedelicraft.client.rendering.PsycheShadowHelper;
-import ivorius.psychedelicraft.entities.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.texture.TextureMap;

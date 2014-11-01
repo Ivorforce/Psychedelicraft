@@ -7,13 +7,9 @@ package ivorius.psychedelicraft;
 
 import cpw.mods.fml.common.event.FMLInterModComms;
 import ivorius.ivtoolkit.tools.IvFMLIntercommHandler;
-import ivorius.psychedelicraft.entities.DrugHelper;
-import ivorius.psychedelicraft.entities.DrugInfluence;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
+import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugInfluence;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
 import org.apache.logging.log4j.Logger;
 
 /**
