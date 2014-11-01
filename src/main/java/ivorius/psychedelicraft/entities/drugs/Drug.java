@@ -8,6 +8,7 @@ package ivorius.psychedelicraft.entities.drugs;
 import ivorius.ivtoolkit.rendering.IvShaderInstance;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
 public interface Drug
@@ -33,4 +34,24 @@ public interface Drug
     boolean isLocked();
 
     void applyToShader(IvShaderInstance shaderWorld, String drugID, Minecraft mc, DrugHelper drugHelper);
+
+    float heartbeatVolume();
+
+    float heartbeatSpeed();
+
+    float breathVolume();
+
+    float breathSpeed();
+
+    float randomJumpChance();
+
+    float randomPunchChance();
+
+    float digSpeedModifier();
+
+    float speedModifier();
+
+    float soundVolumeModifier();
+
+    EntityPlayer.EnumStatus getSleepStatus();
 }

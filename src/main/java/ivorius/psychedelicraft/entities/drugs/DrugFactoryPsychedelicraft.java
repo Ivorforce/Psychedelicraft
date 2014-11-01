@@ -26,11 +26,11 @@ public class DrugFactoryPsychedelicraft implements DrugFactory
         addDrug("RedShrooms", new DrugRedShrooms(1, 0.0002d), drugs);
         addDrug("Tobacco", new DrugSimple(1, 0.003d), drugs);
         addDrug("Cocaine", new DrugCocaine(1, 0.0003d), drugs);
-        addDrug("Caffeine", new DrugSimple(1, 0.0002d), drugs);
+        addDrug("Caffeine", new DrugCaffeine(1, 0.0002d), drugs);
         addDrug("Warmth", new DrugSimple(1, 0.004d, true), drugs);
         addDrug("Peyote", new DrugPeyote(1, 0.0002d), drugs);
         addDrug("Zero", new DrugSimple(1, 0.0001d), drugs);
-        addDrug("Power", new DrugSimple(0.95, 0.0001d, true), drugs);
+        addDrug("Power", new DrugPower(0.95, 0.0001d), drugs);
         addDrug("Harmonium", new DrugHarmonium(1, 0.0003d), drugs);
     }
 

@@ -35,4 +35,16 @@ public class DrugCannabis extends DrugSimple
                 ((EntityPlayer) entity).addExhaustion(0.03F * (float)getActiveValue());
         }
     }
+
+    @Override
+    public float speedModifier()
+    {
+        return (1.0F - (float)getActiveValue()) * 0.5F + 0.5F;
+    }
+
+    @Override
+    public float digSpeedModifier()
+    {
+        return (1.0F - (float)getActiveValue()) * 0.5F + 0.5F;
+    }
 }

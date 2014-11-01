@@ -11,6 +11,7 @@ import ivorius.psychedelicraft.entities.drugs.Drug;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class DrugSimple implements Drug
@@ -126,5 +127,65 @@ public class DrugSimple implements Drug
     public void applyToShader(IvShaderInstance shaderInstance, String key, Minecraft mc, DrugHelper drugHelper)
     {
 
+    }
+
+    @Override
+    public float heartbeatVolume()
+    {
+        return 0;
+    }
+
+    @Override
+    public float heartbeatSpeed()
+    {
+        return 0;
+    }
+
+    @Override
+    public float breathVolume()
+    {
+        return 0;
+    }
+
+    @Override
+    public float breathSpeed()
+    {
+        return 0;
+    }
+
+    @Override
+    public float randomJumpChance()
+    {
+        return 0;
+    }
+
+    @Override
+    public float randomPunchChance()
+    {
+        return 0;
+    }
+
+    @Override
+    public float digSpeedModifier()
+    {
+        return 1;
+    }
+
+    @Override
+    public float speedModifier()
+    {
+        return 1;
+    }
+
+    @Override
+    public float soundVolumeModifier()
+    {
+        return 1;
+    }
+
+    @Override
+    public EntityPlayer.EnumStatus getSleepStatus()
+    {
+        return null;
     }
 }

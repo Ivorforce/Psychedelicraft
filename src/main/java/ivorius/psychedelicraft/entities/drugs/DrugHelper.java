@@ -55,7 +55,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
 
     public int delayUntilHeartbeat;
     public int delayUntilBreath;
-    public boolean breathDeep;
+    public boolean lastBreathWasIn;
 
     public DrugHelper(EntityLivingBase entity)
     {
@@ -145,7 +145,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
 
     public String[] getAllVisibleDrugNames()
     {
-        ArrayList<String> visibleDrugs = new ArrayList<String>();
+        ArrayList<String> visibleDrugs = new ArrayList<>();
 
         for (String s : drugs.keySet())
         {
@@ -249,59 +249,60 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
             if (delayUntilHeartbeat == 0)
             {
                 float heartbeatVolume = 0.0f;
-                if (getDrugValue("Cocaine") > 0.4f)
-                    heartbeatVolume += (getDrugValue("Cocaine") - 0.4f) * 2.0f;
-                if (getDrugValue("Caffeine") > 0.6f)
-                    heartbeatVolume += (getDrugValue("Caffeine") - 0.6f) * 0.5f;
+                for (Drug drug : getAllDrugs())
+                    heartbeatVolume += drug.heartbeatVolume();
 
                 if (heartbeatVolume > 0.0f)
                 {
                     float speed = 1.0f;
-                    speed += getDrugValue("Cocaine") * 0.1f;
-                    speed += getDrugValue("Caffeine") * 0.2f;
+                    for (Drug drug : getAllDrugs())
+                        speed += drug.heartbeatSpeed();
 
-                    delayUntilHeartbeat = (int) (35.0f - (speed - 1.0f) * 80.0f);
+                    delayUntilHeartbeat = MathHelper.floor_float(35.0f / (speed - 1.0f));
                     entity.worldObj.playSound(entity.posX, entity.posY, entity.posZ, Psychedelicraft.modBase + "heartBeat", heartbeatVolume, speed, false);
                 }
             }
-            if (getDrugValue("Cocaine") > 0.4f && delayUntilBreath == 0)
-            {
-                delayUntilBreath = (int) (30.0f - getDrugValue("Cocaine") * 10.0f);
-                breathDeep = !breathDeep;
 
-                entity.worldObj.playSound(entity.posX, entity.posY, entity.posZ, Psychedelicraft.modBase + "breath", (getDrugValue("Cocaine") - 0.4f) * 1.5f, 1.0f + getDrugValue("Cocaine") * 0.1f + (breathDeep ? 0.15f : 0.0f), false);
+            if (delayUntilBreath == 0)
+            {
+                float breathVolume = 0.0f;
+                for (Drug drug : getAllDrugs())
+                    breathVolume += drug.breathVolume();
+
+                lastBreathWasIn = !lastBreathWasIn;
+
+                if (breathVolume > 0.0f)
+                {
+                    float speed = 1.0f;
+                    for (Drug drug : getAllDrugs())
+                        speed += drug.breathSpeed();
+                    delayUntilBreath = MathHelper.floor_float(30.0f / speed);
+
+                    entity.worldObj.playSound(entity.posX, entity.posY, entity.posZ, Psychedelicraft.modBase + "breath", breathVolume, speed + (lastBreathWasIn ? 0.15f : 0.0f), false);
+                }
             }
 
-            if (getDrugValue("Caffeine") > 0.0f)
+            if (entity.onGround)
             {
-                if (entity.onGround)
-                {
-                    float jumpChance = 0.0f;
-                    if (getDrugValue("Cocaine") > 0.6f)
-                        jumpChance += (getDrugValue("Cocaine") - 0.6f) * 0.03f;
-                    if (getDrugValue("Caffeine") > 0.6f)
-                        jumpChance += (getDrugValue("Caffeine") - 0.6f) * 0.07f;
+                float jumpChance = 0.0f;
+                for (Drug drug : getAllDrugs())
+                    jumpChance += drug.randomJumpChance();
 
+                if (random.nextFloat() < jumpChance)
+                {
                     if (entity instanceof EntityPlayer)
-                    {
-                        if (random.nextFloat() < jumpChance)
-                        {
-                            ((EntityPlayer) entity).jump(); // TODO Also do this with EntityLivingBase, but that has protected access
-                        }
-                    }
+                        ((EntityPlayer) entity).jump(); // TODO Also do this with EntityLivingBase, but that has protected access
                 }
+            }
 
-                if (!entity.isSwingInProgress)
-                {
-                    float punchChance = 0.0f;
-                    if (getDrugValue("Cocaine") > 0.3f)
-                        punchChance += (getDrugValue("Cocaine") - 0.5f) * 0.02f;
-                    if (getDrugValue("Caffeine") > 0.3f)
-                        punchChance += (getDrugValue("Caffeine") - 0.3f) * 0.05f;
+            if (!entity.isSwingInProgress)
+            {
+                float punchChance = 0.0f;
+                for (Drug drug : getAllDrugs())
+                    punchChance += drug.randomPunchChance();
 
-                    if (random.nextFloat() < punchChance)
-                        entity.swingItem();
-                }
+                if (random.nextFloat() < punchChance)
+                    entity.swingItem();
             }
         }
 
@@ -327,9 +328,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
         }
 
         if (drugRenderer != null && entity.worldObj.isRemote)
-        {
             drugRenderer.update(this, entity);
-        }
 
         changeDrugModifierMultiply(entity, SharedMonsterAttributes.movementSpeed, getSpeedModifier(entity));
 
@@ -367,7 +366,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
             {
                 if (toRemove == null)
                 {
-                    toRemove = new ArrayList<DrugHallucination>();
+                    toRemove = new ArrayList<>();
                 }
                 toRemove.add(h);
             }
@@ -385,7 +384,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
                 : tagCompound; // legacy
         for (String key : drugs.keySet())
         {
-            NBTTagCompound cmp = tagCompound.getCompoundTag(key);
+            NBTTagCompound cmp = drugData.getCompoundTag(key);
 
             if (cmp != null)
                 drugs.get(key).readFromNBT(cmp);
@@ -407,11 +406,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
                 {
                     inf = influenceClass.newInstance();
                 }
-                catch (InstantiationException e)
-                {
-                    e.printStackTrace();
-                }
-                catch (IllegalAccessException e)
+                catch (InstantiationException | IllegalAccessException e)
                 {
                     e.printStackTrace();
                 }
@@ -481,10 +476,8 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
     public float getSpeedModifier(EntityLivingBase entity)
     {
         float modifier = 1.0F;
-
-        modifier *= (1.0F - getDrugValue("Cannabis")) * 0.5F + 0.5F;
-        modifier *= 1.0F + getDrugValue("Cocaine") * 0.15F;
-        modifier *= 1.0F + getDrugValue("Caffeine") * 0.20F;
+        for (Drug drug : getAllDrugs())
+            modifier *= drug.speedModifier();
 
         return modifier;
     }
@@ -492,24 +485,19 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
     public float getDigSpeedModifier(EntityLivingBase entity)
     {
         float modifier = 1.0F;
-
-        modifier *= (1.0F - getDrugValue("Cannabis")) * 0.5F + 0.5F;
-        modifier *= 1.0F + getDrugValue("Cocaine") * 0.15F;
-        modifier *= 1.0F + getDrugValue("Caffeine") * 0.20F;
+        for (Drug drug : getAllDrugs())
+            modifier *= drug.digSpeedModifier();
 
         return modifier;
     }
 
     public EntityPlayer.EnumStatus getDrugSleepStatus()
     {
-        if (getDrugValue("Cocaine") > 0.4f)
+        for (Drug drug : getAllDrugs())
         {
-            return Psychedelicraft.sleepStatusDrugs;
-        }
-
-        if (getDrugValue("Caffeine") > 0.1f)
-        {
-            return Psychedelicraft.sleepStatusDrugs;
+            EntityPlayer.EnumStatus status = drug.getSleepStatus();
+            if (status != null)
+                return status;
         }
 
         return null;
@@ -517,7 +505,11 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
 
     public float getSoundMultiplier()
     {
-        return 1.0f - getDrugValue("Power");
+        float modifier = 1.0F;
+        for (Drug drug : getAllDrugs())
+            modifier *= drug.soundVolumeModifier();
+
+        return modifier;
     }
 
     public float[] getDigitalEffectPixelResize()
