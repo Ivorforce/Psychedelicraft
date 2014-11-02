@@ -104,8 +104,32 @@ public class DrugCocaine extends DrugSimple
     }
 
     @Override
-    public float getDesaturationHallucinationStrength()
+    public float desaturationHallucinationStrength()
     {
         return (float)getActiveValue() * 0.75f;
+    }
+
+    @Override
+    public float handTrembleStrength()
+    {
+        return IvMathHelper.zeroToOne((float)getActiveValue(), 0.6f, 1.0f);
+    }
+
+    @Override
+    public float viewTrembleStrength()
+    {
+        return IvMathHelper.zeroToOne((float)getActiveValue(), 0.8f, 1.0f);
+    }
+
+    @Override
+    public float headMotionInertness()
+    {
+        return (float)getActiveValue() * 10.0f;
+    }
+
+    @Override
+    public float bloomHallucinationStrength()
+    {
+        return (float)getActiveValue() * 2.5f;
     }
 }

@@ -36,4 +36,10 @@ public class DrugRedShrooms extends DrugSimple
     {
         return (float)getActiveValue() * 1.5f;
     }
+
+    @Override
+    public float viewWobblyness()
+    {
+        return (float)getActiveValue() * 0.03f;
+    }
 }

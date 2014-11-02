@@ -74,8 +74,20 @@ public class DrugCaffeine extends DrugSimple
     }
 
     @Override
-    public float getSuperSaturationHallucinationStrength()
+    public float superSaturationHallucinationStrength()
     {
         return (float)getActiveValue() * 0.3f;
+    }
+
+    @Override
+    public float handTrembleStrength()
+    {
+        return IvMathHelper.zeroToOne((float)getActiveValue(), 0.6f, 1.0f);
+    }
+
+    @Override
+    public float viewTrembleStrength()
+    {
+        return IvMathHelper.zeroToOne((float)getActiveValue(), 0.8f, 1.0f);
     }
 }

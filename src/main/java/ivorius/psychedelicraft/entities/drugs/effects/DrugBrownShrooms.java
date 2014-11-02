@@ -44,8 +44,20 @@ public class DrugBrownShrooms extends DrugSimple
     }
 
     @Override
-    public float getSuperSaturationHallucinationStrength()
+    public float superSaturationHallucinationStrength()
     {
         return (float)getActiveValue();
+    }
+
+    @Override
+    public float hallucinationStrength()
+    {
+        return (float)getActiveValue() * 0.2f;
+    }
+
+    @Override
+    public float viewWobblyness()
+    {
+        return (float)getActiveValue() * 0.03f;
     }
 }

@@ -238,13 +238,67 @@ public class DrugSimple implements Drug
     }
 
     @Override
-    public float getDesaturationHallucinationStrength()
+    public float desaturationHallucinationStrength()
     {
         return 0;
     }
 
     @Override
-    public float getSuperSaturationHallucinationStrength()
+    public float superSaturationHallucinationStrength()
+    {
+        return 0;
+    }
+
+    @Override
+    public float hallucinationStrength()
+    {
+        return 0;
+    }
+
+    @Override
+    public float handTrembleStrength()
+    {
+        return 0;
+    }
+
+    @Override
+    public float viewTrembleStrength()
+    {
+        return 0;
+    }
+
+    @Override
+    public float headMotionInertness()
+    {
+        return 0;
+    }
+
+    @Override
+    public float bloomHallucinationStrength()
+    {
+        return 0;
+    }
+
+    @Override
+    public float viewWobblyness()
+    {
+        return 0;
+    }
+
+    @Override
+    public float doubleVision()
+    {
+        return 0;
+    }
+
+    @Override
+    public void drawOverlays(float partialTicks, EntityLivingBase entity, int updateCounter, int width, int height, DrugHelper drugHelper)
+    {
+
+    }
+
+    @Override
+    public float motionBlur()
     {
         return 0;
     }

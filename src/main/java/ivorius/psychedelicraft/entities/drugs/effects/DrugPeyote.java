@@ -24,4 +24,10 @@ public class DrugPeyote extends DrugSimple
     {
         return (float) getActiveValue();
     }
+
+    @Override
+    public float hallucinationStrength()
+    {
+        return (float)getActiveValue() * 0.2f;
+    }
 }

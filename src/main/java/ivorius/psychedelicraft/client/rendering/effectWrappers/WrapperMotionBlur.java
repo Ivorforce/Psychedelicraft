@@ -6,6 +6,7 @@
 package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
 import ivorius.psychedelicraft.client.rendering.EffectMotionBlur;
+import ivorius.psychedelicraft.entities.drugs.Drug;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.client.Minecraft;
 
@@ -24,13 +25,12 @@ public class WrapperMotionBlur extends ScreenEffectWrapper<EffectMotionBlur>
     {
         DrugHelper drugHelper = DrugHelper.getDrugHelper(Minecraft.getMinecraft().renderViewEntity);
 
+        screenEffect.motionBlur = 0.0f;
+
         if (drugHelper != null)
         {
-            screenEffect.motionBlur = drugHelper.getDrugClamped("Alcohol", 0.5f, 1.0f) * 0.3f + drugHelper.getDrugValue("Power") * 0.3f;
-        }
-        else
-        {
-            screenEffect.motionBlur = 0.0f;
+            for (Drug drug : drugHelper.getAllDrugs())
+                screenEffect.motionBlur += (1.0f - screenEffect.motionBlur) * drug.motionBlur();
         }
     }
 

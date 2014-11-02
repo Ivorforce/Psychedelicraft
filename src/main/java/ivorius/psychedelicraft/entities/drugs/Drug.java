@@ -5,6 +5,8 @@
 
 package ivorius.psychedelicraft.entities.drugs;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ivorius.ivtoolkit.rendering.IvShaderInstance;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
@@ -71,7 +73,26 @@ public interface Drug
 
     void applyWorldColorizationHallucinationStrength(float[] rgba);
 
-    float getDesaturationHallucinationStrength();
+    float desaturationHallucinationStrength();
 
-    float getSuperSaturationHallucinationStrength();
+    float superSaturationHallucinationStrength();
+
+    float hallucinationStrength();
+
+    float handTrembleStrength();
+
+    float viewTrembleStrength();
+
+    float headMotionInertness();
+
+    float bloomHallucinationStrength();
+
+    float viewWobblyness();
+
+    float doubleVision();
+
+    @SideOnly(Side.CLIENT)
+    void drawOverlays(float partialTicks, EntityLivingBase entity, int updateCounter, int width, int height, DrugHelper drugHelper);
+
+    float motionBlur();
 }

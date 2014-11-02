@@ -7,6 +7,7 @@ package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.shaders.ShaderBloom;
+import ivorius.psychedelicraft.entities.drugs.Drug;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.client.Minecraft;
 
@@ -25,13 +26,11 @@ public class WrapperBloom extends ShaderWrapper<ShaderBloom>
     {
         DrugHelper drugHelper = DrugHelper.getDrugHelper(Minecraft.getMinecraft().renderViewEntity);
 
+        shaderInstance.bloom = 0.0f;
         if (drugHelper != null)
         {
-            shaderInstance.bloom = drugHelper.getDrugValue("Cocaine") * 2.5f + drugHelper.getDrugValue("Warmth") * 1.0f;
-        }
-        else
-        {
-            shaderInstance.bloom = 0.0f;
+            for (Drug drug : drugHelper.getAllDrugs())
+                shaderInstance.bloom += drug.bloomHallucinationStrength();
         }
     }
 

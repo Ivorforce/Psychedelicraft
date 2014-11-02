@@ -5,10 +5,15 @@
 
 package ivorius.psychedelicraft.entities.drugs.effects;
 
+import ivorius.ivtoolkit.math.IvMathHelper;
 import ivorius.psychedelicraft.Psychedelicraft;
+import ivorius.psychedelicraft.client.rendering.DrugRenderer;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 
 import java.util.Random;
@@ -60,5 +65,38 @@ public class DrugAlcohol extends DrugSimple
             entity.rotationPitch += MathHelper.sin(ticksExisted / 180.0F * (float) Math.PI) / 3.0F * motionEffect * (random.nextFloat() + 0.5F);
             entity.rotationYaw += MathHelper.cos(ticksExisted / 150.0F * (float) Math.PI) / 2.0F * motionEffect * (random.nextFloat() + 0.5F);
         }
+    }
+
+    @Override
+    public float viewWobblyness()
+    {
+        return (float)getActiveValue() * 0.5f;
+    }
+
+    @Override
+    public void drawOverlays(float partialTicks, EntityLivingBase entity, int updateCounter, int width, int height, DrugHelper drugHelper)
+    {
+        float alcohol = (float)getActiveValue();
+        if (alcohol > 0)
+        {
+            float overlayAlpha = (MathHelper.sin(updateCounter / 80F) * alcohol * 0.5F + alcohol);
+            if (overlayAlpha > 0.8F)
+                overlayAlpha = 0.8F;
+
+            IIcon portalIcon = Blocks.portal.getIcon(0, 0);
+            DrugRenderer.renderOverlay(overlayAlpha * 0.25f, width, height, TextureMap.locationBlocksTexture, portalIcon.getMinU(), portalIcon.getMinV(), portalIcon.getMaxU(), portalIcon.getMaxV(), 0);
+        }
+    }
+
+    @Override
+    public float doubleVision()
+    {
+        return IvMathHelper.zeroToOne((float)getActiveValue(), 0.25f, 1.0f);
+    }
+
+    @Override
+    public float motionBlur()
+    {
+        return IvMathHelper.zeroToOne((float)getActiveValue(), 0.5f, 1.0f) * 0.3f;
     }
 }

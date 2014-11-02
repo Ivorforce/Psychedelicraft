@@ -44,8 +44,20 @@ public class DrugCannabis extends DrugSimple
     }
 
     @Override
-    public float getSuperSaturationHallucinationStrength()
+    public float superSaturationHallucinationStrength()
     {
         return (float)getActiveValue() * 0.5f;
+    }
+
+    @Override
+    public float headMotionInertness()
+    {
+        return (float)getActiveValue() * 8.0f;
+    }
+
+    @Override
+    public float viewWobblyness()
+    {
+        return (float)getActiveValue() * 0.02f;
     }
 }

@@ -106,11 +106,6 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
         return (float) drugs.get(drugName).getActiveValue();
     }
 
-    public float getDrugClamped(String drugName, float min, float max)
-    {
-        return MathHelper.clamp_float((getDrugValue(drugName) - min) / (max - min), 0.0f, 1.0f);
-    }
-
     public void addToDrug(String drugName, double effect)
     {
         if (!drugs.containsKey(drugName))

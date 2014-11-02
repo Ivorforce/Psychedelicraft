@@ -381,51 +381,6 @@ public class PSRegistryHandler
         slurry.setStillIconName(modBase + "slurry_still");
         slurry.setFlowingIconName(modBase + "slurry_flow");
         FluidRegistry.registerFluid(slurry);
-
-//        syringe.addEffect(ItemSyringe.damageCocaine, new DrugInfluence[]{new DrugInfluence("Cocaine", 0, 0.005, 0.01, 0.5f)}, 0x55ffffff, "cocaine");
-//        syringe.addEffect(ItemSyringe.damageCaffeine, new DrugInfluence[]{new DrugInfluence("Caffeine", 0, 0.005, 0.01, 0.85f)}, 0x552e1404, "caffeine");
-
-        //----------------------------------------------------------Syringe----------------------------------
-
-//        DrinkRegistry.registerDrink("beer", new Drink(modBase + "drinkBeer", new DrugInfluence("Alcohol", 20, 0.002, 0.001, 0.06f)));
-//        DrinkRegistry.registerDrink("jenever", new Drink(modBase + "drinkJenever", new DrugInfluence("Alcohol", 20, 0.002, 0.001, 0.25f)));
-//        DrinkRegistry.registerDrink("coffee", new Drink(modBase + "drinkCoffee", new DrugInfluence("Caffeine", 20, 0.002, 0.001, 0.3f), new DrugInfluence("Warmth", 0, 0.00, 0.1, 0.8f)));
-//        DrinkRegistry.registerDrink("coldCoffee", new Drink(modBase + "drinkCoffee", new DrugInfluence("Caffeine", 20, 0.002, 0.001, 0.25f)));
-//        DrinkRegistry.registerDrink("wine", new DrinkWine(modBase + "drinkWine"));
-//        DrinkRegistry.registerDrink("peyote", new Drink(modBase + "drinkPeyote", new DrugInfluence("Peyote", 15, 0.005, 0.003, 0.9f)));
-//        DrinkRegistry.registerDrink("cocaTea", new Drink(modBase + "drinkCocaTea", new DrugInfluence("Cocaine", 60, 0.005, 0.002, 0.1f)));
-//        DrinkRegistry.registerDrink("cannabisTea", new Drink(modBase + "drinkCannabisTea", new DrugInfluence("Cannabis", 60, 0.005, 0.002, 0.15f)));
-//        DrinkRegistry.registerDrink("vodka", new Drink(modBase + "drinkVodka", new DrugInfluence("Alcohol", 20, 0.003, 0.002, 0.5f)));
-
-//        registerSpecialIcon("beer", woodenMug, modBase + "woodenMugBeer");
-//        registerSpecialIcon("jenever", woodenMug, modBase + "woodenMugJenever");
-//        registerSpecialIcon("coffee", woodenMug, modBase + "woodenMugCoffee");
-//        registerSpecialIcon("coldCoffee", woodenMug, modBase + "woodenMugCoffee");
-//        registerSpecialIcon("wine", woodenMug, modBase + "woodenMugWine");
-//        registerSpecialIcon("peyote", woodenMug, modBase + "woodenMugPeyote");
-//        registerSpecialIcon("cocaTea", woodenMug, modBase + "woodenMugCocaTea");
-//        registerSpecialIcon("cannabisTea", woodenMug, modBase + "woodenMugCocaTea");
-//        registerSpecialIcon("vodka", woodenMug, modBase + "woodenMugVodka");
-//
-//        registerSpecialIcon("beer", woodenBowlDrug, modBase + "woodenBowlBeer");
-//        registerSpecialIcon("jenever", woodenBowlDrug, modBase + "woodenBowlJenever");
-//        registerSpecialIcon("coffee", woodenBowlDrug, modBase + "woodenBowlCoffee");
-//        registerSpecialIcon("coldCoffee", woodenBowlDrug, modBase + "woodenBowlCoffee");
-//        registerSpecialIcon("wine", woodenBowlDrug, modBase + "woodenBowlWine");
-//        registerSpecialIcon("peyote", woodenBowlDrug, modBase + "woodenBowlPeyote");
-//        registerSpecialIcon("cocaTea", woodenBowlDrug, modBase + "woodenBowlCocaTea");
-//        registerSpecialIcon("cannabisTea", woodenBowlDrug, modBase + "woodenBowlCocaTea");
-//        registerSpecialIcon("vodka", woodenBowlDrug, modBase + "woodenBowlVodka");
-//
-//        registerSpecialIcon("beer", glassChalice, modBase + "glassChaliceBeer");
-//        registerSpecialIcon("jenever", glassChalice, modBase + "glassChaliceJenever");
-//        registerSpecialIcon("coffee", glassChalice, modBase + "glassChaliceCoffee");
-//        registerSpecialIcon("coldCoffee", glassChalice, modBase + "glassChaliceCoffee");
-//        registerSpecialIcon("wine", glassChalice, modBase + "glassChaliceWine");
-//        registerSpecialIcon("peyote", glassChalice, modBase + "glassChalicePeyote");
-//        registerSpecialIcon("cocaTea", glassChalice, modBase + "glassChaliceCocaTea");
-//        registerSpecialIcon("cannabisTea", glassChalice, modBase + "glassChaliceCocaTea");
-//        registerSpecialIcon("vodka", glassChalice, modBase + "glassChaliceVodka");
     }
 
     public static void load(FMLInitializationEvent event, Psychedelicraft mod)
