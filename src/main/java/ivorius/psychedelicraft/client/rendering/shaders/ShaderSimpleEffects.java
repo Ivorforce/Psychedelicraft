@@ -16,7 +16,8 @@ import static org.lwjgl.opengl.GL11.glColor3f;
  */
 public class ShaderSimpleEffects extends IvShaderInstance2D
 {
-    public float brownShrooms;
+    public float slowColorRotation;
+    public float quickColorRotation;
     public float colorIntensification;
     public float desaturation;
 
@@ -28,7 +29,8 @@ public class ShaderSimpleEffects extends IvShaderInstance2D
     @Override
     public boolean shouldApply(float ticks)
     {
-        return (brownShrooms > 0.0f || colorIntensification > 0.0f || desaturation > 0.0f) && super.shouldApply(ticks);
+        return (slowColorRotation > 0.0f || quickColorRotation > 0.0f
+                || colorIntensification > 0.0f || desaturation > 0.0f) && super.shouldApply(ticks);
     }
 
     @Override
@@ -40,7 +42,8 @@ public class ShaderSimpleEffects extends IvShaderInstance2D
 
         setUniformFloats("totalAlpha", 1.0f);
 
-        setUniformFloats("brownshrooms", brownShrooms);
+        setUniformFloats("slowColorRotation", slowColorRotation);
+        setUniformFloats("quickColorRotation", quickColorRotation);
         setUniformFloats("colorIntensification", colorIntensification);
         setUniformFloats("desaturation", desaturation);
 

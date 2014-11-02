@@ -20,4 +20,10 @@ public class DrugPower extends DrugSimple
     {
         return 1.0f - (float) getActiveValue();
     }
+
+    @Override
+    public float getDesaturationHallucinationStrength()
+    {
+        return (float)getActiveValue() * 0.75f;
+    }
 }

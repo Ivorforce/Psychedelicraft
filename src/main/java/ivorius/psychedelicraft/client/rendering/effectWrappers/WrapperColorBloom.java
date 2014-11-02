@@ -27,18 +27,13 @@ public class WrapperColorBloom extends ShaderWrapper<ShaderColorBloom>
     {
         DrugHelper drugHelper = DrugHelper.getDrugHelper(Minecraft.getMinecraft().renderViewEntity);
 
-        shaderInstance.coloredBloom = new float[4];
+        shaderInstance.coloredBloom = new float[]{1f, 1f, 1f, 0f};
 
         if (drugHelper != null)
         {
-            Drug harmonium = drugHelper.getDrug("Harmonium");
-            if (harmonium instanceof DrugHarmonium)
-            {
-                float[] coloredBloom = ((DrugHarmonium) harmonium).getHarmonizedColorAsPrimary(drugHelper);
-                coloredBloom[3] = Math.min(coloredBloom[3] * 4.0f, 1.0f);
-
-                shaderInstance.coloredBloom = coloredBloom;
-            }
+            for (Drug drug : drugHelper.getAllDrugs())
+                drug.applyWorldColorizationHallucinationStrength(shaderInstance.coloredBloom);
+            shaderInstance.coloredBloom[3] = Math.min(shaderInstance.coloredBloom[3] * 4.0f, 1.0f);
         }
     }
 

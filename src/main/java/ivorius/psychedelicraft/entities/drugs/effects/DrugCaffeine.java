@@ -72,4 +72,10 @@ public class DrugCaffeine extends DrugSimple
     {
         return getActiveValue() > 0.1 ? Psychedelicraft.sleepStatusDrugs : null;
     }
+
+    @Override
+    public float getSuperSaturationHallucinationStrength()
+    {
+        return (float)getActiveValue() * 0.3f;
+    }
 }

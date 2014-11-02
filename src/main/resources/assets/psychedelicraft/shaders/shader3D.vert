@@ -11,9 +11,11 @@ uniform vec4 overrideColor;
 uniform vec4 fractal0TexCoords;
 varying vec2 texFractal0Coords;
 
-uniform float redshrooms;
-uniform float brownshrooms;
-uniform float peyote;
+uniform float bigWaves;
+uniform float smallWaves;
+uniform float wiggleWaves;
+uniform float distantWorldDeformation;
+uniform float surfaceFractal;
 
 uniform vec3 playerPos;
 
@@ -38,7 +40,7 @@ void main()
     gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;
     gl_TexCoord[1] = gl_TextureMatrix[1] * gl_MultiTexCoord1;
     
-	if (brownshrooms > 0.0)
+	if (surfaceFractal > 0.0)
     {
         texFractal0Coords = vec2(mix(fractal0TexCoords[0], fractal0TexCoords[2], (mod(gl_Vertex[0] + gl_Vertex[1], 4.0)) / 4.0), mix(fractal0TexCoords[1], fractal0TexCoords[3], (mod(gl_Vertex[2] + gl_Vertex[1], 4.0)) / 4.0));
     }
@@ -48,38 +50,40 @@ void main()
     vec3 vVertex = vec3(gl_ModelViewMatrix * gl_Vertex);
 	gl_FogFragCoord = length(vVertex);
     
-    if (redshrooms > 0.0)
+    if (smallWaves > 0.0)
     {        
         float w1 = 8.0;
         
-        gl_Position[1] += sin((gl_Vertex[0] + ticks / 5.0) / w1 * 3.14159 * 2.0) * sin((gl_Vertex[2] + ticks / 5.0) / w1 * 3.14159 * 2.0) * redshrooms * 1.5;
-        gl_Position[1] -= sin((playerPos.x + ticks / 5.0) / w1 * 3.14159 * 2.0) * sin((playerPos.z + ticks / 5.0) / w1 * 3.14159 * 2.0) * redshrooms * 1.5;
+        gl_Position[1] += sin((gl_Vertex[0] + ticks / 5.0) / w1 * 3.14159 * 2.0) * sin((gl_Vertex[2] + ticks / 5.0) / w1 * 3.14159 * 2.0) * smallWaves * 1.5;
+        gl_Position[1] -= sin((playerPos.x + ticks / 5.0) / w1 * 3.14159 * 2.0) * sin((playerPos.z + ticks / 5.0) / w1 * 3.14159 * 2.0) * smallWaves * 1.5;
 
         float w2 = 16.0;
 
-        gl_Position[1] += sin((gl_Vertex[0] + ticks / 8.0) / w2 * 3.14159 * 2.0) * sin((gl_Vertex[2]) / w2 * 3.14159 * 2.0) * redshrooms * 3.0;
-        gl_Position[1] -= sin((playerPos.x + ticks / 8.0) / w2 * 3.14159 * 2.0) * sin((playerPos.z) / w2 * 3.14159 * 2.0) * redshrooms * 3.0;
+        gl_Position[1] += sin((gl_Vertex[0] + ticks / 8.0) / w2 * 3.14159 * 2.0) * sin((gl_Vertex[2]) / w2 * 3.14159 * 2.0) * smallWaves * 3.0;
+        gl_Position[1] -= sin((playerPos.x + ticks / 8.0) / w2 * 3.14159 * 2.0) * sin((playerPos.z) / w2 * 3.14159 * 2.0) * smallWaves * 3.0;
         
-        gl_Position[0] = mix(gl_Position[0], gl_Position[0] * (1.0 + gl_FogFragCoord / 20.0), redshrooms);
-        gl_Position[1] = mix(gl_Position[1], gl_Position[1] * (1.0 + gl_FogFragCoord / 20.0), redshrooms);
+        gl_Position[0] = mix(gl_Position[0], gl_Position[0] * (1.0 + gl_FogFragCoord / 20.0), smallWaves);
+        gl_Position[1] = mix(gl_Position[1], gl_Position[1] * (1.0 + gl_FogFragCoord / 20.0), smallWaves);
     }
-    if(brownshrooms > 0.0)
+
+    if(wiggleWaves > 0.0)
     {
         float w1 = 8.0;
 
-        gl_Position[0] += sin((gl_Vertex[1] + ticks / 8.0) / w1 * 3.14159 * 2.0) * sin((gl_Vertex[2] + ticks / 5.0) / w1 * 3.14159 * 2.0) * brownshrooms * 1.5;
-
-        if(gl_FogFragCoord > 5.0) gl_Position[1] += (sin(gl_FogFragCoord / 8.0 * 3.14159 * 2.0) + 1.0) * brownshrooms * (gl_FogFragCoord - 5.0) / 8.0;
+        gl_Position[0] += sin((gl_Vertex[1] + ticks / 8.0) / w1 * 3.14159 * 2.0) * sin((gl_Vertex[2] + ticks / 5.0) / w1 * 3.14159 * 2.0) * wiggleWaves;
     }
+
+    if(distantWorldDeformation > 0.0 && gl_FogFragCoord > 5.0)
+        gl_Position[1] += (sin(gl_FogFragCoord / 8.0 * 3.14159 * 2.0) + 1.0) * distantWorldDeformation * (gl_FogFragCoord - 5.0) / 8.0;
     
-    if(peyote > 0.0)
+    if(bigWaves > 0.0)
     {
         if (gl_Position[2] > 0.1)
         {
-            float dDist = (gl_Position[2] - 0.1) * peyote;
+            float dDist = (gl_Position[2] - 0.1) * bigWaves;
             if (gl_Position[2] > 20.0)
             {
-                dDist = (20.0 - 0.1) * peyote + (gl_Position[2] - 20.0) * peyote * 0.3;
+                dDist = (20.0 - 0.1) * bigWaves + (gl_Position[2] - 20.0) * bigWaves * 0.3;
             }
 
             float inf1 = sin(ticks * 0.0086465563) * dDist;

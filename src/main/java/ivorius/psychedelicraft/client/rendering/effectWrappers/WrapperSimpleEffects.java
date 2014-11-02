@@ -5,9 +5,11 @@
 
 package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
+import ivorius.ivtoolkit.math.IvMathHelper;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
 import ivorius.psychedelicraft.client.rendering.shaders.ShaderSimpleEffects;
+import ivorius.psychedelicraft.entities.drugs.Drug;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.client.Minecraft;
 
@@ -28,13 +30,15 @@ public class WrapperSimpleEffects extends ShaderWrapper<ShaderSimpleEffects>
 
         if (drugHelper != null)
         {
-            shaderInstance.brownShrooms = drugHelper.getDrugValue("BrownShrooms");
+            shaderInstance.quickColorRotation = DrugEffectInterpreter.getQuickColorRotation(drugHelper, partialTicks);
+            shaderInstance.slowColorRotation = DrugEffectInterpreter.getSlowColorRotation(drugHelper, partialTicks);
             shaderInstance.desaturation = DrugEffectInterpreter.getDesaturation(drugHelper, partialTicks);
             shaderInstance.colorIntensification = DrugEffectInterpreter.getColorIntensification(drugHelper, partialTicks);
         }
         else
         {
-            shaderInstance.brownShrooms = 0.0f;
+            shaderInstance.slowColorRotation = 0.0f;
+            shaderInstance.quickColorRotation = 0.0f;
             shaderInstance.desaturation = 0.0f;
             shaderInstance.colorIntensification = 0.0f;
         }

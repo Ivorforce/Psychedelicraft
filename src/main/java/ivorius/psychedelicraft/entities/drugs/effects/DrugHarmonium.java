@@ -21,41 +21,32 @@ public class DrugHarmonium extends DrugSimple
         currentColor = new float[]{1.0f, 1.0f, 1.0f};
     }
 
-    public float[] getHarmonizedColorAsPrimary(DrugHelper drugHelper)
+    @Override
+    public void applyWorldColorizationHallucinationStrength(float[] rgba)
     {
-        float[] safeColor = new float[4];
-
-        safeColor[0] = currentColor[0];
-        safeColor[1] = currentColor[1];
-        safeColor[2] = currentColor[2];
-        safeColor[3] = (float) getActiveValue();
-
-        return safeColor;
+        rgba[0] *= currentColor[0];
+        rgba[1] *= currentColor[1];
+        rgba[2] *= currentColor[2];
+        rgba[3] += (float)getActiveValue();
     }
 
     @Override
-    public void applyToShader(IvShaderInstance shaderInstance, Minecraft mc, DrugHelper drugHelper)
+    public void writeToNBT(NBTTagCompound tagCompound)
     {
-        shaderInstance.setUniformFloats("harmoniumColor", this.getHarmonizedColorAsPrimary(drugHelper));
+        super.writeToNBT(tagCompound);
+
+        tagCompound.setFloat("currentColor[0]", currentColor[0]);
+        tagCompound.setFloat("currentColor[1]", currentColor[1]);
+        tagCompound.setFloat("currentColor[2]", currentColor[2]);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    public void readFromNBT(NBTTagCompound tagCompound)
     {
-        super.writeToNBT(par1NBTTagCompound);
+        super.readFromNBT(tagCompound);
 
-        par1NBTTagCompound.setFloat("currentColor[0]", currentColor[0]);
-        par1NBTTagCompound.setFloat("currentColor[1]", currentColor[1]);
-        par1NBTTagCompound.setFloat("currentColor[2]", currentColor[2]);
-    }
-
-    @Override
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
-    {
-        super.readFromNBT(par1NBTTagCompound);
-
-        currentColor[0] = par1NBTTagCompound.getFloat("currentColor[0]");
-        currentColor[1] = par1NBTTagCompound.getFloat("currentColor[1]");
-        currentColor[2] = par1NBTTagCompound.getFloat("currentColor[2]");
+        currentColor[0] = tagCompound.getFloat("currentColor[0]");
+        currentColor[1] = tagCompound.getFloat("currentColor[1]");
+        currentColor[2] = tagCompound.getFloat("currentColor[2]");
     }
 }

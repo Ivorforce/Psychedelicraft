@@ -5,6 +5,7 @@
 
 package ivorius.psychedelicraft.client.rendering;
 
+import ivorius.psychedelicraft.entities.drugs.Drug;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.util.MathHelper;
 
@@ -88,11 +89,6 @@ public class DrugEffectInterpreter
         return 0.0f;
     }
 
-    public static boolean shouldRegisterFractalTextures(DrugHelper drugHelper)
-    {
-        return drugHelper.getDrugValue("BrownShrooms") > 0.0f;
-    }
-
     public static float getHallucinationStrength(DrugHelper drugHelper, float partialTicks)
     {
         return drugHelper.getDrugValue("BrownShrooms") * 0.2f + drugHelper.getDrugValue("Peyote") * 0.2f;
@@ -101,22 +97,32 @@ public class DrugEffectInterpreter
     public static float getDesaturation(DrugHelper drugHelper, float partialTicks)
     {
         float desaturation = 0.0f;
-
-        desaturation += (1.0f - desaturation) * drugHelper.getDrugValue("Power") * 0.75f;
-        desaturation += (1.0f - desaturation) * drugHelper.getDrugValue("Cocaine") * 0.75f;
-        desaturation += (1.0f - desaturation) * drugHelper.getDrugValue("Tobacco") * 0.35f;
-
+        for (Drug drug : drugHelper.getAllDrugs())
+            desaturation += (1.0f - desaturation) * drug.getDesaturationHallucinationStrength();
         return desaturation;
     }
 
     public static float getColorIntensification(DrugHelper drugHelper, float partialTicks)
     {
         float intensification = 0.0f;
-
-        intensification += (1.0f - intensification) * drugHelper.getDrugValue("Caffeine") * 0.3f;
-        intensification += (1.0f - intensification) * drugHelper.getDrugValue("Cannabis") * 0.6f;
-        intensification += (1.0f - intensification) * drugHelper.getDrugValue("BrownShrooms") * 1.0f;
-
+        for (Drug drug : drugHelper.getAllDrugs())
+            intensification += (1.0f - intensification) * drug.getSuperSaturationHallucinationStrength();
         return intensification;
+    }
+
+    public static float getSlowColorRotation(DrugHelper drugHelper, float partialTicks)
+    {
+        float slowColorRotationStrength = 0.0f;
+        for (Drug drug : drugHelper.getAllDrugs())
+            slowColorRotationStrength += (1.0f - slowColorRotationStrength) * drug.slowColorRotationHallucinationStrength();
+        return slowColorRotationStrength;
+    }
+
+    public static float getQuickColorRotation(DrugHelper drugHelper, float partialTicks)
+    {
+        float quickColorRotationStrength = 0.0f;
+        for (Drug drug : drugHelper.getAllDrugs())
+            quickColorRotationStrength += (1.0f - quickColorRotationStrength) * drug.quickColorRotationHallucinationStrength();
+        return quickColorRotationStrength;
     }
 }

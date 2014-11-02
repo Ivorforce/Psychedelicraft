@@ -5,23 +5,23 @@
 
 package ivorius.psychedelicraft.entities.drugs.effects;
 
-import ivorius.ivtoolkit.rendering.IvShaderInstance;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
-import net.minecraft.client.Minecraft;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 
 /**
  * Created by lukas on 01.11.14.
  */
-public class DrugPeyote extends DrugSimple
+public class DrugTobacco extends DrugSimple
 {
-    public DrugPeyote(double decSpeed, double decSpeedPlus)
+    public DrugTobacco(double decSpeed, double decSpeedPlus)
     {
         super(decSpeed, decSpeedPlus);
     }
 
     @Override
-    public float bigWaveHallucinationStrength()
+    public float getDesaturationHallucinationStrength()
     {
-        return (float) getActiveValue();
+        return (float)getActiveValue() * 0.2f;
     }
 }

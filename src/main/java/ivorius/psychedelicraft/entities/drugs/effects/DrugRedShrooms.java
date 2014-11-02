@@ -20,8 +20,20 @@ public class DrugRedShrooms extends DrugSimple
     }
 
     @Override
-    public void applyToShader(IvShaderInstance shaderInstance, Minecraft mc, DrugHelper drugHelper)
+    public float smallWaveHallucinationStrength()
     {
-        shaderInstance.setUniformFloats("redshrooms", (float) getActiveValue());
+        return (float) getActiveValue();
+    }
+
+    @Override
+    public float redPulsesHallucinationStrength()
+    {
+        return (float) getActiveValue();
+    }
+
+    @Override
+    public float quickColorRotationHallucinationStrength()
+    {
+        return (float)getActiveValue() * 1.5f;
     }
 }

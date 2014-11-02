@@ -20,8 +20,32 @@ public class DrugBrownShrooms extends DrugSimple
     }
 
     @Override
-    public void applyToShader(IvShaderInstance shaderInstance, Minecraft mc, DrugHelper drugHelper)
+    public float surfaceFractalHallucinationStrength()
     {
-        shaderInstance.setUniformFloats("brownshrooms", (float) getActiveValue());
+        return (float)getActiveValue();
+    }
+
+    @Override
+    public float slowColorRotationHallucinationStrength()
+    {
+        return 0.5f * (float)getActiveValue();
+    }
+
+    @Override
+    public float wiggleWaveHallucinationStrength()
+    {
+        return (float)getActiveValue() * 1.5f;
+    }
+
+    @Override
+    public float distantWorldDeformationHallucinationStrength()
+    {
+        return (float)getActiveValue();
+    }
+
+    @Override
+    public float getSuperSaturationHallucinationStrength()
+    {
+        return (float)getActiveValue();
     }
 }

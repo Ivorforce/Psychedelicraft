@@ -5,6 +5,7 @@
 
 package ivorius.psychedelicraft.client.rendering.shaders;
 
+import ivorius.ivtoolkit.math.IvMathHelper;
 import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.ivtoolkit.rendering.IvShaderInstance3D;
 import ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
@@ -45,11 +46,6 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
             EntityLivingBase renderEntity = mc.renderViewEntity;
             DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
 
-            if (drugHelper != null && DrugEffectInterpreter.shouldRegisterFractalTextures(drugHelper))
-            {
-                registerFractals();
-            }
-
             setUniformInts("texture", 0);
             setUniformInts("lightmapTex", 1);
 
@@ -68,14 +64,51 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
             setFogMode(GL11.GL_LINEAR);
             setOverrideColor(null);
 
-            setUniformFloats("desaturation", DrugEffectInterpreter.getDesaturation(drugHelper, partialTicks));
-            setUniformFloats("colorIntensification", DrugEffectInterpreter.getColorIntensification(drugHelper, partialTicks));
+            float desaturation = 0.0f;
+            float colorIntensification = 0.0f;
+            float quickColorRotationStrength = 0.0f;
+            float slowColorRotationStrength = 0.0f;
 
+            float bigWaveStrength = 0.0f;
+            float smallWaveStrength = 0.0f;
+            float wiggleWaveStrength = 0.0f;
+            float redPulsesStrength = 0.0f;
+            float surfaceFractalStrength = 0.0f;
+            float distantWorldDeformationStrength = 0.0f;
+            float[] worldColorization = new float[]{1f, 1f, 1f, 0f};
             if (drugHelper != null)
             {
+                desaturation = DrugEffectInterpreter.getDesaturation(drugHelper, partialTicks);
+                colorIntensification = DrugEffectInterpreter.getColorIntensification(drugHelper, partialTicks);
+                quickColorRotationStrength = DrugEffectInterpreter.getQuickColorRotation(drugHelper, partialTicks);
+                slowColorRotationStrength = DrugEffectInterpreter.getSlowColorRotation(drugHelper, partialTicks);
+
                 for (Drug drug : drugHelper.getAllDrugs())
-                    drug.applyToShader(this, mc, drugHelper);
+                {
+                    bigWaveStrength += drug.bigWaveHallucinationStrength();
+                    smallWaveStrength += drug.smallWaveHallucinationStrength();
+                    wiggleWaveStrength += drug.wiggleWaveHallucinationStrength();
+                    distantWorldDeformationStrength += drug.distantWorldDeformationHallucinationStrength();
+                    redPulsesStrength += drug.redPulsesHallucinationStrength();
+                    surfaceFractalStrength += drug.surfaceFractalHallucinationStrength();
+                    drug.applyWorldColorizationHallucinationStrength(worldColorization);
+                }
             }
+            setUniformFloats("desaturation", desaturation);
+            setUniformFloats("quickColorRotation", quickColorRotationStrength);
+            setUniformFloats("slowColorRotation", slowColorRotationStrength);
+            setUniformFloats("colorIntensification", colorIntensification);
+
+            setUniformFloats("bigWaves", bigWaveStrength);
+            setUniformFloats("smallWaves", smallWaveStrength);
+            setUniformFloats("wiggleWaves", wiggleWaveStrength);
+            setUniformFloats("distantWorldDeformation", distantWorldDeformationStrength);
+            setUniformFloats("redPulses", IvMathHelper.clamp(0.0f, redPulsesStrength, 1.0f));
+            if (surfaceFractalStrength > 0.0f)
+                registerFractals();
+            setUniformFloats("surfaceFractal", IvMathHelper.clamp(0.0f, surfaceFractalStrength, 1.0f));
+            worldColorization[3] = IvMathHelper.clamp(0.0f, worldColorization[3], 1.0f);
+            setUniformFloats("worldColorization", worldColorization);
 
             if (shouldDoShadows)
             {

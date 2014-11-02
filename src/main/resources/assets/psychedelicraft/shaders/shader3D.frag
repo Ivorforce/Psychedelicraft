@@ -25,9 +25,11 @@ uniform int useScreenTexCoords;
 
 uniform int fractal0TexIndex;
 
-uniform float redshrooms;
-uniform float brownshrooms;
-uniform vec4 harmoniumColor;
+uniform float redPulses;
+uniform float quickColorRotation;
+uniform float slowColorRotation;
+uniform float surfaceFractal;
+uniform vec4 worldColorization;
 
 uniform float desaturation;
 uniform float colorIntensification;
@@ -129,31 +131,28 @@ void main()
         }
     }
     
-    if(brownshrooms > 0.0)
+    if(surfaceFractal > 0.0)
     {
         vec4 fractalColor = texture2D(texFractal0, texFractal0Coords);
         float avg = (fractalColor.r + fractalColor.g + fractalColor.b) / 3.0;
-        gl_FragColor.rgb = mix(gl_FragColor.rgb, getRotatedColor(gl_FragColor.rgb, avg * brownshrooms), brownshrooms);
+        gl_FragColor.rgb = mix(gl_FragColor.rgb, getRotatedColor(gl_FragColor.rgb, avg * surfaceFractal), surfaceFractal);
     }
-    if(redshrooms > 0.0)
+
+    if(redPulses > 0.0)
     {
-        float r = (sin((gl_FogFragCoord - ticks) / 5.0) - 0.4) * redshrooms;
+        float r = (sin((gl_FogFragCoord - ticks) / 5.0) - 0.4) * redPulses;
         
         if(r > 0.0)
             gl_FragColor.r += r;
     }
-    
-    if(redshrooms > 0.0)
-    {
-        gl_FragColor.rgb = mix(gl_FragColor.rgb, getRotatedColor(gl_FragColor.rgb, mod(ticks + gl_FogFragCoord, 50.0) / 50.0), clamp(redshrooms * 1.5, 0.0, 1.0));
-    }
 
     if (uses2DShaders == 0)
     {
-        if(brownshrooms > 0.0)
-        {
-            gl_FragColor.rgb = mix(gl_FragColor.rgb, getRotatedColor(gl_FragColor.rgb, mod(ticks, 300.0) / 300.0), brownshrooms / 2.0);
-        }
+        if(slowColorRotation > 0.0)
+            gl_FragColor.rgb = mix(gl_FragColor.rgb, getRotatedColor(gl_FragColor.rgb, mod(ticks, 300.0) / 300.0), slowColorRotation);
+
+        if(quickColorRotation > 0.0)
+            gl_FragColor.rgb = mix(gl_FragColor.rgb, getRotatedColor(gl_FragColor.rgb, mod(ticks + gl_FogFragCoord, 50.0) / 50.0), quickColorRotation);
 
         if (colorIntensification != 0.0)
             gl_FragColor.rgb = mix(gl_FragColor.rgb, getIntensifiedColor(gl_FragColor.rgb), colorIntensification);
@@ -162,10 +161,10 @@ void main()
             gl_FragColor.rgb = mix(gl_FragColor.rgb, getDesaturatedColor(gl_FragColor.rgb), desaturation);    
     }
 
-    if(harmoniumColor.a > 0.0)
+    if(worldColorization.a > 0.0)
     {
         vec3 c1 = gl_FragColor.rgb;
-        vec3 c2 = harmoniumColor.rgb;
+        vec3 c2 = worldColorization.rgb;
         
         float distR = sqrt((c1.r - c2.r) * (c1.r - c2.r));
         float distG = sqrt((c1.g - c2.g) * (c1.g - c2.g));
@@ -191,14 +190,14 @@ void main()
         
         if (harmonizeStrength < 1.0)
         {
-            harmonizedColor = mix(harmoniumColor.rgb, vec3(0.5), harmonizeStrength); // Max of 1.0
+            harmonizedColor = mix(worldColorization.rgb, vec3(0.5), harmonizeStrength); // Max of 1.0
         }
         else
         {
-            harmonizedColor = mix(vec3(0.5), vec3(1.0) - harmoniumColor.rgb, (harmonizeStrength - 1.0) * 0.5); // Max of 2.0
+            harmonizedColor = mix(vec3(0.5), vec3(1.0) - worldColorization.rgb, (harmonizeStrength - 1.0) * 0.5); // Max of 2.0
         }
         
-        gl_FragColor.rgb = mix(gl_FragColor.rgb, harmonizedColor, harmoniumColor.a);
+        gl_FragColor.rgb = mix(gl_FragColor.rgb, harmonizedColor, worldColorization.a);
     }
 
     gl_FragColor = clamp(gl_FragColor, 0.0, 1.0);

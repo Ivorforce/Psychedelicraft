@@ -124,12 +124,6 @@ public class DrugSimple implements Drug
     }
 
     @Override
-    public void applyToShader(IvShaderInstance shaderInstance, Minecraft mc, DrugHelper drugHelper)
-    {
-
-    }
-
-    @Override
     public float heartbeatVolume()
     {
         return 0;
@@ -187,5 +181,71 @@ public class DrugSimple implements Drug
     public EntityPlayer.EnumStatus getSleepStatus()
     {
         return null;
+    }
+
+    @Override
+    public float bigWaveHallucinationStrength()
+    {
+        return 0;
+    }
+
+    @Override
+    public float smallWaveHallucinationStrength()
+    {
+        return 0;
+    }
+
+    @Override
+    public float redPulsesHallucinationStrength()
+    {
+        return 0;
+    }
+
+    @Override
+    public float quickColorRotationHallucinationStrength()
+    {
+        return 0;
+    }
+
+    @Override
+    public float surfaceFractalHallucinationStrength()
+    {
+        return 0;
+    }
+
+    @Override
+    public float slowColorRotationHallucinationStrength()
+    {
+        return 0;
+    }
+
+    @Override
+    public float wiggleWaveHallucinationStrength()
+    {
+        return 0;
+    }
+
+    @Override
+    public float distantWorldDeformationHallucinationStrength()
+    {
+        return 0;
+    }
+
+    @Override
+    public void applyWorldColorizationHallucinationStrength(float[] rgba)
+    {
+
+    }
+
+    @Override
+    public float getDesaturationHallucinationStrength()
+    {
+        return 0;
+    }
+
+    @Override
+    public float getSuperSaturationHallucinationStrength()
+    {
+        return 0;
     }
 }

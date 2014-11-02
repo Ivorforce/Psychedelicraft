@@ -33,8 +33,6 @@ public interface Drug
 
     boolean isLocked();
 
-    void applyToShader(IvShaderInstance shaderWorld, Minecraft mc, DrugHelper drugHelper);
-
     float heartbeatVolume();
 
     float heartbeatSpeed();
@@ -54,4 +52,26 @@ public interface Drug
     float soundVolumeModifier();
 
     EntityPlayer.EnumStatus getSleepStatus();
+
+    float bigWaveHallucinationStrength();
+
+    float smallWaveHallucinationStrength();
+
+    float redPulsesHallucinationStrength();
+
+    float quickColorRotationHallucinationStrength();
+
+    float surfaceFractalHallucinationStrength();
+
+    float slowColorRotationHallucinationStrength();
+
+    float wiggleWaveHallucinationStrength();
+
+    float distantWorldDeformationHallucinationStrength();
+
+    void applyWorldColorizationHallucinationStrength(float[] rgba);
+
+    float getDesaturationHallucinationStrength();
+
+    float getSuperSaturationHallucinationStrength();
 }
