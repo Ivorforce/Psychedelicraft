@@ -19,7 +19,11 @@ public class PSConfig
     public static final String CATEGORY_BALANCING = "balancing";
     public static final String CATEGORY_VISUAL = "visual";
 
-    public static boolean spawnRifts;
+    private static final int MINUTE = 20 * 60;
+
+    public static int randomTicksUntilRiftSpawn;
+    public static boolean enableHarmonium;
+    public static boolean enableRiftJars;
 
     public static boolean genJuniper;
     public static boolean genCannabis;
@@ -55,7 +59,10 @@ public class PSConfig
 
         if (configID == null || configID.equals(CATEGORY_BALANCING))
         {
-            spawnRifts = config.get(CATEGORY_BALANCING, "spawnRifts", true).getBoolean();
+            randomTicksUntilRiftSpawn = config.get(CATEGORY_BALANCING, "randomTicksUntilRiftSpawn", MINUTE * 180, "Approximate number of ticks until a rift spawns. Enter a negative number to disable.").getInt();
+
+            enableHarmonium = config.get(CATEGORY_BALANCING, "enableHarmonium", true).getBoolean();
+            enableRiftJars = config.get(CATEGORY_BALANCING, "enableRiftJars", true).getBoolean();
 
             genJuniper = config.get(CATEGORY_BALANCING, "generateJuniper", true).getBoolean();
             genCannabis = config.get(CATEGORY_BALANCING, "generateCannabis", true).getBoolean();
@@ -69,19 +76,18 @@ public class PSConfig
 
             farmerDrugDeals = config.get(CATEGORY_BALANCING, "farmerDrugDeals", true).getBoolean();
 
-            int minute = 20 * 60;
-            ticksPerWineFermentation = config.get(CATEGORY_BALANCING, "ticksPerWineFermentation", minute * 40, "Time until wine ferments to the next step.").getInt();
-            ticksPerWineMaturation = config.get(CATEGORY_BALANCING, "ticksPerWineMaturation", minute * 40, "Time until wine matures to the next step.").getInt();
-            ticksUntilWineAcetification = config.get(CATEGORY_BALANCING, "ticksUntilWineAcetification", minute * 30, "Time until wine turns to vinegar after it is 'perfect'. Enter a negative number to disable.").getInt();
+            ticksPerWineFermentation = config.get(CATEGORY_BALANCING, "ticksPerWineFermentation", MINUTE * 40, "Time until wine ferments to the next step.").getInt();
+            ticksPerWineMaturation = config.get(CATEGORY_BALANCING, "ticksPerWineMaturation", MINUTE * 40, "Time until wine matures to the next step.").getInt();
+            ticksUntilWineAcetification = config.get(CATEGORY_BALANCING, "ticksUntilWineAcetification", MINUTE * 30, "Time until wine turns to vinegar after it is 'perfect'. Enter a negative number to disable.").getInt();
 
-            ticksPerBeerFermentation = config.get(CATEGORY_BALANCING, "ticksPerBeerFermentation", minute * 30, "Time until beer wort ferments to the next step.").getInt();
-            ticksPerBeerMaturation = config.get(CATEGORY_BALANCING, "ticksPerBeerMaturation", minute * 60, "Time until beer matures to the next step.").getInt();
+            ticksPerBeerFermentation = config.get(CATEGORY_BALANCING, "ticksPerBeerFermentation", MINUTE * 30, "Time until beer wort ferments to the next step.").getInt();
+            ticksPerBeerMaturation = config.get(CATEGORY_BALANCING, "ticksPerBeerMaturation", MINUTE * 60, "Time until beer matures to the next step.").getInt();
 
-            ticksPerVodkaFermentation = config.get(CATEGORY_BALANCING, "ticksPerVodkaFermentation", minute * 30, "Time until vodka wort ferments to the next step.").getInt();
-            ticksPerVodkaDistillation = config.get(CATEGORY_BALANCING, "ticksPerVodkaDistillation", minute * 10, "Time until vodka distills to the next step.").getInt();
+            ticksPerVodkaFermentation = config.get(CATEGORY_BALANCING, "ticksPerVodkaFermentation", MINUTE * 30, "Time until vodka wort ferments to the next step.").getInt();
+            ticksPerVodkaDistillation = config.get(CATEGORY_BALANCING, "ticksPerVodkaDistillation", MINUTE * 10, "Time until vodka distills to the next step.").getInt();
 
-            ticksPerJeneverFermentation = config.get(CATEGORY_BALANCING, "ticksPerJeneverFermentation", minute * 30, "Time until jenever wort ferments to the next step.").getInt();
-            ticksPerJeneverDistillation = config.get(CATEGORY_BALANCING, "ticksPerJeneverDistillation", minute * 10, "Time until jenever distills to the next step.").getInt();
+            ticksPerJeneverFermentation = config.get(CATEGORY_BALANCING, "ticksPerJeneverFermentation", MINUTE * 30, "Time until jenever wort ferments to the next step.").getInt();
+            ticksPerJeneverDistillation = config.get(CATEGORY_BALANCING, "ticksPerJeneverDistillation", MINUTE * 10, "Time until jenever distills to the next step.").getInt();
         }
 
         Psychedelicraft.proxy.loadConfig(configID);

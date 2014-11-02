@@ -28,8 +28,6 @@ import net.minecraft.inventory.Container;
  */
 public class PSEventFMLHandler
 {
-    public static final int RIFT_TICK_SPAWN_CHANCE = 20 * 60 * 180;
-
     public void register()
     {
         FMLCommonHandler.instance().bus().register(this);
@@ -68,9 +66,9 @@ public class PSEventFMLHandler
             {
                 drugHelper.updateDrugEffects(event.player);
 
-                if (!event.player.getEntityWorld().isRemote && PSConfig.spawnRifts)
+                if (!event.player.getEntityWorld().isRemote && PSConfig.randomTicksUntilRiftSpawn > 0)
                 {
-                    if (event.player.getRNG().nextInt(RIFT_TICK_SPAWN_CHANCE) == 0)
+                    if (event.player.getRNG().nextInt(PSConfig.randomTicksUntilRiftSpawn) == 0)
                     {
                         spawnRiftAtPlayer(event.player);
                     }

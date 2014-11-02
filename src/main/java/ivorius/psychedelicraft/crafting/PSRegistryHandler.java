@@ -266,15 +266,16 @@ public class PSRegistryHandler
 
         harmonium = new ItemHarmonium().setUnlocalizedName("harmonium").setTextureName(modBase + "harmonium");
         GameRegistry.registerItem(harmonium, "harmonium", Psychedelicraft.MODID);
-        harmonium.setCreativeTab(Psychedelicraft.creativeTab);
+        if (PSConfig.enableHarmonium)
+            harmonium.setCreativeTab(Psychedelicraft.creativeTab);
 
         //----------------------------------------------------------Digital----------------------------------
 
         riftJar = new BlockRiftJar().setBlockName("riftJar").setBlockTextureName(modBase + "riftJar");
-        riftJar.setCreativeTab(Psychedelicraft.creativeTab);
         GameRegistry.registerBlock(riftJar, ItemRiftJar.class, "riftJar");
         GameRegistry.registerTileEntity(TileEntityRiftJar.class, "riftJar");
-        riftJar.setCreativeTab(Psychedelicraft.creativeTab);
+        if (PSConfig.enableRiftJars)
+            riftJar.setCreativeTab(Psychedelicraft.creativeTab);
 
         glitched = new BlockGlitched().setBlockName("glitched").setBlockTextureName(modBase + "glitched");
         GameRegistry.registerBlock(glitched, ItemBlock.class, "glitched");

@@ -8,6 +8,7 @@ package ivorius.psychedelicraft.crafting;
 import cpw.mods.fml.common.registry.GameRegistry;
 import ivorius.psychedelicraft.blocks.TileEntityDryingTable;
 import ivorius.psychedelicraft.blocks.TileEntityMashTub;
+import ivorius.psychedelicraft.config.PSConfig;
 import ivorius.psychedelicraft.entities.drugs.DrugInfluence;
 import ivorius.psychedelicraft.entities.drugs.DrugInfluenceHarmonium;
 import ivorius.psychedelicraft.items.ItemBong;
@@ -105,10 +106,13 @@ public class PSCrafting
         for (int i = 0; i < 16; i++)
         {
             pipe.addConsumable(new ItemSmokingPipe.ItemSmokingPipeConsumable(new ItemStack(harmonium, 1, 15 - i), new DrugInfluence[]{new DrugInfluenceHarmonium("Harmonium", 0, 0.04, 0.01, 0.65f, EntitySheep.fleeceColorTable[i])}, EntitySheep.fleeceColorTable[i]));
-            addShapelessRecipe(new ItemStack(harmonium, 1, i), new ItemStack(dye, 1, i), glowstone_dust, driedTobacco);
+
+            if (PSConfig.enableHarmonium)
+                addShapelessRecipe(new ItemStack(harmonium, 1, i), new ItemStack(dye, 1, i), glowstone_dust, driedTobacco);
         }
 
-        GameRegistry.addRecipe(new ItemStack(riftJar), "O-O", "GO ", "OIO", 'O', glass, '-', planks, 'G', gold_ingot, 'I', iron_ingot);
+        if (PSConfig.enableRiftJars)
+            GameRegistry.addRecipe(new ItemStack(riftJar), "O-O", "GO ", "OIO", 'O', glass, '-', planks, 'G', gold_ingot, 'I', iron_ingot);
 
 //        GameRegistry.addRecipe(new RecipeTransferDrink());
 

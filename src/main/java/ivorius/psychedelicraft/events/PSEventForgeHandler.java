@@ -38,18 +38,6 @@ public class PSEventForgeHandler
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    public static void spawnRiftAtPlayer(EntityPlayer player)
-    {
-        EntityRealityRift rift = new EntityRealityRift(player.getEntityWorld());
-
-        double xP = (player.getRNG().nextDouble() - 0.5) * 100.0;
-        double yP = (player.getRNG().nextDouble() - 0.5) * 100.0;
-        double zP = (player.getRNG().nextDouble() - 0.5) * 100.0;
-
-        rift.setPosition(player.posX + xP, player.posY + yP, player.posZ + zP);
-        player.getEntityWorld().spawnEntityInWorld(rift);
-    }
-
     @SubscribeEvent
     public void onServerChat(ServerChatEvent event)
     {
