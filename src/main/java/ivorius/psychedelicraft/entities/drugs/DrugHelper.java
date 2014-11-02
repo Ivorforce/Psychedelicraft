@@ -269,7 +269,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
                         speed += drug.breathSpeed();
                     delayUntilBreath = MathHelper.floor_float(30.0f / speed);
 
-                    entity.worldObj.playSound(entity.posX, entity.posY, entity.posZ, Psychedelicraft.modBase + "breath", breathVolume, speed + (lastBreathWasIn ? 0.15f : 0.0f), false);
+                    entity.worldObj.playSound(entity.posX, entity.posY, entity.posZ, Psychedelicraft.modBase + "breath", breathVolume, speed * 0.1f + 0.9f + (lastBreathWasIn ? 0.15f : 0.0f), false);
                 }
             }
 
@@ -360,7 +360,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
 
     public void readFromNBT(NBTTagCompound tagCompound, boolean fromPacket)
     {
-        NBTTagCompound drugData = tagCompound.hasKey("Drugs", Constants.NBT.TAG_COMPOUND) ? tagCompound.getCompoundTag("drugData")
+        NBTTagCompound drugData = tagCompound.hasKey("Drugs", Constants.NBT.TAG_COMPOUND) ? tagCompound.getCompoundTag("Drugs")
                 : tagCompound; // legacy
         for (String key : drugs.keySet())
         {
