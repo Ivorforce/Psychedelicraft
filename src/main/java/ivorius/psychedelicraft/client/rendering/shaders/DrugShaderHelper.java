@@ -104,28 +104,25 @@ public class DrugShaderHelper
         currentRenderPass = pass;
         currentRenderPassTicks = ticks;
 
-        if ("Default".equals(pass))
+        switch (pass)
         {
+            case "Default":
 //            IvRenderHelper.drawRectFullScreen(mc);
 //            GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
 
-            shaderInstance.shouldDoShadows = doShadows;
-            shaderInstance.shadowDepthTextureIndex = shaderInstanceShadows.depthBuffer.getDepthTextureIndex();
+                shaderInstance.shouldDoShadows = doShadows;
+                shaderInstance.shadowDepthTextureIndex = shaderInstanceShadows.depthBuffer.getDepthTextureIndex();
 
-            return useShader(partialTicks, ticks, shaderInstance);
-        }
-        else if ("Depth".equals(pass))
-        {
-            depthBuffer.setParentFB(getMCFBO());
-            depthBuffer.setSize(mc.displayWidth, mc.displayHeight);
-            depthBuffer.bind();
+                return useShader(partialTicks, ticks, shaderInstance);
+            case "Depth":
+                depthBuffer.setParentFB(getMCFBO());
+                depthBuffer.setSize(mc.displayWidth, mc.displayHeight);
+                depthBuffer.bind();
 
-            return useShader(partialTicks, ticks, shaderInstanceDepth);
-        }
-        else if ("Shadows".equals(pass))
-        {
-            Minecraft.getMinecraft().renderViewEntity = new EntityFakeSun(mc.renderViewEntity);
-            return useShader(partialTicks, ticks, shaderInstanceShadows);
+                return useShader(partialTicks, ticks, shaderInstanceDepth);
+            case "Shadows":
+                Minecraft.getMinecraft().renderViewEntity = new EntityFakeSun(mc.renderViewEntity);
+                return useShader(partialTicks, ticks, shaderInstanceShadows);
         }
 
         return true;
@@ -133,21 +130,21 @@ public class DrugShaderHelper
 
     public static void endRenderPass()
     {
-        if ("Default".equals(currentRenderPass))
+        switch (currentRenderPass)
         {
+            case "Default":
 
-        }
-        else if ("Depth".equals(currentRenderPass))
-        {
-            depthBuffer.unbind();
-        }
-        else if ("Shadows".equals(currentRenderPass))
-        {
-            Minecraft mc = Minecraft.getMinecraft();
-            if (mc.renderViewEntity instanceof EntityFakeSun)
-            {
-                mc.renderViewEntity = ((EntityFakeSun) mc.renderViewEntity).prevViewEntity;
-            }
+                break;
+            case "Depth":
+                depthBuffer.unbind();
+                break;
+            case "Shadows":
+                Minecraft mc = Minecraft.getMinecraft();
+                if (mc.renderViewEntity instanceof EntityFakeSun)
+                {
+                    mc.renderViewEntity = ((EntityFakeSun) mc.renderViewEntity).prevViewEntity;
+                }
+                break;
         }
 
         if (currentShader != null)

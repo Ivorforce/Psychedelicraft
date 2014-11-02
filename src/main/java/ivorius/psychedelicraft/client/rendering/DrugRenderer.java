@@ -24,6 +24,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 
 /**
@@ -110,6 +111,7 @@ public class DrugRenderer implements IDrugRenderer
         this.currentHeat = IvMathHelper.nearValue(currentHeat, newHeat, 0.01f, 0.01f);
     }
 
+    @ParametersAreNonnullByDefault
     @Override
     public void distortScreen(float par1, EntityLivingBase entity, int rendererUpdateCount, DrugHelper drugHelper)
     {

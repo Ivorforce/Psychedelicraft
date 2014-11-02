@@ -8,11 +8,13 @@ package ivorius.psychedelicraft.client.rendering;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.util.MathHelper;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 
 /**
  * Created by lukas on 25.02.14.
  */
+@ParametersAreNonnullByDefault
 public class DrugEffectInterpreter
 {
     public static float getSmoothVision(DrugHelper drugHelper)
