@@ -21,6 +21,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class BlockWineGrapeLattice extends Block implements IGrowable
@@ -115,14 +116,23 @@ public class BlockWineGrapeLattice extends Block implements IGrowable
     }
 
     @Override
+    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
+    {
+        ArrayList<ItemStack> drops = super.getDrops(world, x, y, z, metadata, fortune);
+
+        if (metadata >> 1 == 4)
+            drops.add(new ItemStack(PSItems.wineGrapes, world.rand.nextInt(3) + 1));
+
+        return drops;
+    }
+
+    @Override
     public void harvestBlock(World world, EntityPlayer entityplayer, int x, int y, int z, int meta)
     {
         if (!world.isRemote && meta >> 1 > 0 && entityplayer.getCurrentEquippedItem() != null && entityplayer.getCurrentEquippedItem().getItem() == Items.shears)
         {
             if (meta >> 1 == 4)
-            {
                 dropBlockAsItem(world, x, y, z, new ItemStack(PSItems.wineGrapes, world.rand.nextInt(3) + 1));
-            }
 
             world.setBlock(x, y, z, this, (meta & 1 | 2 << 1), 3);
 

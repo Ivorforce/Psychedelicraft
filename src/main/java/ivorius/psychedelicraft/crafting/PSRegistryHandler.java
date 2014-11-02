@@ -26,6 +26,7 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemLeaves;
 import net.minecraft.item.ItemSeeds;
 import net.minecraftforge.fluids.FluidRegistry;
 
@@ -218,7 +219,7 @@ public class PSRegistryHandler
 
         psycheLeaves = new BlockPsycheLeaves();
         psycheLeaves.setCreativeTab(Psychedelicraft.creativeTab);
-        PSRegistryHandler.registerBlockDefault(psycheLeaves, "psycheLeaves");
+        PSRegistryHandler.registerBlockDefault(psycheLeaves, ItemLeavesForge.class, "psycheLeaves");
 
         psycheLog = new BlockPsycheLog().setHardness(1.0F);
         psycheLog.setCreativeTab(Psychedelicraft.creativeTab);
