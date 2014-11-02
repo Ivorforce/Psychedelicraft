@@ -5,6 +5,7 @@
 
 package ivorius.psychedelicraft.blocks;
 
+import ivorius.psychedelicraft.items.PSItems;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -14,6 +15,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class BlockPeyote extends BlockBush implements IGrowable, ITileEntityProvider
@@ -39,15 +41,14 @@ public class BlockPeyote extends BlockBush implements IGrowable, ITileEntityProv
     }
 
     @Override
-    public void dropBlockAsItemWithChance(World par1World, int x, int y, int z, int meta, float par6, int par7)
+    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int meta, int fortune)
     {
-        if (!par1World.isRemote)
-        {
-            for (int i = 0; i < meta + 1; i++)
-            {
-                this.dropBlockAsItem(par1World, x, y, z, new ItemStack(PSBlocks.peyote, 1, 0));
-            }
-        }
+        ArrayList<ItemStack> drops = new ArrayList<>();
+
+        for (int i = 0; i < meta + 1; i++)
+            drops.add(new ItemStack(PSBlocks.peyote, 1, 0));
+
+        return drops;
     }
 
     public void growStep(World world, Random random, int x, int y, int z, boolean bonemeal)

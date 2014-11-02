@@ -17,6 +17,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class BlockTobaccoPlant extends Block implements IGrowable, IvTilledFieldPlant
@@ -35,9 +36,6 @@ public class BlockTobaccoPlant extends Block implements IGrowable, IvTilledField
         setStepSound(Block.soundTypeGrass);
     }
 
-    /**
-     * Ticks the block if it's been scheduled
-     */
     @Override
     public void updateTick(World world, int x, int y, int z, Random random)
     {
@@ -55,16 +53,11 @@ public class BlockTobaccoPlant extends Block implements IGrowable, IvTilledField
     public int getMaxMetadata(int position)
     {
         if (position > 1)
-        {
             return -1;
-        }
 
         return (7 << 1) | (position == 0 ? 0 : 1);
     }
 
-    /**
-     * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
-     */
     @Override
     public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
     {
@@ -72,19 +65,12 @@ public class BlockTobaccoPlant extends Block implements IGrowable, IvTilledField
         return var5 == this || var5 == Blocks.grass || var5 == Blocks.dirt || var5 == Blocks.farmland;
     }
 
-    /**
-     * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
-     * their own) Args: x, y, z, neighbor block
-     */
     @Override
     public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, Block par5)
     {
         this.checkBlockCoordValid(par1World, par2, par3, par4);
     }
 
-    /**
-     * Checks if current block pos is valid, if not, breaks the block as dropable item. Used for reed and cactus.
-     */
     protected final void checkBlockCoordValid(World par1World, int par2, int par3, int par4)
     {
         if (!this.canBlockStay(par1World, par2, par3, par4))
@@ -94,47 +80,30 @@ public class BlockTobaccoPlant extends Block implements IGrowable, IvTilledField
         }
     }
 
-    /**
-     * Can this block stay at this position.  Similar to canPlaceBlockAt except gets checked often with plants.
-     */
     @Override
     public boolean canBlockStay(World par1World, int par2, int par3, int par4)
     {
         return this.canPlaceBlockAt(par1World, par2, par3, par4);
     }
 
-    /**
-     * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
-     * cleared to be reused)
-     */
     @Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
     {
         return null;
     }
 
-    /**
-     * Is this block (a) opaque and (b) a full 1m cube?  This determines whether or not to render the shared face of two
-     * adjacent blocks and also whether the player can attach torches, redstone wire, etc to this block.
-     */
     @Override
     public boolean isOpaqueCube()
     {
         return false;
     }
 
-    /**
-     * If this block doesn't render as an ordinary block it will return False (examples: signs, buttons, stairs, etc)
-     */
     @Override
     public boolean renderAsNormalBlock()
     {
         return false;
     }
 
-    /**
-     * The type of render function that is called for this block
-     */
     @Override
     public int getRenderType()
     {
@@ -142,22 +111,19 @@ public class BlockTobaccoPlant extends Block implements IGrowable, IvTilledField
     }
 
     @Override
-    public void dropBlockAsItemWithChance(World world, int x, int y, int z, int meta, float par6, int par7)
+    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int meta, int fortune)
     {
-        if (!world.isRemote)
-        {
-            int countL = world.rand.nextInt(meta / 3 + 1) + meta / 5;
-            for (int i = 0; i < countL; i++)
-            {
-                this.dropBlockAsItem(world, x, y, z, new ItemStack(PSItems.tobaccoLeaf, 1, 0));
-            }
+        ArrayList<ItemStack> drops = new ArrayList<>();
 
-            int countS = meta / 8;
-            for (int i = 0; i < countS; i++)
-            {
-                this.dropBlockAsItem(world, x, y, z, new ItemStack(PSItems.tobaccoSeeds, 1, 0));
-            }
-        }
+        int countL = world.rand.nextInt(meta / 3 + 1) + meta / 5;
+        for (int i = 0; i < countL; i++)
+            drops.add(new ItemStack(PSItems.tobaccoLeaf, 1, 0));
+
+        int countS = meta / 8;
+        for (int i = 0; i < countS; i++)
+            drops.add(new ItemStack(PSItems.tobaccoSeeds, 1, 0));
+
+        return drops;
     }
 
     @Override

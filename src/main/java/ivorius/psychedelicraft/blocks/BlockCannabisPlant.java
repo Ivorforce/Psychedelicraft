@@ -17,6 +17,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class BlockCannabisPlant extends Block implements IGrowable, IvTilledFieldPlant
@@ -34,9 +35,6 @@ public class BlockCannabisPlant extends Block implements IGrowable, IvTilledFiel
         setStepSound(Block.soundTypeGrass);
     }
 
-    /**
-     * Ticks the block if it's been scheduled
-     */
     @Override
     public void updateTick(World world, int x, int y, int z, Random random)
     {
@@ -63,9 +61,6 @@ public class BlockCannabisPlant extends Block implements IGrowable, IvTilledFiel
         return (position == 2) ? 11 : 15;
     }
 
-    /**
-     * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
-     */
     @Override
     public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
     {
@@ -79,9 +74,6 @@ public class BlockCannabisPlant extends Block implements IGrowable, IvTilledFiel
         this.checkBlockCoordValid(par1World, par2, par3, par4);
     }
 
-    /**
-     * Checks if current block pos is valid, if not, breaks the block as dropable item. Used for reed and cactus.
-     */
     protected final void checkBlockCoordValid(World par1World, int par2, int par3, int par4)
     {
         if (!this.canBlockStay(par1World, par2, par3, par4))
@@ -91,47 +83,30 @@ public class BlockCannabisPlant extends Block implements IGrowable, IvTilledFiel
         }
     }
 
-    /**
-     * Can this block stay at this position.  Similar to canPlaceBlockAt except gets checked often with plants.
-     */
     @Override
     public boolean canBlockStay(World par1World, int par2, int par3, int par4)
     {
         return this.canPlaceBlockAt(par1World, par2, par3, par4);
     }
 
-    /**
-     * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
-     * cleared to be reused)
-     */
     @Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
     {
         return null;
     }
 
-    /**
-     * Is this block (a) opaque and (b) a full 1m cube?  This determines whether or not to render the shared face of two
-     * adjacent blocks and also whether the player can attach torches, redstone wire, etc to this block.
-     */
     @Override
     public boolean isOpaqueCube()
     {
         return false;
     }
 
-    /**
-     * If this block doesn't render as an ordinary block it will return False (examples: signs, buttons, stairs, etc)
-     */
     @Override
     public boolean renderAsNormalBlock()
     {
         return false;
     }
 
-    /**
-     * The type of render function that is called for this block
-     */
     @Override
     public int getRenderType()
     {
@@ -139,28 +114,23 @@ public class BlockCannabisPlant extends Block implements IGrowable, IvTilledFiel
     }
 
     @Override
-    public void dropBlockAsItemWithChance(World world, int x, int y, int z, int meta, float par6, int par7)
+    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int meta, int fortune)
     {
-        if (!world.isRemote)
-        {
-            int countB = world.rand.nextInt(meta / 6 + 1);
-            for (int i = 0; i < countB; i++)
-            {
-                this.dropBlockAsItem(world, x, y, z, new ItemStack(PSItems.cannabisBuds, 1, 0));
-            }
+        ArrayList<ItemStack> drops = new ArrayList<>();
 
-            int countL = world.rand.nextInt(meta / 5 + 1) + meta / 6;
-            for (int i = 0; i < countL; i++)
-            {
-                this.dropBlockAsItem(world, x, y, z, new ItemStack(PSItems.cannabisLeaf, 1, 0));
-            }
+        int countB = world.rand.nextInt(meta / 6 + 1);
+        for (int i = 0; i < countB; i++)
+            drops.add(new ItemStack(PSItems.cannabisBuds, 1, 0));
 
-            int countS = meta / 8;
-            for (int i = 0; i < countS; i++)
-            {
-                this.dropBlockAsItem(world, x, y, z, new ItemStack(PSItems.cannabisSeeds, 1, 0));
-            }
-        }
+        int countL = world.rand.nextInt(meta / 5 + 1) + meta / 6;
+        for (int i = 0; i < countL; i++)
+            drops.add(new ItemStack(PSItems.cannabisLeaf, 1, 0));
+
+        int countS = meta / 8;
+        for (int i = 0; i < countS; i++)
+            drops.add(new ItemStack(PSItems.cannabisSeeds, 1, 0));
+
+        return drops;
     }
 
     @Override
@@ -174,26 +144,26 @@ public class BlockCannabisPlant extends Block implements IGrowable, IvTilledFiel
     }
 
     @Override
-    public IIcon getIcon(int par1, int par2)
+    public IIcon getIcon(int side, int meta)
     {
-        if (par2 < 4)
+        if (meta < 4)
         {
-            return super.getIcon(par1, par2);
+            return super.getIcon(side, meta);
         }
-        else if (par2 < 8)
+        else if (meta < 8)
         {
             return textures[0];
         }
-        else if (par2 < 12)
+        else if (meta < 12)
         {
             return textures[1];
         }
-        else if (par2 < 16)
+        else if (meta < 16)
         {
             return textures[2];
         }
 
-        return super.getIcon(par1, par2);
+        return super.getIcon(side, meta);
     }
 
     public void growStep(World par1World, Random random, int x, int y, int z, boolean bonemeal)

@@ -17,6 +17,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class BlockCoffea extends Block implements IGrowable, IvTilledFieldPlant
@@ -114,27 +115,24 @@ public class BlockCoffea extends Block implements IGrowable, IvTilledFieldPlant
     }
 
     @Override
-    public void dropBlockAsItemWithChance(World world, int x, int y, int z, int meta, float par6, int par7)
+    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int meta, int fortune)
     {
-        if (!world.isRemote)
+        ArrayList<ItemStack> drops = new ArrayList<>();
+
+        int stage = (meta >> 1);
+        boolean above = (meta & 1) == 1;
+
+        if (above)
+            stage += 4;
+
+        if (stage == 6 || stage == 7)
         {
-            int stage = (meta >> 1);
-            boolean above = (meta & 1) == 1;
-
-            if (above)
-            {
-                stage += 4;
-            }
-
-            if (stage == 6 || stage == 7)
-            {
-                int countL = (world.rand.nextInt(3) + 1) * (stage - 5);
-                for (int i = 0; i < countL; i++)
-                {
-                    this.dropBlockAsItem(world, x, y, z, new ItemStack(PSItems.coffeaCherries, 1, 0));
-                }
-            }
+            int countL = (world.rand.nextInt(3) + 1) * (stage - 5);
+            for (int i = 0; i < countL; i++)
+                drops.add(new ItemStack(PSItems.coffeaCherries, 1, 0));
         }
+
+        return drops;
     }
 
     @Override
