@@ -141,7 +141,7 @@ public class Psychedelicraft
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-        PSOutboundCommuncationHandler.init();
+        PSOutboundCommunicationHandler.init();
     }
 
     @EventHandler

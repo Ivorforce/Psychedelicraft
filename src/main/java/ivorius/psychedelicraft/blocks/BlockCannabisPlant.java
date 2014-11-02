@@ -202,15 +202,12 @@ public class BlockCannabisPlant extends Block implements IGrowable, IvTilledFiel
 
         for (int i = 0; i < number; i++)
         {
-            int var6;
-
-            for (var6 = 1; par1World.getBlock(x, y - var6, z) == this; ++var6)
-            {
-
-            }
+            int plantSize = 1;
+            while (par1World.getBlock(x, y - plantSize, z) == this)
+                ++plantSize;
 
             int m = par1World.getBlockMetadata(x, y, z);
-            boolean freeOver = par1World.isAirBlock(x, y + 1, z) && var6 < 3;
+            boolean freeOver = par1World.isAirBlock(x, y + 1, z) && plantSize < 3;
 
             if ((m < 15 && freeOver) || (!freeOver && m < 11))
             {
