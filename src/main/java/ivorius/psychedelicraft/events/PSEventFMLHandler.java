@@ -64,19 +64,22 @@ public class PSEventFMLHandler
         {
             DrugHelper drugHelper = DrugHelper.getDrugHelper(event.player);
 
-            drugHelper.updateDrugEffects(event.player);
-
-            if (!event.player.getEntityWorld().isRemote && PSConfig.spawnRifts)
+            if (drugHelper != null)
             {
-                if (event.player.getRNG().nextInt(RIFT_TICK_SPAWN_CHANCE) == 0)
-                {
-                    spawnRiftAtPlayer(event.player);
-                }
-            }
+                drugHelper.updateDrugEffects(event.player);
 
-            Container container = event.player.openContainer;
-            if (container instanceof UpdatableContainer)
-                ((UpdatableContainer) container).updateAsCustomContainer();
+                if (!event.player.getEntityWorld().isRemote && PSConfig.spawnRifts)
+                {
+                    if (event.player.getRNG().nextInt(RIFT_TICK_SPAWN_CHANCE) == 0)
+                    {
+                        spawnRiftAtPlayer(event.player);
+                    }
+                }
+
+                Container container = event.player.openContainer;
+                if (container instanceof UpdatableContainer)
+                    ((UpdatableContainer) container).updateAsCustomContainer();
+            }
         }
     }
 

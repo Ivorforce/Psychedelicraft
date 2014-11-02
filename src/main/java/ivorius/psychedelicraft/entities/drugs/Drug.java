@@ -33,7 +33,7 @@ public interface Drug
 
     boolean isLocked();
 
-    void applyToShader(IvShaderInstance shaderWorld, String drugID, Minecraft mc, DrugHelper drugHelper);
+    void applyToShader(IvShaderInstance shaderWorld, Minecraft mc, DrugHelper drugHelper);
 
     float heartbeatVolume();
 

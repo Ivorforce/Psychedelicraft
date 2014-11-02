@@ -22,6 +22,8 @@ public class ItemHashMuffin extends ItemFood
     @Override
     protected void onFoodEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        DrugHelper.getDrugHelper(par3EntityPlayer).addToDrug(new DrugInfluence("Cannabis", 60, 0.004, 0.002, 0.7f));
+        DrugHelper drugHelper = DrugHelper.getDrugHelper(par3EntityPlayer);
+        if (drugHelper != null)
+            drugHelper.addToDrug(new DrugInfluence("Cannabis", 60, 0.004, 0.002, 0.7f));
     }
 }

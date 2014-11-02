@@ -101,16 +101,16 @@ public class BlockMashTub extends IvBlockMultiblock
         if (tileEntity instanceof TileEntityMashTub)
         {
             float size = 15.0f / 16.0f;
-            float borderWidth = 1.0f / 16.0f;
+            float borderSize = 1.0f / 16.0f;
             float height = 16.0f / 16.0f;
 
-            addIntersectingCollisionBox(-size - borderWidth, -.5f, -size - borderWidth, size * 2 + borderWidth * 2, height, borderWidth, tileEntity, entityBB, list, x, y, z);
-            addIntersectingCollisionBox(-size - borderWidth, -.5f, size, size * 2 + borderWidth * 2, height, borderWidth, tileEntity, entityBB, list, x, y, z);
+            addIntersectingCollisionBox(-size - borderSize, -.5f, -size - borderSize, size * 2 + borderSize * 2, height, borderSize, tileEntity, entityBB, list, x, y, z);
+            addIntersectingCollisionBox(-size - borderSize, -.5f, size, size * 2 + borderSize * 2, height, borderSize, tileEntity, entityBB, list, x, y, z);
 
-            addIntersectingCollisionBox(-size - borderWidth, -.5f, -size - borderWidth, borderWidth, height, size * 2 + borderWidth * 2, tileEntity, entityBB, list, x, y, z);
-            addIntersectingCollisionBox(size, -.5f, -size - borderWidth, borderWidth, height, size * 2 + borderWidth * 2, tileEntity, entityBB, list, x, y, z);
+            addIntersectingCollisionBox(-size - borderSize, -.5f, -size - borderSize, borderSize, height, size * 2 + borderSize * 2, tileEntity, entityBB, list, x, y, z);
+            addIntersectingCollisionBox(size, -.5f, -size - borderSize, borderSize, height, size * 2 + borderSize * 2, tileEntity, entityBB, list, x, y, z);
 
-            addIntersectingCollisionBox(-size - borderWidth, -.5f, -size - borderWidth, size * 2 + borderWidth * 2, borderWidth, size * 2 + borderWidth * 2, tileEntity, entityBB, list, x, y, z);
+            addIntersectingCollisionBox(-size - borderSize, -.5f, -size - borderSize, size * 2 + borderSize * 2, borderSize, size * 2 + borderSize * 2, tileEntity, entityBB, list, x, y, z);
         }
     }
 

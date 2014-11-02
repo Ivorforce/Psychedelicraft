@@ -30,13 +30,15 @@ public class ItemEdibleDrug extends Item
     }
 
     @Override
-    public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onEaten(ItemStack itemStack, World world, EntityPlayer player)
     {
-        DrugHelper.getDrugHelper(par3EntityPlayer).addToDrug(influence.clone());
+        DrugHelper drugHelper = DrugHelper.getDrugHelper(player);
+        if (drugHelper != null)
+            drugHelper.addToDrug(influence.clone());
 
-        par1ItemStack.stackSize--;
+        itemStack.stackSize--;
 
-        return super.onEaten(par1ItemStack, par2World, par3EntityPlayer);
+        return super.onEaten(itemStack, world, player);
     }
 
     @Override

@@ -28,6 +28,7 @@ import net.minecraftforge.common.IExtendedEntityProperties;
 import net.minecraftforge.common.util.Constants;
 import org.apache.commons.lang3.tuple.Pair;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandler
@@ -68,6 +69,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
             drugs.put(pair.getKey(), pair.getValue());
     }
 
+    @Nullable
     public static DrugHelper getDrugHelper(Entity entity)
     {
         if (entity != null)
@@ -93,6 +95,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
         drugs.put(drugName, drug);
     }
 
+    @Nullable
     public Drug getDrug(String drugName)
     {
         return drugs.get(drugName);

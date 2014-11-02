@@ -170,7 +170,7 @@ public class ContainerFluidHandler extends Container implements UpdatableContain
 
             if (itemstack1.stackSize == 0)
             {
-                slot.putStack((ItemStack) null);
+                slot.putStack(null);
             }
             else
             {

@@ -51,21 +51,20 @@ public class ItemSmokeable extends Item
     @Override
     public ItemStack onEaten(ItemStack stack, World world, EntityPlayer player)
     {
-        for (DrugInfluence drugInfluence : drugEffects)
+        DrugHelper drugHelper = DrugHelper.getDrugHelper(player);
+
+        if (drugHelper != null)
         {
-            DrugHelper.getDrugHelper(player).addToDrug(drugInfluence.clone());
+            for (DrugInfluence drugInfluence : drugEffects)
+                drugHelper.addToDrug(drugInfluence.clone());
+
+            drugHelper.startBreathingSmoke(10 + world.rand.nextInt(10), smokeColor);
         }
 
         if (stack.getItemDamage() < textures.length - 1)
-        {
             stack.setItemDamage(stack.getItemDamage() + 1);
-        }
         else
-        {
             stack.stackSize--;
-        }
-
-        DrugHelper.getDrugHelper(player).startBreathingSmoke(10 + world.rand.nextInt(10), smokeColor);
 
         return super.onEaten(stack, world, player);
     }

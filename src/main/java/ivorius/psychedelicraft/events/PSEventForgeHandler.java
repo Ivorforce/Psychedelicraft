@@ -93,11 +93,12 @@ public class PSEventForgeHandler
     {
         DrugHelper drugHelper = DrugHelper.getDrugHelper(event.entityLiving);
 
-        EntityPlayer.EnumStatus status = drugHelper.getDrugSleepStatus();
-
-        if (status != null)
+        if (drugHelper != null)
         {
-            event.result = status;
+            EntityPlayer.EnumStatus status = drugHelper.getDrugSleepStatus();
+
+            if (status != null)
+                event.result = status;
         }
     }
 

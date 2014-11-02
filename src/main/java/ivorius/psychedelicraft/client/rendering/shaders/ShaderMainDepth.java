@@ -6,6 +6,7 @@
 package ivorius.psychedelicraft.client.rendering.shaders;
 
 import ivorius.ivtoolkit.rendering.IvShaderInstance3D;
+import ivorius.psychedelicraft.entities.drugs.Drug;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
@@ -41,9 +42,10 @@ public class ShaderMainDepth extends IvShaderInstance3D implements ShaderWorld
             setUseScreenTexCoords(false);
             setPixelSize(1.0f / mc.displayWidth, 1.0f / mc.displayHeight);
 
-            for (String key : drugHelper.getAllVisibleDrugNames())
+            if (drugHelper != null)
             {
-                drugHelper.getDrug(key).applyToShader(this, key, mc, drugHelper);
+                for (Drug drug : drugHelper.getAllDrugs())
+                    drug.applyToShader(this, mc, drugHelper);
             }
 
             return true;

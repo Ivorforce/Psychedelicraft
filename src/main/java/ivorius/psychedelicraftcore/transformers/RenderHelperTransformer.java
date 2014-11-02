@@ -30,21 +30,24 @@ public class RenderHelperTransformer extends IvClassTransformerClass
     @Override
     public boolean transformMethod(String className, String methodID, MethodNode methodNode, boolean obf)
     {
-        if (methodID.equals("disableStandardItemLighting"))
+        switch (methodID)
         {
-            InsnList list = new InsnList();
-            list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "disableStandardItemLighting", getMethodDescriptor(Type.VOID_TYPE), false));
-            methodNode.instructions.insert(methodNode.instructions.get(0), list);
+            case "disableStandardItemLighting":
+            {
+                InsnList list = new InsnList();
+                list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "disableStandardItemLighting", getMethodDescriptor(Type.VOID_TYPE), false));
+                methodNode.instructions.insert(methodNode.instructions.get(0), list);
 
-            return true;
-        }
-        if (methodID.equals("enableStandardItemLighting"))
-        {
-            InsnList list = new InsnList();
-            list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "enableStandardItemLighting", getMethodDescriptor(Type.VOID_TYPE), false));
-            methodNode.instructions.insert(methodNode.instructions.get(0), list);
+                return true;
+            }
+            case "enableStandardItemLighting":
+            {
+                InsnList list = new InsnList();
+                list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "enableStandardItemLighting", getMethodDescriptor(Type.VOID_TYPE), false));
+                methodNode.instructions.insert(methodNode.instructions.get(0), list);
 
-            return true;
+                return true;
+            }
         }
 
         return false;

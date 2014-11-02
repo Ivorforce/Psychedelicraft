@@ -41,7 +41,7 @@ public class CommandPsyche extends CommandBase
 
                 if (player == null)
                 {
-                    throw new WrongUsageException(getCommandUsage(par1ICommandSender), new Object[0]);
+                    throw new WrongUsageException(getCommandUsage(par1ICommandSender));
                 }
                 else
                 {
@@ -55,7 +55,7 @@ public class CommandPsyche extends CommandBase
         }
         else
         {
-            throw new WrongUsageException(getCommandUsage(par1ICommandSender), new Object[0]);
+            throw new WrongUsageException(getCommandUsage(par1ICommandSender));
         }
     }
 

@@ -5,6 +5,7 @@
 
 package ivorius.psychedelicraft.commands;
 
+import ivorius.psychedelicraft.entities.drugs.Drug;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -45,7 +46,8 @@ public class CommandDrug extends CommandBase
         if (drugHelper == null)
             return;
 
-        if (drugHelper.doesDrugExist(drugName))
+        Drug drug = drugHelper.getDrug(drugName);
+        if (drug != null)
         {
             String method = arguments[2];
             int lock;
@@ -59,7 +61,7 @@ public class CommandDrug extends CommandBase
                 throw new WrongUsageException(getCommandUsage(par1ICommandSender));
 
             if (lock != 0)
-                drugHelper.getDrug(drugName).setLocked(lock == 1);
+                drug.setLocked(lock == 1);
 
             if (arguments.length >= 4)
             {

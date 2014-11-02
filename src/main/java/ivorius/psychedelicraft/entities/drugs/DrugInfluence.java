@@ -115,11 +115,7 @@ public class DrugInfluence
         {
             inf = getClass().newInstance();
         }
-        catch (InstantiationException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IllegalAccessException e)
+        catch (InstantiationException | IllegalAccessException e)
         {
             e.printStackTrace();
         }

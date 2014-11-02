@@ -20,7 +20,7 @@ public class DrugPeyote extends DrugSimple
     }
 
     @Override
-    public void applyToShader(IvShaderInstance shaderInstance, String key, Minecraft mc, DrugHelper drugHelper)
+    public void applyToShader(IvShaderInstance shaderInstance, Minecraft mc, DrugHelper drugHelper)
     {
         shaderInstance.setUniformFloats("peyote", (float) getActiveValue());
     }

@@ -39,7 +39,7 @@ public class TileEntityRiftJar extends TileEntity implements PartialUpdateHandle
     public boolean suckingRifts = true;
     public float fractionHandleUp;
 
-    public ArrayList<JarRiftConnection> riftConnections = new ArrayList<JarRiftConnection>();
+    public ArrayList<JarRiftConnection> riftConnections = new ArrayList<>();
 
     @Override
     public void updateEntity()

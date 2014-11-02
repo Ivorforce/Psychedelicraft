@@ -36,6 +36,7 @@ public class DrugFactoryPsychedelicraft implements DrugFactory
 
     public void addDrug(String key, Drug drug, List<Pair<String, Drug>> drugs)
     {
+        //noinspection Convert2Diamond
         drugs.add(new ImmutablePair<String, Drug>(key, drug));
     }
 }

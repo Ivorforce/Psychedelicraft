@@ -89,16 +89,14 @@ public class RecipeFillDrink implements IRecipe
                 if (itemstack != null)
                 {
                     boolean flag = false;
-                    Iterator iterator = arraylist.iterator();
 
-                    while (iterator.hasNext())
+                    for (Iterator<ItemStack> iterator = arraylist.iterator(); iterator.hasNext(); )
                     {
-                        ItemStack itemstack1 = (ItemStack) iterator.next();
-
+                        ItemStack itemstack1 = iterator.next();
                         if (itemstack.getItem() == itemstack1.getItem() && (itemstack1.getItemDamage() == 32767 || itemstack.getItemDamage() == itemstack1.getItemDamage()))
                         {
                             flag = true;
-                            arraylist.remove(itemstack1);
+                            iterator.remove();
                             break;
                         }
                     }

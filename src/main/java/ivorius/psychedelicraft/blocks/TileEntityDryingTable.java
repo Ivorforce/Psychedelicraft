@@ -36,7 +36,7 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
 
     public int ticksAlive;
 
-    public static Map<Item, ItemStack> dryingList = new HashMap<Item, ItemStack>();
+    public static Map<Item, ItemStack> dryingList = new HashMap<>();
 
     public static void addDryingResult(Item itemID, ItemStack result)
     {

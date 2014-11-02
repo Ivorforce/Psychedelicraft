@@ -32,26 +32,29 @@ public class OpenGLHelperTransformer extends IvClassTransformerClass
     @Override
     public boolean transformMethod(String className, String methodID, MethodNode methodNode, boolean obf)
     {
-        if (methodID.equals("glBlendFunc"))
+        switch (methodID)
         {
-            InsnList list = new InsnList();
-            list.add(new VarInsnNode(ILOAD, 0));
-            list.add(new VarInsnNode(ILOAD, 1));
-            list.add(new VarInsnNode(ILOAD, 2));
-            list.add(new VarInsnNode(ILOAD, 3));
-            list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLBlendFunc", getMethodDescriptor(Type.VOID_TYPE, Type.INT_TYPE, Type.INT_TYPE, Type.INT_TYPE, Type.INT_TYPE), false));
-            methodNode.instructions.insert(methodNode.instructions.get(0), list);
+            case "glBlendFunc":
+            {
+                InsnList list = new InsnList();
+                list.add(new VarInsnNode(ILOAD, 0));
+                list.add(new VarInsnNode(ILOAD, 1));
+                list.add(new VarInsnNode(ILOAD, 2));
+                list.add(new VarInsnNode(ILOAD, 3));
+                list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLBlendFunc", getMethodDescriptor(Type.VOID_TYPE, Type.INT_TYPE, Type.INT_TYPE, Type.INT_TYPE, Type.INT_TYPE), false));
+                methodNode.instructions.insert(methodNode.instructions.get(0), list);
 
-            return true;
-        }
-        else if (methodID.equals("setActiveTexture"))
-        {
-            InsnList list = new InsnList();
-            list.add(new VarInsnNode(ILOAD, 0));
-            list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLActiveTexture", getMethodDescriptor(Type.VOID_TYPE, Type.INT_TYPE), false));
-            methodNode.instructions.insert(methodNode.instructions.get(0), list);
+                return true;
+            }
+            case "setActiveTexture":
+            {
+                InsnList list = new InsnList();
+                list.add(new VarInsnNode(ILOAD, 0));
+                list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLActiveTexture", getMethodDescriptor(Type.VOID_TYPE, Type.INT_TYPE), false));
+                methodNode.instructions.insert(methodNode.instructions.get(0), list);
 
-            return true;
+                return true;
+            }
         }
 
         return false;

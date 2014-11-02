@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class ItemSmokingPipe extends Item
 {
-    public ArrayList<ItemSmokingPipeConsumable> consumables = new ArrayList<ItemSmokingPipeConsumable>();
+    public ArrayList<ItemSmokingPipeConsumable> consumables = new ArrayList<>();
 
     public ItemSmokingPipe()
     {

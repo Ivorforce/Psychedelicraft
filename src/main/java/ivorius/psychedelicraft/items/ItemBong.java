@@ -23,7 +23,7 @@ import java.util.ArrayList;
  */
 public class ItemBong extends Item
 {
-    public ArrayList<ItemBongConsumable> consumables = new ArrayList<ItemBongConsumable>();
+    public ArrayList<ItemBongConsumable> consumables = new ArrayList<>();
 
     private IIcon empty;
 

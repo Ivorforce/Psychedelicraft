@@ -179,7 +179,7 @@ public class GuiDryingTable extends GuiContainer
 
                 if (var4.stackSize == 0)
                 {
-                    var3.putStack((ItemStack) null);
+                    var3.putStack(null);
                 }
                 else
                 {

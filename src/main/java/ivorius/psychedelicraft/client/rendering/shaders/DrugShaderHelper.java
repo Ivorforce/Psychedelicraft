@@ -26,12 +26,12 @@ import java.util.List;
 public class DrugShaderHelper
 {
     public static ShaderWorld currentShader;
-    public static ArrayList<ShaderWorld> worldShaders = new ArrayList<ShaderWorld>();
+    public static ArrayList<ShaderWorld> worldShaders = new ArrayList<>();
     public static ShaderMain shaderInstance;
     public static ShaderMainDepth shaderInstanceDepth;
     public static ShaderShadows shaderInstanceShadows;
 
-    public static List<IEffectWrapper> effectWrappers = new ArrayList<IEffectWrapper>();
+    public static List<IEffectWrapper> effectWrappers = new ArrayList<>();
 
     public static IvOpenGLTexturePingPong realtimePingPong;
 
@@ -62,7 +62,7 @@ public class DrugShaderHelper
 
     public static List<String> getRenderPasses(float partialTicks)
     {
-        List<String> passes = new ArrayList<String>();
+        @SuppressWarnings("Convert2Diamond") List<String> passes = new ArrayList<String>();
 
         passes.add("Default");
 

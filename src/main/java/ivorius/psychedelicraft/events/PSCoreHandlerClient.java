@@ -228,22 +228,25 @@ public class PSCoreHandlerClient
         EntityLivingBase renderEntity = mc.renderViewEntity;
         DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
 
-        float smoothness = DrugEffectInterpreter.getSmoothVision(drugHelper);
-        if (smoothness < 1.0f && mc.inGameHasFocus)
+        if (drugHelper != null)
         {
-            float deltaX = mc.mouseHelper.deltaX;
-            float deltaY = mc.mouseHelper.deltaY;
-
-            float[] angles = SmoothCameraHelper.instance.getAngles(mc.gameSettings.mouseSensitivity, partialTicks, deltaX, deltaY, mc.gameSettings.invertMouse);
-
-            if (!mc.gameSettings.smoothCamera)
+            float smoothness = DrugEffectInterpreter.getSmoothVision(drugHelper);
+            if (smoothness < 1.0f && mc.inGameHasFocus)
             {
-                float[] originalAngles = SmoothCameraHelper.instance.getOriginalAngles(mc.gameSettings.mouseSensitivity, partialTicks, deltaX, deltaY, mc.gameSettings.invertMouse);
-                renderEntity.setAngles(angles[0] - originalAngles[0], angles[1] - originalAngles[1]);
-            }
-            else
-            {
-                renderEntity.setAngles(angles[0], angles[1]);
+                float deltaX = mc.mouseHelper.deltaX;
+                float deltaY = mc.mouseHelper.deltaY;
+
+                float[] angles = SmoothCameraHelper.instance.getAngles(mc.gameSettings.mouseSensitivity, partialTicks, deltaX, deltaY, mc.gameSettings.invertMouse);
+
+                if (!mc.gameSettings.smoothCamera)
+                {
+                    float[] originalAngles = SmoothCameraHelper.instance.getOriginalAngles(mc.gameSettings.mouseSensitivity, partialTicks, deltaX, deltaY, mc.gameSettings.invertMouse);
+                    renderEntity.setAngles(angles[0] - originalAngles[0], angles[1] - originalAngles[1]);
+                }
+                else
+                {
+                    renderEntity.setAngles(angles[0], angles[1]);
+                }
             }
         }
     }

@@ -7,6 +7,7 @@ package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.shaders.ShaderColorBloom;
+import ivorius.psychedelicraft.entities.drugs.Drug;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import ivorius.psychedelicraft.entities.drugs.effects.DrugHarmonium;
 import net.minecraft.client.Minecraft;
@@ -26,16 +27,18 @@ public class WrapperColorBloom extends ShaderWrapper<ShaderColorBloom>
     {
         DrugHelper drugHelper = DrugHelper.getDrugHelper(Minecraft.getMinecraft().renderViewEntity);
 
+        shaderInstance.coloredBloom = new float[4];
+
         if (drugHelper != null)
         {
-            float[] coloredBloom = ((DrugHarmonium) drugHelper.getDrug("Harmonium")).getHarmonizedColorAsPrimary(drugHelper);
-            coloredBloom[3] = Math.min(coloredBloom[3] * 4.0f, 1.0f);
+            Drug harmonium = drugHelper.getDrug("Harmonium");
+            if (harmonium instanceof DrugHarmonium)
+            {
+                float[] coloredBloom = ((DrugHarmonium) harmonium).getHarmonizedColorAsPrimary(drugHelper);
+                coloredBloom[3] = Math.min(coloredBloom[3] * 4.0f, 1.0f);
 
-            shaderInstance.coloredBloom = coloredBloom;
-        }
-        else
-        {
-            shaderInstance.coloredBloom = new float[4];
+                shaderInstance.coloredBloom = coloredBloom;
+            }
         }
     }
 

@@ -9,6 +9,7 @@ import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.ivtoolkit.rendering.IvShaderInstance3D;
 import ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
 import ivorius.psychedelicraft.client.rendering.PsycheShadowHelper;
+import ivorius.psychedelicraft.entities.drugs.Drug;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -44,7 +45,7 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
             EntityLivingBase renderEntity = mc.renderViewEntity;
             DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
 
-            if (DrugEffectInterpreter.shouldRegisterFractalTextures(drugHelper))
+            if (drugHelper != null && DrugEffectInterpreter.shouldRegisterFractalTextures(drugHelper))
             {
                 registerFractals();
             }
@@ -70,9 +71,10 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
             setUniformFloats("desaturation", DrugEffectInterpreter.getDesaturation(drugHelper, partialTicks));
             setUniformFloats("colorIntensification", DrugEffectInterpreter.getColorIntensification(drugHelper, partialTicks));
 
-            for (String key : drugHelper.getAllVisibleDrugNames())
+            if (drugHelper != null)
             {
-                drugHelper.getDrug(key).applyToShader(this, key, mc, drugHelper);
+                for (Drug drug : drugHelper.getAllDrugs())
+                    drug.applyToShader(this, mc, drugHelper);
             }
 
             if (shouldDoShadows)
