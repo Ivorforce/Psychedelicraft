@@ -7,7 +7,6 @@ package ivorius.psychedelicraft.blocks;
 
 import ivorius.ivtoolkit.blocks.IvTileEntityHelper;
 import ivorius.psychedelicraft.fluids.FluidDistillable;
-import ivorius.psychedelicraft.fluids.FluidFermentable;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -39,12 +38,12 @@ public class TileEntityDistillery extends TileFluidHandler
     public void updateEntity()
     {
         FluidStack fluidStack = tank.getFluid();
-        if (fluidStack != null && fluidStack.getFluid() instanceof FluidFermentable)
+        if (fluidStack != null && fluidStack.getFluid() instanceof FluidDistillable)
         {
             IFluidHandler destination = getDestinationFluidHandler();
 
-            FluidDistillable fluidFermentable = (FluidDistillable) fluidStack.getFluid();
-            int neededDistillationTime = fluidFermentable.distillationTime(fluidStack);
+            FluidDistillable fluidDistillable = (FluidDistillable) fluidStack.getFluid();
+            int neededDistillationTime = fluidDistillable.distillationTime(fluidStack);
 
             if (neededDistillationTime >= 0 && destination != null)
             {
@@ -52,7 +51,7 @@ public class TileEntityDistillery extends TileFluidHandler
                 {
                     if (!worldObj.isRemote)
                     {
-                        FluidStack leftover = fluidFermentable.distillStep(fluidStack);
+                        FluidStack leftover = fluidDistillable.distillStep(fluidStack);
 
                         FluidStack distilled = drain(ForgeDirection.EAST, fluidStack, true);
                         fill(ForgeDirection.EAST, leftover, true);

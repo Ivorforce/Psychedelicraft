@@ -12,6 +12,8 @@ import ivorius.psychedelicraft.client.rendering.FluidBoxRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.AdvancedModelLoader;
+import net.minecraftforge.client.model.IModelCustom;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
@@ -21,12 +23,14 @@ import org.lwjgl.opengl.GL11;
  */
 public class TileEntityRendererFlask extends TileEntitySpecialRenderer
 {
-    private ModelFlask model;
+    public static IModelCustom modelFlask = AdvancedModelLoader.loadModel(new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathModels + "flask.obj"));
+
+    private IModelCustom model;
     private ResourceLocation texture;
 
     public TileEntityRendererFlask()
     {
-        model = new ModelFlask();
+        model = modelFlask;
         texture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "flask.png");
     }
 
@@ -40,11 +44,10 @@ public class TileEntityRendererFlask extends TileEntitySpecialRenderer
 
         GL11.glDisable(GL11.GL_CULL_FACE);
         GL11.glPushMatrix();
-        GL11.glTranslatef(0.0f, 1.0f, 0.0f);
-        GL11.glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
-        GL11.glColor3f(1.0f, 1.0f, 1.0f);
+        GL11.glTranslatef(0f, -.5f, 0f);
+        GL11.glColor3f(1f, 1f, 1f);
         this.bindTexture(texture);
-        model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+        model.renderAll();
         GL11.glPopMatrix();
         GL11.glEnable(GL11.GL_CULL_FACE);
 
