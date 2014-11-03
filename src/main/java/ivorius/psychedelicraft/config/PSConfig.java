@@ -37,6 +37,8 @@ public class PSConfig
 
     public static boolean farmerDrugDeals;
 
+    public static int dryingTableTickDuration;
+
     public static int ticksPerWineFermentation;
     public static int ticksPerWineMaturation;
     public static int ticksUntilWineAcetification;
@@ -75,6 +77,8 @@ public class PSConfig
             villageChests = config.get(CATEGORY_BALANCING, "villageChests", true).getBoolean();
 
             farmerDrugDeals = config.get(CATEGORY_BALANCING, "farmerDrugDeals", true).getBoolean();
+
+            dryingTableTickDuration = config.get(CATEGORY_BALANCING, "dryingTableTickDuration", MINUTE * 16, "Time until plants in the drying table finish the drying process.").getInt();
 
             ticksPerWineFermentation = config.get(CATEGORY_BALANCING, "ticksPerWineFermentation", MINUTE * 40, "Time until wine ferments to the next step.").getInt();
             ticksPerWineMaturation = config.get(CATEGORY_BALANCING, "ticksPerWineMaturation", MINUTE * 40, "Time until wine matures to the next step.").getInt();

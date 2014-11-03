@@ -10,6 +10,7 @@ import ivorius.ivtoolkit.blocks.IvTileEntityHelper;
 import ivorius.ivtoolkit.network.IvNetworkHelperServer;
 import ivorius.ivtoolkit.network.PartialUpdateHandler;
 import ivorius.psychedelicraft.Psychedelicraft;
+import ivorius.psychedelicraft.config.PSConfig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
@@ -64,7 +65,7 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
 
         if (plannedResult != null && (dryingTableItems[0] == null || (dryingTableItems[0] == plannedResult && dryingTableItems[0].getItemDamage() == plannedResult.getItemDamage() && plannedResult.isStackable() && plannedResult.stackSize + plannedResult.stackSize < plannedResult.getMaxStackSize())))
         {
-            dryingProgress += heatRatio / 20000f;
+            dryingProgress += heatRatio / (float)PSConfig.dryingTableTickDuration;
 
             if (dryingProgress >= 1.0f && !worldObj.isRemote)
             {
