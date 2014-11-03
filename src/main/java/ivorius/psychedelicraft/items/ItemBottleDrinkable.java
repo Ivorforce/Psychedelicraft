@@ -5,6 +5,7 @@
 
 package ivorius.psychedelicraft.items;
 
+import ivorius.psychedelicraft.crafting.ItemPouring;
 import ivorius.psychedelicraft.fluids.DrinkableFluid;
 import ivorius.psychedelicraft.fluids.FluidHelper;
 import net.minecraft.creativetab.CreativeTabs;
@@ -20,7 +21,7 @@ import java.util.List;
 /**
  * Created by lukas on 23.10.14.
  */
-public class ItemBottleDrinkable extends ItemBottle
+public class ItemBottleDrinkable extends ItemBottle implements ItemPouring
 {
     public ItemBottleDrinkable(int capacity)
     {
@@ -70,5 +71,17 @@ public class ItemBottleDrinkable extends ItemBottle
                 list.add(stack);
             }
         }
+    }
+
+    @Override
+    public boolean canPour(ItemStack stack, ItemStack dst)
+    {
+        return true;
+    }
+
+    @Override
+    public boolean canReceivePour(ItemStack stack, ItemStack src)
+    {
+        return false;
     }
 }

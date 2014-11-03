@@ -114,7 +114,7 @@ public class PSCrafting
         if (PSConfig.enableRiftJars)
             GameRegistry.addRecipe(new ItemStack(riftJar), "O-O", "GO ", "OIO", 'O', glass, '-', planks, 'G', gold_ingot, 'I', iron_ingot);
 
-//        GameRegistry.addRecipe(new RecipeTransferDrink());
+        RecipeActionRegistry.addRecipe("ps_pourDrink", new RecipePourDrink());
 
         GameRegistry.addRecipe(new RecipeFillDrink(new FluidStack(peyoteJuice, 100), water_bucket, driedPeyote, driedPeyote));
         GameRegistry.addRecipe(new RecipeFillDrink(new FluidStack(coffee, 100), water_bucket, coffeeBeans, coffeeBeans));

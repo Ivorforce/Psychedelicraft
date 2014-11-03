@@ -62,12 +62,6 @@ public class ItemBottle extends ItemFluidContainer implements RenderPassesCustom
         return super.getItemStackDisplayName(stack);
     }
 
-    @Override
-    public ItemStack getContainerItem(ItemStack itemStack)
-    {
-        return new ItemStack(this, 1, itemStack.getItemDamage());
-    }
-
     // Required because otherwise, stack is not passed for icon query
     @Override
     public boolean requiresMultipleRenderPasses()

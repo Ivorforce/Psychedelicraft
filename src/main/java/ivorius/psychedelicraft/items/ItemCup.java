@@ -5,6 +5,7 @@
 
 package ivorius.psychedelicraft.items;
 
+import ivorius.psychedelicraft.crafting.ItemPouring;
 import ivorius.psychedelicraft.fluids.DrinkableFluid;
 import ivorius.psychedelicraft.fluids.FluidHelper;
 import net.minecraft.client.resources.I18n;
@@ -22,7 +23,7 @@ import java.util.List;
 /**
  * Created by lukas on 20.10.14.
  */
-public class ItemCup extends ItemFluidContainer
+public class ItemCup extends ItemFluidContainer implements ItemPouring
 {
     public static final int FLUID_PER_DRINKING = FluidHelper.MILLIBUCKETS_PER_LITER / 4;
 
@@ -100,5 +101,17 @@ public class ItemCup extends ItemFluidContainer
     {
         FluidStack fluidStack = getFluid(stack);
         return fluidStack != null ? 1.0 - ((double) fluidStack.amount / (double) capacity) : 0.0;
+    }
+
+    @Override
+    public boolean canPour(ItemStack stack, ItemStack dst)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean canReceivePour(ItemStack stack, ItemStack src)
+    {
+        return true;
     }
 }

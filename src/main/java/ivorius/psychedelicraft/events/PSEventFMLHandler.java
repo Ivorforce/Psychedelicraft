@@ -9,6 +9,7 @@ import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.blocks.PSBlocks;
@@ -16,12 +17,24 @@ import ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
 import ivorius.psychedelicraft.client.rendering.SmoothCameraHelper;
 import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import ivorius.psychedelicraft.config.PSConfig;
+import ivorius.psychedelicraft.crafting.RecipeAction;
+import ivorius.psychedelicraft.crafting.RecipeActionRegistry;
+import ivorius.psychedelicraft.crafting.RecipeActionRepresentation;
 import ivorius.psychedelicraft.entities.EntityRealityRift;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import ivorius.psychedelicraft.gui.UpdatableContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.List;
 
 /**
  * Created by lukas on 18.02.14.
@@ -122,5 +135,12 @@ public class PSEventFMLHandler
             if (Psychedelicraft.config.hasChanged())
                 Psychedelicraft.config.save();
         }
+    }
+
+    @SubscribeEvent
+    public void onItemCrafted(PlayerEvent.ItemCraftedEvent event)
+    {
+        if (event.craftMatrix instanceof InventoryCrafting)
+            RecipeActionRegistry.finalizeCrafting(event.crafting, (InventoryCrafting) event.craftMatrix, event.player);
     }
 }
