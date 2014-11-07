@@ -23,6 +23,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static ivorius.psychedelicraft.blocks.PSBlocks.*;
 import static ivorius.psychedelicraft.fluids.PSFluids.*;
 import static ivorius.psychedelicraft.items.PSItems.*;
@@ -44,6 +47,18 @@ public class PSCrafting
         for (int type = 0; type < BlockWood.field_150096_a.length; type++)
         {
             GameRegistry.addRecipe(new ItemStack(itemBarrel, 1, type), " I ", "# #", "S#S", '#', new ItemStack(planks, 1, type), 'I', iron_ingot, 'S', stick);
+        }
+
+        GameRegistry.addRecipe(new ItemStack(itemMashTub), "# #", "I I", "###", 'I', iron_ingot, '#', planks);
+
+        List<ItemStack> flaskIngotItems = OreDictionary.getOres("ingotCopper");
+        if (flaskIngotItems.size() == 0)
+            flaskIngotItems = Arrays.asList(new ItemStack(iron_ingot));
+        for (ItemStack flaskIngotItemStack : flaskIngotItems)
+        {
+            Item flaskIngotItem = flaskIngotItemStack.getItem();
+            GameRegistry.addRecipe(new ItemStack(itemFlask), " # ", "#G#", "###", 'G', glass, '#', flaskIngotItem);
+            GameRegistry.addRecipe(new ItemStack(itemDistillery), "##", "D ", 'D', itemFlask, '#', flaskIngotItem);
         }
 
         ItemStack wineMash = new ItemStack(itemMashTub);
