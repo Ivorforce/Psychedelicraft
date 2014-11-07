@@ -29,6 +29,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemLeaves;
 import net.minecraft.item.ItemSeeds;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 
 import static ivorius.psychedelicraft.Psychedelicraft.modBase;
 import static ivorius.psychedelicraft.blocks.PSBlocks.*;
@@ -120,6 +121,7 @@ public class PSRegistryHandler
         wineGrapes = (new ItemWineGrapes(1, 0.5F, true, 15)).setUnlocalizedName("wineGrapes").setTextureName(modBase + "wineGrapes");
         GameRegistry.registerItem(wineGrapes, "wineGrapes", Psychedelicraft.MODID);
         wineGrapes.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("foodGrape", wineGrapes);
 
         //----------------------------------------------------------Molotov Cocktail----------------------------------
 
@@ -132,135 +134,165 @@ public class PSRegistryHandler
         cannabisPlant = new BlockCannabisPlant().setHardness(0.5f);
         cannabisPlant.setCreativeTab(null);
         PSRegistryHandler.registerBlockDefault(cannabisPlant, ItemBlock.class, "cannabisPlant");
+        OreDictionary.registerOre("cropCannabis", cannabisPlant);
 
         cannabisSeeds = new ItemSeeds(cannabisPlant, Blocks.farmland).setUnlocalizedName("cannabisSeeds").setTextureName(modBase + "cannabisSeeds");
         GameRegistry.registerItem(cannabisSeeds, "cannabisSeeds", Psychedelicraft.MODID);
         cannabisSeeds.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("seedCannabis", cannabisSeeds);
 
         cannabisLeaf = new Item().setUnlocalizedName("cannabisLeaf").setTextureName(modBase + "cannabisLeaf");
         GameRegistry.registerItem(cannabisLeaf, "cannabisLeaf", Psychedelicraft.MODID);
         cannabisLeaf.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("leafCannabis", cannabisLeaf);
 
         cannabisBuds = new Item().setUnlocalizedName("cannabisBuds").setTextureName(modBase + "cannabisBuds");
         GameRegistry.registerItem(cannabisBuds, "cannabisBuds", Psychedelicraft.MODID);
         cannabisBuds.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("budCannabis", cannabisBuds);
 
         driedCannabisBuds = new Item().setUnlocalizedName("driedCannabisBuds").setTextureName(modBase + "driedCannabisBuds");
         GameRegistry.registerItem(driedCannabisBuds, "driedCannabisBuds", Psychedelicraft.MODID);
         driedCannabisBuds.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("budCannabisDried", driedCannabisBuds);
 
         driedCannabisLeaves = new Item().setUnlocalizedName("driedCannabisLeaves").setTextureName(modBase + "driedCannabisLeaves");
         GameRegistry.registerItem(driedCannabisLeaves, "driedCannabisLeaves", Psychedelicraft.MODID);
         driedCannabisLeaves.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("leafCannabisDried", driedCannabisLeaves);
 
         hashMuffin = new ItemHashMuffin().setUnlocalizedName("hashMuffin").setTextureName(modBase + "hashMuffin");
         GameRegistry.registerItem(hashMuffin, "hashMuffin", Psychedelicraft.MODID);
         hashMuffin.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("foodHashMuffin", hashMuffin);
 
         //----------------------------------------------------------Magic Mushrooms----------------------------------
 
         magicMushroomsBrown = new ItemEdibleDrug(new DrugInfluence("BrownShrooms", 15, 0.005, 0.003, 0.5f)).setUnlocalizedName("magicMushroomsBrown").setTextureName(modBase + "magicMushroomsBrown");
         GameRegistry.registerItem(magicMushroomsBrown, "brownMagicMushrooms", Psychedelicraft.MODID);
         magicMushroomsBrown.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("foodMagicMushroomBrown", magicMushroomsBrown);
 
         magicMushroomsRed = new ItemEdibleDrug(new DrugInfluence("RedShrooms", 15, 0.005, 0.003, 0.5f)).setUnlocalizedName("magicMushroomsRed").setTextureName(modBase + "magicMushroomsRed");
         GameRegistry.registerItem(magicMushroomsRed, "redMagicMushrooms", Psychedelicraft.MODID);
         magicMushroomsRed.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("foodMagicMushroomRed", magicMushroomsRed);
 
         //----------------------------------------------------------Tobacco----------------------------------
 
         tobaccoPlant = new BlockTobaccoPlant().setHardness(0.5f);
         tobaccoPlant.setCreativeTab(null);
         PSRegistryHandler.registerBlockDefault(tobaccoPlant, "tobaccoPlant");
-
-        tobaccoLeaf = new Item().setUnlocalizedName("tobaccoLeaf").setTextureName(modBase + "tobaccoLeaf");
-        GameRegistry.registerItem(tobaccoLeaf, "tobaccoLeaf", Psychedelicraft.MODID);
-        tobaccoLeaf.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("cropTobacco", tobaccoPlant);
 
         tobaccoSeeds = new ItemSeeds(tobaccoPlant, Blocks.farmland).setUnlocalizedName("tobaccoSeeds").setTextureName(modBase + "tobaccoSeeds");
         GameRegistry.registerItem(tobaccoSeeds, "tobaccoSeeds", Psychedelicraft.MODID);
         tobaccoSeeds.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("seedTobacco", tobaccoSeeds);
+
+        tobaccoLeaf = new Item().setUnlocalizedName("tobaccoLeaf").setTextureName(modBase + "tobaccoLeaf");
+        GameRegistry.registerItem(tobaccoLeaf, "tobaccoLeaf", Psychedelicraft.MODID);
+        tobaccoLeaf.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("leafTobacco", tobaccoLeaf);
 
         driedTobacco = new Item().setUnlocalizedName("driedTobacco").setTextureName(modBase + "driedTobacco");
         GameRegistry.registerItem(driedTobacco, "driedTobacco", Psychedelicraft.MODID);
         driedTobacco.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("leafTobaccoDried", driedTobacco);
 
         cigarette = new ItemSmokeable(new DrugInfluence[]{new DrugInfluence("Tobacco", 0, 0.1, 0.02, 0.7f)}, new String[]{"cigarette"}, new String[]{"cigaretteInUse"}).setUnlocalizedName("cigarette").setTextureName(modBase + "cigarette");
         GameRegistry.registerItem(cigarette, "cigarette", Psychedelicraft.MODID);
         cigarette.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("consumableCigarette", cigarette);
 
         cigar = new ItemSmokeable(new DrugInfluence[]{new DrugInfluence("Tobacco", 0, 0.1, 0.02, 0.7f)}, new String[]{"cigar", "cigar1", "cigar2", "cigar3"}, new String[]{"cigarInUse", "cigar1InUse", "cigar2InUse", "cigar3InUse"}).setUnlocalizedName("cigar").setTextureName(modBase + "cigar");
         GameRegistry.registerItem(cigar, "cigar", Psychedelicraft.MODID);
         cigar.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("consumableCigar", cigar);
 
         joint = new ItemSmokeable(new DrugInfluence[]{new DrugInfluence("Cannabis", 20, 0.002, 0.001, 0.20f)}, new String[]{"joint"}, new String[]{"jointInUse"}).setUnlocalizedName("joint").setTextureName(modBase + "joint");
         GameRegistry.registerItem(joint, "joint", Psychedelicraft.MODID);
         joint.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("consumableJoint", joint);
 
         //----------------------------------------------------------Cocaine----------------------------------
 
         cocaPlant = new BlockCocaPlant().setHardness(0.5f);
         cocaPlant.setCreativeTab(null);
         PSRegistryHandler.registerBlockDefault(cocaPlant, ItemBlock.class, "cocaPlant");
+        OreDictionary.registerOre("cropCoca", cocaPlant);
 
         cocaSeeds = new ItemSeeds(cocaPlant, Blocks.farmland).setUnlocalizedName("cocaSeeds").setTextureName(modBase + "cocaSeeds");
         GameRegistry.registerItem(cocaSeeds, "cocaSeeds", Psychedelicraft.MODID);
         cocaSeeds.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("seedCoca", cocaSeeds);
 
         cocaLeaf = new Item().setUnlocalizedName("cocaLeaf").setTextureName(modBase + "cocaLeaf");
         GameRegistry.registerItem(cocaLeaf, "cocaLeaf", Psychedelicraft.MODID);
         cocaLeaf.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("leafCoca", cocaLeaf);
 
         driedCocaLeaves = new Item().setUnlocalizedName("driedCocaLeaves").setTextureName(modBase + "driedCocaLeaves");
         GameRegistry.registerItem(driedCocaLeaves, "driedCocaLeaves", Psychedelicraft.MODID);
         driedCocaLeaves.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("leafCocaDried", driedCocaLeaves);
 
         //----------------------------------------------------------Jenever----------------------------------
 
         psycheLeaves = new BlockPsycheLeaves();
         psycheLeaves.setCreativeTab(Psychedelicraft.creativeTab);
         PSRegistryHandler.registerBlockDefault(psycheLeaves, ItemLeavesForge.class, "psycheLeaves");
+        OreDictionary.registerOre("treeLeaves", psycheLeaves);
 
         psycheLog = new BlockPsycheLog().setHardness(1.0F);
         psycheLog.setCreativeTab(Psychedelicraft.creativeTab);
         PSRegistryHandler.registerBlockDefault(psycheLog, "psycheLog");
+        OreDictionary.registerOre("treeWood", psycheLog);
 
         psycheSapling = new BlockPsycheSapling().setHardness(1.0F);
         psycheSapling.setCreativeTab(Psychedelicraft.creativeTab);
         PSRegistryHandler.registerBlockDefault(psycheSapling, "psycheSapling");
+        OreDictionary.registerOre("treeSapling", psycheSapling);
 
         juniperBerries = new ItemFoodSpecial(1, 0.5F, true, 15).setUnlocalizedName("juniperBerries").setTextureName(modBase + "juniperBerries");
         GameRegistry.registerItem(juniperBerries, "juniperBerries", Psychedelicraft.MODID);
         juniperBerries.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("foodJuniper", juniperBerries);
 
         //----------------------------------------------------------Coffee----------------------------------
 
         coffea = new BlockCoffea().setHardness(0.5f);
         coffea.setCreativeTab(null);
         PSRegistryHandler.registerBlockDefault(coffea, ItemBlock.class, "coffea");
+        OreDictionary.registerOre("cropCoffea", coffea);
 
         coffeaCherries = new ItemSeeds(coffea, Blocks.farmland).setUnlocalizedName("coffeaCherries").setTextureName(modBase + "coffeaCherries");
         GameRegistry.registerItem(coffeaCherries, "coffeaCherries", Psychedelicraft.MODID);
         coffeaCherries.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("seedCoffea", coffeaCherries);
 
         coffeeBeans = new Item().setUnlocalizedName("coffeeBeans").setTextureName(modBase + "coffeeBeans");
         GameRegistry.registerItem(coffeeBeans, "coffeeBeans", Psychedelicraft.MODID);
         coffeeBeans.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("seedCoffeaDried", coffeeBeans);
 
         //----------------------------------------------------------Peyote----------------------------------
-
-        driedPeyote = new ItemEdibleDrug(new DrugInfluence("Peyote", 15, 0.005, 0.003, 0.5f)).setUnlocalizedName("driedPeyote").setTextureName(modBase + "driedPeyote");
-        GameRegistry.registerItem(driedPeyote, "driedPeyote", Psychedelicraft.MODID);
-        driedPeyote.setCreativeTab(Psychedelicraft.creativeTab);
-
-        peyoteJoint = new ItemSmokeable(new DrugInfluence[]{new DrugInfluence("Peyote", 20, 0.003, 0.0015, 0.4f), new DrugInfluence("Tobacco", 0, 0.1, 0.02, 0.1f)}, new String[]{"jointPeyote"}, new String[]{"jointPeyoteInUse"}).setUnlocalizedName("jointPeyote").setTextureName(modBase + "jointPeyote");
-        GameRegistry.registerItem(peyoteJoint, "peyoteJoint", Psychedelicraft.MODID);
-        peyoteJoint.setCreativeTab(Psychedelicraft.creativeTab);
 
         peyote = new BlockPeyote().setHardness(0.5f);
         peyote.setCreativeTab(Psychedelicraft.creativeTab);
         PSRegistryHandler.registerBlockDefault(peyote, ItemBlock.class, "peyote");
         GameRegistry.registerTileEntity(TileEntityPeyote.class, "peyote");
+        OreDictionary.registerOre("cropPeyote", peyote);
+
+        driedPeyote = new ItemEdibleDrug(new DrugInfluence("Peyote", 15, 0.005, 0.003, 0.5f)).setUnlocalizedName("driedPeyote").setTextureName(modBase + "driedPeyote");
+        GameRegistry.registerItem(driedPeyote, "driedPeyote", Psychedelicraft.MODID);
+        driedPeyote.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("foodPeyoteDried", driedPeyote);
+
+        peyoteJoint = new ItemSmokeable(new DrugInfluence[]{new DrugInfluence("Peyote", 20, 0.003, 0.0015, 0.4f), new DrugInfluence("Tobacco", 0, 0.1, 0.02, 0.1f)}, new String[]{"jointPeyote"}, new String[]{"jointPeyoteInUse"}).setUnlocalizedName("jointPeyote").setTextureName(modBase + "jointPeyote");
+        GameRegistry.registerItem(peyoteJoint, "peyoteJoint", Psychedelicraft.MODID);
+        peyoteJoint.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre("consumablePeyoteJoint", peyoteJoint);
 
         //----------------------------------------------------------Harmonium----------------------------------
 
