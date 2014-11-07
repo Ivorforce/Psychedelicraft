@@ -51,15 +51,9 @@ public class PSCrafting
 
         GameRegistry.addRecipe(new ItemStack(itemMashTub), "# #", "I I", "###", 'I', iron_ingot, '#', planks);
 
-        List<ItemStack> flaskIngotItems = OreDictionary.getOres("ingotCopper");
-        if (flaskIngotItems.size() == 0)
-            flaskIngotItems = Arrays.asList(new ItemStack(iron_ingot));
-        for (ItemStack flaskIngotItemStack : flaskIngotItems)
-        {
-            Item flaskIngotItem = flaskIngotItemStack.getItem();
-            GameRegistry.addRecipe(new ItemStack(itemFlask), " # ", "#G#", "###", 'G', glass, '#', flaskIngotItem);
-            GameRegistry.addRecipe(new ItemStack(itemDistillery), "##", "D ", 'D', itemFlask, '#', flaskIngotItem);
-        }
+        Object flaskIngotItem = foreignItem("ingotCopper", iron_ingot);
+        GameRegistry.addRecipe(new ItemStack(itemFlask), " # ", "#G#", "###", 'G', glass, '#', flaskIngotItem);
+        GameRegistry.addRecipe(new ItemStack(itemDistillery), "##", "D ", 'D', itemFlask, '#', flaskIngotItem);
 
         ItemStack wineMash = new ItemStack(itemMashTub);
         itemMashTub.fill(wineMash, new FluidStack(wine, TileEntityMashTub.MASH_TUB_CAPACITY), true);
@@ -140,6 +134,15 @@ public class PSCrafting
 
         //TODO Add when Forge fixes smelting with NBT
 //                GameRegistry.addSmelting(DrinkRegistry.createDrinkStack(itemDrinkHolder, 1, "coldCoffee"), new ItemStack(emptyContainer, 1, 3), 0.2f);
+    }
+
+    private static Object foreignItem(String oredictID, Object replacement)
+    {
+        List<ItemStack> foreignItems = OreDictionary.getOres(oredictID);
+        if (foreignItems.size() == 0)
+            return replacement;
+
+        return foreignItems.get(0);
     }
 
     private static void addShapelessRecipe(ItemStack output, Object... params)
