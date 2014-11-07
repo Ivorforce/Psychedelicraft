@@ -75,8 +75,8 @@ public class RecipeActionRegistry
             result.readFromNBT(resultCompound);
             result.stackTagCompound = actionResultPickup.stackTagCompound; // Doesn't necessarily get overwritten
 
-            for (int i = 0; i < inventoryCrafting.getSizeInventory(); i++)
-                inventoryCrafting.setInventorySlotContents(i, null);
+//            for (int i = 0; i < inventoryCrafting.getSizeInventory(); i++)
+//                inventoryCrafting.setInventorySlotContents(i, null);
 
             for (ItemStack resultPickup : actionResultPickups)
             {
