@@ -73,7 +73,9 @@ public class ClientProxy implements PSProxy
 
         RenderingRegistry.registerEntityRenderingHandler(EntityMolotovCocktail.class, new RenderSnowball(PSItems.molotovCocktail));
         RenderingRegistry.registerEntityRenderingHandler(EntityRealityRift.class, new RenderRealityRift());
-        VillagerRegistry.instance().registerVillagerSkin(PSEntityList.villagerDealerProfessionID, new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "villagerDealer.png"));
+
+        if (PSEntityList.villagerDealerProfessionID >= 0)
+            VillagerRegistry.instance().registerVillagerSkin(PSEntityList.villagerDealerProfessionID, new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "villagerDealer.png"));
 
         DrugShaderHelper.allocate();
         DrugShaderHelper.outputShaderInfo();

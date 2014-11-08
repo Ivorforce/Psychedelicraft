@@ -322,9 +322,11 @@ public class PSRegistryHandler
 
         //----------------------------------------------------------Villager Dealer----------------------------------
 
-        VillagerRegistry.instance().registerVillagerId(villagerDealerProfessionID);
-
-        VillagerRegistry.instance().registerVillageTradeHandler(villagerDealerProfessionID, new VillagerTradeHandlerDrugDealer());
+        if (villagerDealerProfessionID >= 0)
+        {
+            VillagerRegistry.instance().registerVillagerId(villagerDealerProfessionID);
+            VillagerRegistry.instance().registerVillageTradeHandler(villagerDealerProfessionID, new VillagerTradeHandlerDrugDealer());
+        }
 
         if (PSConfig.farmerDrugDeals)
             VillagerRegistry.instance().registerVillageTradeHandler(0, new VillagerTradeHandlerFarmer());

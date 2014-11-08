@@ -56,7 +56,7 @@ public class PSConfig
     {
         if (configID == null || configID.equals(Configuration.CATEGORY_GENERAL))
         {
-            PSEntityList.villagerDealerProfessionID = config.get("General", "villagerDealerProfessionID", 87).getInt();
+            PSEntityList.villagerDealerProfessionID = config.get("General", "villagerDealerProfessionID", 87, "Internal ID for the drug dealer villager. Enter a negative number to disable.").getInt();
         }
 
         if (configID == null || configID.equals(CATEGORY_BALANCING))
