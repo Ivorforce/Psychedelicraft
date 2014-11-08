@@ -31,7 +31,7 @@ public class PSGuiHandler implements IGuiHandler
     public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z)
     {
         if (id == dryingTableContainerID)
-            return new GuiDryingTable.ContainerDryingTable(player.inventory, world, (TileEntityDryingTable) world.getTileEntity(x, y, z));
+            return new ContainerDryingTable(player.inventory, world, (TileEntityDryingTable) world.getTileEntity(x, y, z));
         else if (id >= fluidHandlerContainerID_UP && id <= fluidHandlerContainerID_SOUTH)
         {
             ForgeDirection forgeDirection = ForgeDirection.getOrientation(id - 1);

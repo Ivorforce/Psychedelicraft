@@ -6,7 +6,6 @@
 package ivorius.psychedelicraft.crafting;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import ivorius.psychedelicraft.blocks.TileEntityDryingTable;
 import ivorius.psychedelicraft.blocks.TileEntityMashTub;
 import ivorius.psychedelicraft.config.PSConfig;
 import ivorius.psychedelicraft.entities.drugs.DrugInfluence;
@@ -23,7 +22,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static ivorius.psychedelicraft.blocks.PSBlocks.*;
@@ -87,29 +85,29 @@ public class PSCrafting
 
         GameRegistry.addRecipe(new ItemStack(dryingTable), "###", "#R#", '#', planks, 'R', redstone);
 
-        TileEntityDryingTable.addDryingResult(cannabisLeaf, new ItemStack(driedCannabisLeaves, 3));
-        TileEntityDryingTable.addDryingResult(cannabisBuds, new ItemStack(driedCannabisBuds, 3));
+        DryingRegistry.addDryingResult("leafCannabis", new ItemStack(driedCannabisLeaves, 3));
+        DryingRegistry.addDryingResult("budCannabis", new ItemStack(driedCannabisBuds, 3));
         GameRegistry.addRecipe(new ItemStack(hashMuffin), "LLL", "#X#", "LLL", 'X', new ItemStack(dye, 1, 3), '#', Items.wheat, 'L', driedCannabisLeaves);
         GameRegistry.addRecipe(new ItemStack(joint), "P", "C", "P", 'P', paper, 'C', driedCannabisBuds);
         pipe.addConsumable(new ItemSmokingPipe.ItemSmokingPipeConsumable(new ItemStack(driedCannabisBuds), new DrugInfluence[]{new DrugInfluence("Cannabis", 20, 0.002, 0.001, 0.25f)}));
         bong.addConsumable(new ItemBong.ItemBongConsumable(new ItemStack(driedCannabisBuds), new DrugInfluence[]{new DrugInfluence("Cannabis", 20, 0.002, 0.001, 0.2f)})); //TODO: Play around with the bongs benefits
 
-        TileEntityDryingTable.addDryingResult(Item.getItemFromBlock(brown_mushroom), new ItemStack(magicMushroomsBrown, 3));
-        TileEntityDryingTable.addDryingResult(Item.getItemFromBlock(red_mushroom), new ItemStack(magicMushroomsRed, 3));
+        DryingRegistry.addDryingResult(brown_mushroom, new ItemStack(magicMushroomsBrown, 3));
+        DryingRegistry.addDryingResult(red_mushroom, new ItemStack(magicMushroomsRed, 3));
 
         GameRegistry.addRecipe(new ItemStack(cigarette, 4), "P", "T", "P", 'P', paper, 'T', driedTobacco);
         GameRegistry.addRecipe(new ItemStack(cigar), "TTT", "TTT", "PPP", 'P', paper, 'T', driedTobacco);
-        TileEntityDryingTable.addDryingResult(tobaccoLeaf, new ItemStack(driedTobacco, 3));
+        DryingRegistry.addDryingResult("leafTobacco", new ItemStack(driedTobacco, 3));
         pipe.addConsumable(new ItemSmokingPipe.ItemSmokingPipeConsumable(new ItemStack(driedTobacco), new DrugInfluence[]{new DrugInfluence("Tobacco", 0, 0.1, 0.02, 0.8f)}));
         bong.addConsumable(new ItemBong.ItemBongConsumable(new ItemStack(driedTobacco), new DrugInfluence[]{new DrugInfluence("Tobacco", 0, 0.1, 0.02, 0.6f)})); //TODO: Play around with the bongs benefits
 
-        TileEntityDryingTable.addDryingResult(cocaLeaf, new ItemStack(driedCocaLeaves, 3));
+        DryingRegistry.addDryingResult("leafCoca", new ItemStack(driedCocaLeaves, 3));
 
         GameRegistry.addRecipe(new ItemStack(planks, 4, 1), "#", '#', psycheLog);
 
         GameRegistry.addSmelting(coffeaCherries, new ItemStack(coffeeBeans), 0.2f);
 
-        TileEntityDryingTable.addDryingResult(Item.getItemFromBlock(peyote), new ItemStack(driedPeyote, 3));
+        DryingRegistry.addDryingResult("cropPeyote", new ItemStack(driedPeyote, 3));
         GameRegistry.addRecipe(new ItemStack(peyoteJoint), "P", "D", "P", 'P', paper, 'D', driedPeyote);
 
         for (int i = 0; i < 16; i++)

@@ -6,16 +6,9 @@
 package ivorius.psychedelicraft.gui;
 
 import ivorius.psychedelicraft.Psychedelicraft;
-import ivorius.psychedelicraft.blocks.PSBlocks;
-import ivorius.psychedelicraft.blocks.SlotDryingTableResult;
 import ivorius.psychedelicraft.blocks.TileEntityDryingTable;
-import net.minecraft.block.Block;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -71,130 +64,4 @@ public class GuiDryingTable extends GuiContainer
         return false;
     }
 
-    public static class ContainerDryingTable extends Container
-    {
-        /**
-         * The crafting matrix inventory (3x3).
-         */
-        private World worldObj;
-        public TileEntityDryingTable tileEntityDryingTable;
-
-        public ContainerDryingTable(InventoryPlayer par1InventoryPlayer, World par2World, TileEntityDryingTable tileEntityDryingTable)
-        {
-            this.worldObj = par2World;
-            this.tileEntityDryingTable = tileEntityDryingTable;
-            this.addSlotToContainer(new SlotDryingTableResult(par1InventoryPlayer.player, tileEntityDryingTable, 0, 124, 35));
-
-            for (int x = 0; x < 3; ++x)
-            {
-                for (int y = 0; y < 3; ++y)
-                {
-                    this.addSlotToContainer(new Slot(tileEntityDryingTable, 1 + x * 3 + y, 30 + x * 18, 17 + y * 18));
-                }
-            }
-
-            int var3;
-
-            for (var3 = 0; var3 < 3; ++var3)
-            {
-                for (int var4 = 0; var4 < 9; ++var4)
-                {
-                    this.addSlotToContainer(new Slot(par1InventoryPlayer, var4 + var3 * 9 + 9, 8 + var4 * 18, 84 + var3 * 18));
-                }
-            }
-
-            for (var3 = 0; var3 < 9; ++var3)
-            {
-                this.addSlotToContainer(new Slot(par1InventoryPlayer, var3, 8 + var3 * 18, 142));
-            }
-        }
-
-        @Override
-        public void onContainerClosed(EntityPlayer par1EntityPlayer)
-        {
-            super.onContainerClosed(par1EntityPlayer);
-
-            if (!this.worldObj.isRemote)
-            {
-                for (int var2 = 0; var2 < 9; ++var2)
-                {
-                    ItemStack var3 = this.tileEntityDryingTable.getStackInSlotOnClosing(var2);
-
-                    if (var3 != null)
-                    {
-                        par1EntityPlayer.dropPlayerItemWithRandomChoice(var3, false);
-                    }
-                }
-            }
-        }
-
-        @Override
-        public boolean canInteractWith(EntityPlayer par1EntityPlayer)
-        {
-            Block id = this.worldObj.getBlock(tileEntityDryingTable.xCoord, tileEntityDryingTable.yCoord, tileEntityDryingTable.zCoord);
-            return id == PSBlocks.dryingTable && par1EntityPlayer.getDistanceSq(tileEntityDryingTable.xCoord + 0.5D, tileEntityDryingTable.yCoord + 0.5D, tileEntityDryingTable.zCoord + 0.5D) <= 64.0D;
-        }
-
-        /**
-         * Called to transfer a stack from one inventory to the other eg. when shift clicking.
-         */
-        @Override
-        public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
-        {
-            ItemStack var2 = null;
-            Slot var3 = (Slot) this.inventorySlots.get(par2);
-
-            if (var3 != null && var3.getHasStack())
-            {
-                ItemStack var4 = var3.getStack();
-                var2 = var4.copy();
-
-                if (par2 < 10)
-                {
-                    if (!this.mergeItemStack(var4, 10, 46, false))
-                    {
-                        return null;
-                    }
-
-                    var3.onSlotChange(var4, var2);
-                }
-                else if (par2 >= 10 && par2 < 37)
-                {
-                    if (!this.mergeItemStack(var4, 37, 46, false))
-                    {
-                        return null;
-                    }
-                }
-                else if (par2 >= 37 && par2 < 46)
-                {
-                    if (!this.mergeItemStack(var4, 10, 37, false))
-                    {
-                        return null;
-                    }
-                }
-                else if (!this.mergeItemStack(var4, 10, 37, false))
-                {
-                    return null;
-                }
-
-                if (var4.stackSize == 0)
-                {
-                    var3.putStack(null);
-                }
-                else
-                {
-                    var3.onSlotChanged();
-                }
-
-                if (var4.stackSize == var2.stackSize)
-                {
-                    return null;
-                }
-
-                var3.onPickupFromSlot(par1EntityPlayer, var2);
-            }
-
-            return var2;
-        }
-    }
 }

@@ -11,10 +11,13 @@ import ivorius.ivtoolkit.network.IvNetworkHelperServer;
 import ivorius.ivtoolkit.network.PartialUpdateHandler;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.config.PSConfig;
+import ivorius.psychedelicraft.crafting.DryingRegistry;
+import ivorius.psychedelicraft.gui.ContainerDryingTable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.Item;
+import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
@@ -24,8 +27,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.util.Constants;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class TileEntityDryingTable extends TileEntity implements ISidedInventory, PartialUpdateHandler
 {
@@ -36,13 +40,6 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
     public ItemStack[] dryingTableItems = new ItemStack[10];
 
     public int ticksAlive;
-
-    public static Map<Item, ItemStack> dryingList = new HashMap<>();
-
-    public static void addDryingResult(Item itemID, ItemStack result)
-    {
-        dryingList.put(itemID, result);
-    }
 
     @Override
     public void updateEntity()
@@ -96,28 +93,14 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
 
     public ItemStack getResult()
     {
-        if (dryingTableItems[1] == null)
+        List<ItemStack> src = new ArrayList<>(dryingTableItems.length - 1);
+        for (int i = 1; i < dryingTableItems.length; i++)
         {
-            return null;
+            if (dryingTableItems[i] != null)
+                src.add(dryingTableItems[i]);
         }
 
-        Item id = dryingTableItems[1].getItem();
-        int damage = dryingTableItems[1].getItemDamage();
-
-        for (int i = 2; i < dryingTableItems.length; i++)
-        {
-            if (dryingTableItems[i] == null || dryingTableItems[i].getItem() != id || dryingTableItems[i].getItemDamage() != damage)
-            {
-                return null;
-            }
-        }
-
-        if (dryingList.containsKey(id))
-        {
-            return (dryingList.get(id)).copy();
-        }
-
-        return null;
+        return DryingRegistry.dryingResult(src);
     }
 
     public void calculateHeatRatio()

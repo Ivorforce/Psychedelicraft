@@ -247,7 +247,7 @@ public class PSRegistryHandler
         psycheLog = new BlockPsycheLog().setHardness(1.0F);
         psycheLog.setCreativeTab(Psychedelicraft.creativeTab);
         PSRegistryHandler.registerBlockDefault(psycheLog, "psycheLog");
-        OreDictionary.registerOre("treeWood", psycheLog);
+        OreDictionary.registerOre("logWood", psycheLog);
 
         psycheSapling = new BlockPsycheSapling().setHardness(1.0F);
         psycheSapling.setCreativeTab(Psychedelicraft.creativeTab);

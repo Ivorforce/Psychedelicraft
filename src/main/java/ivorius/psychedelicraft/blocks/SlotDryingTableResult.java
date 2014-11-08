@@ -14,9 +14,6 @@ import net.minecraft.util.MathHelper;
 
 public class SlotDryingTableResult extends Slot
 {
-    /**
-     * The player that is using the GUI where this slot resides.
-     */
     private EntityPlayer thePlayer;
     private int field_75228_b;
 
@@ -26,19 +23,12 @@ public class SlotDryingTableResult extends Slot
         this.thePlayer = par1EntityPlayer;
     }
 
-    /**
-     * Check if the stack is a valid item for this slot. Always true beside for the armor slots.
-     */
     @Override
     public boolean isItemValid(ItemStack par1ItemStack)
     {
         return false;
     }
 
-    /**
-     * Decrease the size of the stack in slot (first int arg) by the amount of the second int arg. Returns the new
-     * stack.
-     */
     @Override
     public ItemStack decrStackSize(int par1)
     {
@@ -50,9 +40,6 @@ public class SlotDryingTableResult extends Slot
         return super.decrStackSize(par1);
     }
 
-    /**
-     * Called when the player picks up an item from an inventory slot
-     */
     @Override
     public void onPickupFromSlot(EntityPlayer par1EntityPlayer, ItemStack par2ItemStack)
     {
@@ -60,10 +47,6 @@ public class SlotDryingTableResult extends Slot
         super.onPickupFromSlot(par1EntityPlayer, par2ItemStack);
     }
 
-    /**
-     * the itemStack passed in is the output - ie, iron ingots, and pickaxes, not ore and wood. Typically increases an
-     * internal count then calls onCrafting(item).
-     */
     @Override
     protected void onCrafting(ItemStack par1ItemStack, int par2)
     {
@@ -71,9 +54,6 @@ public class SlotDryingTableResult extends Slot
         this.onCrafting(par1ItemStack);
     }
 
-    /**
-     * the itemStack passed in is the output - ie, iron ingots, and pickaxes, not ore and wood.
-     */
     @Override
     protected void onCrafting(ItemStack par1ItemStack)
     {
