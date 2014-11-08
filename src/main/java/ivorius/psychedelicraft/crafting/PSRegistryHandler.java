@@ -357,13 +357,21 @@ public class PSRegistryHandler
         coffee.setFlowingIconName(modBase + "coffee_flow");
         FluidRegistry.registerFluid(coffee);
 
-        wine = new FluidWine("pscWine");
+        wine = new FluidWine("pscWine", 2, 4, 0.55, 0.2);
         wine.setDrinkable(true);
         wine.setColor(0xee3f0822);
         wine.setSymbolIconName(modBase + "drinkWine");
         wine.setStillIconName(modBase + "wine_still");
         wine.setFlowingIconName(modBase + "wine_flow");
         FluidRegistry.registerFluid(wine);
+
+        riceWine = new FluidWine("pscRiceWine", 2, 4, 0.7, 0.25);
+        riceWine.setDrinkable(true);
+        riceWine.setColor(0xeecac4b2);
+        riceWine.setSymbolIconName(modBase + "drinkRiceWine");
+        riceWine.setStillIconName(modBase + "rice_wine_still");
+        riceWine.setFlowingIconName(modBase + "rice_wine_flow");
+        FluidRegistry.registerFluid(riceWine);
 
         peyoteJuice = new FluidDrug("pscPeyoteJuice", new DrugInfluence("Peyote", 15, 0.005, 0.003, 2.0f));
         peyoteJuice.setDrinkable(true);

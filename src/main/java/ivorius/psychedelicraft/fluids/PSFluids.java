@@ -14,6 +14,7 @@ public class PSFluids
     public static FluidDrug jenever;
     public static FluidDrug wine;
     public static FluidDrug vodka;
+    public static FluidDrug riceWine;
 
     public static FluidDrug coffee;
     public static FluidDrug cocaTea;

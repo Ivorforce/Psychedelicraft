@@ -69,6 +69,10 @@ public class PSCrafting
         itemMashTub.fill(jeneverMash, new FluidStack(jenever, TileEntityMashTub.MASH_TUB_CAPACITY), true);
         addShapelessRecipe(jeneverMash, new ItemStack(itemMashTub), DC_JUNIPER_BERRIES, DC_JUNIPER_BERRIES, DC_JUNIPER_BERRIES, DC_JUNIPER_BERRIES, sugar, DC_GRAPE, DC_GRAPE, DC_CROP_WHEAT);
 
+        ItemStack riceWineMash = new ItemStack(itemMashTub);
+        itemMashTub.fill(riceWineMash, new FluidStack(riceWine, TileEntityMashTub.MASH_TUB_CAPACITY), true);
+        addShapelessRecipe(riceWineMash, new ItemStack(itemMashTub), water_bucket, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE);
+
         addRecipe(new ItemStack(glassChalice, 4), "# #", " # ", " # ", '#', DC_BLOCK_GLASS_CLEAR);
         addRecipe(new ItemStack(wineGrapeLattice), "###", "###", "O#O", '#', DC_STICK_WOOD, 'O', DC_PLANK_WOOD);
 
