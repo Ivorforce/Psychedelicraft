@@ -121,7 +121,7 @@ artifacts {
 uploadArchives() {
     dependsOn reobf
 
-    if (project.mavenUrl != null) {
+    if (project.hasProperty("mavenUrl") != null) {
         repositories {
             logger.info('Publishing to files server')
 
