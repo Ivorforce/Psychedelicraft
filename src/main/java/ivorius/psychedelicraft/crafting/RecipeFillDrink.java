@@ -26,16 +26,10 @@ import java.util.List;
  */
 public class RecipeFillDrink implements IRecipe
 {
-    /**
-     * Is the ItemStack that you get when craft the recipe.
-     */
     private final FluidStack recipeOutput;
-    /**
-     * Is a List of ItemStack that composes the recipe.
-     */
-    public final List<ItemStack> recipeItems;
+    public final List<Object> recipeItems;
 
-    public RecipeFillDrink(FluidStack recipeOutput, List<ItemStack> items)
+    public RecipeFillDrink(FluidStack recipeOutput, List<Object> items)
     {
         this.recipeOutput = recipeOutput;
         this.recipeItems = items;
@@ -43,24 +37,30 @@ public class RecipeFillDrink implements IRecipe
 
     public RecipeFillDrink(FluidStack recipeOutput, Object... items)
     {
-        this(recipeOutput, stacks(items));
-    }
+        this.recipeOutput = recipeOutput;
 
-    public static List<ItemStack> stacks(Object... params)
-    {
-        List<ItemStack> stacks = new ArrayList<>();
-        for (Object param : params)
+        recipeItems = new ArrayList<>();
+        for (Object in : items)
         {
-            if (param instanceof Item)
-                stacks.add(new ItemStack((Item) param, 1, OreDictionary.WILDCARD_VALUE));
-            else if (param instanceof Block)
-                stacks.add(new ItemStack((Block) param, 1, OreDictionary.WILDCARD_VALUE));
-            else if (param instanceof ItemStack)
-                stacks.add((ItemStack) param);
+            if (in instanceof ItemStack)
+                recipeItems.add(((ItemStack) in).copy());
+            else if (in instanceof Item)
+                recipeItems.add(new ItemStack((Item) in));
+            else if (in instanceof Block)
+                recipeItems.add(new ItemStack((Block) in));
+            else if (in instanceof String)
+                recipeItems.add(OreDictionary.getOres((String) in));
             else
-                throw new IllegalArgumentException();
+            {
+                String ret = "Invalid shapeless ore recipe: ";
+                for (Object tmp : items)
+                {
+                    ret += tmp + ", ";
+                }
+                ret += recipeOutput;
+                throw new RuntimeException(ret);
+            }
         }
-        return stacks;
     }
 
     public ItemStack getRecipeOutput()
@@ -68,53 +68,60 @@ public class RecipeFillDrink implements IRecipe
         return new ItemStack(PSItems.woodenMug);
     }
 
-    /**
-     * Used to check if a recipe matches current crafting inventory
-     */
-    public boolean matches(InventoryCrafting inventoryCrafting, World p_77569_2_)
+    public boolean matches(InventoryCrafting inventoryCrafting, World world)
     {
-        ArrayList<ItemStack> arraylist = new ArrayList<>(this.recipeItems);
+        ArrayList<Object> required = new ArrayList<>(this.recipeItems);
 
         ItemStack drinkHolder = getFirstDrinkHolder(inventoryCrafting, recipeOutput);
         if (drinkHolder == null)
             return false;
-        arraylist.add(drinkHolder);
+        required.add(drinkHolder);
 
-        for (int i = 0; i < 3; ++i)
+        for (int x = 0; x < inventoryCrafting.getSizeInventory(); x++)
         {
-            for (int j = 0; j < 3; ++j)
+            ItemStack slot = inventoryCrafting.getStackInSlot(x);
+
+            if (slot != null)
             {
-                ItemStack itemstack = inventoryCrafting.getStackInRowAndColumn(j, i);
+                boolean inRecipe = false;
+                Iterator<Object> req = required.iterator();
 
-                if (itemstack != null)
+                while (req.hasNext())
                 {
-                    boolean flag = false;
+                    boolean match = false;
 
-                    for (Iterator<ItemStack> iterator = arraylist.iterator(); iterator.hasNext(); )
+                    Object next = req.next();
+
+                    if (next instanceof ItemStack)
                     {
-                        ItemStack itemstack1 = iterator.next();
-                        if (itemstack.getItem() == itemstack1.getItem() && (itemstack1.getItemDamage() == 32767 || itemstack.getItemDamage() == itemstack1.getItemDamage()))
+                        match = OreDictionary.itemMatches((ItemStack)next, slot, false);
+                    }
+                    else if (next instanceof ArrayList)
+                    {
+                        Iterator<ItemStack> itr = ((ArrayList<ItemStack>)next).iterator();
+                        while (itr.hasNext() && !match)
                         {
-                            flag = true;
-                            iterator.remove();
-                            break;
+                            match = OreDictionary.itemMatches(itr.next(), slot, false);
                         }
                     }
 
-                    if (!flag)
+                    if (match)
                     {
-                        return false;
+                        inRecipe = true;
+                        required.remove(next);
+                        break;
                     }
+                }
+
+                if (!inRecipe)
+                {
+                    return false;
                 }
             }
         }
 
-        return arraylist.isEmpty();
-    }
+        return required.isEmpty();    }
 
-    /**
-     * Returns an Item that is the result of this recipe
-     */
     public ItemStack getCraftingResult(InventoryCrafting inventoryCrafting)
     {
         ItemStack drinkHolder = getFirstDrinkHolder(inventoryCrafting, recipeOutput);
