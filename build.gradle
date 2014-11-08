@@ -121,14 +121,14 @@ artifacts {
 uploadArchives() {
     dependsOn reobf
 
-    if (project.hasProperty("mavenUrl") != null) {
+    if (project.hasProperty("mavenUrl") && project.hasProperty("mavenUser") && project.hasProperty("mavenPassword")) {
         repositories {
             logger.info('Publishing to files server')
 
             mavenDeployer {
 
-                repository(url: project.mavenUrl) {
-                    authentication(userName: project.mavenUser, password: project.mavenPassword)
+                repository(url: project."mavenUrl") {
+                    authentication(userName: project."mavenUser", password: project."mavenPassword")
                 }
 
                 addFilter('deobf') {artifact, file ->
@@ -178,6 +178,6 @@ uploadArchives() {
         }
     }
     else {
-        logger.log(LogLevel.ERROR, 'No upload url (project.mavenUrl) defined!');
+        logger.log(LogLevel.ERROR, 'No upload variables defined!');
     }
 }
