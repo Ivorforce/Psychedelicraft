@@ -34,8 +34,8 @@ public class FluidBeer extends FluidDrug implements FluidFermentable
         int fermentation = getFermentation(fluidStack);
         int maturation = getMaturation(fluidStack);
 
-        double alcohol = (double) fermentation / (double) FERMENTATION_STEPS * 0.15
-                + (double) maturation / (double) MATURATION_STEPS * 0.05;
+        double alcohol = (double) fermentation / (double) FERMENTATION_STEPS * 0.25
+                + (double) maturation / (double) MATURATION_STEPS * 0.08;
 
         list.add(new DrugInfluence("Alcohol", 20, 0.002, 0.001, alcohol));
     }

@@ -54,7 +54,7 @@ public class PSRegistryHandler
         GameRegistry.registerItem(syringe, "syringe", Psychedelicraft.MODID);
         syringe.setCreativeTab(Psychedelicraft.creativeTab);
 
-        woodenBowlDrug = (ItemCup) new ItemWoodenBowlDrug(1).setUnlocalizedName("woodenBowlDrug").setTextureName(modBase + "bowl");
+        woodenBowlDrug = (ItemCup) new ItemWoodenBowlDrug(MILLIBUCKETS_PER_LITER / 20).setUnlocalizedName("woodenBowlDrug").setTextureName(modBase + "bowl");
         GameRegistry.registerItem(woodenBowlDrug, "psycheWoodenBowl", Psychedelicraft.MODID);
         woodenBowlDrug.setCreativeTab(Psychedelicraft.drinksTab);
 
@@ -363,7 +363,7 @@ public class PSRegistryHandler
         wine.setFlowingIconName(modBase + "wine_flow");
         FluidRegistry.registerFluid(wine);
 
-        peyoteJuice = new FluidDrug("pscPeyoteJuice", new DrugInfluence("Peyote", 15, 0.005, 0.003, 0.9f));
+        peyoteJuice = new FluidDrug("pscPeyoteJuice", new DrugInfluence("Peyote", 15, 0.005, 0.003, 2.0f));
         peyoteJuice.setDrinkable(true);
         peyoteJuice.setColor(0x779bab62);
         peyoteJuice.setSymbolIconName(modBase + "drinkPeyote");
@@ -385,7 +385,7 @@ public class PSRegistryHandler
         caffeineFluid.setFlowingIconName(modBase + "clear_flow");
         FluidRegistry.registerFluid(caffeineFluid);
 
-        cocaTea = new FluidDrug("pscCocaTea", new DrugInfluence("Cocaine", 60, 0.005, 0.002, 0.1f));
+        cocaTea = new FluidDrug("pscCocaTea", new DrugInfluence("Cocaine", 60, 0.005, 0.002, 0.2f));
         cocaTea.setDrinkable(true);
         cocaTea.setColor(0x44787a36);
         cocaTea.setSymbolIconName(modBase + "drinkCocaTea");
@@ -393,7 +393,7 @@ public class PSRegistryHandler
         cocaTea.setFlowingIconName(modBase + "tea_flow");
         FluidRegistry.registerFluid(cocaTea);
 
-        cannabisTea = new FluidDrug("pscCannabisTea", new DrugInfluence("Cannabis", 60, 0.005, 0.002, 0.15f));
+        cannabisTea = new FluidDrug("pscCannabisTea", new DrugInfluence("Cannabis", 60, 0.005, 0.002, 0.25f));
         cannabisTea.setDrinkable(true);
         cannabisTea.setColor(0x446d6f3c);
         cannabisTea.setSymbolIconName(modBase + "drinkCannabisTea");

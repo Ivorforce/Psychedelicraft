@@ -50,8 +50,8 @@ public class FluidJenever extends FluidDrug implements FluidFermentable, FluidDi
         int fermentation = getFermentation(fluidStack);
         int distillation = getDistillation(fluidStack);
 
-        double alcohol = (double) fermentation / (double) FERMENTATION_STEPS * 0.15
-                + (double) distillation / (double) DISTILLATION_STEPS * 0.6;
+        double alcohol = (double) fermentation / (double) FERMENTATION_STEPS * 0.55
+                + (double) distillation / (double) DISTILLATION_STEPS * 1.7;
 
         list.add(new DrugInfluence("Alcohol", 20, 0.003, 0.002, alcohol));
     }
