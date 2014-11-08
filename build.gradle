@@ -18,6 +18,11 @@ buildscript {
 apply plugin: 'forge'
 
 version = "1.4.2"
+def ENV = System.getenv()
+if (ENV.DRONE_BUILD_NUMBER) {
+    version += ".n" + ENV.DRONE_BUILD_NUMBER
+}
+
 group= "ivorius.psychedelicraft" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Psychedelicraft"
 
