@@ -50,4 +50,5 @@ public class OreDictionaryConstants
     public static final String DC_COFFEE_BEANS = "foodCoffeeBeans";
     public static final String DC_PEYOTE_DRIED = "foodPeyoteDried";
     public static final String DC_PEYOTE_JOINT = "consumablePeyoteJoint";
+    public static final String DC_GLOWSTONE_DUST = "dustGlowstone";
 }
