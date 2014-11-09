@@ -333,7 +333,7 @@ public class PSRegistryHandler
 
         //----------------------------------------------------------Liquids----------------------------------
 
-        beer = new FluidBeer("pscBeer");
+        beer = new FluidMaturingAlcohol("pscBeer", 2, 2, 0.25, 0.08, PSConfig.beerInfo);
         beer.setDrinkable(true);
         beer.setColor(0xaafeaa08);
         beer.setSymbolIconName(modBase + "drinkBeer");
@@ -357,7 +357,7 @@ public class PSRegistryHandler
         coffee.setFlowingIconName(modBase + "coffee_flow");
         FluidRegistry.registerFluid(coffee);
 
-        wine = new FluidWine("pscWine", 2, 4, 0.55, 0.2);
+        wine = new FluidMaturingAlcohol("pscWine", 2, 5, 0.55, 0.2, PSConfig.wineInfo);
         wine.setDrinkable(true);
         wine.setColor(0xee3f0822);
         wine.setSymbolIconName(modBase + "drinkWine");
@@ -365,7 +365,7 @@ public class PSRegistryHandler
         wine.setFlowingIconName(modBase + "wine_flow");
         FluidRegistry.registerFluid(wine);
 
-        riceWine = new FluidWine("pscRiceWine", 2, 4, 0.7, 0.25);
+        riceWine = new FluidMaturingAlcohol("pscRiceWine", 2, 5, 0.7, 0.25, PSConfig.riceWineInfo);
         riceWine.setDrinkable(true);
         riceWine.setColor(0xeecac4b2);
         riceWine.setSymbolIconName(modBase + "drinkRiceWine");

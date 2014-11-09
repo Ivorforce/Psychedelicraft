@@ -6,7 +6,6 @@
 package ivorius.psychedelicraft.fluids;
 
 import ivorius.ivtoolkit.math.IvMathHelper;
-import ivorius.psychedelicraft.config.PSConfig;
 import ivorius.psychedelicraft.entities.drugs.DrugInfluence;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
@@ -19,7 +18,7 @@ import java.util.List;
 /**
  * Created by lukas on 22.10.14.
  */
-public class FluidWine extends FluidDrug implements FluidFermentable
+public class FluidMaturingAlcohol extends FluidDrug implements FluidFermentable
 {
     public int fermentationSteps;
     public int maturationSteps;
@@ -27,18 +26,21 @@ public class FluidWine extends FluidDrug implements FluidFermentable
     public double fermentationAlcohol;
     public double maturationAlcohol;
 
+    public MaturationInfo config;
+
     public static double zeroToOne(double value, double min, double max)
     {
         return IvMathHelper.clamp(0.0, (value - min) / (max - min), 1.0);
     }
 
-    public FluidWine(String fluidName, int fermentationSteps, int maturationSteps, double fermentationAlcohol, double maturationAlcohol)
+    public FluidMaturingAlcohol(String fluidName, int fermentationSteps, int maturationSteps, double fermentationAlcohol, double maturationAlcohol, MaturationInfo config)
     {
         super(fluidName);
         this.fermentationSteps = fermentationSteps;
         this.maturationSteps = maturationSteps;
         this.fermentationAlcohol = fermentationAlcohol;
         this.maturationAlcohol = maturationAlcohol;
+        this.config = config;
     }
 
     @Override
@@ -93,6 +95,11 @@ public class FluidWine extends FluidDrug implements FluidFermentable
             setMaturation(fluidStack, maturation);
             list.add(fluidStack);
         }
+
+        FluidStack fluidStack = new FluidStack(this, 1);
+        setFermentation(fluidStack, fermentationSteps);
+        setIsVinegar(fluidStack, true);
+        list.add(fluidStack);
     }
 
     @Override
@@ -104,12 +111,12 @@ public class FluidWine extends FluidDrug implements FluidFermentable
         if (fermentation < fermentationSteps)
         {
             if (openContainer)
-                return PSConfig.ticksPerWineFermentation;
+                return config.ticksPerFermentation;
         }
         else if (openContainer)
-            return PSConfig.ticksUntilWineAcetification;
+            return config.ticksUntilAcetification;
         else if (maturation < maturationSteps)
-            return PSConfig.ticksPerWineMaturation;
+            return config.ticksPerMaturation;
 
         return UNFERMENTABLE;
     }
@@ -184,5 +191,12 @@ public class FluidWine extends FluidDrug implements FluidFermentable
     {
         FluidHelper.ensureTag(stack);
         stack.tag.setInteger("maturation", maturation);
+    }
+
+    public static class MaturationInfo
+    {
+        public int ticksPerFermentation;
+        public int ticksPerMaturation;
+        public int ticksUntilAcetification;
     }
 }

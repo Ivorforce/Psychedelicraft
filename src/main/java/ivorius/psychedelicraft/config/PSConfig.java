@@ -10,6 +10,7 @@ import ivorius.psychedelicraft.entities.PSEntityList;
 import net.minecraftforge.common.config.Configuration;
 
 import static ivorius.psychedelicraft.Psychedelicraft.config;
+import static ivorius.psychedelicraft.fluids.FluidMaturingAlcohol.MaturationInfo;
 
 /**
  * Created by lukas on 31.07.14.
@@ -39,12 +40,9 @@ public class PSConfig
 
     public static int dryingTableTickDuration;
 
-    public static int ticksPerWineFermentation;
-    public static int ticksPerWineMaturation;
-    public static int ticksUntilWineAcetification;
-
-    public static int ticksPerBeerFermentation;
-    public static int ticksPerBeerMaturation;
+    public static final MaturationInfo beerInfo = new MaturationInfo();
+    public static final MaturationInfo wineInfo = new MaturationInfo();
+    public static final MaturationInfo riceWineInfo = new MaturationInfo();
 
     public static int ticksPerVodkaFermentation;
     public static int ticksPerVodkaDistillation;
@@ -80,12 +78,9 @@ public class PSConfig
 
             dryingTableTickDuration = config.get(CATEGORY_BALANCING, "dryingTableTickDuration", MINUTE * 16, "Time until plants in the drying table finish the drying process.").getInt();
 
-            ticksPerWineFermentation = config.get(CATEGORY_BALANCING, "ticksPerWineFermentation", MINUTE * 40, "Time until wine ferments to the next step.").getInt();
-            ticksPerWineMaturation = config.get(CATEGORY_BALANCING, "ticksPerWineMaturation", MINUTE * 40, "Time until wine matures to the next step.").getInt();
-            ticksUntilWineAcetification = config.get(CATEGORY_BALANCING, "ticksUntilWineAcetification", MINUTE * 30, "Time until wine turns to vinegar after it is 'perfect'. Enter a negative number to disable.").getInt();
-
-            ticksPerBeerFermentation = config.get(CATEGORY_BALANCING, "ticksPerBeerFermentation", MINUTE * 30, "Time until beer wort ferments to the next step.").getInt();
-            ticksPerBeerMaturation = config.get(CATEGORY_BALANCING, "ticksPerBeerMaturation", MINUTE * 60, "Time until beer matures to the next step.").getInt();
+            readMaturationInfo(beerInfo, "beer", MINUTE * 30, MINUTE * 60, MINUTE * 100, config);
+            readMaturationInfo(wineInfo, "wine", MINUTE * 40, MINUTE * 40, MINUTE * 30, config);
+            readMaturationInfo(riceWineInfo, "riceWine", MINUTE * 40, MINUTE * 40, MINUTE * 30, config);
 
             ticksPerVodkaFermentation = config.get(CATEGORY_BALANCING, "ticksPerVodkaFermentation", MINUTE * 30, "Time until vodka wort ferments to the next step.").getInt();
             ticksPerVodkaDistillation = config.get(CATEGORY_BALANCING, "ticksPerVodkaDistillation", MINUTE * 10, "Time until vodka distills to the next step.").getInt();
@@ -95,5 +90,12 @@ public class PSConfig
         }
 
         Psychedelicraft.proxy.loadConfig(configID);
+    }
+
+    public static void readMaturationInfo(MaturationInfo maturationInfo, String fluidName, int defaultFermentation, int defaultMaturation, int defaultAcetification, Configuration config)
+    {
+        maturationInfo.ticksPerFermentation = config.get(CATEGORY_BALANCING, fluidName + "_ticksPerFermentation", defaultFermentation, String.format("Time until %s wort ferments to the next step.", fluidName)).getInt();
+        maturationInfo.ticksPerMaturation = config.get(CATEGORY_BALANCING, fluidName + "_ticksPerMaturation", defaultMaturation, String.format("Time until %s matures to the next step.", fluidName)).getInt();
+        maturationInfo.ticksUntilAcetification = config.get(CATEGORY_BALANCING, fluidName + "_ticksUntilAcetification", defaultAcetification, String.format("Time until %s acetifies when it oxidizes after complete fermentation. Enter a negative number to disable.", fluidName)).getInt();
     }
 }
