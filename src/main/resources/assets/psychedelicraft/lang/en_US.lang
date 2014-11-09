@@ -42,10 +42,10 @@ item.riftJar.halfFilled=Half Full
 item.riftJar.full=Full
 item.riftJar.overflowing=Overflowing
 tile.glitched.name=Block $__0
-tile.flask.name=Flask
-tile.flask.full.name=Flask of %s
-tile.distillery.name=Distillery
-tile.distillery.full.name=Distillery (Filled with %s)
+tile.psFlask.name=Flask
+tile.psFlask.full.name=Flask of %s
+tile.psDistillery.name=Distillery
+tile.psDistillery.full.name=Distillery (Filled with %s)
 
 item.woodenMug.name=Wooden Mug
 item.woodenMug.full.name=Wooden Mug of %s
@@ -70,10 +70,10 @@ item.molotovCocktail.quality5.name=Excellent Molotov Cocktail
 item.molotovCocktail.quality6.name=Perfect Molotov Cocktail
 item.molotovCocktail.quality7.name=Unreal Molotov Cocktail
 
-tile.ygcBarrel.name=Barrel
-tile.ygcBarrel.full.name=%s Barrel
-tile.ygcMashTub.name=Wooden Vat
-tile.ygcMashTub.full.name=Wooden Vat (%s)
+tile.psBarrel.name=Barrel
+tile.psBarrel.full.name=%s Barrel
+tile.psMashTub.name=Wooden Vat
+tile.psMashTub.full.name=Wooden Vat (%s)
 
 item.syringe.name=Syringe
 item.syringe.full.name=Syringe - %s

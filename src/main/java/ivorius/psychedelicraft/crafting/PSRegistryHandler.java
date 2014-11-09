@@ -43,7 +43,6 @@ import static ivorius.psychedelicraft.items.PSItems.*;
  */
 public class PSRegistryHandler
 {
-
     public static void preInit(FMLPreInitializationEvent event, Psychedelicraft mod)
     {
         DrugRegistry.registerFactory(new DrugFactoryPsychedelicraft());
@@ -82,42 +81,40 @@ public class PSRegistryHandler
         GameRegistry.registerItem(bong, "bong", Psychedelicraft.MODID);
         bong.setCreativeTab(Psychedelicraft.creativeTab);
 
-        dryingTable = new BlockDryingTable().setHardness(1.0f);
+        dryingTable = new BlockDryingTable().setHardness(1.0f).setBlockName("dryingTable").setBlockTextureName(modBase + "dryingTable");
         dryingTable.setCreativeTab(Psychedelicraft.creativeTab);
-        PSRegistryHandler.registerBlockDefault(dryingTable, "dryingTable");
+        GameRegistry.registerBlock(dryingTable, "dryingTable");
         GameRegistry.registerTileEntityWithAlternatives(TileEntityDryingTable.class, "ygcDryingTable", "dryingTable");
 
-        barrel = new BlockBarrel().setHardness(1.0F);
+        barrel = new BlockBarrel().setHardness(1.0F).setBlockName("psBarrel").setBlockTextureName(modBase + "barrel");
         barrel.setCreativeTab(Psychedelicraft.drinksTab);
-        PSRegistryHandler.registerBlockDefault(barrel, ItemBarrel.class, "barrel");
-        barrel.setBlockName("ygcBarrel");
+        GameRegistry.registerBlock(barrel, ItemBarrel.class, "barrel");
         GameRegistry.registerTileEntityWithAlternatives(TileEntityBarrel.class, "ygcBarrel", "barrel");
         itemBarrel = (ItemBarrel) Item.getItemFromBlock(barrel);
 
-        mashTub = new BlockMashTub().setHardness(1.0F);
+        mashTub = new BlockMashTub().setHardness(1.0F).setBlockName("psMashTub");
         mashTub.setCreativeTab(Psychedelicraft.drinksTab);
-        PSRegistryHandler.registerBlockDefault(mashTub, ItemMashTub.class, "mash_tub");
-        mashTub.setBlockName("ygcMashTub");
+        GameRegistry.registerBlock(mashTub, ItemMashTub.class, "mash_tub");
         GameRegistry.registerTileEntityWithAlternatives(TileEntityMashTub.class, "ygcMashTub");
         itemMashTub = (ItemMashTub) Item.getItemFromBlock(mashTub);
 
-        flask = new BlockFlask().setHardness(1.0F);
+        flask = new BlockFlask().setHardness(1.0F).setBlockName("psFlask");
         flask.setCreativeTab(Psychedelicraft.creativeTab);
-        PSRegistryHandler.registerBlockDefault(flask, ItemFlask.class, "flask");
-        GameRegistry.registerTileEntity(TileEntityFlask.class, "ygcFlask");
+        GameRegistry.registerBlock(flask, ItemFlask.class, "flask");
+        GameRegistry.registerTileEntity(TileEntityFlask.class, "psFlask");
         itemFlask = (ItemFlask) Item.getItemFromBlock(flask);
 
-        distillery = new BlockDistillery().setHardness(1.0F);
+        distillery = new BlockDistillery().setHardness(1.0F).setBlockName("psDistillery");
         distillery.setCreativeTab(Psychedelicraft.creativeTab);
-        PSRegistryHandler.registerBlockDefault(distillery, ItemDistillery.class, "distillery");
-        GameRegistry.registerTileEntity(TileEntityDistillery.class, "ygcDistillery");
+        GameRegistry.registerBlock(distillery, ItemDistillery.class, "distillery");
+        GameRegistry.registerTileEntity(TileEntityDistillery.class, "psDistillery");
         itemDistillery = (ItemDistillery) Item.getItemFromBlock(distillery);
 
         //----------------------------------------------------------Wine----------------------------------
 
-        wineGrapeLattice = new BlockWineGrapeLattice().setHardness(0.3F);
+        wineGrapeLattice = new BlockWineGrapeLattice().setHardness(0.3F).setBlockName("wineGrapeLattice").setBlockTextureName(modBase + "wineGrapeLattice");
         wineGrapeLattice.setCreativeTab(Psychedelicraft.creativeTab);
-        PSRegistryHandler.registerBlockDefault(wineGrapeLattice, ItemBlock.class, "wineGrapeLattice");
+        GameRegistry.registerBlock(wineGrapeLattice, ItemBlock.class, "wineGrapeLattice");
 
         wineGrapes = (new ItemWineGrapes(1, 0.5F, true, 15)).setUnlocalizedName("wineGrapes").setTextureName(modBase + "wineGrapes");
         GameRegistry.registerItem(wineGrapes, "wineGrapes", Psychedelicraft.MODID);
@@ -132,9 +129,9 @@ public class PSRegistryHandler
 
         //----------------------------------------------------------Weed----------------------------------
 
-        cannabisPlant = new BlockCannabisPlant().setHardness(0.5f);
+        cannabisPlant = new BlockCannabisPlant().setHardness(0.5f).setBlockName("cannabisPlant").setBlockTextureName(modBase + "cannabisPlant");
         cannabisPlant.setCreativeTab(null);
-        PSRegistryHandler.registerBlockDefault(cannabisPlant, ItemBlock.class, "cannabisPlant");
+        GameRegistry.registerBlock(cannabisPlant, ItemBlock.class, "cannabisPlant");
         OreDictionary.registerOre(DC_CROP_CANNABIS, cannabisPlant);
 
         cannabisSeeds = new ItemSeeds(cannabisPlant, Blocks.farmland).setUnlocalizedName("cannabisSeeds").setTextureName(modBase + "cannabisSeeds");
@@ -181,9 +178,9 @@ public class PSRegistryHandler
 
         //----------------------------------------------------------Tobacco----------------------------------
 
-        tobaccoPlant = new BlockTobaccoPlant().setHardness(0.5f);
+        tobaccoPlant = new BlockTobaccoPlant().setHardness(0.5f).setBlockName("tobaccoPlant").setBlockTextureName(modBase + "tobaccoPlant");
         tobaccoPlant.setCreativeTab(null);
-        PSRegistryHandler.registerBlockDefault(tobaccoPlant, "tobaccoPlant");
+        GameRegistry.registerBlock(tobaccoPlant, "tobaccoPlant");
         OreDictionary.registerOre(DC_CROP_TOBACCO, tobaccoPlant);
 
         tobaccoSeeds = new ItemSeeds(tobaccoPlant, Blocks.farmland).setUnlocalizedName("tobaccoSeeds").setTextureName(modBase + "tobaccoSeeds");
@@ -218,9 +215,9 @@ public class PSRegistryHandler
 
         //----------------------------------------------------------Cocaine----------------------------------
 
-        cocaPlant = new BlockCocaPlant().setHardness(0.5f);
+        cocaPlant = new BlockCocaPlant().setHardness(0.5f).setBlockName("cocaPlant").setBlockTextureName(modBase + "cocaPlant");
         cocaPlant.setCreativeTab(null);
-        PSRegistryHandler.registerBlockDefault(cocaPlant, ItemBlock.class, "cocaPlant");
+        GameRegistry.registerBlock(cocaPlant, ItemBlock.class, "cocaPlant");
         OreDictionary.registerOre(DC_CROP_COCA, cocaPlant);
 
         cocaSeeds = new ItemSeeds(cocaPlant, Blocks.farmland).setUnlocalizedName("cocaSeeds").setTextureName(modBase + "cocaSeeds");
@@ -240,19 +237,19 @@ public class PSRegistryHandler
 
         //----------------------------------------------------------Jenever----------------------------------
 
-        psycheLeaves = new BlockPsycheLeaves();
+        psycheLeaves = (BlockPsycheLeaves) new BlockPsycheLeaves().setBlockName("psycheLeaves").setBlockTextureName(modBase + "psycheLeaves");
         psycheLeaves.setCreativeTab(Psychedelicraft.creativeTab);
-        PSRegistryHandler.registerBlockDefault(psycheLeaves, ItemLeavesForge.class, "psycheLeaves");
+        GameRegistry.registerBlock(psycheLeaves, ItemLeavesForge.class, "psycheLeaves");
         OreDictionary.registerOre(DC_TREE_LEAVES, psycheLeaves);
 
-        psycheLog = new BlockPsycheLog().setHardness(1.0F);
+        psycheLog = new BlockPsycheLog().setHardness(1.0F).setBlockName("psycheLog").setBlockTextureName(modBase + "psycheLog");
         psycheLog.setCreativeTab(Psychedelicraft.creativeTab);
-        PSRegistryHandler.registerBlockDefault(psycheLog, "psycheLog");
+        GameRegistry.registerBlock(psycheLog, "psycheLog");
         OreDictionary.registerOre(DC_LOG_WOOD, psycheLog);
 
-        psycheSapling = new BlockPsycheSapling().setHardness(1.0F);
+        psycheSapling = new BlockPsycheSapling().setHardness(1.0F).setBlockName("psycheSapling").setBlockTextureName(modBase + "psycheSapling");
         psycheSapling.setCreativeTab(Psychedelicraft.creativeTab);
-        PSRegistryHandler.registerBlockDefault(psycheSapling, "psycheSapling");
+        GameRegistry.registerBlock(psycheSapling, "psycheSapling");
         OreDictionary.registerOre(DC_TREE_SAPLING, psycheSapling);
 
         juniperBerries = new ItemFoodSpecial(1, 0.5F, true, 15).setUnlocalizedName("juniperBerries").setTextureName(modBase + "juniperBerries");
@@ -262,9 +259,9 @@ public class PSRegistryHandler
 
         //----------------------------------------------------------Coffee----------------------------------
 
-        coffea = new BlockCoffea().setHardness(0.5f);
+        coffea = new BlockCoffea().setHardness(0.5f).setBlockName("coffea").setBlockTextureName(modBase + "coffea");
         coffea.setCreativeTab(null);
-        PSRegistryHandler.registerBlockDefault(coffea, ItemBlock.class, "coffea");
+        GameRegistry.registerBlock(coffea, ItemBlock.class, "coffea");
         OreDictionary.registerOre(DC_CROP_COFFEA, coffea);
 
         coffeaCherries = new ItemSeeds(coffea, Blocks.farmland).setUnlocalizedName("coffeaCherries").setTextureName(modBase + "coffeaCherries");
@@ -279,9 +276,9 @@ public class PSRegistryHandler
 
         //----------------------------------------------------------Peyote----------------------------------
 
-        peyote = new BlockPeyote().setHardness(0.5f);
+        peyote = new BlockPeyote().setHardness(0.5f).setBlockName("peyote").setBlockTextureName(modBase + "peyote");
         peyote.setCreativeTab(Psychedelicraft.creativeTab);
-        PSRegistryHandler.registerBlockDefault(peyote, ItemBlock.class, "peyote");
+        GameRegistry.registerBlock(peyote, ItemBlock.class, "peyote");
         GameRegistry.registerTileEntity(TileEntityPeyote.class, "peyote");
         OreDictionary.registerOre(DC_CROP_PEYOTE, peyote);
 
@@ -436,21 +433,5 @@ public class PSRegistryHandler
 
     public static void load(FMLInitializationEvent event, Psychedelicraft mod)
     {
-    }
-
-    public static void registerBlockDefault(Block block, String id)
-    {
-        GameRegistry.registerBlock(block, id);
-        block.setBlockName(id);
-        block.setBlockTextureName(modBase + id);
-//        block.setCreativeTab(Psychedelicraft.creativeTab);
-    }
-
-    public static void registerBlockDefault(Block block, Class<? extends ItemBlock> itemBlock, String id)
-    {
-        GameRegistry.registerBlock(block, itemBlock, id);
-        block.setBlockName(id);
-        block.setBlockTextureName(modBase + id);
-//        block.setCreativeTab(Psychedelicraft.creativeTab);
     }
 }
