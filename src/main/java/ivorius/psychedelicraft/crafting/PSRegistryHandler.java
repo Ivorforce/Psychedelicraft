@@ -363,7 +363,7 @@ public class PSRegistryHandler
         riceWine.setFlowingIconName(modBase + "rice_wine_flow");
         FluidRegistry.registerFluid(riceWine);
 
-        jenever = new FluidJenever("pscJenever", 2, 8, 0.55f, 1.7f, PSConfig.jeneverInfo);
+        jenever = new FluidJenever("pscJenever", 2, 8, 0.5f, 1.7f, PSConfig.jeneverInfo);
         jenever.setDrinkable(true);
         jenever.setColor(0x44e8f4f8);
         jenever.setSymbolIconName(modBase + "drinkJenever");
@@ -378,6 +378,14 @@ public class PSRegistryHandler
         vodka.setStillIconName(modBase + "clear_still");
         vodka.setFlowingIconName(modBase + "clear_flow");
         FluidRegistry.registerFluid(vodka);
+
+        rum = new FluidRum("pscRum", 2, 8, 0.35f, 1.7f, PSConfig.rumInfo);
+        rum.setDrinkable(true);
+        rum.setColor(0x44e8f4f8);
+        rum.setSymbolIconName(modBase + "drinkRum");
+        rum.setStillIconName(modBase + "clear_still");
+        rum.setFlowingIconName(modBase + "clear_flow");
+        FluidRegistry.registerFluid(rum);
 
         coffee = new FluidCoffee("pscCoffee");
         coffee.setDrinkable(true);

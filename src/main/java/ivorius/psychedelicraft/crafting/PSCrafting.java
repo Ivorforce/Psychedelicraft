@@ -14,8 +14,10 @@ import ivorius.psychedelicraft.items.ItemBong;
 import ivorius.psychedelicraft.items.ItemSmokingPipe;
 import net.minecraft.block.BlockWood;
 import net.minecraft.entity.passive.EntitySheep;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -53,25 +55,13 @@ public class PSCrafting
         addRecipe(new ItemStack(itemFlask), " # ", "#G#", "###", 'G', DC_BLOCK_GLASS_CLEAR, '#', flaskIngotItem);
         addRecipe(new ItemStack(itemDistillery), "##", "D ", 'D', itemFlask, '#', flaskIngotItem);
 
-        ItemStack wineMash = new ItemStack(itemMashTub);
-        itemMashTub.fill(wineMash, new FluidStack(wine, TileEntityMashTub.MASH_TUB_CAPACITY), true);
-        addShapelessRecipe(wineMash, new ItemStack(itemMashTub), DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE);
+        addMashTubRecipe(new FluidStack(beer, TileEntityMashTub.MASH_TUB_CAPACITY), water_bucket, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT);
+        addMashTubRecipe(new FluidStack(wine, TileEntityMashTub.MASH_TUB_CAPACITY), DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE);
+        addMashTubRecipe(new FluidStack(riceWine, TileEntityMashTub.MASH_TUB_CAPACITY), water_bucket, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE);
 
-        ItemStack wortMash = new ItemStack(itemMashTub);
-        itemMashTub.fill(wortMash, new FluidStack(beer, TileEntityMashTub.MASH_TUB_CAPACITY), true);
-        addShapelessRecipe(wortMash, new ItemStack(itemMashTub), water_bucket, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT);
-
-        ItemStack vodkaMash = new ItemStack(itemMashTub);
-        itemMashTub.fill(vodkaMash, new FluidStack(vodka, TileEntityMashTub.MASH_TUB_CAPACITY), true);
-        addShapelessRecipe(vodkaMash, new ItemStack(itemMashTub), water_bucket, DC_POTATO, DC_POTATO, DC_POTATO, DC_POTATO, DC_POTATO, DC_POTATO, DC_POTATO);
-
-        ItemStack jeneverMash = new ItemStack(itemMashTub);
-        itemMashTub.fill(jeneverMash, new FluidStack(jenever, TileEntityMashTub.MASH_TUB_CAPACITY), true);
-        addShapelessRecipe(jeneverMash, new ItemStack(itemMashTub), DC_JUNIPER_BERRIES, DC_JUNIPER_BERRIES, DC_JUNIPER_BERRIES, DC_JUNIPER_BERRIES, sugar, DC_GRAPE, DC_GRAPE, DC_CROP_WHEAT);
-
-        ItemStack riceWineMash = new ItemStack(itemMashTub);
-        itemMashTub.fill(riceWineMash, new FluidStack(riceWine, TileEntityMashTub.MASH_TUB_CAPACITY), true);
-        addShapelessRecipe(riceWineMash, new ItemStack(itemMashTub), water_bucket, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE);
+        addMashTubRecipe(new FluidStack(jenever, TileEntityMashTub.MASH_TUB_CAPACITY), DC_JUNIPER_BERRIES, DC_JUNIPER_BERRIES, DC_JUNIPER_BERRIES, DC_JUNIPER_BERRIES, sugar, DC_GRAPE, DC_GRAPE, DC_CROP_WHEAT);
+        addMashTubRecipe(new FluidStack(vodka, TileEntityMashTub.MASH_TUB_CAPACITY), water_bucket, DC_POTATO, DC_POTATO, DC_POTATO, DC_POTATO, DC_POTATO, DC_POTATO, DC_POTATO);
+        addMashTubRecipe(new FluidStack(rum, TileEntityMashTub.MASH_TUB_CAPACITY), water_bucket, Items.reeds, Items.reeds, Items.reeds, Items.reeds, Items.reeds, Items.reeds, Items.reeds);
 
         addRecipe(new ItemStack(glassChalice, 4), "# #", " # ", " # ", '#', DC_BLOCK_GLASS_CLEAR);
         addRecipe(new ItemStack(wineGrapeLattice), "###", "###", "O#O", '#', DC_STICK_WOOD, 'O', DC_PLANK_WOOD);
@@ -152,5 +142,17 @@ public class PSCrafting
     private static void addShapelessRecipe(ItemStack output, Object... params)
     {
         GameRegistry.addRecipe(new ShapelessOreRecipe(output, params));
+    }
+
+    private static void addMashTubRecipe(FluidStack fluid, Object... ingredients)
+    {
+        ItemStack mashTubStack = new ItemStack(itemMashTub);
+        itemMashTub.fill(mashTubStack, fluid, true);
+
+        Object[] ing = new Object[ingredients.length + 1];
+        System.arraycopy(ingredients, 0, ing, 1, ingredients.length);
+        ing[0] = new ItemStack(itemMashTub);
+
+        addShapelessRecipe(mashTubStack, ing);
     }
 }

@@ -47,6 +47,7 @@ public class PSConfig
 
     public static final DistillationInfo vodkaInfo = new DistillationInfo();
     public static final DistillationInfo jeneverInfo = new DistillationInfo();
+    public static final DistillationInfo rumInfo = new DistillationInfo();
 
     public static void loadConfig(String configID)
     {
@@ -82,6 +83,7 @@ public class PSConfig
 
             readDistillationInfo(vodkaInfo, "vodka", MINUTE * 30, MINUTE * 10, config);
             readDistillationInfo(jeneverInfo, "jenever", MINUTE * 30, MINUTE * 10, config);
+            readDistillationInfo(rumInfo, "rum", MINUTE * 30, MINUTE * 10, config);
         }
 
         Psychedelicraft.proxy.loadConfig(configID);
