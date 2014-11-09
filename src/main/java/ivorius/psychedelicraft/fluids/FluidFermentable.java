@@ -18,6 +18,16 @@ public interface FluidFermentable
     public static final int UNFERMENTABLE = -1;
 
     /**
+     * The creative subtype for FluidWithTypes.
+     */
+    public static final String SUBTYPE_OPEN = "openFermentation";
+
+    /**
+     * The creative subtype for FluidWithTypes.
+     */
+    public static final String SUBTYPE_CLOSED = "closedContainer";
+
+    /**
      * Returns the ticks needed for the fluid to ferment. Return {@link #UNFERMENTABLE} if the fluid is curently unfermentable.
      *
      * @param stack         The fluid currently fermenting.

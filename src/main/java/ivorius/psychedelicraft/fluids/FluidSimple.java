@@ -94,9 +94,4 @@ public class FluidSimple extends Fluid implements FluidWithIconSymbolRegistering
                 stillIcon = iconRegister.registerIcon(stillIconName);
         }
     }
-
-    public void addCreativeSubtypes(List<FluidStack> list)
-    {
-        list.add(new FluidStack(this, 1));
-    }
 }

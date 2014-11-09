@@ -95,7 +95,7 @@ public class PSRegistryHandler
         itemBarrel = (ItemBarrel) Item.getItemFromBlock(barrel);
 
         mashTub = new BlockMashTub().setHardness(1.0F);
-        mashTub.setCreativeTab(Psychedelicraft.creativeTab);
+        mashTub.setCreativeTab(Psychedelicraft.drinksTab);
         PSRegistryHandler.registerBlockDefault(mashTub, ItemMashTub.class, "mash_tub");
         mashTub.setBlockName("ygcMashTub");
         GameRegistry.registerTileEntityWithAlternatives(TileEntityMashTub.class, "ygcMashTub");

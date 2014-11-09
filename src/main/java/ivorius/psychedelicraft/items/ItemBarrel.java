@@ -6,7 +6,7 @@
 package ivorius.psychedelicraft.items;
 
 import ivorius.psychedelicraft.blocks.TileEntityBarrel;
-import ivorius.psychedelicraft.fluids.DrinkableFluid;
+import ivorius.psychedelicraft.fluids.FluidFermentable;
 import ivorius.psychedelicraft.fluids.FluidHelper;
 import ivorius.psychedelicraft.fluids.FluidWithIconSymbol;
 import ivorius.psychedelicraft.fluids.FluidWithIconSymbolRegistering;
@@ -105,7 +105,7 @@ public class ItemBarrel extends ItemBlockFluidContainer
     {
         list.add(new ItemStack(item, 1, woodType));
 
-        for (FluidStack fluidStack : FluidHelper.allFluids(DrinkableFluid.SUBTYPE, capacity))
+        for (FluidStack fluidStack : FluidHelper.allFluids(FluidFermentable.SUBTYPE_CLOSED, capacity))
         {
             ItemStack stack = new ItemStack(item, 1, woodType);
             fill(stack, fluidStack, true);

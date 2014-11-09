@@ -90,25 +90,13 @@ public class FluidDrug extends FluidSimple implements FluidWithTypes, DrinkableF
     @Override
     public void addCreativeSubtypes(String listType, List<FluidStack> list)
     {
-        List<FluidStack> defaultTypes = new ArrayList<>();
-        addCreativeSubtypes(defaultTypes);
+        FluidStack defaultStack = new FluidStack(this, 1);
 
-        for (FluidStack stack : defaultTypes)
-        {
-            if (DrinkableFluid.SUBTYPE.equals(listType) && canDrink(stack, null))
-                list.add(stack);
+        if (DrinkableFluid.SUBTYPE.equals(listType) && canDrink(defaultStack, null))
+            list.add(new FluidStack(this, 1));
 
-            if (InjectableFluid.SUBTYPE.equals(listType) && canInject(stack, null))
-                list.add(stack);
-
-            if (ExplodingFluid.SUBTYPE.equals(listType) && (fireStrength(stack) > 0.0f || explosionStrength(stack) > 0.0f))
-                list.add(stack);
-        }
-    }
-
-    public void addCreativeSubtypes(List<FluidStack> list)
-    {
-        list.add(new FluidStack(this, 1));
+        if (InjectableFluid.SUBTYPE.equals(listType) && canInject(defaultStack, null))
+            list.add(new FluidStack(this, 1));
     }
 
     @Override

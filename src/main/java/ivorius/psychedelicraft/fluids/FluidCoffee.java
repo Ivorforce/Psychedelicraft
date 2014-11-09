@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class FluidCoffee extends FluidDrug
 {
-    public static final int WARMTH_STEPS = 3;
+    public static final int WARMTH_STEPS = 2;
 
     public FluidCoffee(String fluidName)
     {
@@ -31,22 +31,24 @@ public class FluidCoffee extends FluidDrug
     {
         super.getDrugInfluencesPerLiter(fluidStack, list);
 
-        float warmth = getCoffeeTemperature(fluidStack);
+        float warmth = (float)getCoffeeTemperature(fluidStack) / (float) WARMTH_STEPS;
         list.add(new DrugInfluence("Caffeine", 20, 0.002, 0.001, 0.25f + warmth * 0.05f));
         list.add(new DrugInfluence("Warmth", 0, 0.00, 0.1, 0.8f * warmth));
     }
 
     @Override
-    public void addCreativeSubtypes(List<FluidStack> list)
+    public void addCreativeSubtypes(String listType, List<FluidStack> list)
     {
-        super.addCreativeSubtypes(list);
+        super.addCreativeSubtypes(listType, list);
 
-        for (int warmth = 1; warmth < WARMTH_STEPS; warmth++)
+        if (listType.equals(DrinkableFluid.SUBTYPE))
         {
-            FluidStack fluidStack = new FluidStack(this, 1);
-            fluidStack.tag = new NBTTagCompound();
-            fluidStack.tag.setFloat("temperature", warmth / (float) (WARMTH_STEPS - 1));
-            list.add(fluidStack);
+            for (int temperature = 1; temperature <= WARMTH_STEPS; temperature++)
+            {
+                FluidStack fluidStack = new FluidStack(this, 1);
+                setCoffeeTemperature(fluidStack, temperature);
+                list.add(fluidStack);
+            }
         }
     }
 
@@ -61,11 +63,17 @@ public class FluidCoffee extends FluidDrug
     public String getUnlocalizedName(FluidStack stack)
     {
         float warmth = getCoffeeTemperature(stack);
-        return super.getUnlocalizedName(stack) + ".temperature" + (MathHelper.floor_float(warmth * (WARMTH_STEPS - 1) + 0.5f));
+        return super.getUnlocalizedName(stack) + ".temperature" + warmth;
     }
 
-    public float getCoffeeTemperature(FluidStack stack)
+    public void setCoffeeTemperature(FluidStack stack, int temperature)
     {
-        return stack.tag != null ? IvMathHelper.clamp(0.0f, stack.tag.getFloat("temperature"), 1.0f) : 0.0f;
+        FluidHelper.ensureTag(stack);
+        stack.tag.setInteger("temperature", temperature);
+    }
+
+    public int getCoffeeTemperature(FluidStack stack)
+    {
+        return stack.tag != null ? stack.tag.getInteger("temperature") : 0;
     }
 }

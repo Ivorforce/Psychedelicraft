@@ -77,29 +77,33 @@ public class FluidMaturingAlcohol extends FluidDrug implements FluidFermentable
     }
 
     @Override
-    public void addCreativeSubtypes(List<FluidStack> list)
+    public void addCreativeSubtypes(String listType, List<FluidStack> list)
     {
-        super.addCreativeSubtypes(list);
-
-        for (int fermentation = 1; fermentation <= fermentationSteps; fermentation++)
+        if (listType.equals(FluidFermentable.SUBTYPE_OPEN))
         {
-            FluidStack fluidStack = new FluidStack(this, 1);
-            setFermentation(fluidStack, fermentation);
-            list.add(fluidStack);
+            for (int fermentation = 0; fermentation <= fermentationSteps; fermentation++)
+            {
+                FluidStack fluidStack = new FluidStack(this, 1);
+                setFermentation(fluidStack, fermentation);
+                list.add(fluidStack);
+            }
         }
 
-        for (int maturation = 1; maturation <= maturationSteps; maturation++)
+        if (listType.equals(DrinkableFluid.SUBTYPE) || listType.equals(FluidFermentable.SUBTYPE_CLOSED))
         {
+            for (int maturation = 1; maturation <= maturationSteps; maturation++)
+            {
+                FluidStack fluidStack = new FluidStack(this, 1);
+                setFermentation(fluidStack, fermentationSteps);
+                setMaturation(fluidStack, maturation);
+                list.add(fluidStack);
+            }
+
             FluidStack fluidStack = new FluidStack(this, 1);
             setFermentation(fluidStack, fermentationSteps);
-            setMaturation(fluidStack, maturation);
+            setIsVinegar(fluidStack, true);
             list.add(fluidStack);
         }
-
-        FluidStack fluidStack = new FluidStack(this, 1);
-        setFermentation(fluidStack, fermentationSteps);
-        setIsVinegar(fluidStack, true);
-        list.add(fluidStack);
     }
 
     @Override

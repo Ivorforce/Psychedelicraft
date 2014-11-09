@@ -13,6 +13,9 @@ import net.minecraftforge.fluids.FluidStack;
  */
 public interface DrinkableFluid
 {
+    /**
+     * The creative subtype for FluidWithTypes.
+     */
     public static final String SUBTYPE = "drinkable";
 
     /**

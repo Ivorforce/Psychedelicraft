@@ -8,10 +8,14 @@ package ivorius.psychedelicraft.items;
 import ivorius.ivtoolkit.blocks.IvMultiBlockHelper;
 import ivorius.ivtoolkit.blocks.IvTileEntityMultiBlock;
 import ivorius.psychedelicraft.blocks.TileEntityMashTub;
+import ivorius.psychedelicraft.fluids.FluidFermentable;
+import ivorius.psychedelicraft.fluids.FluidHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -81,6 +85,19 @@ public class ItemMashTub extends ItemBlockFluidContainer
     @Override
     public void registerIcons(IIconRegister iconRegister)
     {
+    }
+
+    @Override
+    public void getSubItems(Item item, CreativeTabs tab, List list)
+    {
+        super.getSubItems(item, tab, list);
+
+        for (FluidStack fluidStack : FluidHelper.allFluids(FluidFermentable.SUBTYPE_OPEN, capacity))
+        {
+            ItemStack stack = new ItemStack(item);
+            fill(stack, fluidStack, true);
+            list.add(stack);
+        }
     }
 
     @Override

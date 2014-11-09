@@ -18,6 +18,11 @@ public interface FluidDistillable
     public static final int UNDISTILLABLE = -1;
 
     /**
+     * The creative subtype for FluidWithTypes.
+     */
+    public static final String SUBTYPE = "distillable";
+
+    /**
      * Returns the ticks needed for the fluid to distill. Return {@link #UNDISTILLABLE} if the fluid is curently not distillable.
      *
      * @param stack The fluid currently being distilled.
