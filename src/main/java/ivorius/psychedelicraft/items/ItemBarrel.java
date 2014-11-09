@@ -24,6 +24,9 @@ import java.util.List;
 public class ItemBarrel extends ItemBlockFluidContainer
 {
     private IIcon spruceIcon;
+    private IIcon birchIcon;
+    private IIcon jungleIcon;
+    private IIcon acaciaIcon;
     private IIcon darkOakIcon;
 
     public ItemBarrel(Block block)
@@ -54,6 +57,9 @@ public class ItemBarrel extends ItemBlockFluidContainer
         super.registerIcons(iconRegister);
 
         spruceIcon = iconRegister.registerIcon(this.field_150939_a.getItemIconName() + "_spruce");
+        birchIcon = iconRegister.registerIcon(this.field_150939_a.getItemIconName() + "_birch");
+        jungleIcon = iconRegister.registerIcon(this.field_150939_a.getItemIconName() + "_jungle");
+        acaciaIcon = iconRegister.registerIcon(this.field_150939_a.getItemIconName() + "_acacia");
         darkOakIcon = iconRegister.registerIcon(this.field_150939_a.getItemIconName() + "_darkOak");
     }
 
@@ -83,10 +89,19 @@ public class ItemBarrel extends ItemBlockFluidContainer
             }
         }
 
-        if (stack.getItemDamage() == 1)
-            return spruceIcon;
-        else if (stack.getItemDamage() == 5)
-            return darkOakIcon;
+        switch (stack.getItemDamage())
+        {
+            case 1:
+                return spruceIcon;
+            case 2:
+                return birchIcon;
+            case 3:
+                return jungleIcon;
+            case 4:
+                return acaciaIcon;
+            case 5:
+                return darkOakIcon;
+        }
 
         return super.getIcon(stack, pass);
     }
@@ -98,6 +113,9 @@ public class ItemBarrel extends ItemBlockFluidContainer
 
         getSubItems(item, tab, list, 0); // Oak
         getSubItems(item, tab, list, 1); // Spruce
+        getSubItems(item, tab, list, 2); // Birch
+        getSubItems(item, tab, list, 3); // Jungle
+        getSubItems(item, tab, list, 4); // Acacia
         getSubItems(item, tab, list, 5); // Dark oak
     }
 

@@ -26,6 +26,9 @@ public class TileEntityRendererBarrel extends TileEntitySpecialRenderer
 
     private ResourceLocation barrelTexture;
     private ResourceLocation barrelTextureSpruce;
+    private ResourceLocation barrelTextureBirch;
+    private ResourceLocation barrelTextureJungle;
+    private ResourceLocation barrelTextureAcacia;
     private ResourceLocation barrelTextureDarkOak;
 
     public TileEntityRendererBarrel()
@@ -35,6 +38,9 @@ public class TileEntityRendererBarrel extends TileEntitySpecialRenderer
         this.barrelModel = new ModelBarrel();
         this.barrelTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "barrelTexture.png");
         this.barrelTextureSpruce = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "barrelTextureSpruce.png");
+        this.barrelTextureBirch = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "barrelTextureBirch.png");
+        this.barrelTextureJungle = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "barrelTextureJungle.png");
+        this.barrelTextureAcacia = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "barrelTextureAcacia.png");
         this.barrelTextureDarkOak = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "barrelTextureDarkOak.png");
     }
 
@@ -96,6 +102,12 @@ public class TileEntityRendererBarrel extends TileEntitySpecialRenderer
         {
             case 1:
                 return barrelTextureSpruce;
+            case 2:
+                return barrelTextureBirch;
+            case 3:
+                return barrelTextureJungle;
+            case 4:
+                return barrelTextureAcacia;
             case 5:
                 return barrelTextureDarkOak;
             default:
