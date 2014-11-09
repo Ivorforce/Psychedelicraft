@@ -41,7 +41,7 @@ public class FluidCoffee extends FluidDrug
     {
         super.addCreativeSubtypes(listType, list);
 
-        if (listType.equals(DrinkableFluid.SUBTYPE))
+        if (listType.equals(DrinkableFluid.SUBTYPE) || listType.equals(FluidFermentable.SUBTYPE_CLOSED))
         {
             for (int temperature = 1; temperature <= WARMTH_STEPS; temperature++)
             {
@@ -62,7 +62,7 @@ public class FluidCoffee extends FluidDrug
     @Override
     public String getUnlocalizedName(FluidStack stack)
     {
-        float warmth = getCoffeeTemperature(stack);
+        int warmth = getCoffeeTemperature(stack);
         return super.getUnlocalizedName(stack) + ".temperature" + warmth;
     }
 

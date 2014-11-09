@@ -109,8 +109,6 @@ public class ItemBarrel extends ItemBlockFluidContainer
     @Override
     public void getSubItems(Item item, CreativeTabs tab, List list)
     {
-        super.getSubItems(item, tab, list);
-
         getSubItems(item, tab, list, 0); // Oak
         getSubItems(item, tab, list, 1); // Spruce
         getSubItems(item, tab, list, 2); // Birch

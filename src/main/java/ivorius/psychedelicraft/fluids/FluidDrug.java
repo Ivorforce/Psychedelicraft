@@ -92,7 +92,7 @@ public class FluidDrug extends FluidSimple implements FluidWithTypes, DrinkableF
     {
         FluidStack defaultStack = new FluidStack(this, 1);
 
-        if (DrinkableFluid.SUBTYPE.equals(listType) && canDrink(defaultStack, null))
+        if ((DrinkableFluid.SUBTYPE.equals(listType) || FluidFermentable.SUBTYPE_CLOSED.equals(listType)) && canDrink(defaultStack, null))
             list.add(new FluidStack(this, 1));
 
         if (InjectableFluid.SUBTYPE.equals(listType) && canInject(defaultStack, null))
