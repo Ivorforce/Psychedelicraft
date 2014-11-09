@@ -26,21 +26,21 @@ public class FluidMaturingAlcohol extends FluidDrug implements FluidFermentable
     public double fermentationAlcohol;
     public double maturationAlcohol;
 
-    public MaturationInfo config;
+    public MaturationInfo maturationInfo;
 
     public static double zeroToOne(double value, double min, double max)
     {
         return IvMathHelper.clamp(0.0, (value - min) / (max - min), 1.0);
     }
 
-    public FluidMaturingAlcohol(String fluidName, int fermentationSteps, int maturationSteps, double fermentationAlcohol, double maturationAlcohol, MaturationInfo config)
+    public FluidMaturingAlcohol(String fluidName, int fermentationSteps, int maturationSteps, double fermentationAlcohol, double maturationAlcohol, MaturationInfo maturationInfo)
     {
         super(fluidName);
         this.fermentationSteps = fermentationSteps;
         this.maturationSteps = maturationSteps;
         this.fermentationAlcohol = fermentationAlcohol;
         this.maturationAlcohol = maturationAlcohol;
-        this.config = config;
+        this.maturationInfo = maturationInfo;
     }
 
     @Override
@@ -111,12 +111,12 @@ public class FluidMaturingAlcohol extends FluidDrug implements FluidFermentable
         if (fermentation < fermentationSteps)
         {
             if (openContainer)
-                return config.ticksPerFermentation;
+                return maturationInfo.ticksPerFermentation;
         }
         else if (openContainer)
-            return config.ticksUntilAcetification;
+            return maturationInfo.ticksUntilAcetification;
         else if (maturation < maturationSteps)
-            return config.ticksPerMaturation;
+            return maturationInfo.ticksPerMaturation;
 
         return UNFERMENTABLE;
     }

@@ -10,11 +10,11 @@ package ivorius.psychedelicraft.fluids;
  */
 public class PSFluids
 {
-    public static FluidDrug beer;
-    public static FluidDrug jenever;
-    public static FluidDrug wine;
-    public static FluidDrug vodka;
-    public static FluidDrug riceWine;
+    public static FluidMaturingAlcohol beer;
+    public static FluidMaturingAlcohol wine;
+    public static FluidMaturingAlcohol riceWine;
+    public static FluidDistillingAlcohol jenever;
+    public static FluidDistillingAlcohol vodka;
 
     public static FluidDrug coffee;
     public static FluidDrug cocaTea;
