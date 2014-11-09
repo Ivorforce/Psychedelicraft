@@ -26,21 +26,21 @@ public class FluidMaturingAlcohol extends FluidDrug implements FluidFermentable
     public double fermentationAlcohol;
     public double maturationAlcohol;
 
-    public MaturationInfo maturationInfo;
+    public TickInfo tickInfo;
 
     public static double zeroToOne(double value, double min, double max)
     {
         return IvMathHelper.clamp(0.0, (value - min) / (max - min), 1.0);
     }
 
-    public FluidMaturingAlcohol(String fluidName, int fermentationSteps, int maturationSteps, double fermentationAlcohol, double maturationAlcohol, MaturationInfo maturationInfo)
+    public FluidMaturingAlcohol(String fluidName, int fermentationSteps, int maturationSteps, double fermentationAlcohol, double maturationAlcohol, TickInfo tickInfo)
     {
         super(fluidName);
         this.fermentationSteps = fermentationSteps;
         this.maturationSteps = maturationSteps;
         this.fermentationAlcohol = fermentationAlcohol;
         this.maturationAlcohol = maturationAlcohol;
-        this.maturationInfo = maturationInfo;
+        this.tickInfo = tickInfo;
     }
 
     @Override
@@ -111,12 +111,12 @@ public class FluidMaturingAlcohol extends FluidDrug implements FluidFermentable
         if (fermentation < fermentationSteps)
         {
             if (openContainer)
-                return maturationInfo.ticksPerFermentation;
+                return tickInfo.ticksPerFermentation;
         }
         else if (openContainer)
-            return maturationInfo.ticksUntilAcetification;
+            return tickInfo.ticksUntilAcetification;
         else if (maturation < maturationSteps)
-            return maturationInfo.ticksPerMaturation;
+            return tickInfo.ticksPerMaturation;
 
         return UNFERMENTABLE;
     }
@@ -193,7 +193,7 @@ public class FluidMaturingAlcohol extends FluidDrug implements FluidFermentable
         stack.tag.setInteger("maturation", maturation);
     }
 
-    public static class MaturationInfo
+    public static class TickInfo
     {
         public int ticksPerFermentation;
         public int ticksPerMaturation;

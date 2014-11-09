@@ -379,7 +379,7 @@ public class PSRegistryHandler
         vodka.setFlowingIconName(modBase + "clear_flow");
         FluidRegistry.registerFluid(vodka);
 
-        rum = new FluidRum("pscRum", 2, 8, 0.35f, 1.7f, PSConfig.rumInfo);
+        rum = new FluidRum("pscRum", 2, 8, 5, 0.35f, 1.7f, 0.2f, PSConfig.rumInfo);
         rum.setDrinkable(true);
         rum.setColor(0x44e8f4f8);
         rum.setSymbolIconName(modBase + "drinkRum");

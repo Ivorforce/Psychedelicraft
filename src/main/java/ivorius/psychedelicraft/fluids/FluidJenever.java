@@ -2,6 +2,7 @@ package ivorius.psychedelicraft.fluids;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.MCColorHelper;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
@@ -24,9 +25,9 @@ public class FluidJenever extends FluidDistillingAlcohol
     @SideOnly(Side.CLIENT)
     private IIcon iconSemiWortFlow;
 
-    public FluidJenever(String fluidName, int fermentationSteps, int distillationSteps, float fermentationAlcohol, float distillationAlcohol, DistillationInfo distillationInfo)
+    public FluidJenever(String fluidName, int fermentationSteps, int distillationSteps, float fermentationAlcohol, float distillationAlcohol, TickInfo tickInfo)
     {
-        super(fluidName, fermentationSteps, distillationSteps, fermentationAlcohol, distillationAlcohol, distillationInfo);
+        super(fluidName, fermentationSteps, distillationSteps, fermentationAlcohol, distillationAlcohol, tickInfo);
     }
 
     @Override
@@ -43,10 +44,10 @@ public class FluidJenever extends FluidDistillingAlcohol
 
         if (textureType == TEXTURE_TYPE_BLOCK)
         {
-            iconWortStill = iconRegister.registerIcon("slurry_still");
-            iconWortFlow = iconRegister.registerIcon("slurry_flow");
-            iconSemiWortStill = iconRegister.registerIcon("semi_slurry_still");
-            iconSemiWortFlow = iconRegister.registerIcon("semi_slurry_flow");
+            iconWortStill = iconRegister.registerIcon(Psychedelicraft.modBase + "slurry_still");
+            iconWortFlow = iconRegister.registerIcon(Psychedelicraft.modBase + "slurry_flow");
+            iconSemiWortStill = iconRegister.registerIcon(Psychedelicraft.modBase + "semi_slurry_still");
+            iconSemiWortFlow = iconRegister.registerIcon(Psychedelicraft.modBase + "semi_slurry_flow");
         }
     }
 

@@ -145,10 +145,15 @@ fluid.pscVodka.ferment0=Vodka Wort
 fluid.pscVodka.ferment1=Vodka Half-Wash
 fluid.pscVodka.ferment2=Vodka Wash
 fluid.pscRum=Rum
-fluid.pscRum.distill=Rum (%d times distilled)
 fluid.pscRum.ferment0=Rum Wort
 fluid.pscRum.ferment1=Rum Half-Wash
 fluid.pscRum.ferment2=Rum Wash
+fluid.pscRum.distill=Rum (%d times distilled)
+fluid.pscRum.mature1=Very Young Rum (%d times distilled)
+fluid.pscRum.mature2=Young Rum (%d times distilled)
+fluid.pscRum.mature3=Mature Rum (%d times distilled)
+fluid.pscRum.mature4=Quality Rum (%d times distilled)
+fluid.pscRum.mature5=Historical Rum (%d times distilled)
 
 fluid.pscCoffee=Coffee
 fluid.pscCoffee.temperature0=Cold Coffee

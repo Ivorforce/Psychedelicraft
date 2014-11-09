@@ -13,9 +13,9 @@ public class PSFluids
     public static FluidMaturingAlcohol beer;
     public static FluidMaturingAlcohol wine;
     public static FluidMaturingAlcohol riceWine;
-    public static FluidDistillingAlcohol jenever;
-    public static FluidDistillingAlcohol vodka;
-    public static FluidDistillingAlcohol rum;
+    public static FluidJenever jenever;
+    public static FluidVodka vodka;
+    public static FluidRum rum;
 
     public static FluidDrug coffee;
     public static FluidDrug cocaTea;

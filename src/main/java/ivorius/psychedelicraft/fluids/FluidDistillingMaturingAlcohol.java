@@ -16,23 +16,27 @@ import java.util.List;
 /**
  * Created by lukas on 27.10.14.
  */
-public class FluidDistillingAlcohol extends FluidDrug implements FluidFermentable, FluidDistillable
+public class FluidDistillingMaturingAlcohol extends FluidDrug implements FluidFermentable, FluidDistillable
 {
     public int fermentationSteps;
     public int distillationSteps;
+    public int maturationSteps;
 
     public float fermentationAlcohol;
     public float distillationAlcohol;
+    public float maturationAlcohol;
 
     public TickInfo tickInfo;
 
-    public FluidDistillingAlcohol(String fluidName, int fermentationSteps, int distillationSteps, float fermentationAlcohol, float distillationAlcohol, TickInfo tickInfo)
+    public FluidDistillingMaturingAlcohol(String fluidName, int fermentationSteps, int distillationSteps, int maturationSteps, float fermentationAlcohol, float distillationAlcohol, float maturationAlcohol, TickInfo tickInfo)
     {
         super(fluidName);
         this.fermentationSteps = fermentationSteps;
         this.distillationSteps = distillationSteps;
+        this.maturationSteps = maturationSteps;
         this.fermentationAlcohol = fermentationAlcohol;
         this.distillationAlcohol = distillationAlcohol;
+        this.maturationAlcohol = maturationAlcohol;
         this.tickInfo = tickInfo;
     }
 
@@ -43,9 +47,11 @@ public class FluidDistillingAlcohol extends FluidDrug implements FluidFermentabl
 
         int fermentation = getFermentation(fluidStack);
         int distillation = getDistillation(fluidStack);
+        int maturation = getMaturation(fluidStack);
 
         double alcohol = (double) fermentation / (double) fermentationSteps * fermentationAlcohol
-                + (double) distillation / (double) distillationSteps * distillationAlcohol;
+                + (double) distillation / (double) distillationSteps * distillationAlcohol
+                + (double) maturation / (double) maturationSteps * maturationAlcohol;
 
         list.add(new DrugInfluence("Alcohol", 20, 0.003, 0.002, alcohol));
     }
@@ -69,6 +75,15 @@ public class FluidDistillingAlcohol extends FluidDrug implements FluidFermentabl
             setDistillation(fluidStack, distillation);
             list.add(fluidStack);
         }
+
+        for (int maturation = 1; maturation <= maturationSteps; maturation++)
+        {
+            FluidStack fluidStack = new FluidStack(this, 1);
+            setFermentation(fluidStack, fermentationSteps);
+            setDistillation(fluidStack, distillationSteps);
+            setMaturation(fluidStack, maturation);
+            list.add(fluidStack);
+        }
     }
 
     @Override
@@ -78,6 +93,10 @@ public class FluidDistillingAlcohol extends FluidDrug implements FluidFermentabl
         {
             if (openContainer)
                 return tickInfo.ticksPerFermentation;
+        }
+        else if (!openContainer && getMaturation(stack) < maturationSteps && getDistillation(stack) > 0)
+        {
+            return tickInfo.ticksPerMaturation;
         }
 
         return UNFERMENTABLE;
@@ -93,6 +112,12 @@ public class FluidDistillingAlcohol extends FluidDrug implements FluidFermentabl
             if (openContainer)
                 setFermentation(stack, fermentation + 1);
         }
+        else
+        {
+            int maturation = getMaturation(stack);
+            if (!openContainer && maturation < maturationSteps)
+                setMaturation(stack, maturation + 1);
+        }
     }
 
     @Override
@@ -100,10 +125,11 @@ public class FluidDistillingAlcohol extends FluidDrug implements FluidFermentabl
     {
         int fermentation = getFermentation(stack);
         int distillation = getDistillation(stack);
+        int maturation = getMaturation(stack);
 
         if (fermentation < fermentationSteps)
             return UNDISTILLABLE;
-        else if (distillation < distillationSteps)
+        else if (maturation == 0 && distillation < distillationSteps)
             return tickInfo.ticksPerDistillation;
 
         return UNDISTILLABLE;
@@ -136,8 +162,11 @@ public class FluidDistillingAlcohol extends FluidDrug implements FluidFermentabl
         String s = this.getUnlocalizedName(stack);
 
         int distillation = getDistillation(stack);
+        int maturation = getMaturation(stack);
 
-        if (distillation > 0)
+        if (maturation > 0)
+            return I18n.format(super.getUnlocalizedName(stack) + ".mature" + maturation, distillation);
+        else if (distillation > 0)
             return I18n.format(super.getUnlocalizedName(stack) + ".distill", distillation);
 
         return s == null ? "" : StatCollector.translateToLocal(s);
@@ -177,9 +206,21 @@ public class FluidDistillingAlcohol extends FluidDrug implements FluidFermentabl
         stack.tag.setInteger("distillation", maturation);
     }
 
+    public int getMaturation(FluidStack stack)
+    {
+        return stack.tag != null ? MathHelper.clamp_int(stack.tag.getInteger("maturation"), 0, maturationSteps) : 0;
+    }
+
+    public void setMaturation(FluidStack stack, int maturation)
+    {
+        FluidHelper.ensureTag(stack);
+        stack.tag.setInteger("maturation", maturation);
+    }
+
     public static class TickInfo
     {
         public int ticksPerFermentation;
         public int ticksPerDistillation;
+        public int ticksPerMaturation;
     }
 }

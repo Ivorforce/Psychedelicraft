@@ -7,11 +7,12 @@ package ivorius.psychedelicraft.config;
 
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.entities.PSEntityList;
+import ivorius.psychedelicraft.fluids.FluidDistillingAlcohol;
+import ivorius.psychedelicraft.fluids.FluidDistillingMaturingAlcohol;
+import ivorius.psychedelicraft.fluids.FluidMaturingAlcohol;
 import net.minecraftforge.common.config.Configuration;
 
 import static ivorius.psychedelicraft.Psychedelicraft.config;
-import static ivorius.psychedelicraft.fluids.FluidDistillingAlcohol.DistillationInfo;
-import static ivorius.psychedelicraft.fluids.FluidMaturingAlcohol.MaturationInfo;
 
 /**
  * Created by lukas on 31.07.14.
@@ -41,13 +42,13 @@ public class PSConfig
 
     public static int dryingTableTickDuration;
 
-    public static final MaturationInfo beerInfo = new MaturationInfo();
-    public static final MaturationInfo wineInfo = new MaturationInfo();
-    public static final MaturationInfo riceWineInfo = new MaturationInfo();
+    public static final FluidMaturingAlcohol.TickInfo beerInfo = new FluidMaturingAlcohol.TickInfo();
+    public static final FluidMaturingAlcohol.TickInfo wineInfo = new FluidMaturingAlcohol.TickInfo();
+    public static final FluidMaturingAlcohol.TickInfo riceWineInfo = new FluidMaturingAlcohol.TickInfo();
 
-    public static final DistillationInfo vodkaInfo = new DistillationInfo();
-    public static final DistillationInfo jeneverInfo = new DistillationInfo();
-    public static final DistillationInfo rumInfo = new DistillationInfo();
+    public static final FluidDistillingAlcohol.TickInfo vodkaInfo = new FluidDistillingAlcohol.TickInfo();
+    public static final FluidDistillingAlcohol.TickInfo jeneverInfo = new FluidDistillingAlcohol.TickInfo();
+    public static final FluidDistillingMaturingAlcohol.TickInfo rumInfo = new FluidDistillingMaturingAlcohol.TickInfo();
 
     public static void loadConfig(String configID)
     {
@@ -77,28 +78,36 @@ public class PSConfig
 
             dryingTableTickDuration = config.get(CATEGORY_BALANCING, "dryingTableTickDuration", MINUTE * 16, "Time until plants in the drying table finish the drying process.").getInt();
 
-            readMaturationInfo(beerInfo, "beer", MINUTE * 30, MINUTE * 60, MINUTE * 100, config);
-            readMaturationInfo(wineInfo, "wine", MINUTE * 40, MINUTE * 40, MINUTE * 30, config);
-            readMaturationInfo(riceWineInfo, "riceWine", MINUTE * 40, MINUTE * 40, MINUTE * 30, config);
+            readTickInfo(beerInfo, "beer", MINUTE * 30, MINUTE * 60, MINUTE * 100, config);
+            readTickInfo(wineInfo, "wine", MINUTE * 40, MINUTE * 40, MINUTE * 30, config);
+            readTickInfo(riceWineInfo, "riceWine", MINUTE * 40, MINUTE * 40, MINUTE * 30, config);
 
-            readDistillationInfo(vodkaInfo, "vodka", MINUTE * 30, MINUTE * 10, config);
-            readDistillationInfo(jeneverInfo, "jenever", MINUTE * 30, MINUTE * 10, config);
-            readDistillationInfo(rumInfo, "rum", MINUTE * 30, MINUTE * 10, config);
+            readTickInfo(vodkaInfo, "vodka", MINUTE * 30, MINUTE * 10, config);
+            readTickInfo(jeneverInfo, "jenever", MINUTE * 30, MINUTE * 10, config);
+
+            readTickInfo(rumInfo, "rum", MINUTE * 30, MINUTE * 10, MINUTE * 40, config);
         }
 
         Psychedelicraft.proxy.loadConfig(configID);
     }
 
-    public static void readMaturationInfo(MaturationInfo maturationInfo, String fluidName, int defaultFermentation, int defaultMaturation, int defaultAcetification, Configuration config)
+    public static void readTickInfo(FluidMaturingAlcohol.TickInfo tickInfo, String fluidName, int defaultFermentation, int defaultMaturation, int defaultAcetification, Configuration config)
     {
-        maturationInfo.ticksPerFermentation = config.get(CATEGORY_BALANCING, fluidName + "_ticksPerFermentation", defaultFermentation, String.format("Time until %s wort ferments to the next step.", fluidName)).getInt();
-        maturationInfo.ticksPerMaturation = config.get(CATEGORY_BALANCING, fluidName + "_ticksPerMaturation", defaultMaturation, String.format("Time until %s matures to the next step.", fluidName)).getInt();
-        maturationInfo.ticksUntilAcetification = config.get(CATEGORY_BALANCING, fluidName + "_ticksUntilAcetification", defaultAcetification, String.format("Time until %s acetifies when it oxidizes after complete fermentation. Enter a negative number to disable.", fluidName)).getInt();
+        tickInfo.ticksPerFermentation = config.get(CATEGORY_BALANCING, fluidName + "_ticksPerFermentation", defaultFermentation, String.format("Time until %s wort ferments to the next step.", fluidName)).getInt();
+        tickInfo.ticksPerMaturation = config.get(CATEGORY_BALANCING, fluidName + "_ticksPerMaturation", defaultMaturation, String.format("Time until %s matures to the next step.", fluidName)).getInt();
+        tickInfo.ticksUntilAcetification = config.get(CATEGORY_BALANCING, fluidName + "_ticksUntilAcetification", defaultAcetification, String.format("Time until %s acetifies when it oxidizes after complete fermentation. Enter a negative number to disable.", fluidName)).getInt();
     }
 
-    public static void readDistillationInfo(DistillationInfo distillationInfo, String fluidName, int defaultFermentation, int defaultDistillation, Configuration config)
+    public static void readTickInfo(FluidDistillingAlcohol.TickInfo tickInfo, String fluidName, int defaultFermentation, int defaultDistillation, Configuration config)
     {
-        distillationInfo.ticksPerFermentation = config.get(CATEGORY_BALANCING, fluidName + "_ticksPerFermentation", defaultFermentation, String.format("Time until %s wort ferments to the next step.", fluidName)).getInt();
-        distillationInfo.ticksPerDistillation = config.get(CATEGORY_BALANCING, fluidName + "_ticksPerDistillation", defaultDistillation, String.format("Time until %s distills to the next step.", fluidName)).getInt();
+        tickInfo.ticksPerFermentation = config.get(CATEGORY_BALANCING, fluidName + "_ticksPerFermentation", defaultFermentation, String.format("Time until %s wort ferments to the next step.", fluidName)).getInt();
+        tickInfo.ticksPerDistillation = config.get(CATEGORY_BALANCING, fluidName + "_ticksPerDistillation", defaultDistillation, String.format("Time until %s distills to the next step.", fluidName)).getInt();
+    }
+
+    public static void readTickInfo(FluidDistillingMaturingAlcohol.TickInfo tickInfo, String fluidName, int defaultFermentation, int defaultDistillation, int defaultMaturation, Configuration config)
+    {
+        tickInfo.ticksPerFermentation = config.get(CATEGORY_BALANCING, fluidName + "_ticksPerFermentation", defaultFermentation, String.format("Time until %s wort ferments to the next step.", fluidName)).getInt();
+        tickInfo.ticksPerDistillation = config.get(CATEGORY_BALANCING, fluidName + "_ticksPerDistillation", defaultDistillation, String.format("Time until %s distills to the next step.", fluidName)).getInt();
+        tickInfo.ticksPerMaturation = config.get(CATEGORY_BALANCING, fluidName + "_ticksPerMaturation", defaultMaturation, String.format("Time until %s matures to the next step.", fluidName)).getInt();
     }
 }
