@@ -1,15 +1,6 @@
-/*
- *  Copyright (c) 2014, Lukas Tenbrink.
- *  * http://lukas.axxim.net
- */
-
 package ivorius.psychedelicraft.crafting;
 
-import ivorius.psychedelicraft.items.PSItems;
-import net.minecraft.block.Block;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
@@ -22,11 +13,11 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Created by lukas on 21.10.14.
+ * Created by lukas on 10.11.14.
  */
-public class RecipeFillDrink implements IRecipe
+public class RecipeConvertFluidContainer implements IRecipe
 {
-    public static ItemStack getFirstFillableDrinkHolder(InventoryCrafting inventoryCrafting, FluidStack fluidStack)
+    public static ItemStack getFirstFluidContainer(InventoryCrafting inventoryCrafting)
     {
         for (int i = 0; i < 3; ++i)
         {
@@ -34,7 +25,7 @@ public class RecipeFillDrink implements IRecipe
             {
                 ItemStack itemstack = inventoryCrafting.getStackInRowAndColumn(j, i);
 
-                if (itemstack != null && (itemstack.getItem() instanceof IFluidContainerItem && ((IFluidContainerItem) itemstack.getItem()).fill(itemstack, fluidStack, false) >= fluidStack.amount))
+                if (itemstack != null && (itemstack.getItem() instanceof IFluidContainerItem))
                     return itemstack;
             }
         }
@@ -42,48 +33,24 @@ public class RecipeFillDrink implements IRecipe
         return null;
     }
 
-    public static List<Object> getItemStacks(Object[] items)
-    {
-        List<Object> recipeItems = new ArrayList<>();
-        for (Object in : items)
-        {
-            if (in instanceof ItemStack)
-                recipeItems.add(((ItemStack) in).copy());
-            else if (in instanceof Item)
-                recipeItems.add(new ItemStack((Item) in));
-            else if (in instanceof Block)
-                recipeItems.add(new ItemStack((Block) in));
-            else if (in instanceof String)
-                recipeItems.add(OreDictionary.getOres((String) in));
-            else
-            {
-                String ret = "Invalid shapeless ore recipe: ";
-                for (Object tmp : items)
-                    ret += tmp + ", ";
-                throw new RuntimeException(ret);
-            }
-        }
-        return recipeItems;
-    }
-
-    private final FluidStack recipeOutput;
+    private final ItemStack recipeOutput;
     public final List<Object> recipeItems;
 
-    public RecipeFillDrink(FluidStack recipeOutput, List<Object> items)
+    public RecipeConvertFluidContainer(ItemStack recipeOutput, List<Object> items)
     {
         this.recipeOutput = recipeOutput;
         this.recipeItems = items;
     }
 
-    public RecipeFillDrink(FluidStack recipeOutput, Object... items)
+    public RecipeConvertFluidContainer(ItemStack recipeOutput, Object... items)
     {
-        this(recipeOutput, getItemStacks(items));
+        this(recipeOutput, RecipeFillDrink.getItemStacks(items));
     }
 
     @Override
     public ItemStack getRecipeOutput()
     {
-        return new ItemStack(PSItems.woodenMug);
+        return recipeOutput;
     }
 
     @Override
@@ -91,10 +58,9 @@ public class RecipeFillDrink implements IRecipe
     {
         ArrayList<Object> required = new ArrayList<>(this.recipeItems);
 
-        ItemStack drinkHolder = getFirstFillableDrinkHolder(inventoryCrafting, recipeOutput);
+        ItemStack drinkHolder = getFirstFluidContainer(inventoryCrafting);
         if (drinkHolder == null)
             return false;
-        required.add(drinkHolder);
 
         for (int x = 0; x < inventoryCrafting.getSizeInventory(); x++)
         {
@@ -113,11 +79,11 @@ public class RecipeFillDrink implements IRecipe
 
                     if (next instanceof ItemStack)
                     {
-                        match = OreDictionary.itemMatches((ItemStack)next, slot, false);
+                        match = OreDictionary.itemMatches((ItemStack) next, slot, false);
                     }
                     else if (next instanceof ArrayList)
                     {
-                        Iterator<ItemStack> itr = ((ArrayList<ItemStack>)next).iterator();
+                        Iterator<ItemStack> itr = ((ArrayList<ItemStack>) next).iterator();
                         while (itr.hasNext() && !match)
                         {
                             match = OreDictionary.itemMatches(itr.next(), slot, false);
@@ -145,25 +111,20 @@ public class RecipeFillDrink implements IRecipe
     @Override
     public ItemStack getCraftingResult(InventoryCrafting inventoryCrafting)
     {
-        ItemStack drinkHolder = getFirstFillableDrinkHolder(inventoryCrafting, recipeOutput);
+        ItemStack fluidContainer = getFirstFluidContainer(inventoryCrafting);
+        IFluidContainerItem fluidContainerItem = (IFluidContainerItem) fluidContainer.getItem();
+        FluidStack containedFluid = fluidContainerItem.drain(fluidContainer, fluidContainerItem.getCapacity(fluidContainer), false);
 
-        ItemStack result;
+        ItemStack result = recipeOutput.copy();
+        if (containedFluid != null)
+            ((IFluidContainerItem) result.getItem()).fill(result, containedFluid, true);
 
-        if (drinkHolder.getItem() == Items.bowl)
-            result = new ItemStack(PSItems.woodenBowlDrug);
-        else
-        {
-            result = drinkHolder.copy();
-            result.stackSize = 1;
-        }
-
-        ((IFluidContainerItem) result.getItem()).fill(result, recipeOutput, true);
         return result;
     }
 
     @Override
     public int getRecipeSize()
     {
-        return this.recipeItems.size() + 1;
+        return this.recipeItems.size();
     }
 }

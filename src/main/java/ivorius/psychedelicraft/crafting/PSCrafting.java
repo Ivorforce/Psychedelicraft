@@ -74,7 +74,8 @@ public class PSCrafting
         for (int color = 0; color < ItemDye.field_150922_c.length; color++)
         {
             addRecipe(new ItemStack(bottle, 8, color), " # ", "# #", "###", '#', new ItemStack(stained_glass, 1, 15 - color));
-            addRecipe(new ItemStack(molotovCocktail, 1, color), "P", "G", 'P', paper, 'G', new ItemStack(bottle, 1, color));
+            GameRegistry.addRecipe(new RecipeConvertFluidContainer(new ItemStack(molotovCocktail, 1, color), wool, new ItemStack(bottle, 1, color)));
+            GameRegistry.addRecipe(new RecipeConvertFluidContainer(new ItemStack(bottle, 1, color), new ItemStack(molotovCocktail, 1, color)));
         }
 
         addRecipe(new ItemStack(dryingTable), "###", "#R#", '#', DC_PLANK_WOOD, 'R', DC_REDSTONE_DUST);
