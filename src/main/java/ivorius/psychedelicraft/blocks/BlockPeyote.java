@@ -35,6 +35,25 @@ public class BlockPeyote extends BlockBush implements IGrowable, ITileEntityProv
     }
 
     @Override
+    public void updateTick(World world, int x, int y, int z, Random random)
+    {
+        super.updateTick(world, x, y, z, random); // Ticks about every minute
+
+        int meta = world.getBlockMetadata(x, y, z);
+
+        if (meta < 3)
+        {
+            if (func_149851_a(world, x, y, z, world.isRemote) && random.nextInt(20) == 0)
+                this.growStep(world, random, x, y, z, false);
+        }
+        else
+        {
+            if (func_149851_a(world, x, y, z, world.isRemote) && random.nextInt(120) == 0)
+                this.growStep(world, random, x, y, z, false);
+        }
+    }
+
+    @Override
     public TileEntity createNewTileEntity(World var1, int var2)
     {
         return new TileEntityPeyote();
