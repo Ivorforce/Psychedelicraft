@@ -12,6 +12,7 @@ import ivorius.psychedelicraft.client.rendering.EntityFakeSun;
 import ivorius.psychedelicraft.client.rendering.PsycheShadowHelper;
 import ivorius.psychedelicraft.client.rendering.effectWrappers.*;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.IResource;
@@ -79,9 +80,7 @@ public class DrugShaderHelper
             }
 
             if (addDepth)
-            {
                 passes.add("Depth");
-            }
         }
 
         if (shaderInstanceShadows.depthBuffer.isAllocated() && shaderInstanceShadows.getShaderID() > 0 && doShadows)
@@ -97,9 +96,7 @@ public class DrugShaderHelper
         Minecraft mc = Minecraft.getMinecraft();
 
         if (currentRenderPass != null)
-        {
             endRenderPass();
-        }
 
         currentRenderPass = pass;
         currentRenderPassTicks = ticks;
@@ -224,16 +221,12 @@ public class DrugShaderHelper
         effectWrappers.add(new WrapperDigital(utils));
 
         for (IEffectWrapper effectWrapper : effectWrappers)
-        {
             effectWrapper.alloc();
-        }
 
         setUpRealtimeCacheTexture();
         depthBuffer = new IvDepthBuffer(mc.displayWidth, mc.displayHeight, Psychedelicraft.logger);
         if (!disableDepthBuffer)
-        {
             depthBuffer.allocate();
-        }
 
         IvOpenGLHelper.checkGLError(Psychedelicraft.logger, "Allocation");
     }
@@ -257,9 +250,7 @@ public class DrugShaderHelper
         if (Minecraft.getMinecraft().theWorld != null)
         {
             for (IEffectWrapper effectWrapper : effectWrappers)
-            {
                 effectWrapper.update();
-            }
         }
     }
 
@@ -270,9 +261,7 @@ public class DrugShaderHelper
         if (shader != null && shaderEnabled)
         {
             if (shader.isShaderActive())
-            {
                 return true;
-            }
 
             if (shader.activate(partialTicks, ticks))
             {
@@ -287,94 +276,70 @@ public class DrugShaderHelper
     public static void setTexture2DEnabled(boolean enabled)
     {
         for (ShaderWorld shaderWorld : worldShaders)
-        {
             shaderWorld.setTexture2DEnabled(enabled);
-        }
     }
 
     public static void setLightmapEnabled(boolean enabled)
     {
         for (ShaderWorld shaderWorld : worldShaders)
-        {
             shaderWorld.setLightmapEnabled(enabled);
-        }
     }
 
     public static void setBlendFunc(int func)
     {
         for (ShaderWorld shaderWorld : worldShaders)
-        {
             shaderWorld.setBlendFunc(func);
-        }
     }
 
     public static void setOverrideColor(float... color)
     {
         if (color != null && color.length != 4)
-        {
             throw new IllegalArgumentException("Color must be a length-4 float array");
-        }
 
         for (ShaderWorld shaderWorld : worldShaders)
-        {
             shaderWorld.setOverrideColor(color);
-        }
     }
 
     public static void setGLLightEnabled(boolean enabled)
     {
         for (ShaderWorld shaderWorld : worldShaders)
-        {
             shaderWorld.setGLLightEnabled(enabled);
-        }
     }
 
     public static void setGLLight(int number, float x, float y, float z, float strength, float specular)
     {
         for (ShaderWorld shaderWorld : worldShaders)
-        {
             shaderWorld.setGLLight(number, x, y, z, strength, specular);
-        }
     }
 
     public static void setGLLightAmbient(float strength)
     {
         for (ShaderWorld shaderWorld : worldShaders)
-        {
             shaderWorld.setGLLightAmbient(strength);
-        }
     }
 
     public static void setFogMode(int mode)
     {
         for (ShaderWorld shaderWorld : worldShaders)
-        {
             shaderWorld.setFogMode(mode);
-        }
     }
 
     public static void setFogEnabled(boolean enabled)
     {
         for (ShaderWorld shaderWorld : worldShaders)
-        {
             shaderWorld.setFogEnabled(enabled);
-        }
     }
 
     public static void setDepthMultiplier(float depthMultiplier)
     {
         for (ShaderWorld shaderWorld : worldShaders)
-        {
             shaderWorld.setDepthMultiplier(depthMultiplier);
-        }
     }
 
     public static void setUseScreenTexCoords(boolean enabled)
     {
         for (ShaderWorld shaderWorld : worldShaders)
-        {
             shaderWorld.setUseScreenTexCoords(enabled);
-        }
     }
 
     public static void setScreenSizeDefault()
@@ -391,29 +356,21 @@ public class DrugShaderHelper
     public static void setPixelSize(float pixelWidth, float pixelHeight)
     {
         for (ShaderWorld shaderWorld : worldShaders)
-        {
             shaderWorld.setPixelSize(pixelWidth, pixelHeight);
-        }
     }
 
     public static void setProjectShadows(boolean projectShadows)
     {
         for (ShaderWorld shaderWorld : worldShaders)
-        {
             shaderWorld.setProjectShadows(projectShadows);
-        }
     }
 
     public static int getCurrentAllowedGLDataMask()
     {
         if ("Depth".equals(currentRenderPass))
-        {
             return GL11.GL_DEPTH_BUFFER_BIT;
-        }
         else if ("Shadows".equals(currentRenderPass))
-        {
             return GL11.GL_DEPTH_BUFFER_BIT;
-        }
 
         return ~0;
     }
@@ -423,7 +380,7 @@ public class DrugShaderHelper
         Minecraft mc = Minecraft.getMinecraft();
         Framebuffer framebuffer = mc.getFramebuffer();
 
-        return (framebuffer != null && framebuffer.framebufferObject >= 0) ? framebuffer.framebufferObject : 0;
+        return (OpenGlHelper.isFramebufferEnabled() && framebuffer != null && framebuffer.framebufferObject >= 0) ? framebuffer.framebufferObject : 0;
     }
 
     public static void postRender(float ticks, float partialTicks)
@@ -445,9 +402,7 @@ public class DrugShaderHelper
         realtimePingPong.preTick(screenWidth, screenHeight);
 
         for (IEffectWrapper effectWrapper : effectWrappers)
-        {
             effectWrapper.apply(partialTicks, realtimePingPong);
-        }
 
         realtimePingPong.postTick();
 
@@ -465,39 +420,23 @@ public class DrugShaderHelper
     public static void delete3DShaders()
     {
         if (shaderInstance != null)
-        {
             shaderInstance.deleteShader();
-        }
         shaderInstance = null;
 
         if (shaderInstanceDepth != null)
-        {
             shaderInstanceDepth.deleteShader();
-        }
         shaderInstanceDepth = null;
 
         if (shaderInstanceShadows != null)
-        {
             shaderInstanceShadows.deleteShader();
-        }
         shaderInstanceShadows = null;
-    }
-
-    private static void deleteEffect(Iv2DScreenEffect instance)
-    {
-        if (instance != null)
-        {
-            instance.destruct();
-        }
     }
 
     public static void deleteRealtimeCacheTexture()
     {
         if (realtimePingPong != null)
-        {
             realtimePingPong.destroy();
-            realtimePingPong = null;
-        }
+        realtimePingPong = null;
     }
 
     public static void deallocate()
@@ -506,15 +445,11 @@ public class DrugShaderHelper
         deleteRealtimeCacheTexture();
 
         for (IEffectWrapper effectWrapper : effectWrappers)
-        {
             effectWrapper.dealloc();
-        }
         effectWrappers.clear();
 
         if (depthBuffer != null)
-        {
             depthBuffer.deallocate();
-        }
         depthBuffer = null;
 
         worldShaders.clear();
