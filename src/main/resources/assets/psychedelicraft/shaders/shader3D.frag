@@ -108,8 +108,8 @@ void main()
         for (int i = 0; i < MAX_LIGHTS; i++)
         {
             float glLightColor = glLightAmbient;
-            vec3 lightVec = normalize(gl_LightSource[0].position.xyz - relativeVertex);
-            vec4 lightDiff = gl_FrontLightProduct[0].diffuse * max(dot(normalVector, lightVec), 0.0);
+            vec3 lightVec = normalize(gl_LightSource[i].position.xyz);
+            vec4 lightDiff = gl_FrontLightProduct[i].diffuse * max(dot(normalVector, lightVec), 0.0);
             
             finalLightColor += lightDiff.rgb;
         }
