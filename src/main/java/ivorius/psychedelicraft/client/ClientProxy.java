@@ -8,7 +8,6 @@ package ivorius.psychedelicraft.client;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
-import ivorius.ivtoolkit.items.IvItemRendererModel;
 import ivorius.ivtoolkit.rendering.IvParticleHelper;
 import ivorius.psychedelicraft.PSProxy;
 import ivorius.psychedelicraft.Psychedelicraft;

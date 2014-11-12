@@ -42,7 +42,7 @@ public class DrugShaderHelper
     public static boolean bypassPingPongBuffer = false;
     public static boolean shaderEnabled = true;
     public static boolean shader2DEnabled = true;
-    public static boolean doShadows = true;
+    public static boolean doShadows = false;
     public static boolean doHeatDistortion = false;
     public static boolean doWaterDistortion = false;
 
@@ -63,7 +63,7 @@ public class DrugShaderHelper
 
     public static List<String> getRenderPasses(float partialTicks)
     {
-        @SuppressWarnings("Convert2Diamond") List<String> passes = new ArrayList<String>();
+        List<String> passes = new ArrayList<>();
 
         passes.add("Default");
 
@@ -76,6 +76,7 @@ public class DrugShaderHelper
                 if (wrapper.wantsDepthBuffer(partialTicks))
                 {
                     addDepth = true;
+                    break;
                 }
             }
 
@@ -104,13 +105,17 @@ public class DrugShaderHelper
         switch (pass)
         {
             case "Default":
-//            IvRenderHelper.drawRectFullScreen(mc);
-//            GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
-
                 shaderInstance.shouldDoShadows = doShadows;
                 shaderInstance.shadowDepthTextureIndex = shaderInstanceShadows.depthBuffer.getDepthTextureIndex();
 
-                return useShader(partialTicks, ticks, shaderInstance);
+                if (useShader(partialTicks, ticks, shaderInstance))
+                {
+//                    IvRenderHelper.drawRectFullScreen(mc);
+//                    GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
+
+                    return true;
+                }
+                return false;
             case "Depth":
                 depthBuffer.setParentFB(getMCFBO());
                 depthBuffer.setSize(mc.displayWidth, mc.displayHeight);
