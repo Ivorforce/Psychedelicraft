@@ -179,7 +179,7 @@ public class DrugShaderHelper
     public static void allocate()
     {
         Minecraft mc = Minecraft.getMinecraft();
-        delete3DShaders();
+        deallocate();
 
         String utils = null;
 
@@ -190,7 +190,7 @@ public class DrugShaderHelper
         }
         catch (Exception ex)
         {
-            Psychedelicraft.logger.error("Could not load shader utils!", utils);
+            Psychedelicraft.logger.error("Could not load shader utils!", ex);
         }
 
         shaderInstance = new ShaderMain(Psychedelicraft.logger);
