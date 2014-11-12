@@ -178,6 +178,8 @@ public class DrugShaderHelper
 
     public static void allocate()
     {
+        IvOpenGLHelper.checkGLError(Psychedelicraft.logger, "Pre-Allocation");
+
         Minecraft mc = Minecraft.getMinecraft();
         deallocate();
 
@@ -205,6 +207,8 @@ public class DrugShaderHelper
         setUpShader(shaderInstanceShadows, "shader3D.vert", "shader3DDepth.frag", utils);
         worldShaders.add(shaderInstanceShadows);
 
+        IvOpenGLHelper.checkGLError(Psychedelicraft.logger, "Allocation-Shaders");
+
         // Add order = Application order!
         effectWrappers.add(new WrapperHeatDistortion(utils));
         effectWrappers.add(new WrapperUnderwaterDistortion(utils));
@@ -222,6 +226,8 @@ public class DrugShaderHelper
 
         for (IEffectWrapper effectWrapper : effectWrappers)
             effectWrapper.alloc();
+
+        IvOpenGLHelper.checkGLError(Psychedelicraft.logger, "Allocation-Effects");
 
         setUpRealtimeCacheTexture();
         depthBuffer = new IvDepthBuffer(mc.displayWidth, mc.displayHeight, Psychedelicraft.logger);
