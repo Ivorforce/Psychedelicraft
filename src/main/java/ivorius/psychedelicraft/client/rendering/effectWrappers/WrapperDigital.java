@@ -5,6 +5,7 @@
 
 package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
+import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.ivtoolkit.rendering.IvOpenGLTexturePingPong;
 import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 
@@ -44,16 +45,12 @@ public class WrapperDigital implements IEffectWrapper
     }
 
     @Override
-    public void apply(float partialTicks, IvOpenGLTexturePingPong pingPong)
+    public void apply(float partialTicks, IvOpenGLTexturePingPong pingPong, IvDepthBuffer depthBuffer)
     {
-        if (DrugShaderHelper.depthBuffer.isAllocated())
-        {
-            digitalPD.apply(partialTicks, pingPong);
-        }
+        if (depthBuffer != null)
+            digitalPD.apply(partialTicks, pingPong, depthBuffer);
         else
-        {
-            digitalMD.apply(partialTicks, pingPong);
-        }
+            digitalMD.apply(partialTicks, pingPong, depthBuffer);
     }
 
     @Override

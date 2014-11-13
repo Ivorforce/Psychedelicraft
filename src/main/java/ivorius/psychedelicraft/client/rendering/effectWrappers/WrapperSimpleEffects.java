@@ -5,11 +5,10 @@
 
 package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
-import ivorius.ivtoolkit.math.IvMathHelper;
+import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
 import ivorius.psychedelicraft.client.rendering.shaders.ShaderSimpleEffects;
-import ivorius.psychedelicraft.entities.drugs.Drug;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.client.Minecraft;
 
@@ -24,7 +23,7 @@ public class WrapperSimpleEffects extends ShaderWrapper<ShaderSimpleEffects>
     }
 
     @Override
-    public void setShaderValues(float partialTicks, int ticks)
+    public void setShaderValues(float partialTicks, int ticks, IvDepthBuffer depthBuffer)
     {
         DrugHelper drugHelper = DrugHelper.getDrugHelper(Minecraft.getMinecraft().renderViewEntity);
 

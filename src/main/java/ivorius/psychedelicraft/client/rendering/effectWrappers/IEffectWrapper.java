@@ -5,6 +5,7 @@
 
 package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
+import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.ivtoolkit.rendering.IvOpenGLTexturePingPong;
 
 /**
@@ -18,7 +19,7 @@ public interface IEffectWrapper
 
     public void update();
 
-    public void apply(float partialTicks, IvOpenGLTexturePingPong pingPong);
+    public void apply(float partialTicks, IvOpenGLTexturePingPong pingPong, IvDepthBuffer depthBuffer);
 
     public boolean wantsDepthBuffer(float partialTicks);
 }

@@ -6,6 +6,7 @@
 package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
 import ivorius.ivtoolkit.rendering.Iv2DScreenEffect;
+import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.ivtoolkit.rendering.IvOpenGLTexturePingPong;
 import net.minecraft.client.Minecraft;
 
@@ -34,7 +35,7 @@ public abstract class ScreenEffectWrapper<ScreenEffect extends Iv2DScreenEffect>
     }
 
     @Override
-    public void apply(float partialTicks, IvOpenGLTexturePingPong pingPong)
+    public void apply(float partialTicks, IvOpenGLTexturePingPong pingPong, IvDepthBuffer depthBuffer)
     {
         Minecraft mc = Minecraft.getMinecraft();
         int ticks = mc.ingameGUI.getUpdateCounter();

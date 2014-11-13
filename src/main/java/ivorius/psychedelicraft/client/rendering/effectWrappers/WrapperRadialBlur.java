@@ -5,6 +5,7 @@
 
 package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
+import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.shaders.ShaderRadialBlur;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
@@ -21,7 +22,7 @@ public class WrapperRadialBlur extends ShaderWrapper<ShaderRadialBlur>
     }
 
     @Override
-    public void setShaderValues(float partialTicks, int ticks)
+    public void setShaderValues(float partialTicks, int ticks, IvDepthBuffer depthBuffer)
     {
         DrugHelper drugHelper = DrugHelper.getDrugHelper(Minecraft.getMinecraft().renderViewEntity);
 

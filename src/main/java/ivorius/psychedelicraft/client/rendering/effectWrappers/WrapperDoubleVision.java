@@ -5,6 +5,7 @@
 
 package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
+import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.shaders.ShaderDoubleVision;
 import ivorius.psychedelicraft.entities.drugs.Drug;
@@ -23,7 +24,7 @@ public class WrapperDoubleVision extends ShaderWrapper<ShaderDoubleVision>
     }
 
     @Override
-    public void setShaderValues(float partialTicks, int ticks)
+    public void setShaderValues(float partialTicks, int ticks, IvDepthBuffer depthBuffer)
     {
         DrugHelper drugHelper = DrugHelper.getDrugHelper(Minecraft.getMinecraft().renderViewEntity);
 

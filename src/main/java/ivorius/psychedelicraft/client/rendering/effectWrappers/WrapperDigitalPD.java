@@ -5,6 +5,7 @@
 
 package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
+import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import ivorius.psychedelicraft.client.rendering.shaders.ShaderDigitalDepth;
@@ -27,16 +28,16 @@ public class WrapperDigitalPD extends ShaderWrapper<ShaderDigitalDepth>
     }
 
     @Override
-    public void setShaderValues(float partialTicks, int ticks)
+    public void setShaderValues(float partialTicks, int ticks, IvDepthBuffer depthBuffer)
     {
         DrugHelper drugHelper = DrugHelper.getDrugHelper(Minecraft.getMinecraft().renderViewEntity);
 
-        if (drugHelper != null)
+        if (drugHelper != null && depthBuffer != null)
         {
             shaderInstance.digital = drugHelper.getDrugValue("Zero");
             shaderInstance.maxDownscale = drugHelper.getDigitalEffectPixelResize();
             shaderInstance.digitalTextTexture = DrugShaderHelper.getTextureIndex(digitalTextTexture);
-            shaderInstance.depthTextureIndex = DrugShaderHelper.depthBuffer.getDepthTextureIndex();
+            shaderInstance.depthTextureIndex = depthBuffer.getDepthTextureIndex();
 
             shaderInstance.zNear = 0.05f;
             shaderInstance.zFar = (float) (Minecraft.getMinecraft().gameSettings.renderDistanceChunks * 16);

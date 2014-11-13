@@ -5,6 +5,7 @@
 
 package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
+import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.ivtoolkit.rendering.IvOpenGLTexturePingPong;
 import ivorius.ivtoolkit.rendering.IvShaderInstance2D;
 import ivorius.ivtoolkit.rendering.IvShaderInstanceMC;
@@ -54,13 +55,13 @@ public abstract class ShaderWrapper<ShaderInstance extends IvShaderInstance2D> i
     }
 
     @Override
-    public void apply(float partialTicks, IvOpenGLTexturePingPong pingPong)
+    public void apply(float partialTicks, IvOpenGLTexturePingPong pingPong, IvDepthBuffer depthBuffer)
     {
         if (DrugShaderHelper.shader2DEnabled)
         {
             Minecraft mc = Minecraft.getMinecraft();
             int ticks = mc.renderViewEntity.ticksExisted;
-            setShaderValues(partialTicks, ticks);
+            setShaderValues(partialTicks, ticks, depthBuffer);
 
             if (shaderInstance.shouldApply(ticks + partialTicks))
             {
@@ -69,5 +70,5 @@ public abstract class ShaderWrapper<ShaderInstance extends IvShaderInstance2D> i
         }
     }
 
-    public abstract void setShaderValues(float partialTicks, int ticks);
+    public abstract void setShaderValues(float partialTicks, int ticks, IvDepthBuffer depthBuffer);
 }

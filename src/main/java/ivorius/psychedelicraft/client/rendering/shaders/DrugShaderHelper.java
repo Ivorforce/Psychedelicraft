@@ -37,6 +37,7 @@ public class DrugShaderHelper
     public static IvOpenGLTexturePingPong realtimePingPong;
 
     public static IvDepthBuffer depthBuffer;
+    public static boolean didDepthPass = false;
 
     public static boolean disableDepthBuffer = false;
     public static boolean bypassPingPongBuffer = false;
@@ -54,6 +55,7 @@ public class DrugShaderHelper
 
     public static void preRender(float ticks)
     {
+        didDepthPass = false;
     }
 
     public static void preRender3D(float ticks)
@@ -67,7 +69,7 @@ public class DrugShaderHelper
 
         passes.add("Default");
 
-        if (depthBuffer.isAllocated() && shaderInstanceDepth.getShaderID() > 0)
+        if (!disableDepthBuffer && depthBuffer.isAllocated() && shaderInstanceDepth.getShaderID() > 0)
         {
             boolean addDepth = false;
 
@@ -139,6 +141,7 @@ public class DrugShaderHelper
                 break;
             case "Depth":
                 depthBuffer.unbind();
+                didDepthPass = true;
                 break;
             case "Shadows":
                 Minecraft mc = Minecraft.getMinecraft();
@@ -413,7 +416,7 @@ public class DrugShaderHelper
         realtimePingPong.preTick(screenWidth, screenHeight);
 
         for (IEffectWrapper effectWrapper : effectWrappers)
-            effectWrapper.apply(partialTicks, realtimePingPong);
+            effectWrapper.apply(partialTicks, realtimePingPong, didDepthPass ? depthBuffer : null);
 
         realtimePingPong.postTick();
 
