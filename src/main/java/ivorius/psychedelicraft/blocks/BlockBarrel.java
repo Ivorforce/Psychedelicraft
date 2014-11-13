@@ -136,7 +136,7 @@ public class BlockBarrel extends BlockContainer
             else
             {
                 if (!world.isRemote)
-                    player.openGui(Psychedelicraft.instance, PSGuiHandler.fluidHandlerContainerID_UP, world, x, y, z);
+                    player.openGui(Psychedelicraft.instance, PSGuiHandler.barrelContainerID, world, x, y, z);
 
                 return true;
             }

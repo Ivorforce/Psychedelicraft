@@ -165,6 +165,10 @@ fluid.pscCannabisTea=Cannabis Tea
 fluid.pscCocaineFluid=Cocaine
 fluid.pscCaffeineFluid=Caffeine
 
+fluid.status.maturing=Maturing
+fluid.status.fermenting=Fermenting
+fluid.status.distilling=Distilling
+
 itemGroup.psychedelicraft=Psychedelicraft
 itemGroup.psycheDrinks=Drinks
 itemGroup.psycheWeapons=Psychedelicraft Weapons

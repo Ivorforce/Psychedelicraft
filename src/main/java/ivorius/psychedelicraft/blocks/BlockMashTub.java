@@ -86,7 +86,7 @@ public class BlockMashTub extends IvBlockMultiblock
         if (tileEntity instanceof TileEntityMashTub)
         {
             if (!world.isRemote)
-                player.openGui(Psychedelicraft.instance, PSGuiHandler.fluidHandlerContainerID_UP, world, x, y, z);
+                player.openGui(Psychedelicraft.instance, PSGuiHandler.woodenVatContainerID, world, x, y, z);
 
             return true;
         }

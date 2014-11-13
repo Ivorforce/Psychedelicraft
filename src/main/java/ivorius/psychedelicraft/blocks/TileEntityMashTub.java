@@ -112,6 +112,32 @@ public class TileEntityMashTub extends TileEntityMultiblockFluidHandler
         return drain;
     }
 
+    public int getNeededFermentationTime()
+    {
+        FluidStack fluidStack = tank.getFluid();
+        if (fluidStack != null && fluidStack.getFluid() instanceof FluidFermentable)
+        {
+            FluidFermentable fluidFermentable = (FluidFermentable) fluidStack.getFluid();
+            return fluidFermentable.fermentationTime(fluidStack, true);
+        }
+
+        return FluidFermentable.UNFERMENTABLE;
+    }
+
+    public int getRemainingFermentationTimeScaled(int scale)
+    {
+        int neededFermentationTime = getNeededFermentationTime();
+        if (neededFermentationTime >= 0)
+            return (neededFermentationTime - timeFermented) * scale / neededFermentationTime;
+
+        return scale;
+    }
+
+    public boolean isFermenting()
+    {
+        return getNeededFermentationTime() >= 0;
+    }
+
     @Override
     public void writeToNBT(NBTTagCompound nbttagcompound)
     {

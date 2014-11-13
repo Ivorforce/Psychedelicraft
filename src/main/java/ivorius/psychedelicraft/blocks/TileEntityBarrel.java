@@ -200,6 +200,32 @@ public class TileEntityBarrel extends TileFluidHandler
         return tapRotation;
     }
 
+    public int getNeededFermentationTime()
+    {
+        FluidStack fluidStack = tank.getFluid();
+        if (fluidStack != null && fluidStack.getFluid() instanceof FluidFermentable)
+        {
+            FluidFermentable fluidFermentable = (FluidFermentable) fluidStack.getFluid();
+            return fluidFermentable.fermentationTime(fluidStack, false);
+        }
+
+        return FluidFermentable.UNFERMENTABLE;
+    }
+
+    public int getRemainingFermentationTimeScaled(int scale)
+    {
+        int neededFermentationTime = getNeededFermentationTime();
+        if (neededFermentationTime >= 0)
+            return (neededFermentationTime - timeFermented) * scale / neededFermentationTime;
+
+        return scale;
+    }
+
+    public boolean isFermenting()
+    {
+        return getNeededFermentationTime() >= 0;
+    }
+
     @Override
     public Packet getDescriptionPacket()
     {

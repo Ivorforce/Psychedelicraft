@@ -40,7 +40,7 @@ public class BlockDistillery extends BlockContainer
         if (tileEntity instanceof TileEntityDistillery)
         {
             if (!world.isRemote)
-                player.openGui(Psychedelicraft.instance, PSGuiHandler.fluidHandlerContainerID_UP, world, x, y, z);
+                player.openGui(Psychedelicraft.instance, PSGuiHandler.distilleryContainerID, world, x, y, z);
 
             return true;
         }

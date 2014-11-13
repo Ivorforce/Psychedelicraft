@@ -7,6 +7,7 @@ package ivorius.psychedelicraft.blocks;
 
 import ivorius.ivtoolkit.blocks.IvTileEntityHelper;
 import ivorius.psychedelicraft.fluids.FluidDistillable;
+import ivorius.psychedelicraft.fluids.FluidFermentable;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -142,6 +143,37 @@ public class TileEntityDistillery extends TileFluidHandler
         }
 
         return drain;
+    }
+
+    public int getNeededDistillationTime()
+    {
+        FluidStack fluidStack = tank.getFluid();
+        if (fluidStack != null && fluidStack.getFluid() instanceof FluidDistillable)
+        {
+            IFluidHandler destination = getDestinationFluidHandler();
+
+            FluidDistillable fluidDistillable = (FluidDistillable) fluidStack.getFluid();
+            int neededDistillationTime = fluidDistillable.distillationTime(fluidStack);
+
+            if (neededDistillationTime >= 0 && destination != null)
+                return neededDistillationTime;
+        }
+
+        return FluidFermentable.UNFERMENTABLE;
+    }
+
+    public int getRemainingDistillationTimeScaled(int scale)
+    {
+        int neededDistillationTime = getNeededDistillationTime();
+        if (neededDistillationTime >= 0)
+            return (neededDistillationTime - timeDistilled) * scale / neededDistillationTime;
+
+        return scale;
+    }
+
+    public boolean isDistilling()
+    {
+        return getNeededDistillationTime() >= 0;
     }
 
     @Override
