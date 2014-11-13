@@ -15,6 +15,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class CommandDrug extends CommandBase
@@ -33,12 +35,12 @@ public class CommandDrug extends CommandBase
     }
 
     @Override
-    public void processCommand(ICommandSender par1ICommandSender, String[] arguments)
+    public void processCommand(ICommandSender commandSender, String[] arguments)
     {
         if (arguments.length < 3)
-            throw new WrongUsageException(getCommandUsage(par1ICommandSender));
+            throw new WrongUsageException(getCommandUsage(commandSender));
 
-        EntityPlayer player = getPlayer(par1ICommandSender, arguments[0]);
+        EntityPlayer player = getPlayer(commandSender, arguments[0]);
 
         String drugName = arguments[1];
 
@@ -46,41 +48,42 @@ public class CommandDrug extends CommandBase
         if (drugHelper == null)
             return;
 
-        Drug drug = drugHelper.getDrug(drugName);
-        if (drug != null)
+        Drug singleDrug = drugHelper.getDrug(drugName);
+        boolean modifyAllDrugs = drugName.equalsIgnoreCase("all");
+        Collection<Drug> drugs = singleDrug != null ? Arrays.asList(singleDrug) : modifyAllDrugs ? drugHelper.getAllDrugs() : null;
+        if (drugs != null)
         {
-            String method = arguments[2];
-            int lock;
-            if (method.equalsIgnoreCase("set"))
-                lock = 0;
-            else if (method.equalsIgnoreCase("lock"))
-                lock = 1;
-            else if (method.equalsIgnoreCase("unlock"))
-                lock = -1;
-            else
-                throw new WrongUsageException(getCommandUsage(par1ICommandSender));
+            int lock = getLockMode(arguments[2], commandSender);
+            if (modifyAllDrugs)
+                drugName = "Drugs";
+
+            drugHelper.hasChanges = true;
 
             if (lock != 0)
-                drug.setLocked(lock == 1);
+            {
+                for (Drug drug : drugs)
+                    drug.setLocked(lock == 1);
+            }
 
             if (arguments.length >= 4)
             {
-                double amount = parseDouble(par1ICommandSender, arguments[3]);
-                drugHelper.setDrugValue(drugName, amount);
+                double amount = parseDouble(commandSender, arguments[3]);
+                for (Drug drug : drugs)
+                    drug.setDesiredValue(amount);
 
                 if (lock == 0)
-                    par1ICommandSender.addChatMessage(new ChatComponentTranslation("commands.drug.success", player.getCommandSenderName(), drugName, String.valueOf(amount)));
+                    commandSender.addChatMessage(new ChatComponentTranslation("commands.drug.success", player.getCommandSenderName(), drugName, String.valueOf(amount)));
                 else if (lock == 1)
-                    par1ICommandSender.addChatMessage(new ChatComponentTranslation("commands.drug.success.lock", player.getCommandSenderName(), drugName, String.valueOf(amount)));
+                    commandSender.addChatMessage(new ChatComponentTranslation("commands.drug.success.lock", player.getCommandSenderName(), drugName, String.valueOf(amount)));
                 else if (lock == 2)
-                    par1ICommandSender.addChatMessage(new ChatComponentTranslation("commands.drug.success.unlock", player.getCommandSenderName(), drugName, String.valueOf(amount)));
+                    commandSender.addChatMessage(new ChatComponentTranslation("commands.drug.success.unlock", player.getCommandSenderName(), drugName, String.valueOf(amount)));
             }
             else if (lock == 0)
-                throw new CommandException(getCommandUsage(par1ICommandSender), drugName); // Didn't actually do anything
+                throw new CommandException(getCommandUsage(commandSender), drugName); // Didn't actually do anything
             else if (lock == 1)
-                par1ICommandSender.addChatMessage(new ChatComponentTranslation("commands.drug.success.lock", player.getCommandSenderName(), drugName, drugHelper.getDrugValue(drugName)));
+                commandSender.addChatMessage(new ChatComponentTranslation("commands.drug.success.lock", player.getCommandSenderName(), drugName, drugHelper.getDrugValue(drugName)));
             else if (lock == 2)
-                par1ICommandSender.addChatMessage(new ChatComponentTranslation("commands.drug.success.unlock", player.getCommandSenderName(), drugName, drugHelper.getDrugValue(drugName)));
+                commandSender.addChatMessage(new ChatComponentTranslation("commands.drug.success.unlock", player.getCommandSenderName(), drugName, drugHelper.getDrugValue(drugName)));
         }
         else
         {
@@ -99,7 +102,13 @@ public class CommandDrug extends CommandBase
             {
                 DrugHelper drugHelper = DrugHelper.getDrugHelper(getPlayer(par1ICommandSender, arguments[0]));
                 if (drugHelper != null)
-                    return getListOfStringsMatchingLastWord(arguments, drugHelper.getAllVisibleDrugNames());
+                {
+                    String[] drugNames = drugHelper.getAllVisibleDrugNames();
+                    String[] drugNamesPlusAll = new String[drugNames.length + 1];
+                    drugNamesPlusAll[0] = "All";
+                    System.arraycopy(drugNames, 0, drugNamesPlusAll, 1, drugNames.length);
+                    return getListOfStringsMatchingLastWord(arguments, drugNamesPlusAll);
+                }
                 else
                     return null;
             }
@@ -114,6 +123,18 @@ public class CommandDrug extends CommandBase
             return getListOfStringsMatchingLastWord(arguments, "0.0", "0.5", "1.0");
 
         return null;
+    }
+
+    protected int getLockMode(String lockMode, ICommandSender sender)
+    {
+        if (lockMode.equalsIgnoreCase("set"))
+            return 0;
+        else if (lockMode.equalsIgnoreCase("lock"))
+            return 1;
+        else if (lockMode.equalsIgnoreCase("unlock"))
+            return -1;
+        else
+            throw new WrongUsageException(getCommandUsage(sender));
     }
 
     protected String[] getPlayers()

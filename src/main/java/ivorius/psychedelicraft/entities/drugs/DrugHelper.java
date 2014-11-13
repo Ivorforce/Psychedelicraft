@@ -34,6 +34,7 @@ import java.util.*;
 public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandler
 {
     public static final UUID drugUUID = UUID.fromString("2da054e7-0fe0-4fb4-bf2c-a185a5f72aa1"); // Randomly gen'd
+    public static final String EEP_KEY = "DrugHelper";
 
     public static boolean waterOverlayEnabled;
     public static boolean hurtOverlayEnabled;
@@ -73,7 +74,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
     public static DrugHelper getDrugHelper(Entity entity)
     {
         if (entity != null)
-            return (DrugHelper) entity.getExtendedProperties("DrugHelper");
+            return (DrugHelper) entity.getExtendedProperties(EEP_KEY);
 
         return null;
     }
@@ -82,7 +83,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
     {
         if (entity instanceof EntityLivingBase)
         {
-            entity.registerExtendedProperties("DrugHelper", new DrugHelper((EntityLivingBase) entity));
+            entity.registerExtendedProperties(EEP_KEY, new DrugHelper((EntityLivingBase) entity));
             DrugHelper drugHelper = getDrugHelper(entity);
 
             if (drugHelper != null)
@@ -325,7 +326,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
             hasChanges = false;
 
             if (!entity.worldObj.isRemote)
-                PSNetworkHelperServer.sendEEPUpdatePacket(entity, "DrugHelper", "DrugData", Psychedelicraft.network);
+                PSNetworkHelperServer.sendEEPUpdatePacket(entity, EEP_KEY, "DrugData", Psychedelicraft.network);
         }
     }
 
@@ -358,12 +359,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
         NBTTagCompound drugData = tagCompound.hasKey("Drugs", Constants.NBT.TAG_COMPOUND) ? tagCompound.getCompoundTag("Drugs")
                 : tagCompound; // legacy
         for (String key : drugs.keySet())
-        {
-            NBTTagCompound cmp = drugData.getCompoundTag(key);
-
-            if (cmp != null)
-                drugs.get(key).readFromNBT(cmp);
-        }
+            drugs.get(key).readFromNBT(drugData.getCompoundTag(key));
 
         influences.clear();
         NBTTagList influenceTagList = tagCompound.getTagList("drugInfluences", Constants.NBT.TAG_COMPOUND);
@@ -397,9 +393,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
         this.ticksExisted = tagCompound.getInteger("drugsTicksExisted");
 
         if (fromPacket)
-        {
             hasChanges = true;
-        }
     }
 
     public void writeToNBT(NBTTagCompound compound)
@@ -536,19 +530,13 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
     public void writeUpdateData(ByteBuf buffer, String context, Object... params)
     {
         if ("DrugData".equals(context))
-        {
-            NBTTagCompound compound = new NBTTagCompound();
-            writeToNBT(compound);
-            ByteBufUtils.writeTag(buffer, compound);
-        }
+            ByteBufUtils.writeTag(buffer, createNBTTagCompound());
     }
 
     @Override
     public void readUpdateData(ByteBuf buffer, String context)
     {
         if ("DrugData".equals(context))
-        {
             readFromNBT(ByteBufUtils.readTag(buffer), true);
-        }
     }
 }
