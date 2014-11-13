@@ -34,6 +34,9 @@ public class PSItems
     public static ItemBong bong;
     public static Item hashMuffin;
 
+    public static Item hopCones;
+    public static Item hopSeeds;
+
     public static Item magicMushroomsBrown;
     public static Item magicMushroomsRed;
 

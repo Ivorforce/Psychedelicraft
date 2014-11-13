@@ -110,6 +110,22 @@ public class PSRegistryHandler
         GameRegistry.registerTileEntity(TileEntityDistillery.class, "psDistillery");
         itemDistillery = (ItemDistillery) Item.getItemFromBlock(distillery);
 
+        //----------------------------------------------------------Beer----------------------------------
+
+        hopPlant = new BlockHopPlant().setHardness(0.5f).setBlockName("hopPlant").setBlockTextureName(modBase + "hopPlant");
+        GameRegistry.registerBlock(hopPlant, ItemBlock.class, "hop_plant");
+        OreDictionary.registerOre(DC_CROP_HOPS, hopPlant);
+
+        hopSeeds = new ItemSeeds(hopPlant, Blocks.farmland).setUnlocalizedName("hopSeeds").setTextureName(modBase + "hopSeeds");
+        GameRegistry.registerItem(hopSeeds, "hop_seeds", Psychedelicraft.MODID);
+        hopSeeds.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre(DC_SEED_HOPS, hopSeeds);
+
+        hopCones = new Item().setUnlocalizedName("hopCones").setTextureName(modBase + "hopCones");
+        GameRegistry.registerItem(hopCones, "hop_cones", Psychedelicraft.MODID);
+        hopCones.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre(DC_CONES_HOPS, hopCones);
+
         //----------------------------------------------------------Wine----------------------------------
 
         wineGrapeLattice = new BlockWineGrapeLattice().setHardness(0.3F).setBlockName("wineGrapeLattice").setBlockTextureName(modBase + "wineGrapeLattice");
@@ -127,10 +143,9 @@ public class PSRegistryHandler
         EntityRegistry.registerGlobalEntityID(EntityMolotovCocktail.class, "molotovCocktail", entityMolotovCocktailID);
         EntityRegistry.registerModEntity(EntityMolotovCocktail.class, "molotovCocktail", entityMolotovCocktailID, mod, 64, 10, true);
 
-        //----------------------------------------------------------Weed----------------------------------
+        //----------------------------------------------------------Cannabis----------------------------------
 
         cannabisPlant = new BlockCannabisPlant().setHardness(0.5f).setBlockName("cannabisPlant").setBlockTextureName(modBase + "cannabisPlant");
-        cannabisPlant.setCreativeTab(null);
         GameRegistry.registerBlock(cannabisPlant, ItemBlock.class, "cannabisPlant");
         OreDictionary.registerOre(DC_CROP_CANNABIS, cannabisPlant);
 

@@ -55,7 +55,7 @@ public class PSCrafting
         addRecipe(new ItemStack(itemFlask), " # ", "#G#", "###", 'G', DC_BLOCK_GLASS_CLEAR, '#', flaskIngotItem);
         addRecipe(new ItemStack(itemDistillery), "##", "D ", 'D', itemFlask, '#', flaskIngotItem);
 
-        addMashTubRecipe(new FluidStack(beer, TileEntityMashTub.MASH_TUB_CAPACITY), water_bucket, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT);
+        addMashTubRecipe(new FluidStack(beer, TileEntityMashTub.MASH_TUB_CAPACITY), water_bucket, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CONES_HOPS, DC_CONES_HOPS);
         addMashTubRecipe(new FluidStack(wine, TileEntityMashTub.MASH_TUB_CAPACITY), DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE);
         addMashTubRecipe(new FluidStack(riceWine, TileEntityMashTub.MASH_TUB_CAPACITY), water_bucket, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE);
 

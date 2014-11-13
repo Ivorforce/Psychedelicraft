@@ -19,6 +19,7 @@ public class PSBlocks
     public static Block dryingTable;
 
     public static Block cannabisPlant;
+    public static Block hopPlant;
 
     public static Block tobaccoPlant;
 

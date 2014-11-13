@@ -20,11 +20,11 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class BlockCannabisPlant extends Block implements IGrowable, IvTilledFieldPlant
+public class BlockHopPlant extends Block implements IGrowable, IvTilledFieldPlant
 {
     public IIcon[] textures = new IIcon[3];
 
-    public BlockCannabisPlant()
+    public BlockHopPlant()
     {
         super(Material.plants);
         float var3 = 0.375F;
@@ -120,15 +120,11 @@ public class BlockCannabisPlant extends Block implements IGrowable, IvTilledFiel
 
         int countB = world.rand.nextInt(meta / 6 + 1);
         for (int i = 0; i < countB; i++)
-            drops.add(new ItemStack(PSItems.cannabisBuds, 1, 0));
-
-        int countL = world.rand.nextInt(meta / 5 + 1) + meta / 6;
-        for (int i = 0; i < countL; i++)
-            drops.add(new ItemStack(PSItems.cannabisLeaf, 1, 0));
+            drops.add(new ItemStack(PSItems.hopCones, 1, 0));
 
         int countS = meta / 8;
         for (int i = 0; i < countS; i++)
-            drops.add(new ItemStack(PSItems.cannabisSeeds, 1, 0));
+            drops.add(new ItemStack(PSItems.hopSeeds, 1, 0));
 
         return drops;
     }

@@ -31,6 +31,9 @@ public class OreDictionaryConstants
     public static final String DC_BUD_CANNABIS_DRIED = "budCannabisDried";
     public static final String DC_LEAF_CANNABIS_DRIED = "leafCannabisDried";
     public static final String DC_HASH_MUFFIN = "foodHashMuffin";
+    public static final String DC_CROP_HOPS = "cropHops";
+    public static final String DC_SEED_HOPS = "seedHops";
+    public static final String DC_CONES_HOPS = "conesHops";
     public static final String DC_FOOD_MAGIC_MUSHROOM_BROWN = "foodMagicMushroomBrown";
     public static final String DC_FOOD_MAGIC_MUSHROOM_RED = "foodMagicMushroomRed";
     public static final String DC_CROP_TOBACCO = "cropTobacco";
