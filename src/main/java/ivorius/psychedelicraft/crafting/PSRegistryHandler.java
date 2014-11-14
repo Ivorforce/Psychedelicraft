@@ -250,6 +250,11 @@ public class PSRegistryHandler
         driedCocaLeaves.setCreativeTab(Psychedelicraft.creativeTab);
         OreDictionary.registerOre(DC_LEAF_COCA_DRIED, driedCocaLeaves);
 
+        cocainePowder = new ItemCocainePowder().setUnlocalizedName("cocainePowder").setTextureName(modBase + "cocainePowder");
+        GameRegistry.registerItem(cocainePowder, "cocaine_powder", Psychedelicraft.MODID);
+        cocainePowder.setCreativeTab(Psychedelicraft.creativeTab);
+        OreDictionary.registerOre(DC_COCAINE_POWDER, cocainePowder);
+
         //----------------------------------------------------------Jenever----------------------------------
 
         psycheLeaves = (BlockPsycheLeaves) new BlockPsycheLeaves().setBlockName("psycheLeaves").setBlockTextureName(modBase + "psycheLeaves");

@@ -49,6 +49,7 @@ public class PSItems
 
     public static Item cocaSeeds;
     public static Item cocaLeaf;
+    public static Item cocainePowder;
     public static Item driedCocaLeaves;
 
     public static ItemInjectable syringe;

@@ -49,6 +49,7 @@ tile.psDistillery.full.name=Distillery (Filled with %s)
 tile.hopPlant.name=Hops
 item.hopSeeds.name=Hop Seeds
 item.hopCones.name=Hop Cones
+item.cocainePowder.name=Cocaine Powder
 
 item.woodenMug.name=Wooden Mug
 item.woodenMug.full.name=Wooden Mug of %s

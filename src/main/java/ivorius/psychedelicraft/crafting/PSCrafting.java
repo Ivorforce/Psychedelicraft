@@ -93,6 +93,8 @@ public class PSCrafting
         DryingRegistry.addDryingResult(brown_mushroom, new ItemStack(magicMushroomsBrown, 3));
         DryingRegistry.addDryingResult(red_mushroom, new ItemStack(magicMushroomsRed, 3));
 
+        addShapelessRecipe(new ItemStack(cocainePowder), driedCocaLeaves);
+
         addRecipe(new ItemStack(cigarette, 4), "P", "T", "P", 'P', paper, 'T', DC_DRIED_TOBACCO);
         addRecipe(new ItemStack(cigar), "TTT", "TTT", "PPP", 'P', paper, 'T', DC_DRIED_TOBACCO);
         DryingRegistry.addDryingResult(DC_DRIED_TOBACCO, new ItemStack(driedTobacco, 3));
@@ -125,7 +127,7 @@ public class PSCrafting
         GameRegistry.addRecipe(new RecipeFillDrink(new FluidStack(coffee, 100), water_bucket, DC_COFFEE_BEANS, DC_COFFEE_BEANS));
         GameRegistry.addRecipe(new RecipeFillDrink(new FluidStack(cocaTea, 100), water_bucket, DC_LEAF_COCA, DC_LEAF_COCA));
         GameRegistry.addRecipe(new RecipeFillDrink(new FluidStack(cannabisTea, 100), water_bucket, DC_LEAF_CANNABIS, DC_LEAF_CANNABIS));
-        GameRegistry.addRecipe(new RecipeFillDrink(new FluidStack(cocaineFluid, 10), water_bucket, DC_LEAF_COCA_DRIED, DC_LEAF_COCA_DRIED));
+        GameRegistry.addRecipe(new RecipeFillDrink(new FluidStack(cocaineFluid, 10), water_bucket, DC_COCAINE_POWDER));
         GameRegistry.addRecipe(new RecipeFillDrink(new FluidStack(caffeineFluid, 10), DC_COFFEE_BEANS, DC_COFFEE_BEANS));
 
         //TODO Add when Forge fixes smelting with NBT

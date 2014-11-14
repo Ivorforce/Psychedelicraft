@@ -45,6 +45,7 @@ public class OreDictionaryConstants
     public static final String DC_CROP_COCA = "cropCoca";
     public static final String DC_SEED_COCA = "seedCoca";
     public static final String DC_LEAF_COCA_DRIED = "leafCocaDried";
+    public static final String DC_COCAINE_POWDER = "dustCocaine";
     public static final String DC_TREE_LEAVES = "treeLeaves";
     public static final String DC_LOG_WOOD = "logWood";
     public static final String DC_TREE_SAPLING = "treeSapling";
