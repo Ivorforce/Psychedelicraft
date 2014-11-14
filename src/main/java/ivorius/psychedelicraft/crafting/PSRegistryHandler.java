@@ -383,7 +383,7 @@ public class PSRegistryHandler
         jenever.setFlowingIconName(modBase + "clear_flow");
         FluidRegistry.registerFluid(jenever);
 
-        vodka = new FluidVodka("pscVodka", 2, 8, 0.55f, 1.7f, PSConfig.vodkaInfo);
+        vodka = new FluidVodka("pscVodka", 2, 8, 5, 0.55f, 1.7f, 0.2f, PSConfig.vodkaInfo);
         vodka.setDrinkable(true);
         vodka.setColor(0x44e8f4f8);
         vodka.setSymbolIconName(modBase + "drinkVodka");
