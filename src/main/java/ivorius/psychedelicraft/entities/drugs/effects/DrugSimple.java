@@ -184,54 +184,6 @@ public class DrugSimple implements Drug
     }
 
     @Override
-    public float bigWaveHallucinationStrength()
-    {
-        return 0;
-    }
-
-    @Override
-    public float smallWaveHallucinationStrength()
-    {
-        return 0;
-    }
-
-    @Override
-    public float redPulsesHallucinationStrength()
-    {
-        return 0;
-    }
-
-    @Override
-    public float quickColorRotationHallucinationStrength()
-    {
-        return 0;
-    }
-
-    @Override
-    public float surfaceFractalHallucinationStrength()
-    {
-        return 0;
-    }
-
-    @Override
-    public float slowColorRotationHallucinationStrength()
-    {
-        return 0;
-    }
-
-    @Override
-    public float wiggleWaveHallucinationStrength()
-    {
-        return 0;
-    }
-
-    @Override
-    public float distantWorldDeformationHallucinationStrength()
-    {
-        return 0;
-    }
-
-    @Override
     public void applyWorldColorizationHallucinationStrength(float[] rgba)
     {
 
@@ -250,7 +202,19 @@ public class DrugSimple implements Drug
     }
 
     @Override
-    public float hallucinationStrength()
+    public float contextualHallucinationStrength()
+    {
+        return 0;
+    }
+
+    @Override
+    public float colorHallucinationStrength()
+    {
+        return 0;
+    }
+
+    @Override
+    public float movementHallucinationStrength()
     {
         return 0;
     }

@@ -5,10 +5,6 @@
 
 package ivorius.psychedelicraft.entities.drugs.effects;
 
-import ivorius.ivtoolkit.rendering.IvShaderInstance;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
-import net.minecraft.client.Minecraft;
-
 /**
  * Created by lukas on 01.11.14.
  */
@@ -20,14 +16,14 @@ public class DrugPeyote extends DrugSimple
     }
 
     @Override
-    public float bigWaveHallucinationStrength()
+    public float colorHallucinationStrength()
     {
-        return (float) getActiveValue();
+        return (float) getActiveValue() * 0.3f;
     }
 
     @Override
-    public float hallucinationStrength()
+    public float contextualHallucinationStrength()
     {
-        return (float)getActiveValue() * 0.2f;
+        return (float) getActiveValue() * 0.3f;
     }
 }

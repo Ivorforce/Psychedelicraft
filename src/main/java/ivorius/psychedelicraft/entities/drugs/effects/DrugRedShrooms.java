@@ -5,10 +5,6 @@
 
 package ivorius.psychedelicraft.entities.drugs.effects;
 
-import ivorius.ivtoolkit.rendering.IvShaderInstance;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
-import net.minecraft.client.Minecraft;
-
 /**
  * Created by lukas on 01.11.14.
  */
@@ -20,26 +16,26 @@ public class DrugRedShrooms extends DrugSimple
     }
 
     @Override
-    public float smallWaveHallucinationStrength()
+    public float colorHallucinationStrength()
     {
-        return (float) getActiveValue();
+        return (float) getActiveValue() * 1.3f;
     }
 
     @Override
-    public float redPulsesHallucinationStrength()
+    public float movementHallucinationStrength()
     {
-        return (float) getActiveValue();
+        return (float) getActiveValue() * 0.7f;
     }
 
     @Override
-    public float quickColorRotationHallucinationStrength()
+    public float contextualHallucinationStrength()
     {
-        return (float)getActiveValue() * 1.5f;
+        return (float) getActiveValue() * 0.2f;
     }
 
     @Override
     public float viewWobblyness()
     {
-        return (float)getActiveValue() * 0.03f;
+        return (float) getActiveValue() * 0.03f;
     }
 }

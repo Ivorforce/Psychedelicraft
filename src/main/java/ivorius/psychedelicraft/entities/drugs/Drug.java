@@ -55,29 +55,17 @@ public interface Drug
 
     EntityPlayer.EnumStatus getSleepStatus();
 
-    float bigWaveHallucinationStrength();
-
-    float smallWaveHallucinationStrength();
-
-    float redPulsesHallucinationStrength();
-
-    float quickColorRotationHallucinationStrength();
-
-    float surfaceFractalHallucinationStrength();
-
-    float slowColorRotationHallucinationStrength();
-
-    float wiggleWaveHallucinationStrength();
-
-    float distantWorldDeformationHallucinationStrength();
-
     void applyWorldColorizationHallucinationStrength(float[] rgba);
 
     float desaturationHallucinationStrength();
 
     float superSaturationHallucinationStrength();
 
-    float hallucinationStrength();
+    float contextualHallucinationStrength();
+
+    float colorHallucinationStrength();
+
+    float movementHallucinationStrength();
 
     float handTrembleStrength();
 
