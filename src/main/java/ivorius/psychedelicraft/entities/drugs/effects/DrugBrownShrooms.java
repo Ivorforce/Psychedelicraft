@@ -30,7 +30,7 @@ public class DrugBrownShrooms extends DrugSimple
     @Override
     public float contextualHallucinationStrength()
     {
-        return (float) getActiveValue() * 0.2f;
+        return (float) getActiveValue() * 0.35f;
     }
 
     @Override

@@ -242,7 +242,7 @@ public class DrugHallucinationManager
 
     public float getHallucinationStrength(DrugHelper drugHelper, float partialTicks)
     {
-        return getHallucinationMultiplier(HALLUCATION_ENTITIES) * hallucinationValues.get(HALLUCATION_ENTITIES);
+        return 0.4f * getHallucinationMultiplier(HALLUCATION_ENTITIES) * hallucinationValues.get(HALLUCATION_ENTITIES);
     }
 
     public float getDesaturation(DrugHelper drugHelper, float partialTicks)
