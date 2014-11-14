@@ -45,10 +45,9 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
 
     public boolean hasChanges;
 
-    public List<DrugHallucination> hallucinations = new ArrayList<>();
-
     public IDrugRenderer drugRenderer;
     public DrugMessageDistorter drugMessageDistorter;
+    public DrugHallucinationManager hallucinationManager;
 
     public int ticksExisted = 0;
 
@@ -65,6 +64,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
         influences = new ArrayList<>();
 
         drugMessageDistorter = new DrugMessageDistorter();
+        hallucinationManager = new DrugHallucinationManager();
 
         for (Pair<String, Drug> pair : DrugRegistry.createDrugs(entity))
             drugs.put(pair.getKey(), pair.getValue());
@@ -163,35 +163,6 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
         return drugs.containsKey(name);
     }
 
-    public void addRandomHallucination(EntityPlayer player)
-    {
-        if (!player.worldObj.isRemote)
-        {
-            return;
-        }
-
-        if (getNumberOfHallucinations(DrugHallucinationRastaHead.class) == 0 && (player.getRNG().nextFloat() < 0.1f && getDrugValue("Cannabis") > 0.4f))
-        {
-            hallucinations.add(new DrugHallucinationRastaHead(player));
-        }
-        else
-        {
-            hallucinations.add(new DrugHallucinationEntity(player));
-        }
-    }
-
-    public int getNumberOfHallucinations(Class<? extends DrugHallucination> aClass)
-    {
-        int count = 0;
-        for (DrugHallucination hallucination : hallucinations)
-        {
-            if (aClass.isAssignableFrom(hallucination.getClass()))
-                count++;
-        }
-
-        return count;
-    }
-
     public void startBreathingSmoke(int time, float[] color)
     {
         if (color != null)
@@ -226,7 +197,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
 
         if (entity.worldObj.isRemote)
         {
-            updateHallucinations(entity);
+            hallucinationManager.update(entity, this);
 
             if (delayUntilHeartbeat > 0)
                 delayUntilHeartbeat--;
@@ -330,30 +301,6 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
         }
     }
 
-    public void updateHallucinations(EntityLivingBase entity)
-    {
-        float hallucinationChance = DrugEffectInterpreter.getHallucinationStrength(this, 1.0f) * 0.05f;
-        if (hallucinationChance > 0.0f)
-        {
-            if (entity.getRNG().nextInt((int) (1F / hallucinationChance)) == 0)
-            {
-                if (entity instanceof EntityPlayer)
-                {
-                    addRandomHallucination((EntityPlayer) entity);
-                }
-            }
-        }
-
-        for (Iterator<DrugHallucination> iterator = hallucinations.iterator(); iterator.hasNext(); )
-        {
-            DrugHallucination hallucination = iterator.next();
-            hallucination.update();
-
-            if (hallucination.isDead())
-                iterator.remove();
-        }
-    }
-
     public void readFromNBT(NBTTagCompound tagCompound, boolean fromPacket)
     {
         NBTTagCompound drugData = tagCompound.hasKey("Drugs", Constants.NBT.TAG_COMPOUND) ? tagCompound.getCompoundTag("Drugs")
@@ -438,10 +385,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
 
     public void receiveChatMessage(EntityLivingBase entity, String message)
     {
-        for (DrugHallucination h : hallucinations)
-        {
-            h.receiveChatMessage(message, entity);
-        }
+        hallucinationManager.receiveChatMessage(entity, message);
     }
 
     public float getSpeedModifier(EntityLivingBase entity)

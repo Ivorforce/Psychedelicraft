@@ -7,7 +7,6 @@ package ivorius.psychedelicraft.client.rendering.shaders;
 
 import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.ivtoolkit.rendering.IvShaderInstance3D;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import org.apache.logging.log4j.Logger;
@@ -22,8 +21,6 @@ public class ShaderShadows extends IvShaderInstance3D implements ShaderWorld
     public ShaderShadows(Logger logger)
     {
         super(logger);
-
-        Minecraft mc = Minecraft.getMinecraft();
 
         int pixels = getShadowPixels();
         depthBuffer = new IvDepthBuffer(pixels, pixels, logger);
@@ -48,7 +45,6 @@ public class ShaderShadows extends IvShaderInstance3D implements ShaderWorld
             Minecraft mc = Minecraft.getMinecraft();
 
             EntityLivingBase renderEntity = mc.renderViewEntity;
-            DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
 
             setUniformFloats("ticks", ticks);
             setUniformInts("worldTime", (int) mc.theWorld.getWorldTime());

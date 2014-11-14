@@ -11,6 +11,7 @@ import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import ivorius.psychedelicraft.entities.drugs.Drug;
 import ivorius.psychedelicraft.entities.drugs.DrugHallucination;
+import ivorius.psychedelicraft.entities.drugs.DrugHallucinationManager;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -191,9 +192,9 @@ public class DrugRenderer implements IDrugRenderer
     @Override
     public void renderAllHallucinations(float par1, DrugHelper drugHelper)
     {
-        for (DrugHallucination h : drugHelper.hallucinations)
+        for (DrugHallucination h : drugHelper.hallucinationManager.entities)
         {
-            h.render(par1, MathHelper.clamp_float(0.0f, DrugEffectInterpreter.getHallucinationStrength(drugHelper, par1) * 15.0f, 1.0f));
+            h.render(par1, MathHelper.clamp_float(0.0f, drugHelper.hallucinationManager.getHallucinationStrength(drugHelper, par1) * 15.0f, 1.0f));
         }
     }
 

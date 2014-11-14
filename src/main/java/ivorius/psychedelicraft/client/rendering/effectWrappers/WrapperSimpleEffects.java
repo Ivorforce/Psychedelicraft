@@ -7,7 +7,6 @@ package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
 import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.psychedelicraft.Psychedelicraft;
-import ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
 import ivorius.psychedelicraft.client.rendering.shaders.ShaderSimpleEffects;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.client.Minecraft;
@@ -29,10 +28,10 @@ public class WrapperSimpleEffects extends ShaderWrapper<ShaderSimpleEffects>
 
         if (drugHelper != null)
         {
-            shaderInstance.quickColorRotation = DrugEffectInterpreter.getQuickColorRotation(drugHelper, partialTicks);
-            shaderInstance.slowColorRotation = DrugEffectInterpreter.getSlowColorRotation(drugHelper, partialTicks);
-            shaderInstance.desaturation = DrugEffectInterpreter.getDesaturation(drugHelper, partialTicks);
-            shaderInstance.colorIntensification = DrugEffectInterpreter.getColorIntensification(drugHelper, partialTicks);
+            shaderInstance.quickColorRotation = drugHelper.hallucinationManager.getQuickColorRotation(drugHelper, partialTicks);
+            shaderInstance.slowColorRotation = drugHelper.hallucinationManager.getSlowColorRotation(drugHelper, partialTicks);
+            shaderInstance.desaturation = drugHelper.hallucinationManager.getDesaturation(drugHelper, partialTicks);
+            shaderInstance.colorIntensification = drugHelper.hallucinationManager.getColorIntensification(drugHelper, partialTicks);
         }
         else
         {

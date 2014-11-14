@@ -5,9 +5,7 @@
 
 package ivorius.psychedelicraft.client.rendering.shaders;
 
-import ivorius.ivtoolkit.math.IvMathHelper;
 import ivorius.ivtoolkit.rendering.IvShaderInstance3D;
-import ivorius.psychedelicraft.entities.drugs.Drug;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
@@ -49,13 +47,10 @@ public class ShaderMainDepth extends IvShaderInstance3D implements ShaderWorld
             float distantWorldDeformationStrength = 0.0f;
             if (drugHelper != null)
             {
-                for (Drug drug : drugHelper.getAllDrugs())
-                {
-                    bigWaveStrength += drug.bigWaveHallucinationStrength();
-                    smallWaveStrength += drug.smallWaveHallucinationStrength();
-                    wiggleWaveStrength += drug.wiggleWaveHallucinationStrength();
-                    distantWorldDeformationStrength += drug.distantWorldDeformationHallucinationStrength();
-                }
+                bigWaveStrength = drugHelper.hallucinationManager.getBigWaveStrength(drugHelper, partialTicks);
+                smallWaveStrength = drugHelper.hallucinationManager.getSmallWaveStrength(drugHelper, partialTicks);
+                wiggleWaveStrength = drugHelper.hallucinationManager.getWiggleWaveStrength(drugHelper, partialTicks);
+                distantWorldDeformationStrength = drugHelper.hallucinationManager.getDistantWorldDeformationStrength(drugHelper, partialTicks);
             }
             setUniformFloats("bigWaves", bigWaveStrength);
             setUniformFloats("smallWaves", smallWaveStrength);

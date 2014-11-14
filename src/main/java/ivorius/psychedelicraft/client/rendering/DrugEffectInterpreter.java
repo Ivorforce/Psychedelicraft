@@ -69,44 +69,4 @@ public class DrugEffectInterpreter
 
         return 0.0f;
     }
-
-    public static float getHallucinationStrength(DrugHelper drugHelper, float partialTicks)
-    {
-        float hallucinationStrength = 0.0f;
-        for (Drug drug : drugHelper.getAllDrugs())
-            hallucinationStrength += (1.0f - hallucinationStrength) * drug.hallucinationStrength();
-        return hallucinationStrength;
-    }
-
-    public static float getDesaturation(DrugHelper drugHelper, float partialTicks)
-    {
-        float desaturation = 0.0f;
-        for (Drug drug : drugHelper.getAllDrugs())
-            desaturation += (1.0f - desaturation) * drug.desaturationHallucinationStrength();
-        return desaturation;
-    }
-
-    public static float getColorIntensification(DrugHelper drugHelper, float partialTicks)
-    {
-        float intensification = 0.0f;
-        for (Drug drug : drugHelper.getAllDrugs())
-            intensification += (1.0f - intensification) * drug.superSaturationHallucinationStrength();
-        return intensification;
-    }
-
-    public static float getSlowColorRotation(DrugHelper drugHelper, float partialTicks)
-    {
-        float slowColorRotationStrength = 0.0f;
-        for (Drug drug : drugHelper.getAllDrugs())
-            slowColorRotationStrength += (1.0f - slowColorRotationStrength) * drug.slowColorRotationHallucinationStrength();
-        return slowColorRotationStrength;
-    }
-
-    public static float getQuickColorRotation(DrugHelper drugHelper, float partialTicks)
-    {
-        float quickColorRotationStrength = 0.0f;
-        for (Drug drug : drugHelper.getAllDrugs())
-            quickColorRotationStrength += (1.0f - quickColorRotationStrength) * drug.quickColorRotationHallucinationStrength();
-        return quickColorRotationStrength;
-    }
 }
