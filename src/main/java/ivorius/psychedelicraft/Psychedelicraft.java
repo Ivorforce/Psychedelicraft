@@ -21,7 +21,6 @@ import ivorius.psychedelicraft.commands.CommandDrug;
 import ivorius.psychedelicraft.commands.CommandPsyche;
 import ivorius.psychedelicraft.config.PSConfig;
 import ivorius.psychedelicraft.crafting.PSCrafting;
-import ivorius.psychedelicraft.crafting.PSRegistryHandler;
 import ivorius.psychedelicraft.entities.drugs.DrugInfluence;
 import ivorius.psychedelicraft.entities.drugs.DrugInfluenceHarmonium;
 import ivorius.psychedelicraft.entities.drugs.DrugRegistry;
