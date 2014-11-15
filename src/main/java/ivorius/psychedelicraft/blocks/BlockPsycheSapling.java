@@ -51,7 +51,7 @@ public class BlockPsycheSapling extends BlockBush implements IGrowable
     public IIcon getIcon(int p_149691_1_, int p_149691_2_)
     {
         p_149691_2_ &= 7;
-        return field_149881_b[MathHelper.clamp_int(p_149691_2_, 0, 5)];
+        return field_149881_b[MathHelper.clamp_int(p_149691_2_, 0, 0)];
     }
 
     public void func_149879_c(World p_149879_1_, int p_149879_2_, int p_149879_3_, int p_149879_4_, Random p_149879_5_)

@@ -53,7 +53,8 @@ public class BlockPsycheLeaves extends BlockLeaves
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int p_149691_1_, int p_149691_2_)
     {
-        return (p_149691_2_ & 3) == 1 ? this.field_150129_M[this.field_150127_b][1] : ((p_149691_2_ & 3) == 3 ? this.field_150129_M[this.field_150127_b][3] : ((p_149691_2_ & 3) == 2 ? this.field_150129_M[this.field_150127_b][2] : this.field_150129_M[this.field_150127_b][0]));
+        if ((p_149691_2_ & 3) == 1) return this.field_150129_M[this.field_150127_b][1];
+        else return this.field_150129_M[this.field_150127_b][0];
     }
 
     @SideOnly(Side.CLIENT)
