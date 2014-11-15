@@ -55,7 +55,9 @@ public interface Drug
 
     EntityPlayer.EnumStatus getSleepStatus();
 
-    void applyWorldColorizationHallucinationStrength(float[] rgba);
+    void applyContrastColorization(float[] rgba);
+
+    void applyColorBloom(float[] rgba);
 
     float desaturationHallucinationStrength();
 

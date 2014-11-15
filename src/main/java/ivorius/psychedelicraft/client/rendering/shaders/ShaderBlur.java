@@ -41,15 +41,13 @@ public class ShaderBlur extends IvShaderInstance2D
 
         setUniformFloats("pixelSize", 1.0f / screenWidth, 1.0f / screenHeight);
 
-        for (int n = 0; n < MathHelper.floor_double(Math.max(hBlur, vBlur)) + 1; n++)
+        for (int n = 0; n < MathHelper.ceiling_double_int(Math.max(hBlur, vBlur)); n++)
         {
             for (int i = 0; i < 2; i++)
             {
                 float activeBlur = (i == 0 ? hBlur : vBlur) - n;
                 if (activeBlur > 1.0f)
-                {
                     activeBlur = 1.0f;
-                }
 
                 if (activeBlur > 0.0f)
                 {

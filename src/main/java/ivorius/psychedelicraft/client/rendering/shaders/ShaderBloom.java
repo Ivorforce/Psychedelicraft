@@ -40,19 +40,18 @@ public class ShaderBloom extends IvShaderInstance2D
 
         setUniformFloats("pixelSize", 1.0f / screenWidth * 2.0f, 1.0f / screenHeight * 2.0f);
 
-        for (int n = 0; n < MathHelper.floor_double(bloom) + 1; n++)
+        for (int n = 0; n < MathHelper.ceiling_double_int(bloom); n++)
         {
+            float activeBloom = bloom - n;
+            if (activeBloom > 1.0f)
+            {
+                activeBloom = 1.0f;
+            }
+            setUniformFloats("totalAlpha", activeBloom);
+
             for (int i = 0; i < 2; i++)
             {
-                float activeBloom = bloom - n;
-                if (activeBloom > 1.0f)
-                {
-                    activeBloom = 1.0f;
-                }
-
                 setUniformInts("vertical", i);
-                setUniformFloats("totalAlpha", activeBloom);
-
                 drawFullScreen(screenWidth, screenHeight, pingPong);
             }
         }

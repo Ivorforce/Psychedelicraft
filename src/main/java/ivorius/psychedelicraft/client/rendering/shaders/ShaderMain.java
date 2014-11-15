@@ -69,10 +69,10 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
             float bigWaveStrength = 0.0f;
             float smallWaveStrength = 0.0f;
             float wiggleWaveStrength = 0.0f;
-            float redPulsesStrength = 0.0f;
             float surfaceFractalStrength = 0.0f;
             float distantWorldDeformationStrength = 0.0f;
-            float[] worldColorization = new float[]{1f, 1f, 1f, 0f};
+            float[] contrastColorization = new float[]{1f, 1f, 1f, 0f};
+            float[] pulseColor = new float[]{1f, 1f, 1f, 0f};
             if (drugHelper != null)
             {
                 desaturation = drugHelper.hallucinationManager.getDesaturation(drugHelper, partialTicks);
@@ -82,10 +82,10 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
                 bigWaveStrength = drugHelper.hallucinationManager.getBigWaveStrength(drugHelper, partialTicks);
                 smallWaveStrength = drugHelper.hallucinationManager.getSmallWaveStrength(drugHelper, partialTicks);
                 wiggleWaveStrength = drugHelper.hallucinationManager.getWiggleWaveStrength(drugHelper, partialTicks);
-                redPulsesStrength = drugHelper.hallucinationManager.getRedPulsesStrength(drugHelper, partialTicks);
                 surfaceFractalStrength = drugHelper.hallucinationManager.getSurfaceFractalStrength(drugHelper, partialTicks);
                 distantWorldDeformationStrength = drugHelper.hallucinationManager.getDistantWorldDeformationStrength(drugHelper, partialTicks);
-                drugHelper.hallucinationManager.applyWorldColorizationHallucinationStrength(drugHelper, worldColorization);
+                drugHelper.hallucinationManager.applyContrastColorization(drugHelper, contrastColorization, partialTicks);
+                drugHelper.hallucinationManager.applyPulseColor(drugHelper, pulseColor, partialTicks);
             }
             setUniformFloats("desaturation", desaturation);
             setUniformFloats("quickColorRotation", quickColorRotationStrength);
@@ -96,12 +96,13 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
             setUniformFloats("smallWaves", smallWaveStrength);
             setUniformFloats("wiggleWaves", wiggleWaveStrength);
             setUniformFloats("distantWorldDeformation", distantWorldDeformationStrength);
-            setUniformFloats("redPulses", IvMathHelper.clamp(0.0f, redPulsesStrength, 1.0f));
+            pulseColor[3] = IvMathHelper.clamp(0.0f, pulseColor[3], 1.0f);
+            setUniformFloats("pulses", pulseColor);
             if (surfaceFractalStrength > 0.0f)
                 registerFractals();
             setUniformFloats("surfaceFractal", IvMathHelper.clamp(0.0f, surfaceFractalStrength, 1.0f));
-            worldColorization[3] = IvMathHelper.clamp(0.0f, worldColorization[3], 1.0f);
-            setUniformFloats("worldColorization", worldColorization);
+            contrastColorization[3] = IvMathHelper.clamp(0.0f, contrastColorization[3], 1.0f);
+            setUniformFloats("worldColorization", contrastColorization);
 
             if (shouldDoShadows)
             {

@@ -29,7 +29,7 @@ public class WrapperBloom extends ShaderWrapper<ShaderBloom>
 
         shaderInstance.bloom = 0.0f;
         if (drugHelper != null)
-            drugHelper.hallucinationManager.getBloom(drugHelper, partialTicks);
+            shaderInstance.bloom = drugHelper.hallucinationManager.getBloom(drugHelper, partialTicks);
     }
 
     @Override

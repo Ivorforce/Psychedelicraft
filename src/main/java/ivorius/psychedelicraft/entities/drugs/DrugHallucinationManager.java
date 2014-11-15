@@ -20,10 +20,33 @@ public class DrugHallucinationManager
     public static final int HALLUCATION_BIG_WAVES = 5;
     public static final int HALLUCATION_SMALL_WAVES = 6;
     public static final int HALLUCATION_WIGGLE_WAVES = 7;
-    public static final int HALLUCATION_RED_PULSES = 8;
+    public static final int HALLUCATION_PULSES = 8;
     public static final int HALLUCATION_SURFACE_FRACTALS = 9;
     public static final int HALLUCATION_DISTANT_WORLD_DEFORMATION = 10;
     public static final int HALLUCATION_BLOOM = 11;
+    public static final int HALLUCATION_COLOR_BLOOM = 12;
+    public static final int HALLUCATION_COLOR_CONTRAST = 13;
+
+    protected final float[] currentMindColor = new float[]{1.0f, 1.0f, 1.0f};
+
+    public static void mixColorsDynamic(float[] color, float[] colorBase, float alpha)
+    {
+        if (alpha > 0.0f)
+        {
+            float max = alpha + colorBase[3];
+            colorBase[0] = (float) IvMathHelper.mix(colorBase[0], color[0], alpha / max);
+            colorBase[1] = (float) IvMathHelper.mix(colorBase[1], color[1], alpha / max);
+            colorBase[2] = (float) IvMathHelper.mix(colorBase[2], color[2], alpha / max);
+            colorBase[3] = max;
+        }
+    }
+
+    public static float randomColor(Random random, int ticksExisted, float base, float sway, float... speed)
+    {
+        for (float s : speed)
+            base *= 1.0f + MathHelper.sin(ticksExisted * s) * sway;
+        return base;
+    }
 
     public final List<DrugHallucination> entities = new ArrayList<>();
 
@@ -45,7 +68,7 @@ public class DrugHallucinationManager
             }
         };
         hallucinationTypes.add(colorHallucinationType);
-        Collections.addAll(colorHallucinationType.hallucinations, HALLUCATION_DESATURATION, HALLUCATION_SUPER_SATURATION, HALLUCATION_SLOW_COLOR_ROTATION, HALLUCATION_QUICK_COLOR_ROTATION, HALLUCATION_RED_PULSES, HALLUCATION_SURFACE_FRACTALS, HALLUCATION_BLOOM);
+        Collections.addAll(colorHallucinationType.hallucinations, HALLUCATION_DESATURATION, HALLUCATION_SUPER_SATURATION, HALLUCATION_SLOW_COLOR_ROTATION, HALLUCATION_QUICK_COLOR_ROTATION, HALLUCATION_PULSES, HALLUCATION_SURFACE_FRACTALS, HALLUCATION_BLOOM, HALLUCATION_COLOR_BLOOM, HALLUCATION_COLOR_CONTRAST);
 
         HallucinationType movementHallucinationType = new HallucinationType()
         {
@@ -83,10 +106,12 @@ public class DrugHallucinationManager
         hallucinationValues.put(HALLUCATION_BIG_WAVES, 0.0f);
         hallucinationValues.put(HALLUCATION_SMALL_WAVES, 0.0f);
         hallucinationValues.put(HALLUCATION_WIGGLE_WAVES, 0.0f);
-        hallucinationValues.put(HALLUCATION_RED_PULSES, 0.0f);
+        hallucinationValues.put(HALLUCATION_PULSES, 0.0f);
         hallucinationValues.put(HALLUCATION_SURFACE_FRACTALS, 0.0f);
         hallucinationValues.put(HALLUCATION_DISTANT_WORLD_DEFORMATION, 0.0f);
         hallucinationValues.put(HALLUCATION_BLOOM, 0.0f);
+        hallucinationValues.put(HALLUCATION_COLOR_BLOOM, 0.0f);
+        hallucinationValues.put(HALLUCATION_COLOR_CONTRAST, 0.0f);
     }
 
     public void update(EntityLivingBase entity, DrugHelper drugHelper)
@@ -107,7 +132,7 @@ public class DrugHallucinationManager
 
         if (activeHallucinations.size() > 0)
         {
-            while (random.nextFloat() < 1.0f / (20 * 60 * 2 / activeHallucinations.size()))
+            while (random.nextFloat() < 1.0f / (20 * 60 * 5 / activeHallucinations.size()))
             {
                 removeRandomHallucination(random);
                 addRandomHallucination(random);
@@ -125,9 +150,7 @@ public class DrugHallucinationManager
 
             if (activeHallucinations.contains(hKey))
             {
-                float pureDesiredValue = 1.0f + MathHelper.sin(drugHelper.ticksExisted * 0.00121f) * 0.5f;
-                pureDesiredValue *= 1.0f + MathHelper.sin(drugHelper.ticksExisted * 0.0019318f) * 0.5f;
-                float desiredValue = pureDesiredValue * getHallucinationMultiplier(hKey);
+                float desiredValue = randomColor(random, drugHelper.ticksExisted, getHallucinationMultiplier(hKey), 0.5f, 0.00121f, 0.0019318f);
 
                 val = IvMathHelper.nearValue(val, desiredValue, 0.002f, 0.002f);
                 hallucinationValues.put(hKey, val);
@@ -138,6 +161,10 @@ public class DrugHallucinationManager
                 hallucinationValues.put(hKey, val);
             }
         }
+
+        currentMindColor[0] = IvMathHelper.nearValue(currentMindColor[0], randomColor(random, drugHelper.ticksExisted, 0.5f, 0.5f, 0.0012371f, 0.0017412f), 0.002f, 0.002f);
+        currentMindColor[1] = IvMathHelper.nearValue(currentMindColor[1], randomColor(random, drugHelper.ticksExisted, 0.5f, 0.5f, 0.0011239f, 0.0019321f), 0.002f, 0.002f);
+        currentMindColor[2] = IvMathHelper.nearValue(currentMindColor[2], randomColor(random, drugHelper.ticksExisted, 0.5f, 0.5f, 0.0011541f, 0.0018682f), 0.002f, 0.002f);
     }
 
     public void updateEntities(EntityLivingBase entity, DrugHelper drugHelper, Random random)
@@ -227,7 +254,7 @@ public class DrugHallucinationManager
         for (HallucinationType type : hallucinationTypes)
         {
             if (type.hallucinations.contains(hallucination))
-                value *= IvMathHelper.zeroToOne(type.currentValue, 0.0f, 0.1f);
+                value *= IvMathHelper.zeroToOne(type.currentValue, 0.0f, 0.5f);
         }
         return value;
     }
@@ -286,11 +313,6 @@ public class DrugHallucinationManager
         return 0.7f * getHallucinationMultiplier(HALLUCATION_WIGGLE_WAVES) * hallucinationValues.get(HALLUCATION_WIGGLE_WAVES);
     }
 
-    public float getRedPulsesStrength(DrugHelper drugHelper, float partialTicks)
-    {
-        return getHallucinationMultiplier(HALLUCATION_RED_PULSES) * hallucinationValues.get(HALLUCATION_RED_PULSES);
-    }
-
     public float getSurfaceFractalStrength(DrugHelper drugHelper, float partialTicks)
     {
         return getHallucinationMultiplier(HALLUCATION_SURFACE_FRACTALS) * hallucinationValues.get(HALLUCATION_SURFACE_FRACTALS);
@@ -301,10 +323,31 @@ public class DrugHallucinationManager
         return getHallucinationMultiplier(HALLUCATION_DISTANT_WORLD_DEFORMATION) * hallucinationValues.get(HALLUCATION_DISTANT_WORLD_DEFORMATION);
     }
 
-    public void applyWorldColorizationHallucinationStrength(DrugHelper drugHelper, float[] worldColorization)
+    public void applyPulseColor(DrugHelper drugHelper, float[] pulseColor, float partialTicks)
+    {
+        float val = getHallucinationMultiplier(HALLUCATION_PULSES) * hallucinationValues.get(HALLUCATION_PULSES);
+        pulseColor[0] = currentMindColor[0];
+        pulseColor[1] = currentMindColor[1];
+        pulseColor[2] = currentMindColor[2];
+        pulseColor[3] = val;
+    }
+
+    public void applyColorBloom(DrugHelper drugHelper, float[] bloomColor, float partialTicks)
     {
         for (Drug drug : drugHelper.getAllDrugs())
-            drug.applyWorldColorizationHallucinationStrength(worldColorization);
+            drug.applyColorBloom(bloomColor);
+
+        float val = 2.0f * getHallucinationMultiplier(HALLUCATION_COLOR_BLOOM) * hallucinationValues.get(HALLUCATION_COLOR_BLOOM);
+        mixColorsDynamic(currentMindColor, bloomColor, val);
+    }
+
+    public void applyContrastColorization(DrugHelper drugHelper, float[] contrastColor, float partialTicks)
+    {
+        for (Drug drug : drugHelper.getAllDrugs())
+            drug.applyContrastColorization(contrastColor);
+
+        float val = getHallucinationMultiplier(HALLUCATION_COLOR_CONTRAST) * hallucinationValues.get(HALLUCATION_COLOR_CONTRAST);
+        mixColorsDynamic(currentMindColor, contrastColor, val);
     }
 
     public float getBloom(DrugHelper drugHelper, float partialTicks)

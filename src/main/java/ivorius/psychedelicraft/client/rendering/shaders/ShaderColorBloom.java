@@ -34,26 +34,21 @@ public class ShaderColorBloom extends IvShaderInstance2D
         useShader();
 
         for (int i = 0; i < 1; i++)
-        {
             setUniformInts("tex" + i, i);
-        }
 
         setUniformFloats("pixelSize", 1.0f / screenWidth, 1.0f / screenHeight);
         setUniformFloats("bloomColor", coloredBloom[0], coloredBloom[1], coloredBloom[2]);
 
-        for (int n = 0; n < MathHelper.floor_double(coloredBloom[3]) + 1; n++)
+        for (int n = 0; n < MathHelper.ceiling_double_int(coloredBloom[3]); n++)
         {
+            float activeBloom = coloredBloom[3] - n;
+            if (activeBloom > 1.0f)
+                activeBloom = 1.0f;
+            setUniformFloats("totalAlpha", activeBloom);
+
             for (int i = 0; i < 2; i++)
             {
-                float activeBloom = coloredBloom[3] - n;
-                if (activeBloom > 1.0f)
-                {
-                    activeBloom = 1.0f;
-                }
-
                 setUniformInts("vertical", i);
-                setUniformFloats("totalAlpha", activeBloom);
-
                 drawFullScreen(screenWidth, screenHeight, pingPong);
             }
         }

@@ -25,7 +25,7 @@ uniform int useScreenTexCoords;
 
 uniform int fractal0TexIndex;
 
-uniform float redPulses;
+uniform vec4 pulses;
 uniform float quickColorRotation;
 uniform float slowColorRotation;
 uniform float surfaceFractal;
@@ -138,12 +138,11 @@ void main()
         gl_FragColor.rgb = mix(gl_FragColor.rgb, getRotatedColor(gl_FragColor.rgb, avg * surfaceFractal), surfaceFractal);
     }
 
-    if(redPulses > 0.0)
+    if(pulses.a > 0.0)
     {
-        float r = (sin((gl_FogFragCoord - ticks) / 5.0) - 0.4) * redPulses;
-        
-        if(r > 0.0)
-            gl_FragColor.r += r;
+        float pulseA = (sin((gl_FogFragCoord - ticks) / 5.0) - 0.4) * pulses.a;
+        if (pulseA > 0.0)
+            gl_FragColor.rgb = mix(gl_FragColor.rgb, (gl_FragColor.rgb + 1.0) * pulses.rgb, pulseA);
     }
 
     if (uses2DShaders == 0)

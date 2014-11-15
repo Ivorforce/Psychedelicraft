@@ -5,9 +5,7 @@
 
 package ivorius.psychedelicraft.entities.drugs.effects;
 
-import ivorius.ivtoolkit.rendering.IvShaderInstance;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
-import net.minecraft.client.Minecraft;
+import ivorius.psychedelicraft.entities.drugs.DrugHallucinationManager;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class DrugHarmonium extends DrugSimple
@@ -22,12 +20,15 @@ public class DrugHarmonium extends DrugSimple
     }
 
     @Override
-    public void applyWorldColorizationHallucinationStrength(float[] rgba)
+    public void applyContrastColorization(float[] rgba)
     {
-        rgba[0] *= currentColor[0];
-        rgba[1] *= currentColor[1];
-        rgba[2] *= currentColor[2];
-        rgba[3] += (float)getActiveValue();
+        DrugHallucinationManager.mixColorsDynamic(currentColor, rgba, (float) getActiveValue());
+    }
+
+    @Override
+    public void applyColorBloom(float[] rgba)
+    {
+        DrugHallucinationManager.mixColorsDynamic(currentColor, rgba, (float) getActiveValue() * 3.0f);
     }
 
     @Override

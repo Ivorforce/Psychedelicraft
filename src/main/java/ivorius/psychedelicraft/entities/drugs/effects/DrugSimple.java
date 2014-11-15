@@ -184,7 +184,13 @@ public class DrugSimple implements Drug
     }
 
     @Override
-    public void applyWorldColorizationHallucinationStrength(float[] rgba)
+    public void applyContrastColorization(float[] rgba)
+    {
+
+    }
+
+    @Override
+    public void applyColorBloom(float[] rgba)
     {
 
     }
