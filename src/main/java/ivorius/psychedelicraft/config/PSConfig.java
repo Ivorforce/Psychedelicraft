@@ -61,7 +61,7 @@ public class PSConfig
         {
             randomTicksUntilRiftSpawn = config.get(CATEGORY_BALANCING, "randomTicksUntilRiftSpawn", MINUTE * 180, "Approximate number of ticks until a rift spawns. Enter a negative number to disable.").getInt();
 
-            enableHarmonium = config.get(CATEGORY_BALANCING, "enableHarmonium", true).getBoolean();
+            enableHarmonium = config.get(CATEGORY_BALANCING, "enableHarmonium", false).getBoolean();
             enableRiftJars = config.get(CATEGORY_BALANCING, "enableRiftJars", true).getBoolean();
 
             genJuniper = config.get(CATEGORY_BALANCING, "generateJuniper", true).getBoolean();
