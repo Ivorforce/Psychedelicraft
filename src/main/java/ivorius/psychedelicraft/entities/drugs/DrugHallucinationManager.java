@@ -337,8 +337,8 @@ public class DrugHallucinationManager
         for (Drug drug : drugHelper.getAllDrugs())
             drug.applyColorBloom(bloomColor);
 
-        float val = 2.0f * getHallucinationMultiplier(HALLUCATION_COLOR_BLOOM) * hallucinationValues.get(HALLUCATION_COLOR_BLOOM);
-        mixColorsDynamic(currentMindColor, bloomColor, val);
+        float val = 1.5f * getHallucinationMultiplier(HALLUCATION_COLOR_BLOOM) * hallucinationValues.get(HALLUCATION_COLOR_BLOOM);
+        mixColorsDynamic(currentMindColor, bloomColor, IvMathHelper.clamp(0.0f, val, 1.0f));
     }
 
     public void applyContrastColorization(DrugHelper drugHelper, float[] contrastColor, float partialTicks)
@@ -347,12 +347,12 @@ public class DrugHallucinationManager
             drug.applyContrastColorization(contrastColor);
 
         float val = getHallucinationMultiplier(HALLUCATION_COLOR_CONTRAST) * hallucinationValues.get(HALLUCATION_COLOR_CONTRAST);
-        mixColorsDynamic(currentMindColor, contrastColor, val);
+        mixColorsDynamic(currentMindColor, contrastColor, IvMathHelper.clamp(0.0f, val, 1.0f));
     }
 
     public float getBloom(DrugHelper drugHelper, float partialTicks)
     {
-        float value = 2.0f * getHallucinationMultiplier(HALLUCATION_BLOOM) * hallucinationValues.get(HALLUCATION_BLOOM);
+        float value = 1.5f * getHallucinationMultiplier(HALLUCATION_BLOOM) * hallucinationValues.get(HALLUCATION_BLOOM);
         for (Drug drug : drugHelper.getAllDrugs())
             value += drug.bloomHallucinationStrength();
         return value;
