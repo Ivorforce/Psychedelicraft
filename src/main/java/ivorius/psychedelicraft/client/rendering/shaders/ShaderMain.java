@@ -20,6 +20,7 @@ import net.minecraft.util.IIcon;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL11;
 
+import static org.lwjgl.opengl.GL11.GL_FOG;
 import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
 
 /**
@@ -56,9 +57,8 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
 
             setTexture2DEnabled(GLStateProxy.isTextureEnabled(OpenGlHelper.defaultTexUnit));
             setLightmapEnabled(GLStateProxy.isTextureEnabled(OpenGlHelper.lightmapTexUnit));
-            setFogEnabled(GLStateProxy.isFogEnabled());
+            setFogEnabled(GLStateProxy.isEnabled(GL_FOG));
 
-            setBlendFunc(GL_ONE_MINUS_SRC_ALPHA);
             setDepthMultiplier(1.0f);
             setUseScreenTexCoords(false);
             setPixelSize(1.0f / mc.displayWidth, 1.0f / mc.displayHeight);
@@ -156,12 +156,6 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
     public void setLightmapEnabled(boolean enabled)
     {
         setUniformInts("lightmapEnabled", enabled ? 1 : 0);
-    }
-
-    @Override
-    public void setBlendFunc(int func)
-    {
-//        setUniformInts("blendFunc", func);
     }
 
     @Override

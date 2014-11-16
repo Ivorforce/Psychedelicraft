@@ -284,6 +284,26 @@ public class DrugShaderHelper
         return false;
     }
 
+    public static void setEnabled(int cap, boolean enabled)
+    {
+        if (cap == GL11.GL_TEXTURE_2D)
+            setTexture2DEnabled(GLStateProxy.getActiveTextureUnit(), enabled);
+        else
+        {
+            GLStateProxy.setEnabled(cap, enabled);
+
+            if (currentShader != null)
+            {
+                switch (cap)
+                {
+                    case GL11.GL_FOG:
+                        currentShader.setFogEnabled(enabled);
+                        break;
+                }
+            }
+        }
+    }
+
     public static void setTexture2DEnabled(int textureUnit, boolean enabled)
     {
         GLStateProxy.setTextureEnabled(textureUnit, enabled);
@@ -295,10 +315,9 @@ public class DrugShaderHelper
             currentShader.setLightmapEnabled(enabled);
     }
 
-    public static void setBlendFunc(int func)
+    public static void setBlendFunc(int sFactor, int dFactor, int sFactorAlpha, int dFactorAlpha)
     {
-        if (currentShader != null)
-            currentShader.setBlendFunc(func);
+        GLStateProxy.glBlendFunc(sFactor, dFactor, sFactorAlpha, dFactorAlpha);
     }
 
     public static void setOverrideColor(float... color)
@@ -332,13 +351,6 @@ public class DrugShaderHelper
     {
         if (currentShader != null)
             currentShader.setFogMode(mode);
-    }
-
-    public static void setFogEnabled(boolean enabled)
-    {
-        GLStateProxy.setFogEnabled(enabled);
-        if (currentShader != null)
-            currentShader.setFogEnabled(enabled);
     }
 
     public static void setDepthMultiplier(float depthMultiplier)

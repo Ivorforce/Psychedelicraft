@@ -91,12 +91,6 @@ public class ShaderShadows extends IvShaderInstance3D implements ShaderWorld
     }
 
     @Override
-    public void setBlendFunc(int func)
-    {
-
-    }
-
-    @Override
     public void setOverrideColor(float[] color)
     {
         if (color != null)

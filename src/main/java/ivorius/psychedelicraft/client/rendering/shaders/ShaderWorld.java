@@ -20,8 +20,6 @@ public interface ShaderWorld
 
     public void setLightmapEnabled(boolean enabled);
 
-    public void setBlendFunc(int func);
-
     public void setOverrideColor(float[] color);
 
     public void setGLLightEnabled(boolean enabled);

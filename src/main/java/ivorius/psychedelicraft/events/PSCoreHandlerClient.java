@@ -98,19 +98,13 @@ public class PSCoreHandlerClient
     @SubscribeEvent
     public void psycheGLEnable(GLSwitchEvent event)
     {
-        if (event.cap == GL11.GL_TEXTURE_2D)
-            DrugShaderHelper.setTexture2DEnabled(GLStateProxy.getActiveTextureUnit(), event.enable);
-        else if (event.cap == GL11.GL_FOG)
-            DrugShaderHelper.setFogEnabled(event.enable);
+        DrugShaderHelper.setEnabled(event.cap, event.enable);
     }
 
     @SubscribeEvent
     public void psycheGLBlendFunc(GLBlendFuncEvent event)
     {
-        if (event.sFactor == GL11.GL_SRC_ALPHA && event.dFactor == GL11.GL_ONE)
-            DrugShaderHelper.setBlendFunc(GL11.GL_ONE);
-        else
-            DrugShaderHelper.setBlendFunc(GL11.GL_ONE_MINUS_SRC_ALPHA);
+        DrugShaderHelper.setBlendFunc(event.sFactor, event.dFactor, event.dfactorAlpha, event.dfactorAlpha);
     }
 
     @SubscribeEvent
