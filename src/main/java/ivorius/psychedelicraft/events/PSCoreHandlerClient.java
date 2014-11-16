@@ -99,18 +99,14 @@ public class PSCoreHandlerClient
     @SubscribeEvent
     public void psycheGLEnable(GLSwitchEvent event)
     {
-        boolean enable = event instanceof GLSwitchEvent.Enable;
+        boolean enable = event.enable;
 
         if (event.cap == GL11.GL_TEXTURE_2D)
         {
             if (getLastActiveTexture() == OpenGlHelper.defaultTexUnit)
-            {
                 DrugShaderHelper.setTexture2DEnabled(enable);
-            }
             else if (getLastActiveTexture() == OpenGlHelper.lightmapTexUnit)
-            {
                 DrugShaderHelper.setLightmapEnabled(enable);
-            }
         }
         else if (event.cap == GL11.GL_FOG)
         {
@@ -145,7 +141,7 @@ public class PSCoreHandlerClient
     @SubscribeEvent
     public void standardItemLighting(ItemLightingEvent event)
     {
-        if (event instanceof ItemLightingEvent.Enable)
+        if (event.enable)
         {
             float var0 = 0.4F;
             float var1 = 0.6F;
@@ -300,14 +296,10 @@ public class PSCoreHandlerClient
     @SubscribeEvent
     public void lightmapSwitched(LightmapSwitchEvent event)
     {
-        if (event instanceof LightmapSwitchEvent.Enable)
-        {
+        if (event.enable)
             DrugShaderHelper.setLightmapEnabled(true);
-        }
         else
-        {
             DrugShaderHelper.setLightmapEnabled(false);
-        }
     }
 
     @SubscribeEvent

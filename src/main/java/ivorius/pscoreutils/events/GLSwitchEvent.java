@@ -13,25 +13,11 @@ import cpw.mods.fml.common.eventhandler.Event;
 public class GLSwitchEvent extends Event
 {
     public final int cap;
+    public final boolean enable;
 
-    public GLSwitchEvent(int cap)
+    public GLSwitchEvent(int cap, boolean enable)
     {
         this.cap = cap;
-    }
-
-    public static class Enable extends GLSwitchEvent
-    {
-        public Enable(int cap)
-        {
-            super(cap);
-        }
-    }
-
-    public static class Disable extends GLSwitchEvent
-    {
-        public Disable(int cap)
-        {
-            super(cap);
-        }
+        this.enable = enable;
     }
 }

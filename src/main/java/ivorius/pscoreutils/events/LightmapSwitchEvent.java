@@ -12,24 +12,10 @@ import cpw.mods.fml.common.eventhandler.Event;
  */
 public class LightmapSwitchEvent extends Event
 {
-    public LightmapSwitchEvent()
-    {
+    public final boolean enable;
 
-    }
-
-    public static class Enable extends LightmapSwitchEvent
+    public LightmapSwitchEvent(boolean enable)
     {
-        public Enable()
-        {
-            super();
-        }
-    }
-
-    public static class Disable extends LightmapSwitchEvent
-    {
-        public Disable()
-        {
-            super();
-        }
+        this.enable = enable;
     }
 }

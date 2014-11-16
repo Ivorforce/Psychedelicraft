@@ -12,24 +12,10 @@ import cpw.mods.fml.common.eventhandler.Event;
  */
 public class ItemLightingEvent extends Event
 {
-    public ItemLightingEvent()
-    {
+    public final boolean enable;
 
-    }
-
-    public static class Enable extends ItemLightingEvent
+    public ItemLightingEvent(boolean enable)
     {
-        public Enable()
-        {
-            super();
-        }
-    }
-
-    public static class Disable extends ItemLightingEvent
-    {
-        public Disable()
-        {
-            super();
-        }
+        this.enable = enable;
     }
 }

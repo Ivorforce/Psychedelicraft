@@ -29,12 +29,12 @@ public class PsycheCoreBusClient
 
     public static void psycheGLEnable(int cap)
     {
-        PsycheCoreBusCommon.EVENT_BUS.post(new GLSwitchEvent.Enable(cap));
+        PsycheCoreBusCommon.EVENT_BUS.post(new GLSwitchEvent(cap, true));
     }
 
     public static void psycheGLDisable(int cap)
     {
-        PsycheCoreBusCommon.EVENT_BUS.post(new GLSwitchEvent.Disable(cap));
+        PsycheCoreBusCommon.EVENT_BUS.post(new GLSwitchEvent(cap, false));
     }
 
     public static void psycheGLBlendFunc(int sFactor, int dFactor, int sfactorAlpha, int dfactorAlpha)
@@ -76,12 +76,12 @@ public class PsycheCoreBusClient
 
     public static void enableStandardItemLighting()
     {
-        PsycheCoreBusCommon.EVENT_BUS.post(new ItemLightingEvent.Enable());
+        PsycheCoreBusCommon.EVENT_BUS.post(new ItemLightingEvent(true));
     }
 
     public static void disableStandardItemLighting()
     {
-        PsycheCoreBusCommon.EVENT_BUS.post(new ItemLightingEvent.Disable());
+        PsycheCoreBusCommon.EVENT_BUS.post(new ItemLightingEvent(false));
     }
 
     public static void orientCamera(float partialTicks)
@@ -139,11 +139,11 @@ public class PsycheCoreBusClient
 
     public static void enableLightmap()
     {
-        PsycheCoreBusCommon.EVENT_BUS.post(new LightmapSwitchEvent.Enable());
+        PsycheCoreBusCommon.EVENT_BUS.post(new LightmapSwitchEvent(true));
     }
 
     public static void disableLightmap()
     {
-        PsycheCoreBusCommon.EVENT_BUS.post(new LightmapSwitchEvent.Disable());
+        PsycheCoreBusCommon.EVENT_BUS.post(new LightmapSwitchEvent(false));
     }
 }
