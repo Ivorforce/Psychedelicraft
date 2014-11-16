@@ -8,6 +8,7 @@ package ivorius.psychedelicraft.events;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import ivorius.pscoreutils.events.*;
 import ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
+import ivorius.psychedelicraft.client.rendering.GLStateProxy;
 import ivorius.psychedelicraft.client.rendering.SmoothCameraHelper;
 import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
@@ -29,8 +30,6 @@ public class PSCoreHandlerClient
     // Taken from RenderHelper
     private final Vec3 field_82884_b = Vec3.createVectorHelper(0.20000000298023224D, 1.0D, -0.699999988079071D).normalize();
     private final Vec3 field_82885_c = Vec3.createVectorHelper(-0.20000000298023224D, 1.0D, 0.699999988079071D).normalize();
-
-    private int lastActiveTexture = OpenGlHelper.defaultTexUnit;
 
     public void register()
     {
@@ -99,43 +98,25 @@ public class PSCoreHandlerClient
     @SubscribeEvent
     public void psycheGLEnable(GLSwitchEvent event)
     {
-        boolean enable = event.enable;
-
         if (event.cap == GL11.GL_TEXTURE_2D)
-        {
-            if (getLastActiveTexture() == OpenGlHelper.defaultTexUnit)
-                DrugShaderHelper.setTexture2DEnabled(enable);
-            else if (getLastActiveTexture() == OpenGlHelper.lightmapTexUnit)
-                DrugShaderHelper.setLightmapEnabled(enable);
-        }
+            DrugShaderHelper.setTexture2DEnabled(GLStateProxy.getActiveTextureUnit(), event.enable);
         else if (event.cap == GL11.GL_FOG)
-        {
-            DrugShaderHelper.setFogEnabled(enable);
-        }
+            DrugShaderHelper.setFogEnabled(event.enable);
     }
 
     @SubscribeEvent
     public void psycheGLBlendFunc(GLBlendFuncEvent event)
     {
         if (event.sFactor == GL11.GL_SRC_ALPHA && event.dFactor == GL11.GL_ONE)
-        {
             DrugShaderHelper.setBlendFunc(GL11.GL_ONE);
-        }
         else
-        {
             DrugShaderHelper.setBlendFunc(GL11.GL_ONE_MINUS_SRC_ALPHA);
-        }
     }
 
     @SubscribeEvent
     public void psycheGLActiveTexture(GLActiveTextureEvent event)
     {
-        lastActiveTexture = event.texture;
-    }
-
-    public int getLastActiveTexture()
-    {
-        return lastActiveTexture;
+        GLStateProxy.setActiveTextureUnit(event.texture);
     }
 
     @SubscribeEvent
@@ -290,16 +271,7 @@ public class PSCoreHandlerClient
     public void fixGLState(GLStateFixEvent event)
     {
         DrugShaderHelper.setUseScreenTexCoords(false);
-        DrugShaderHelper.setTexture2DEnabled(true);
-    }
-
-    @SubscribeEvent
-    public void lightmapSwitched(LightmapSwitchEvent event)
-    {
-        if (event.enable)
-            DrugShaderHelper.setLightmapEnabled(true);
-        else
-            DrugShaderHelper.setLightmapEnabled(false);
+        DrugShaderHelper.setTexture2DEnabled(OpenGlHelper.defaultTexUnit, true);
     }
 
     @SubscribeEvent

@@ -7,7 +7,9 @@ package ivorius.psychedelicraft.client.rendering.shaders;
 
 import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.ivtoolkit.rendering.IvShaderInstance3D;
+import ivorius.psychedelicraft.client.rendering.GLStateProxy;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.EntityLivingBase;
 import org.apache.logging.log4j.Logger;
 
@@ -49,7 +51,7 @@ public class ShaderShadows extends IvShaderInstance3D implements ShaderWorld
             setUniformFloats("ticks", ticks);
             setUniformInts("worldTime", (int) mc.theWorld.getWorldTime());
 
-            setTexture2DEnabled(true);
+            setTexture2DEnabled(GLStateProxy.isTextureEnabled(OpenGlHelper.defaultTexUnit));
             setUniformFloats("playerPos", (float) renderEntity.posX, (float) renderEntity.posY, (float) renderEntity.posZ);
             setUniformFloats("depthMultiplier", 1.0f);
             setUniformFloats("pixelSize", 1.0f / depthBuffer.getTextureWidth(), 1.0f / depthBuffer.getTextureHeight());

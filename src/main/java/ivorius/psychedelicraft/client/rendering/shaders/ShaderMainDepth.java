@@ -6,8 +6,10 @@
 package ivorius.psychedelicraft.client.rendering.shaders;
 
 import ivorius.ivtoolkit.rendering.IvShaderInstance3D;
+import ivorius.psychedelicraft.client.rendering.GLStateProxy;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.EntityLivingBase;
 import org.apache.logging.log4j.Logger;
 
@@ -36,7 +38,7 @@ public class ShaderMainDepth extends IvShaderInstance3D implements ShaderWorld
 
             setUniformFloats("playerPos", (float) renderEntity.posX, (float) renderEntity.posY, (float) renderEntity.posZ);
             setDepthMultiplier(1.0f);
-            setTexture2DEnabled(true);
+            setTexture2DEnabled(GLStateProxy.isTextureEnabled(OpenGlHelper.defaultTexUnit));
             setOverrideColor(null);
             setUseScreenTexCoords(false);
             setPixelSize(1.0f / mc.displayWidth, 1.0f / mc.displayHeight);

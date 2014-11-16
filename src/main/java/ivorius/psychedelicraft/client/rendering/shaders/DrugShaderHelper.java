@@ -9,6 +9,7 @@ import com.google.common.base.Charsets;
 import ivorius.ivtoolkit.rendering.*;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.EntityFakeSun;
+import ivorius.psychedelicraft.client.rendering.GLStateProxy;
 import ivorius.psychedelicraft.client.rendering.PsycheShadowHelper;
 import ivorius.psychedelicraft.client.rendering.effectWrappers.*;
 import net.minecraft.client.Minecraft;
@@ -27,7 +28,6 @@ import java.util.List;
 public class DrugShaderHelper
 {
     public static ShaderWorld currentShader;
-    public static ArrayList<ShaderWorld> worldShaders = new ArrayList<>();
     public static ShaderMain shaderInstance;
     public static ShaderMainDepth shaderInstanceDepth;
     public static ShaderShadows shaderInstanceShadows;
@@ -205,15 +205,12 @@ public class DrugShaderHelper
 
         shaderInstance = new ShaderMain(Psychedelicraft.logger);
         setUpShader(shaderInstance, "shader3D.vert", "shader3D.frag", utils);
-        worldShaders.add(shaderInstance);
 
         shaderInstanceDepth = new ShaderMainDepth(Psychedelicraft.logger);
         setUpShader(shaderInstanceDepth, "shader3D.vert", "shader3DDepth.frag", utils);
-        worldShaders.add(shaderInstanceDepth);
 
         shaderInstanceShadows = new ShaderShadows(Psychedelicraft.logger);
         setUpShader(shaderInstanceShadows, "shader3D.vert", "shader3DDepth.frag", utils);
-        worldShaders.add(shaderInstanceShadows);
 
         IvOpenGLHelper.checkGLError(Psychedelicraft.logger, "Allocation-Shaders");
 
@@ -287,22 +284,21 @@ public class DrugShaderHelper
         return false;
     }
 
-    public static void setTexture2DEnabled(boolean enabled)
+    public static void setTexture2DEnabled(int textureUnit, boolean enabled)
     {
-        for (ShaderWorld shaderWorld : worldShaders)
-            shaderWorld.setTexture2DEnabled(enabled);
-    }
+        GLStateProxy.setTextureEnabled(textureUnit, enabled);
 
-    public static void setLightmapEnabled(boolean enabled)
-    {
-        for (ShaderWorld shaderWorld : worldShaders)
-            shaderWorld.setLightmapEnabled(enabled);
+        if (textureUnit == OpenGlHelper.defaultTexUnit && currentShader != null)
+            currentShader.setTexture2DEnabled(enabled);
+
+        if (textureUnit == OpenGlHelper.lightmapTexUnit && currentShader != null)
+            currentShader.setLightmapEnabled(enabled);
     }
 
     public static void setBlendFunc(int func)
     {
-        for (ShaderWorld shaderWorld : worldShaders)
-            shaderWorld.setBlendFunc(func);
+        if (currentShader != null)
+            currentShader.setBlendFunc(func);
     }
 
     public static void setOverrideColor(float... color)
@@ -310,50 +306,51 @@ public class DrugShaderHelper
         if (color != null && color.length != 4)
             throw new IllegalArgumentException("Color must be a length-4 float array");
 
-        for (ShaderWorld shaderWorld : worldShaders)
-            shaderWorld.setOverrideColor(color);
+        if (currentShader != null)
+            currentShader.setOverrideColor(color);
     }
 
     public static void setGLLightEnabled(boolean enabled)
     {
-        for (ShaderWorld shaderWorld : worldShaders)
-            shaderWorld.setGLLightEnabled(enabled);
+        if (currentShader != null)
+            currentShader.setGLLightEnabled(enabled);
     }
 
     public static void setGLLight(int number, float x, float y, float z, float strength, float specular)
     {
-        for (ShaderWorld shaderWorld : worldShaders)
-            shaderWorld.setGLLight(number, x, y, z, strength, specular);
+        if (currentShader != null)
+            currentShader.setGLLight(number, x, y, z, strength, specular);
     }
 
     public static void setGLLightAmbient(float strength)
     {
-        for (ShaderWorld shaderWorld : worldShaders)
-            shaderWorld.setGLLightAmbient(strength);
+        if (currentShader != null)
+            currentShader.setGLLightAmbient(strength);
     }
 
     public static void setFogMode(int mode)
     {
-        for (ShaderWorld shaderWorld : worldShaders)
-            shaderWorld.setFogMode(mode);
+        if (currentShader != null)
+            currentShader.setFogMode(mode);
     }
 
     public static void setFogEnabled(boolean enabled)
     {
-        for (ShaderWorld shaderWorld : worldShaders)
-            shaderWorld.setFogEnabled(enabled);
+        GLStateProxy.setFogEnabled(enabled);
+        if (currentShader != null)
+            currentShader.setFogEnabled(enabled);
     }
 
     public static void setDepthMultiplier(float depthMultiplier)
     {
-        for (ShaderWorld shaderWorld : worldShaders)
-            shaderWorld.setDepthMultiplier(depthMultiplier);
+        if (currentShader != null)
+            currentShader.setDepthMultiplier(depthMultiplier);
     }
 
     public static void setUseScreenTexCoords(boolean enabled)
     {
-        for (ShaderWorld shaderWorld : worldShaders)
-            shaderWorld.setUseScreenTexCoords(enabled);
+        if (currentShader != null)
+            currentShader.setUseScreenTexCoords(enabled);
     }
 
     public static void setScreenSizeDefault()
@@ -369,14 +366,14 @@ public class DrugShaderHelper
 
     public static void setPixelSize(float pixelWidth, float pixelHeight)
     {
-        for (ShaderWorld shaderWorld : worldShaders)
-            shaderWorld.setPixelSize(pixelWidth, pixelHeight);
+        if (currentShader != null)
+            currentShader.setPixelSize(pixelWidth, pixelHeight);
     }
 
     public static void setProjectShadows(boolean projectShadows)
     {
-        for (ShaderWorld shaderWorld : worldShaders)
-            shaderWorld.setProjectShadows(projectShadows);
+        if (currentShader != null)
+            currentShader.setProjectShadows(projectShadows);
     }
 
     public static int getCurrentAllowedGLDataMask()
@@ -465,8 +462,6 @@ public class DrugShaderHelper
         if (depthBuffer != null)
             depthBuffer.deallocate();
         depthBuffer = null;
-
-        worldShaders.clear();
     }
 
     public static void outputShaderInfo()

@@ -144,7 +144,7 @@ public class DrugHallucinationEntity extends DrugHallucination
             OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
             GL11.glEnable(GL11.GL_BLEND);
             DrugShaderHelper.setOverrideColor(color[0], color[1], color[2], alpha * dAlpha);
-            DrugShaderHelper.setLightmapEnabled(false);
+            DrugShaderHelper.setTexture2DEnabled(OpenGlHelper.lightmapTexUnit, false);
 
             Render var10 = RenderManager.instance.getEntityRenderObject(this.entity);
             GL11.glTranslated(var3 - RenderManager.renderPosX, var5 - RenderManager.renderPosY, var7 - RenderManager.renderPosZ);
@@ -153,7 +153,7 @@ public class DrugHallucinationEntity extends DrugHallucination
             GL11.glScaled(scale, scale, scale);
             var10.doRender(this.entity, 0.0F, 0.0F, 0.0F, 0.0F, 1.0f);
 
-            DrugShaderHelper.setLightmapEnabled(true);
+            DrugShaderHelper.setTexture2DEnabled(OpenGlHelper.lightmapTexUnit, true);
             DrugShaderHelper.setOverrideColor((float[]) null);
 
             GL11.glPopMatrix();

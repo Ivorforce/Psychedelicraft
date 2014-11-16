@@ -8,6 +8,7 @@ package ivorius.psychedelicraft.client.rendering.shaders;
 import ivorius.ivtoolkit.math.IvMathHelper;
 import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.ivtoolkit.rendering.IvShaderInstance3D;
+import ivorius.psychedelicraft.client.rendering.GLStateProxy;
 import ivorius.psychedelicraft.client.rendering.PsycheShadowHelper;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.client.Minecraft;
@@ -53,8 +54,10 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
 
             setUniformFloats("playerPos", (float) renderEntity.posX, (float) renderEntity.posY, (float) renderEntity.posZ);
 
-            setTexture2DEnabled(true);
-            setLightmapEnabled(true);
+            setTexture2DEnabled(GLStateProxy.isTextureEnabled(OpenGlHelper.defaultTexUnit));
+            setLightmapEnabled(GLStateProxy.isTextureEnabled(OpenGlHelper.lightmapTexUnit));
+            setFogEnabled(GLStateProxy.isFogEnabled());
+
             setBlendFunc(GL_ONE_MINUS_SRC_ALPHA);
             setDepthMultiplier(1.0f);
             setUseScreenTexCoords(false);

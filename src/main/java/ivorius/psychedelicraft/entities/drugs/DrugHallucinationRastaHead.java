@@ -140,7 +140,7 @@ public class DrugHallucinationRastaHead extends DrugHallucination
 
             OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
             GL11.glEnable(GL11.GL_BLEND);
-            DrugShaderHelper.setLightmapEnabled(false);
+            DrugShaderHelper.setTexture2DEnabled(OpenGlHelper.lightmapTexUnit, false);
             GL11.glTranslated(var3 - RenderManager.renderPosX, var5 + 1.0 - RenderManager.renderPosY, var7 - RenderManager.renderPosZ);
             GL11.glRotatef(pitch, 0.0f, 0.0f, 1.0f);
             GL11.glRotatef(var9, 0.0f, 1.0f, 0.0f);
@@ -149,7 +149,7 @@ public class DrugHallucinationRastaHead extends DrugHallucination
             Minecraft.getMinecraft().renderEngine.bindTexture(rastaHeadTexture);
             modelRastaHead.render(dummyEntity, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 
-            DrugShaderHelper.setLightmapEnabled(true);
+            DrugShaderHelper.setTexture2DEnabled(OpenGlHelper.lightmapTexUnit, true);
             DrugShaderHelper.setOverrideColor((float[]) null);
 
             GL11.glPopMatrix();
