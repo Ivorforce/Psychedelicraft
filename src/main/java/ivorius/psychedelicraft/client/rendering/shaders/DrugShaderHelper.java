@@ -10,10 +10,12 @@ import ivorius.ivtoolkit.rendering.*;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.EntityFakeSun;
 import ivorius.psychedelicraft.client.rendering.GLStateProxy;
+import ivorius.psychedelicraft.client.rendering.PSAccessHelperClient;
 import ivorius.psychedelicraft.client.rendering.PsycheShadowHelper;
 import ivorius.psychedelicraft.client.rendering.effectWrappers.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.IResource;
@@ -110,14 +112,7 @@ public class DrugShaderHelper
                 shaderInstance.shouldDoShadows = doShadows;
                 shaderInstance.shadowDepthTextureIndex = shaderInstanceShadows.depthBuffer.getDepthTextureIndex();
 
-                if (useShader(partialTicks, ticks, shaderInstance))
-                {
-//                    IvRenderHelper.drawRectFullScreen(mc);
-//                    GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
-
-                    return true;
-                }
-                return false;
+                return useShader(partialTicks, ticks, shaderInstance);
             case "Depth":
                 depthBuffer.setParentFB(getMCFBO());
                 depthBuffer.setSize(mc.displayWidth, mc.displayHeight);
@@ -282,6 +277,20 @@ public class DrugShaderHelper
         }
 
         return false;
+    }
+
+    public static void preRenderSky(float partialTicks)
+    {
+        float boxSize = Minecraft.getMinecraft().gameSettings.renderDistanceChunks * 16 * 0.75f;
+        float[] fogColor = PSAccessHelperClient.getFogColor();
+
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        GL11.glColor3f(fogColor[0], fogColor[1], fogColor[2]);
+        Tessellator.instance.startDrawingQuads();
+        IvRenderHelper.renderCuboid(Tessellator.instance, -boxSize, -boxSize, -boxSize, 1.0f);
+        Tessellator.instance.draw();
+        GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
     }
 
     public static void setEnabled(int cap, boolean enabled)

@@ -25,25 +25,35 @@ public class RenderGlobalTransformer extends IvClassTransformerClass
         super(logger);
 
         registerExpectedMethod("renderEntities", "func_147589_a", getMethodDescriptor(Type.VOID_TYPE, "net/minecraft/entity/EntityLivingBase", "net/minecraft/client/renderer/culling/ICamera", Type.FLOAT_TYPE));
+        registerExpectedMethod("renderSky", "func_72714_a", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE));
     }
 
     @Override
     public boolean transformMethod(String className, String methodID, MethodNode methodNode, boolean obf)
     {
-        if (methodID.equals("renderEntities"))
+        switch (methodID)
         {
-            AbstractInsnNode entitiesNode = IvNodeFinder.findNode(new IvNodeMatcherLDC("entities"), methodNode);
-            entitiesNode = entitiesNode.getNext();
+            case "renderEntities":
+                AbstractInsnNode entitiesNode = IvNodeFinder.findNode(new IvNodeMatcherLDC("entities"), methodNode);
+                entitiesNode = entitiesNode.getNext();
 
-            if (entitiesNode != null)
-            {
+                if (entitiesNode != null)
+                {
+                    InsnList list = new InsnList();
+                    list.add(new VarInsnNode(FLOAD, 3));
+                    list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "renderEntities", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE), false));
+                    methodNode.instructions.insert(entitiesNode, list);
+
+                    return true;
+                }
+                break;
+            case "renderSky":
                 InsnList list = new InsnList();
-                list.add(new VarInsnNode(FLOAD, 3));
-                list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "renderEntities", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE), false));
-                methodNode.instructions.insert(entitiesNode, list);
+                list.add(new VarInsnNode(FLOAD, 1));
+                list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "preRenderSky", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE), false));
+                methodNode.instructions.insert(methodNode.instructions.get(0), list);
 
-                return true;
-            }
+                break;
         }
 
         return false;

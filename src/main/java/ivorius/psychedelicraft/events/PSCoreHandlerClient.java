@@ -273,4 +273,10 @@ public class PSCoreHandlerClient
     {
         event.currentMask = event.currentMask & DrugShaderHelper.getCurrentAllowedGLDataMask();
     }
+
+    @SubscribeEvent
+    public void renderSkyPre(RenderSkyEvent.Pre event)
+    {
+        DrugShaderHelper.preRenderSky(event.partialTicks);
+    }
 }

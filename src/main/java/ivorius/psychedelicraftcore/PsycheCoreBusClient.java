@@ -146,4 +146,9 @@ public class PsycheCoreBusClient
     {
         PsycheCoreBusCommon.EVENT_BUS.post(new LightmapSwitchEvent(false));
     }
+
+    public static void preRenderSky(float partialTicks)
+    {
+        PsycheCoreBusCommon.EVENT_BUS.post(new RenderSkyEvent.Pre(partialTicks));
+    }
 }
