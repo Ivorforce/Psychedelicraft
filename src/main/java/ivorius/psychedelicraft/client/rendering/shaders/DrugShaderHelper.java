@@ -299,6 +299,9 @@ public class DrugShaderHelper
                     case GL11.GL_FOG:
                         currentShader.setFogEnabled(enabled);
                         break;
+                    case GL11.GL_BLEND:
+                        currentShader.setBlendModeEnabled(enabled);
+                        break;
                 }
             }
         }
@@ -318,6 +321,8 @@ public class DrugShaderHelper
     public static void setBlendFunc(int sFactor, int dFactor, int sFactorAlpha, int dFactorAlpha)
     {
         GLStateProxy.glBlendFunc(sFactor, dFactor, sFactorAlpha, dFactorAlpha);
+        if (currentShader != null)
+            currentShader.setBlendFunc(sFactor, dFactor, sFactorAlpha, dFactorAlpha);
     }
 
     public static void setOverrideColor(float... color)

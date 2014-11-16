@@ -56,6 +56,8 @@ uniform mat4 sunMatrix;
 uniform vec2 sunDepthRange;
 uniform float shadowBias;
 
+uniform int colorSafeMode;
+
 void main()
 {
     if (texture2DEnabled == 1)
@@ -138,7 +140,7 @@ void main()
         gl_FragColor.rgb = mix(gl_FragColor.rgb, getRotatedColor(gl_FragColor.rgb, avg * surfaceFractal), surfaceFractal);
     }
 
-    if(pulses.a > 0.0)
+    if(colorSafeMode == 0 && pulses.a > 0.0)
     {
         float pulseA = (sin((gl_FogFragCoord - ticks) / 5.0) - 0.4) * pulses.a;
         if (pulseA > 0.0)
@@ -173,7 +175,7 @@ void main()
         for (int i = 0; i < 4; i++)
             dist *= dist;
         float harmonizeStrength = dist * 3.0;
-        
+
         float disk = (sin((gl_FogFragCoord - ticks) * 0.1434234) - 0.4) * 0.8;
         harmonizeStrength += disk;
 
@@ -186,16 +188,15 @@ void main()
         harmonizeStrength = clamp(harmonizeStrength, 0.0, 3.0);
         
         vec3 harmonizedColor;
-        
+
         if (harmonizeStrength < 1.0)
-        {
             harmonizedColor = mix(worldColorization.rgb, vec3(0.5), harmonizeStrength); // Max of 1.0
-        }
         else
-        {
             harmonizedColor = mix(vec3(0.5), vec3(1.0) - worldColorization.rgb, (harmonizeStrength - 1.0) * 0.5); // Max of 2.0
-        }
-        
+
+        if (colorSafeMode != 0) // Make sure we don't add brightness
+            harmonizedColor *= gl_FragColor.rgb;
+
         gl_FragColor.rgb = mix(gl_FragColor.rgb, harmonizedColor, worldColorization.a);
     }
 

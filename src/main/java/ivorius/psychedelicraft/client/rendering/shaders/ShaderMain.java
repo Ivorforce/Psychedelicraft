@@ -20,6 +20,7 @@ import net.minecraft.util.IIcon;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL11;
 
+import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.GL_FOG;
 import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
 
@@ -30,6 +31,8 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
 {
     public boolean shouldDoShadows;
     public int shadowDepthTextureIndex;
+
+    private boolean colorSafeModeIsEnabled;
 
     public ShaderMain(Logger logger)
     {
@@ -58,6 +61,7 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
             setTexture2DEnabled(GLStateProxy.isTextureEnabled(OpenGlHelper.defaultTexUnit));
             setLightmapEnabled(GLStateProxy.isTextureEnabled(OpenGlHelper.lightmapTexUnit));
             setFogEnabled(GLStateProxy.isEnabled(GL_FOG));
+            evaluateColorSafeMode();
 
             setDepthMultiplier(1.0f);
             setUseScreenTexCoords(false);
@@ -218,6 +222,26 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
     public void setPixelSize(float pixelWidth, float pixelHeight)
     {
         setUniformFloats("pixelSize", pixelWidth, pixelHeight);
+    }
+
+    @Override
+    public void setBlendModeEnabled(boolean enabled)
+    {
+        evaluateColorSafeMode();
+    }
+
+    @Override
+    public void setBlendFunc(int sFactor, int dFactor, int sFactorA, int dFactorA)
+    {
+        evaluateColorSafeMode();
+    }
+
+    public void evaluateColorSafeMode()
+    {
+        boolean enable = GLStateProxy.isEnabled(GL_BLEND) && GLStateProxy.getBlendDFactor() != GL11.GL_ONE_MINUS_SRC_ALPHA;
+        if (colorSafeModeIsEnabled != enable)
+            setUniformInts("colorSafeMode", enable ? 1 : 0);
+        colorSafeModeIsEnabled = enable;
     }
 
     @Override

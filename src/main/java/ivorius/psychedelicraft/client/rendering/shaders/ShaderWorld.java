@@ -38,5 +38,9 @@ public interface ShaderWorld
 
     public void setPixelSize(float pixelWidth, float pixelHeight);
 
+    public void setBlendModeEnabled(boolean enabled);
+
+    public void setBlendFunc(int sFactor, int dFactor, int sFactorA, int dFactorA);
+
     public void setProjectShadows(boolean projectShadows);
 }

@@ -146,6 +146,18 @@ public class ShaderMainDepth extends IvShaderInstance3D implements ShaderWorld
     }
 
     @Override
+    public void setBlendModeEnabled(boolean enabled)
+    {
+
+    }
+
+    @Override
+    public void setBlendFunc(int sFactor, int dFactor, int sFactorA, int dFactorA)
+    {
+
+    }
+
+    @Override
     public void setProjectShadows(boolean projectShadows)
     {
 
