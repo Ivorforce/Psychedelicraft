@@ -74,10 +74,10 @@ public class Psychedelicraft
     public static String modBase = "psychedelicraft:";
 
     public static EntityPlayer.EnumStatus sleepStatusDrugs;
-    public static DamageSource alcoholPoisoning = (new DamageSource("alcoholPoisoning")).setDamageBypassesArmor().setDamageIsAbsolute();
-    public static DamageSource respiratoryFailure = (new DamageSource("respiratoryFailure")).setDamageBypassesArmor().setDamageIsAbsolute();
-    public static DamageSource stroke = (new DamageSource("stroke")).setDamageBypassesArmor().setDamageIsAbsolute();
-    public static DamageSource heartFailure = (new DamageSource("heartFailure")).setDamageBypassesArmor().setDamageIsAbsolute();
+    public static DamageSource alcoholPoisoning;
+    public static DamageSource respiratoryFailure;
+    public static DamageSource stroke;
+    public static DamageSource heartFailure;
 
     public static int blockWineGrapeLatticeRenderType;
 
@@ -109,6 +109,10 @@ public class Psychedelicraft
         coreHandlerCommon.register();
 
         sleepStatusDrugs = EnumHelper.addStatus("onDrugs");
+        alcoholPoisoning = new DamageSource("alcoholPoisoning").setDamageBypassesArmor().setDamageIsAbsolute();
+        respiratoryFailure = new DamageSource("respiratoryFailure").setDamageBypassesArmor().setDamageIsAbsolute();
+        stroke = new DamageSource("stroke").setDamageBypassesArmor().setDamageIsAbsolute();
+        heartFailure = new DamageSource("heartFailure").setDamageBypassesArmor().setDamageIsAbsolute();
 
         PSRegistryHandler.preInit(event, this);
 
