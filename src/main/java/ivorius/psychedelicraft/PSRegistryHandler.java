@@ -30,6 +30,7 @@ import net.minecraft.item.ItemSeeds;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
+import static ivorius.psychedelicraft.Psychedelicraft.creativeTab;
 import static ivorius.psychedelicraft.Psychedelicraft.modBase;
 import static ivorius.psychedelicraft.blocks.PSBlocks.*;
 import static ivorius.psychedelicraft.crafting.OreDictionaryConstants.*;
@@ -312,6 +313,13 @@ public class PSRegistryHandler
         peyoteJoint.setCreativeTab(Psychedelicraft.creativeTab);
         OreDictionary.registerOre(DC_PEYOTE_JOINT, peyoteJoint);
 
+        //----------------------------------------------------------Peyote----------------------------------
+
+        bottleRack = new BlockBottleRack().setHardness(0.5f).setBlockName("bottleRack");
+        GameRegistry.registerBlock(bottleRack, ItemBottleRack.class, "bottle_rack");
+        GameRegistry.registerTileEntity(TileEntityBottleRack.class, "psBottleRack");
+        bottleRack.setCreativeTab(creativeTab);
+
         //----------------------------------------------------------Harmonium----------------------------------
 
         harmonium = new ItemHarmonium().setUnlocalizedName("harmonium").setTextureName(modBase + "harmonium");
@@ -321,7 +329,7 @@ public class PSRegistryHandler
 
         //----------------------------------------------------------Digital----------------------------------
 
-        riftJar = new BlockRiftJar().setBlockName("riftJar").setBlockTextureName(modBase + "riftJar");
+        riftJar = new BlockRiftJar().setHardness(0.5f).setBlockName("riftJar").setBlockTextureName(modBase + "riftJar");
         GameRegistry.registerBlock(riftJar, ItemRiftJar.class, "riftJar");
         GameRegistry.registerTileEntity(TileEntityRiftJar.class, "riftJar");
         if (PSConfig.enableRiftJars)

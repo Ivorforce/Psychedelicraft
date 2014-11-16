@@ -9,6 +9,7 @@ import ivorius.psychedelicraft.client.rendering.RenderPassesCustom;
 import ivorius.psychedelicraft.fluids.FluidHelper;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -113,5 +114,10 @@ public class ItemBottle extends ItemFluidContainer implements RenderPassesCustom
     {
         FluidStack fluidStack = getFluid(stack);
         return fluidStack != null ? 1.0 - ((double) fluidStack.amount / (double) capacity) : 0.0;
+    }
+
+    public float[] getBottleColor(ItemStack stack)
+    {
+        return EntitySheep.fleeceColorTable[EntitySheep.fleeceColorTable.length - 1 - (stack.getItemDamage() % EntitySheep.fleeceColorTable.length)];
     }
 }

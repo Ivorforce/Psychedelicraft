@@ -34,4 +34,6 @@ public class PSBlocks
     public static Block peyote;
     public static Block riftJar;
     public static Block glitched;
+
+    public static Block bottleRack;
 }
