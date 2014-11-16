@@ -6,6 +6,7 @@
 package ivorius.psychedelicraft.entities.drugs;
 
 import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
@@ -17,6 +18,8 @@ import net.minecraft.util.MathHelper;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Random;
+
+import static org.lwjgl.opengl.GL11.*;
 
 public class DrugHallucinationEntity extends DrugHallucination
 {
@@ -138,7 +141,7 @@ public class DrugHallucinationEntity extends DrugHallucination
 
             GL11.glPushMatrix();
 
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
             GL11.glEnable(GL11.GL_BLEND);
             DrugShaderHelper.setOverrideColor(color[0], color[1], color[2], alpha * dAlpha);
             DrugShaderHelper.setLightmapEnabled(false);

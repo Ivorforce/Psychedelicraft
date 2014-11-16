@@ -10,6 +10,7 @@ import ivorius.psychedelicraft.client.rendering.ModelRastaHead;
 import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityLookHelper;
@@ -18,6 +19,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
+
+import static org.lwjgl.opengl.GL11.*;
 
 public class DrugHallucinationRastaHead extends DrugHallucination
 {
@@ -135,7 +138,7 @@ public class DrugHallucinationRastaHead extends DrugHallucination
 
             GL11.glPushMatrix();
 
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
             GL11.glEnable(GL11.GL_BLEND);
             DrugShaderHelper.setLightmapEnabled(false);
             GL11.glTranslated(var3 - RenderManager.renderPosX, var5 + 1.0 - RenderManager.renderPosY, var7 - RenderManager.renderPosZ);

@@ -20,6 +20,8 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.Random;
 
+import static org.lwjgl.opengl.GL11.*;
+
 /**
  * Created by lukas on 03.03.14.
  */
@@ -100,7 +102,7 @@ public class RenderRealityRift extends Render
         Random var6 = new Random(432L);
         GL11.glShadeModel(GL11.GL_SMOOTH);
         GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
         GL11.glDisable(GL11.GL_ALPHA_TEST);
 //        GL11.glEnable(GL11.GL_CULL_FACE);
         GL11.glDepthMask(false);
