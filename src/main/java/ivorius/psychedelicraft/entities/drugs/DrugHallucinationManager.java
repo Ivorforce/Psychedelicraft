@@ -141,8 +141,11 @@ public class DrugHallucinationManager
 
         while (activeHallucinations.size() > desiredHallucinations)
             removeRandomHallucination(random);
-        while (activeHallucinations.size() < desiredHallucinations && desiredHallucinations < hallucinationValues.size())
-            addRandomHallucination(random);
+        while (activeHallucinations.size() < desiredHallucinations)
+        {
+            if (!addRandomHallucination(random))
+                break;
+        }
 
         for (Integer hKey : hallucinationValues.keySet())
         {
@@ -225,7 +228,7 @@ public class DrugHallucinationManager
         activeHallucinations.remove(activeHallucinations.get(random.nextInt(activeHallucinations.size())));
     }
 
-    public void addRandomHallucination(Random random)
+    public boolean addRandomHallucination(Random random)
     {
         float maxValue = 0.0f;
         int currentHallucination = -1;
@@ -246,6 +249,7 @@ public class DrugHallucinationManager
 
         if (currentHallucination >= 0)
             activeHallucinations.add(currentHallucination);
+        return currentHallucination >= 0;
     }
 
     public float getHallucinationMultiplier(int hallucination)
