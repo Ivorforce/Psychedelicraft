@@ -97,7 +97,7 @@ public class PSCrafting
 
         addRecipe(new ItemStack(cigarette, 4), "P", "T", "P", 'P', paper, 'T', DC_DRIED_TOBACCO);
         addRecipe(new ItemStack(cigar), "TTT", "TTT", "PPP", 'P', paper, 'T', DC_DRIED_TOBACCO);
-        DryingRegistry.addDryingResult(DC_DRIED_TOBACCO, new ItemStack(driedTobacco, 3));
+        DryingRegistry.addDryingResult(DC_LEAF_TOBACCO, new ItemStack(driedTobacco, 3));
         pipe.addConsumable(new ItemSmokingPipe.ItemSmokingPipeConsumable(new ItemStack(driedTobacco), new DrugInfluence[]{new DrugInfluence("Tobacco", 0, 0.1, 0.02, 0.8f)}));
         bong.addConsumable(new ItemBong.ItemBongConsumable(new ItemStack(driedTobacco), new DrugInfluence[]{new DrugInfluence("Tobacco", 0, 0.1, 0.02, 0.6f)})); //TODO: Play around with the bongs benefits
 
