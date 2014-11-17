@@ -25,7 +25,6 @@ public class RenderGlobalTransformer extends IvClassTransformerClass
         super(logger);
 
         registerExpectedMethod("renderEntities", "func_147589_a", getMethodDescriptor(Type.VOID_TYPE, "net/minecraft/entity/EntityLivingBase", "net/minecraft/client/renderer/culling/ICamera", Type.FLOAT_TYPE));
-        registerExpectedMethod("renderSky", "func_72714_a", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE));
     }
 
     @Override
@@ -46,13 +45,6 @@ public class RenderGlobalTransformer extends IvClassTransformerClass
 
                     return true;
                 }
-                break;
-            case "renderSky":
-                InsnList list = new InsnList();
-                list.add(new VarInsnNode(FLOAD, 1));
-                list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "preRenderSky", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE), false));
-                methodNode.instructions.insert(methodNode.instructions.get(0), list);
-
                 break;
         }
 

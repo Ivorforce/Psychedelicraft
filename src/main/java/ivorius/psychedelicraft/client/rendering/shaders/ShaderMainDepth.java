@@ -162,4 +162,10 @@ public class ShaderMainDepth extends IvShaderInstance3D implements ShaderWorld
     {
 
     }
+
+    @Override
+    public void setForceColorSafeMode(boolean enable)
+    {
+
+    }
 }

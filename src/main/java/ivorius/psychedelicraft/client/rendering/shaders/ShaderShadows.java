@@ -169,6 +169,12 @@ public class ShaderShadows extends IvShaderInstance3D implements ShaderWorld
         // Do something? :/
     }
 
+    @Override
+    public void setForceColorSafeMode(boolean enable)
+    {
+
+    }
+
     public static int getShadowPixels()
     {
         return Minecraft.getMinecraft().gameSettings.renderDistanceChunks * DrugShaderHelper.shadowPixelsPerChunk;

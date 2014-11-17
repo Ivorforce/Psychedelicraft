@@ -33,6 +33,7 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
     public int shadowDepthTextureIndex;
 
     private boolean colorSafeModeIsEnabled;
+    private boolean colorSafeModeIsForceEnabled;
 
     public ShaderMain(Logger logger)
     {
@@ -238,7 +239,7 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
 
     public void evaluateColorSafeMode()
     {
-        boolean enable = GLStateProxy.isEnabled(GL_BLEND) && GLStateProxy.getBlendDFactor() != GL11.GL_ONE_MINUS_SRC_ALPHA;
+        boolean enable = colorSafeModeIsForceEnabled || (GLStateProxy.isEnabled(GL_BLEND) && GLStateProxy.getBlendDFactor() != GL11.GL_ONE_MINUS_SRC_ALPHA);
         if (colorSafeModeIsEnabled != enable)
             setUniformInts("colorSafeMode", enable ? 1 : 0);
         colorSafeModeIsEnabled = enable;
@@ -251,5 +252,12 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
         {
             setUniformInts("doShadows", projectShadows ? 1 : 0);
         }
+    }
+
+    @Override
+    public void setForceColorSafeMode(boolean enable)
+    {
+        colorSafeModeIsForceEnabled = enable;
+        evaluateColorSafeMode();
     }
 }

@@ -43,4 +43,6 @@ public interface ShaderWorld
     public void setBlendFunc(int sFactor, int dFactor, int sFactorA, int dFactorA);
 
     public void setProjectShadows(boolean projectShadows);
+
+    void setForceColorSafeMode(boolean enable);
 }

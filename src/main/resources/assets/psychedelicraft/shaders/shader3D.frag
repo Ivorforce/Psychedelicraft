@@ -120,19 +120,15 @@ void main()
     }
     
     gl_FragColor = clamp(gl_FragColor, 0.0, 1.0);
-    
+
     if (fogEnabled == 1)
     {
         if (fogMode == GL_EXP)
-        {
             gl_FragColor.rgb = mix(gl_FragColor.rgb, gl_Fog.color.rgb, 1.0 - clamp(exp(-gl_Fog.density * gl_FogFragCoord), 0.0, 1.0));
-        }
         else if (fogMode == GL_LINEAR)
-        {
             gl_FragColor.rgb = mix(gl_FragColor.rgb, gl_Fog.color.rgb, clamp((gl_FogFragCoord - gl_Fog.start) * gl_Fog.scale, 0.0, 1.0));
-        }
     }
-    
+
     if(surfaceFractal > 0.0)
     {
         vec4 fractalColor = texture2D(texFractal0, texFractal0Coords);

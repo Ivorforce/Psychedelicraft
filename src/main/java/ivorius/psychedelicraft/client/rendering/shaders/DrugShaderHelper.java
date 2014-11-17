@@ -281,6 +281,7 @@ public class DrugShaderHelper
 
     public static void preRenderSky(float partialTicks)
     {
+        setForceColorSafeMode(true);
         float boxSize = Minecraft.getMinecraft().gameSettings.renderDistanceChunks * 16 * 0.75f;
         float[] fogColor = PSAccessHelperClient.getFogColor();
 
@@ -291,6 +292,7 @@ public class DrugShaderHelper
         Tessellator.instance.draw();
         GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
         GL11.glEnable(GL11.GL_TEXTURE_2D);
+        setForceColorSafeMode(false);
     }
 
     public static void setEnabled(int cap, boolean enabled)
@@ -394,6 +396,12 @@ public class DrugShaderHelper
     {
         if (currentShader != null)
             currentShader.setPixelSize(pixelWidth, pixelHeight);
+    }
+
+    public static void setForceColorSafeMode(boolean enable)
+    {
+        if (currentShader != null)
+            currentShader.setForceColorSafeMode(enable);
     }
 
     public static void setProjectShadows(boolean projectShadows)

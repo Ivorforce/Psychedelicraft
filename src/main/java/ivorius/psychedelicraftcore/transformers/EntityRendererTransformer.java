@@ -33,6 +33,7 @@ public class EntityRendererTransformer extends IvClassTransformerClass
         registerExpectedMethod("renderWorldAdditions", "func_78471_a", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE, Type.LONG_TYPE));
         registerExpectedMethod("setupFog", "func_78468_a", getMethodDescriptor(Type.VOID_TYPE, Type.INT_TYPE, Type.FLOAT_TYPE));
         registerExpectedMethod("setupCameraTransform", "func_78479_a", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE, Type.INT_TYPE));
+        registerExpectedMethod("preRenderSky", "func_78471_a", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE, Type.LONG_TYPE));
     }
 
     @Override
@@ -184,7 +185,7 @@ public class EntityRendererTransformer extends IvClassTransformerClass
                 return true;
             }
             case "renderWorldAdditions":
-                @SuppressWarnings("Convert2Diamond") List<AbstractInsnNode> valuepatchNodes = new ArrayList<AbstractInsnNode>();
+                List<AbstractInsnNode> valuepatchNodes = new ArrayList<>();
                 valuepatchNodes.addAll(IvNodeFinder.findNodes(new IvNodeMatcherLDC("prepareterrain"), methodNode));
                 valuepatchNodes.addAll(IvNodeFinder.findNodes(new IvNodeMatcherLDC("water"), methodNode));
                 valuepatchNodes.addAll(IvNodeFinder.findNodes(new IvNodeMatcherLDC("entities"), methodNode));
@@ -197,6 +198,19 @@ public class EntityRendererTransformer extends IvClassTransformerClass
                 }
 
                 return valuepatchNodes.size() > 0;
+            case "preRenderSky":
+                AbstractInsnNode preRenderSkyNode = IvNodeFinder.findNode(new IvNodeMatcherMethodSRG(INVOKESTATIC, "func_78558_a", "net/minecraft/client/renderer/culling/ClippingHelperImpl", getMethodDescriptor("net/minecraft/client/renderer/culling/ClippingHelper")), methodNode);
+
+                if (preRenderSkyNode != null)
+                {
+                    InsnList list = new InsnList();
+                    list.add(new VarInsnNode(FLOAD, 1));
+                    list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "preRenderSky", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE), false));
+                    methodNode.instructions.insert(preRenderSkyNode.getNext(), list);
+
+                    return true;
+                }
+                break;
         }
 
         return false;

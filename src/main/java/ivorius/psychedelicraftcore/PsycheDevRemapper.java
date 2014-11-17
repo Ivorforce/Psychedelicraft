@@ -33,6 +33,7 @@ public class PsycheDevRemapper
         IvDevRemapper.fakeMappings.put("setActiveTexture", "func_77473_a");
         IvDevRemapper.fakeMappings.put("setupCameraTransform", "func_78479_a");
         IvDevRemapper.fakeMappings.put("renderOverlays", "func_78447_b");
+        IvDevRemapper.fakeMappings.put("getInstance", "func_78558_a");
 
         IvDevRemapper.fakeMappings.put("shadersSupported", "field_148824_g");
     }
