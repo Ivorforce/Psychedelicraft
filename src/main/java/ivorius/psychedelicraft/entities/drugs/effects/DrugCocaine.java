@@ -130,6 +130,6 @@ public class DrugCocaine extends DrugSimple
     @Override
     public float bloomHallucinationStrength()
     {
-        return (float)getActiveValue() * 2.5f;
+        return (float)getActiveValue() * 2.0f;
     }
 }

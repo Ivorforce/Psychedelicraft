@@ -356,7 +356,7 @@ public class DrugHallucinationManager
 
     public float getBloom(DrugHelper drugHelper, float partialTicks)
     {
-        float value = 1.5f * getHallucinationMultiplier(HALLUCATION_BLOOM) * hallucinationValues.get(HALLUCATION_BLOOM);
+        float value = getHallucinationMultiplier(HALLUCATION_BLOOM) * hallucinationValues.get(HALLUCATION_BLOOM);
         for (Drug drug : drugHelper.getAllDrugs())
             value += drug.bloomHallucinationStrength();
         return value;
