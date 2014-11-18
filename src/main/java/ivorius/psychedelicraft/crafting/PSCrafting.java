@@ -70,6 +70,7 @@ public class PSCrafting
         addRecipe(new ItemStack(wineGrapeLattice), "###", "###", "O#O", '#', DC_STICK_WOOD, 'O', DC_PLANK_WOOD);
 
         addRecipe(new ItemStack(woodenMug, 8), "# #", "# #", "###", '#', DC_PLANK_WOOD);
+        addRecipe(new ItemStack(stoneCup, 8), "# #", "# #", "###", '#', clay_ball);
 
 //        for (int color = 0; color < ItemDye.field_150922_c.length; color++)
 //            addRecipe(new ItemStack(molotovCocktail, 4, color), "P", "#", '#', new ItemStack(stained_glass, 1, 15 - color), 'P', paper);

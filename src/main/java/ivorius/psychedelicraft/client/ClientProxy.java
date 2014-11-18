@@ -57,7 +57,7 @@ public class ClientProxy implements PSProxy
         MinecraftForgeClient.registerItemRenderer(PSItems.bottle, new ItemRendererThatMakesFuckingSense());
         MinecraftForgeClient.registerItemRenderer(PSItems.molotovCocktail, new ItemRendererThatMakesFuckingSense());
         MinecraftForgeClient.registerItemRenderer(PSItems.woodenMug, new ItemRendererThatMakesFuckingSense());
-        MinecraftForgeClient.registerItemRenderer(PSItems.woodenBowlDrug, new ItemRendererThatMakesFuckingSense());
+        MinecraftForgeClient.registerItemRenderer(PSItems.stoneCup, new ItemRendererThatMakesFuckingSense());
         MinecraftForgeClient.registerItemRenderer(PSItems.glassChalice, new ItemRendererThatMakesFuckingSense());
         MinecraftForgeClient.registerItemRenderer(PSItems.syringe, new ItemRendererThatMakesFuckingSense());
 

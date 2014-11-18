@@ -95,8 +95,8 @@ public class PSWorldGen
             woodenMug.fill(coffeeStack, new FluidStack(PSFluids.coffee, 1), true);
             addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(coffeeStack, 1, 4, 1));
 
-            ItemStack peyoteStack = new ItemStack(woodenBowlDrug);
-            woodenBowlDrug.fill(coffeeStack, new FluidStack(PSFluids.peyoteJuice, 1), true);
+            ItemStack peyoteStack = new ItemStack(stoneCup);
+            stoneCup.fill(coffeeStack, new FluidStack(PSFluids.peyoteJuice, 1), true);
             addItem(VILLAGE_BLACKSMITH, new WeightedRandomChestContent(peyoteStack, 1, 1, 1));
 
             ItemStack cocaineStack = new ItemStack(syringe);

@@ -13,7 +13,7 @@ import net.minecraft.item.Item;
 public class PSItems
 {
     public static ItemCup woodenMug;
-    public static ItemCup woodenBowlDrug;
+    public static ItemCup stoneCup;
     public static ItemCup glassChalice;
 
     public static ItemBarrel itemBarrel;

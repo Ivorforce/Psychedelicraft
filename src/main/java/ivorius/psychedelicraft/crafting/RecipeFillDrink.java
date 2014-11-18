@@ -149,13 +149,8 @@ public class RecipeFillDrink implements IRecipe
 
         ItemStack result;
 
-        if (drinkHolder.getItem() == Items.bowl)
-            result = new ItemStack(PSItems.woodenBowlDrug);
-        else
-        {
-            result = drinkHolder.copy();
-            result.stackSize = 1;
-        }
+        result = drinkHolder.copy();
+        result.stackSize = 1;
 
         ((IFluidContainerItem) result.getItem()).fill(result, recipeOutput, true);
         return result;

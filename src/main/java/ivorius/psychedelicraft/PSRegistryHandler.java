@@ -54,9 +54,9 @@ public class PSRegistryHandler
         GameRegistry.registerItem(syringe, "syringe", Psychedelicraft.MODID);
         syringe.setCreativeTab(Psychedelicraft.creativeTab);
 
-        woodenBowlDrug = (ItemCup) new ItemWoodenBowlDrug(MILLIBUCKETS_PER_LITER / 20).setUnlocalizedName("woodenBowlDrug").setTextureName(modBase + "bowl");
-        GameRegistry.registerItem(woodenBowlDrug, "psycheWoodenBowl", Psychedelicraft.MODID);
-        woodenBowlDrug.setCreativeTab(Psychedelicraft.drinksTab);
+        stoneCup = (ItemCup) new ItemCupWithLiquid(MILLIBUCKETS_PER_LITER / 20).setUnlocalizedName("stoneCup").setTextureName(modBase + "stoneCup");
+        GameRegistry.registerItem(stoneCup, "stone_cup", Psychedelicraft.MODID);
+        stoneCup.setCreativeTab(Psychedelicraft.drinksTab);
 
         woodenMug = (ItemCup) new ItemCupWithLiquid(MILLIBUCKETS_PER_LITER / 2).setUnlocalizedName("woodenMug").setTextureName(modBase + "woodenMug");
         GameRegistry.registerItem(woodenMug, "woodenMug", Psychedelicraft.MODID);

@@ -59,8 +59,8 @@ item.woodenMug.full.name=Wooden Mug of %s
 item.glassChalice.name=Glass Chalice
 item.glassChalice.full.name=Glass Chalice of %s
 
-item.woodenBowlDrug.name=Wooden Bowl
-item.woodenBowlDrug.full.name=Wooden Bowl of %s
+item.stoneCup.name=Cup
+item.stoneCup.full.name=Cup of %s
 
 item.pscBottle.name=Bottle
 item.pscBottle.full.name=Bottle of %s
