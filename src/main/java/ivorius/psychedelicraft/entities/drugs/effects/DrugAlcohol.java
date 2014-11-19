@@ -10,6 +10,7 @@ import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.DrugRenderer;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.DamageSource;
@@ -23,6 +24,21 @@ import java.util.Random;
  */
 public class DrugAlcohol extends DrugSimple
 {
+    public static void rotateEntityPitch(Entity entity, double amount)
+    {
+        entity.rotationPitch += amount;
+        if (entity.rotationPitch < -90.0F)
+            entity.rotationPitch = -90.0F;
+
+        if (entity.rotationPitch > 90.0F)
+            entity.rotationPitch = 90.0F;
+    }
+
+    public static void rotateEntityYaw(Entity entity, double amount)
+    {
+        entity.rotationYaw += amount;
+    }
+
     public DrugAlcohol(double decSpeed, double decSpeedPlus)
     {
         super(decSpeed, decSpeedPlus);
@@ -59,11 +75,11 @@ public class DrugAlcohol extends DrugSimple
 //            player.motionX *= (random.nextFloat() - 0.5F) * 2 * motionEffect + 1.0F;
 //            player.motionZ *= (random.nextFloat() - 0.5F) * 2 * motionEffect + 1.0F;
 
-            entity.rotationPitch += MathHelper.sin(ticksExisted / 600.0F * (float) Math.PI) / 2.0F * motionEffect * (random.nextFloat() + 0.5F);
-            entity.rotationYaw += MathHelper.cos(ticksExisted / 500.0F * (float) Math.PI) / 1.3F * motionEffect * (random.nextFloat() + 0.5F);
+            rotateEntityPitch(entity, MathHelper.sin(ticksExisted / 600.0F * (float) Math.PI) / 2.0F * motionEffect * (random.nextFloat() + 0.5F));
+            rotateEntityYaw(entity, MathHelper.cos(ticksExisted / 500.0F * (float) Math.PI) / 1.3F * motionEffect * (random.nextFloat() + 0.5F));
 
-            entity.rotationPitch += MathHelper.sin(ticksExisted / 180.0F * (float) Math.PI) / 3.0F * motionEffect * (random.nextFloat() + 0.5F);
-            entity.rotationYaw += MathHelper.cos(ticksExisted / 150.0F * (float) Math.PI) / 2.0F * motionEffect * (random.nextFloat() + 0.5F);
+            rotateEntityPitch(entity, MathHelper.sin(ticksExisted / 180.0F * (float) Math.PI) / 3.0F * motionEffect * (random.nextFloat() + 0.5F));
+            rotateEntityYaw(entity, MathHelper.cos(ticksExisted / 150.0F * (float) Math.PI) / 2.0F * motionEffect * (random.nextFloat() + 0.5F));
         }
     }
 
