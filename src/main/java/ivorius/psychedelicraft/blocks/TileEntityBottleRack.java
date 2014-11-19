@@ -56,6 +56,7 @@ public class TileEntityBottleRack extends IvTileEntityRotatable implements IInve
                 if (!worldObj.isRemote && player.inventory.addItemStackToInventory(stack))
                 {
                     setInventorySlotContents(slot, null);
+                    player.openContainer.detectAndSendChanges();
                 }
 
                 return true;
