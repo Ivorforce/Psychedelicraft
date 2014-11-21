@@ -107,6 +107,7 @@ public class ClientProxy implements PSProxy
             DrugShaderHelper.sunFlareIntensity = (float) config.get(CATEGORY_VISUAL, "sunFlareIntensity", 0.25).getDouble();
             DrugShaderHelper.doHeatDistortion = config.get(CATEGORY_VISUAL, "biomeHeatDistortion", true).getBoolean();
             DrugShaderHelper.doWaterDistortion = config.get(CATEGORY_VISUAL, "waterDistortion", true).getBoolean();
+            DrugShaderHelper.doMotionBlur = config.get(CATEGORY_VISUAL, "motionBlur", true).getBoolean();
 //        DrugShaderHelper.doShadows = config.get(CATEGORY_VISUAL, "doShadows", true).getBoolean(true);
             DrugShaderHelper.doShadows = false;
 

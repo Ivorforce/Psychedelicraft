@@ -32,9 +32,9 @@ public class WrapperHeatDistortion extends ShaderWrapper<ShaderHeatDistortions>
     {
         DrugHelper drugHelper = DrugHelper.getDrugHelper(Minecraft.getMinecraft().renderViewEntity);
 
-        if (drugHelper != null && depthBuffer != null)
+        if (DrugShaderHelper.doHeatDistortion && drugHelper != null && depthBuffer != null)
         {
-            float heatDistortion = DrugShaderHelper.doHeatDistortion ? drugHelper.drugRenderer.getCurrentHeatDistortion() : 0.0f;
+            float heatDistortion = drugHelper.drugRenderer.getCurrentHeatDistortion();
 
             shaderInstance.depthTextureIndex = depthBuffer.getDepthTextureIndex();
             shaderInstance.noiseTextureIndex = DrugShaderHelper.getTextureIndex(heatDistortionNoiseTexture);

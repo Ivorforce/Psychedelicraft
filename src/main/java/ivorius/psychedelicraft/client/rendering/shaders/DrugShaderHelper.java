@@ -48,6 +48,7 @@ public class DrugShaderHelper
     public static boolean doShadows = false;
     public static boolean doHeatDistortion = false;
     public static boolean doWaterDistortion = false;
+    public static boolean doMotionBlur = false;
 
     public static float sunFlareIntensity;
     public static int shadowPixelsPerChunk = 256;

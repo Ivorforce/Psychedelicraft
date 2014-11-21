@@ -362,6 +362,14 @@ public class DrugHallucinationManager
         return value;
     }
 
+    public float getMotionBlur(DrugHelper drugHelper, float partialTicks)
+    {
+        float value = 0.0f;
+        for (Drug drug : drugHelper.getAllDrugs())
+            value += (1.0f - value) * drug.motionBlur();
+        return value;
+    }
+
     public static abstract class HallucinationType
     {
         public final List<Integer> hallucinations = new ArrayList<>();
