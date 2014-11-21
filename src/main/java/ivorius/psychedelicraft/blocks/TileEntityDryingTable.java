@@ -7,6 +7,7 @@ package ivorius.psychedelicraft.blocks;
 
 import io.netty.buffer.ByteBuf;
 import ivorius.ivtoolkit.blocks.IvTileEntityHelper;
+import ivorius.ivtoolkit.math.IvMathHelper;
 import ivorius.ivtoolkit.network.IvNetworkHelperServer;
 import ivorius.ivtoolkit.network.PartialUpdateHandler;
 import ivorius.psychedelicraft.Psychedelicraft;
@@ -53,37 +54,17 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
             calculateHeatRatio();
 
             if (worldObj.getRainStrength(1.0f) > 0.0f && worldObj.getPrecipitationHeight(xCoord, yCoord) == yCoord + 1)
-            {
                 dryingProgress = 0;
-            }
 
             IvNetworkHelperServer.sendTileEntityUpdatePacket(this, "dryingProgress", Psychedelicraft.network);
         }
 
-        if (plannedResult != null && (dryingTableItems[0] == null || (dryingTableItems[0] == plannedResult && dryingTableItems[0].getItemDamage() == plannedResult.getItemDamage() && plannedResult.isStackable() && plannedResult.stackSize + plannedResult.stackSize < plannedResult.getMaxStackSize())))
+        if (plannedResult != null)
         {
             dryingProgress += heatRatio / (float)PSConfig.dryingTableTickDuration;
 
             if (dryingProgress >= 1.0f && !worldObj.isRemote)
-            {
-                dryingProgress = 0;
-
-                for (int i = 1; i < 10; i++)
-                {
-                    dryingTableItems[i] = null;
-                }
-
-                if (dryingTableItems[0] == null)
-                {
-                    dryingTableItems[0] = plannedResult;
-                }
-                else
-                {
-                    dryingTableItems[0].stackSize += plannedResult.stackSize;
-                }
-
-                onInventoryChanged();
-            }
+                endDryingProcess();
         }
         else
         {
@@ -100,7 +81,27 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
                 src.add(dryingTableItems[i]);
         }
 
-        return DryingRegistry.dryingResult(src);
+        ItemStack itemStack = DryingRegistry.dryingResult(src);
+
+        if (dryingTableItems[0] == null || ItemStack.areItemStacksEqual(itemStack, dryingTableItems[0]))
+            return itemStack;
+
+        return null;
+    }
+
+    public void endDryingProcess()
+    {
+        dryingProgress = 0;
+
+        for (int i = 1; i < 10; i++)
+            dryingTableItems[i] = null;
+
+        if (dryingTableItems[0] == null)
+            dryingTableItems[0] = plannedResult;
+        else
+            dryingTableItems[0].stackSize += plannedResult.stackSize;
+
+        onInventoryChanged();
     }
 
     public void calculateHeatRatio()
@@ -114,17 +115,7 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
             h = var48.getBiomeGenForWorldCoords(xCoord & 15, zCoord & 15, worldObj.getWorldChunkManager()).getFloatTemperature(xCoord, yCoord, zCoord) * 0.75F + 0.25F;
         }
 
-        float t = (l * l * h) * (l * l * h);
-        if (t > 1.0f)
-        {
-            t = 1.0f;
-        }
-        if (t < 0.0f)
-        {
-            t = 0.0f;
-        }
-
-        heatRatio = t;
+        heatRatio = IvMathHelper.clamp(0.0f, (l * l * h) * (l * l * h), 1.0f);
 
         if (!worldObj.isRemote)
             IvNetworkHelperServer.sendTileEntityUpdatePacket(this, "heatRatio", Psychedelicraft.network);
@@ -169,19 +160,15 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
         NBTTagList var2 = par1NBTTagCompound.getTagList("Items", Constants.NBT.TAG_COMPOUND);
         this.dryingTableItems = new ItemStack[this.dryingTableItems.length];
 
-        for (int var3 = 0; var3 < var2.tagCount(); ++var3)
+        for (int slot = 0; slot < var2.tagCount(); ++slot)
         {
-            NBTTagCompound var4 = var2.getCompoundTagAt(var3);
+            NBTTagCompound var4 = var2.getCompoundTagAt(slot);
             byte var5 = var4.getByte("Slot");
 
             if (var5 == 20)
-            {
                 this.plannedResult = ItemStack.loadItemStackFromNBT(var4);
-            }
             else if (var5 >= 0 && var5 < this.dryingTableItems.length)
-            {
                 this.dryingTableItems[var5] = ItemStack.loadItemStackFromNBT(var4);
-            }
         }
 
         heatRatio = par1NBTTagCompound.getFloat("heatRatio");
@@ -261,6 +248,7 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
     public void onInventoryChanged()
     {
         plannedResult = getResult();
+        dryingProgress = 0.0f;
 
         markDirty();
         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
