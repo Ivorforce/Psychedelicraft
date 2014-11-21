@@ -16,6 +16,9 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
 
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
+
 /**
  * Created by lukas on 27.10.14.
  */
@@ -121,7 +124,7 @@ public class FluidBoxRenderer
     {
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glAlphaFunc(GL11.GL_GREATER, 0.001f);
-        OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
+        GL11.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         preparedTranslucency = true;
     }
 

@@ -176,7 +176,6 @@ public class EffectLensFlare implements Iv2DScreenEffect
 
         // Reset
         GL11.glDisable(GL11.GL_BLEND);
-        OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
     }
 
     @Override

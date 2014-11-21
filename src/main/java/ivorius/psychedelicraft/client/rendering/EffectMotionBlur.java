@@ -10,6 +10,7 @@ import ivorius.ivtoolkit.rendering.IvOpenGLHelper;
 import ivorius.ivtoolkit.rendering.IvOpenGLTexturePingPong;
 import ivorius.ivtoolkit.rendering.IvRenderHelper;
 import net.minecraft.client.renderer.OpenGlHelper;
+import org.lwjgl.opengl.GL11;
 
 import java.nio.ByteBuffer;
 
@@ -74,7 +75,7 @@ public class EffectMotionBlur implements Iv2DScreenEffect
 
             glDisable(GL_ALPHA_TEST);
             glEnable(GL_BLEND);
-            OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
+            GL11.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             for (int i = 0; i < motionBlurCacheTextures.length; i++)
             {
                 int index = (i + motionBlurCacheTextureIndex) % motionBlurCacheTextures.length;
@@ -97,7 +98,6 @@ public class EffectMotionBlur implements Iv2DScreenEffect
             }
             glDisable(GL_BLEND);
             glEnable(GL_ALPHA_TEST);
-            glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         }
         else
         {
