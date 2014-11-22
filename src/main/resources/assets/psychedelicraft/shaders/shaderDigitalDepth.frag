@@ -1,9 +1,8 @@
 #version 120
 
-uniform sampler2D tex0;
-uniform sampler2D tex1;
-uniform sampler2D tex2;
-uniform sampler2D tex3;
+uniform sampler2D tex;
+uniform sampler2D asciiTex;
+uniform sampler2D depthTex;
 
 uniform vec2 newResolution;
 uniform float textProgress;
@@ -15,7 +14,7 @@ uniform vec2 depthRange;
 
 float getPixelDensity(vec2 newUV, vec4 newColor)
 {
-    float textureDepth = texture2D(tex3, newUV).r;
+    float textureDepth = texture2D(depthTex, newUV).r;
 
     return linearize(textureDepth, depthRange.x, depthRange.y);
 }
@@ -23,7 +22,7 @@ float getPixelDensity(vec2 newUV, vec4 newColor)
 void main()
 {
     vec2 newUV = (newResolution.x > 0.0 && newResolution.y > 0.0) ? pixelate(gl_TexCoord[0].st, newResolution) : gl_TexCoord[0].st;
-    vec4 newColor = texture2D(tex0, newUV);
+    vec4 newColor = texture2D(tex, newUV);
     
     if (saturation < 1.0)
     {
@@ -57,7 +56,7 @@ void main()
             
             vec2 innerUV = (newUV - gl_TexCoord[0].st) * newResolution;
             innerUV.x = 1.0 - innerUV.x;
-            vec4 textTexturePixel = texture2D(tex2, vec2(pixelDensityPart + innerUV.x / pixelDensityParts, innerUV.y * 0.5 + (isBinary ? 0.5 : 0.0)));
+            vec4 textTexturePixel = texture2D(asciiTex, vec2(pixelDensityPart + innerUV.x / pixelDensityParts, innerUV.y * 0.5 + (isBinary ? 0.5 : 0.0)));
             
             newColor.rgb = mix(newColor.rgb, textTexturePixel.rgb * newColor.rgb, clamp(0.0, max(textProg * textProg * textProg, 1.0 - bgMaxAlpha), 1.0));
         }
@@ -66,5 +65,5 @@ void main()
 	if (totalAlpha == 1.0)
 		gl_FragColor = newColor;
 	else
-		gl_FragColor = mix(texture2D(tex0, gl_TexCoord[0].st), newColor, totalAlpha);
+		gl_FragColor = mix(texture2D(tex, gl_TexCoord[0].st), newColor, totalAlpha);
 }

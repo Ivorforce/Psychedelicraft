@@ -37,17 +37,17 @@ public class ShaderDigitalDepth extends ShaderDigital
     @Override
     public void apply(int screenWidth, int screenHeight, float ticks, IvOpenGLTexturePingPong pingPong)
     {
-        IvDepthBuffer.bindTextureForSource(OpenGlHelper.lightmapTexUnit + 2, depthTextureIndex);
-        OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit + 1);
-        glBindTexture(GL_TEXTURE_2D, digitalTextTexture);
-        OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
-
         useShader();
 
-        for (int i = 0; i < 4; i++)
-        {
-            setUniformInts("tex" + i, i);
-        }
+        IvDepthBuffer.bindTextureForSource(OpenGlHelper.lightmapTexUnit + 2, depthTextureIndex);
+        setUniformInts("depthTex", 3);
+
+        OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit + 1);
+        glBindTexture(GL_TEXTURE_2D, digitalTextTexture);
+        setUniformInts("asciiTex", 2);
+
+        OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
+        setUniformInts("tex", 0);
 
         setUniformFloats("totalAlpha", 1.0f);
 

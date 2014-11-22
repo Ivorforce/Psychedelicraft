@@ -21,6 +21,15 @@ public class ShaderDoF extends IvShaderInstance2D
 
     public int depthTextureIndex;
 
+    public float zNear;
+    public float zFar;
+
+    public float focalPointNear;
+    public float focalBlurNear;
+
+    public float focalPointFar;
+    public float focalBlurFar;
+
     public ShaderDoF(Logger logger)
     {
         super(logger);
@@ -35,42 +44,39 @@ public class ShaderDoF extends IvShaderInstance2D
     @Override
     public void apply(int screenWidth, int screenHeight, float ticks, IvOpenGLTexturePingPong pingPong)
     {
-        IvDepthBuffer.bindTextureForSource(OpenGlHelper.lightmapTexUnit + 2, depthTextureIndex);
-        pingPong.bindCurrentTexture();
-
-        float dofHBlur = dof;
-        float dofVBlur = dof;
-
         useShader();
 
-        for (int i = 0; i < 3; i++)
-        {
-            setUniformInts("tex" + i, i);
-        }
+        IvDepthBuffer.bindTextureForSource(OpenGlHelper.lightmapTexUnit + 1, depthTextureIndex);
+        setUniformInts("depthTex", 2);
+
+        OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
+        setUniformInts("tex", 0);
 
         setUniformFloats("pixelSize", 1.0f / screenWidth, 1.0f / screenHeight);
 
+        setUniformFloats("focalPointNear", focalPointNear);
+        setUniformFloats("focalPointFar", focalPointFar);
+
         for (int n = 0; n < MathHelper.floor_double(dof) + 1; n++)
         {
-            for (int i = 0; i < 2; i++)
-            {
-                float activeBlur = (i == 0 ? dofHBlur : dofVBlur) - n;
-                if (activeBlur > 1.0f)
-                {
-                    activeBlur = 1.0f;
-                }
+            float activeBlur = dof - n;
+            if (activeBlur > 1.0f)
+                activeBlur = 1.0f;
 
-                if (activeBlur > 0.0f)
+            if (activeBlur > 0.0f)
+            {
+                setUniformFloats("focalBlurNear", focalBlurNear * activeBlur);
+                setUniformFloats("focalBlurFar", focalBlurFar * activeBlur);
+
+                for (int i = 0; i < 2; i++)
                 {
                     setUniformInts("vertical", i);
-                    setUniformFloats("totalAlpha", activeBlur);
-
                     drawFullScreen(screenWidth, screenHeight, pingPong);
                 }
             }
         }
 
-        pingPong.bindCurrentTexture();
+        setUniformFloats("depthRange", zNear, zFar);
 
         stopUsingShader();
     }

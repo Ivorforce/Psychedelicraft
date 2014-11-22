@@ -38,6 +38,11 @@ import static ivorius.psychedelicraft.config.PSConfig.CATEGORY_VISUAL;
 
 public class ClientProxy implements PSProxy
 {
+    public static float dofFocalPointNear;
+    public static float dofFocalBlurNear;
+    public static float dofFocalPointFar;
+    public static float dofFocalBlurFar;
+
     @Override
     public void preInit()
     {
@@ -110,6 +115,11 @@ public class ClientProxy implements PSProxy
             DrugShaderHelper.doMotionBlur = config.get(CATEGORY_VISUAL, "motionBlur", true).getBoolean();
 //        DrugShaderHelper.doShadows = config.get(CATEGORY_VISUAL, "doShadows", true).getBoolean(true);
             DrugShaderHelper.doShadows = false;
+
+            dofFocalPointNear = (float) config.get(CATEGORY_VISUAL, "dofFocalPointNear", 0f).getDouble();
+            dofFocalPointFar = (float) config.get(CATEGORY_VISUAL, "dofFocalPointFar", 128f).getDouble();
+            dofFocalBlurNear = (float) config.get(CATEGORY_VISUAL, "dofFocalBlurNear", 0f).getDouble();
+            dofFocalBlurFar = (float) config.get(CATEGORY_VISUAL, "dofFocalBlurFar", 1f).getDouble();
 
             DrugHelper.waterOverlayEnabled = config.get(CATEGORY_VISUAL, "waterOverlayEnabled", true).getBoolean();
             DrugHelper.hurtOverlayEnabled = config.get(CATEGORY_VISUAL, "hurtOverlayEnabled", true).getBoolean();

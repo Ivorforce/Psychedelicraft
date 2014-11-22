@@ -7,6 +7,7 @@ package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
 import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.psychedelicraft.Psychedelicraft;
+import ivorius.psychedelicraft.client.ClientProxy;
 import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import ivorius.psychedelicraft.client.rendering.shaders.ShaderDoF;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
@@ -25,12 +26,18 @@ public class WrapperDoF extends ShaderWrapper<ShaderDoF>
     @Override
     public void setShaderValues(float partialTicks, int ticks, IvDepthBuffer depthBuffer)
     {
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(Minecraft.getMinecraft().renderViewEntity);
-
-        if (drugHelper != null && depthBuffer != null)
+        if (depthBuffer != null)
         {
-            shaderInstance.dof = 0.0f;
+            shaderInstance.dof = 1.0f;
             shaderInstance.depthTextureIndex = depthBuffer.getDepthTextureIndex();
+
+            shaderInstance.zNear = 0.05f;
+            shaderInstance.zFar = (float) (Minecraft.getMinecraft().gameSettings.renderDistanceChunks * 16);
+
+            shaderInstance.focalPointNear = ClientProxy.dofFocalPointNear / shaderInstance.zFar;
+            shaderInstance.focalPointFar = ClientProxy.dofFocalPointFar / shaderInstance.zFar;
+            shaderInstance.focalBlurFar = ClientProxy.dofFocalBlurFar;
+            shaderInstance.focalBlurNear = ClientProxy.dofFocalBlurNear;
         }
         else
         {
@@ -47,6 +54,6 @@ public class WrapperDoF extends ShaderWrapper<ShaderDoF>
     @Override
     public boolean wantsDepthBuffer(float partialTicks)
     {
-        return false;
+        return true;
     }
 }

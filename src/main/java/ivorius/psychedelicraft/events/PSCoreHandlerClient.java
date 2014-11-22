@@ -146,9 +146,12 @@ public class PSCoreHandlerClient
             EntityPlayer player = (EntityPlayer) mc.renderViewEntity;
             DrugHelper drugHelper = DrugHelper.getDrugHelper(player);
 
-            float shiftX = DrugEffectInterpreter.getHandShiftX(drugHelper, (float) rendererUpdateCount + partialTicks);
-            float shiftY = DrugEffectInterpreter.getHandShiftY(drugHelper, (float) rendererUpdateCount + partialTicks);
-            GL11.glTranslatef(shiftX, shiftY, 0.0f);
+            if (drugHelper != null)
+            {
+                float shiftX = DrugEffectInterpreter.getHandShiftX(drugHelper, (float) rendererUpdateCount + partialTicks);
+                float shiftY = DrugEffectInterpreter.getHandShiftY(drugHelper, (float) rendererUpdateCount + partialTicks);
+                GL11.glTranslatef(shiftX, shiftY, 0.0f);
+            }
         }
     }
 
