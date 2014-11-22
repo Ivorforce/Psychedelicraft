@@ -1,7 +1,7 @@
 item.smokingPipe.name=Pipe
 item.bong.name=Bong
 item.wineGrapes.name=Wine Grapes
-tile.wineGrapeLattice.name=Wine Grape Lattice
+tile.wineGrapeLattice.name=Wood Lattice
 item.cannabisPlant.name=Cannabis Plant
 item.cannabisSeeds.name=Cannabis Seeds
 item.cannabisLeaf.name=Cannabis Leaf
@@ -75,6 +75,7 @@ item.molotovCocktail.quality4.name=Good Molotov Cocktail
 item.molotovCocktail.quality5.name=Excellent Molotov Cocktail
 item.molotovCocktail.quality6.name=Perfect Molotov Cocktail
 item.molotovCocktail.quality7.name=Unreal Molotov Cocktail
+entity.molotovCocktail.name=Molotov Cocktail
 
 tile.psBarrel.name=Barrel
 tile.psBarrel.full.name=%s Barrel
@@ -102,7 +103,6 @@ item.harmonium.dye14.name=Orange Harmonium
 item.harmonium.dye15.name=White Harmonium
 
 entity.realityRift.name=Zero Rift
-entity.molotovCocktail.name=Molotov Cocktail
 
 tile.bed.onDrugs=The drugs in your body keep you awake
 
@@ -129,7 +129,7 @@ fluid.pscWine.mature3=Mature Wine
 fluid.pscWine.mature4=Quality Wine
 fluid.pscWine.mature5=Historical Wine
 fluid.pscWine.vinegar=Wine Vinegar
-fluid.pscRiceWine=Wine
+fluid.pscRiceWine=Rice Wine
 fluid.pscRiceWine.ferment0=Rice Wort
 fluid.pscRiceWine.ferment1=Rice Half-Wash
 fluid.pscRiceWine.ferment2=Rice Wash
