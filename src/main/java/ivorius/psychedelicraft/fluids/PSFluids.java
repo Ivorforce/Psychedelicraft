@@ -13,6 +13,7 @@ public class PSFluids
     public static FluidMaturingAlcohol beer;
     public static FluidMaturingAlcohol wine;
     public static FluidMaturingAlcohol riceWine;
+    public static FluidMaturingAlcohol mead;
     public static FluidJenever jenever;
     public static FluidVodka vodka;
     public static FluidRum rum;

@@ -45,6 +45,7 @@ public class PSConfig
     public static final FluidMaturingAlcohol.TickInfo beerInfo = new FluidMaturingAlcohol.TickInfo();
     public static final FluidMaturingAlcohol.TickInfo wineInfo = new FluidMaturingAlcohol.TickInfo();
     public static final FluidMaturingAlcohol.TickInfo riceWineInfo = new FluidMaturingAlcohol.TickInfo();
+    public static final FluidMaturingAlcohol.TickInfo meadInfo = new FluidMaturingAlcohol.TickInfo();
 
     public static final FluidDistillingMaturingAlcohol.TickInfo vodkaInfo = new FluidDistillingMaturingAlcohol.TickInfo();
     public static final FluidDistillingAlcohol.TickInfo jeneverInfo = new FluidDistillingAlcohol.TickInfo();
@@ -81,6 +82,7 @@ public class PSConfig
             readTickInfo(beerInfo, "beer", MINUTE * 30, MINUTE * 60, MINUTE * 100, config);
             readTickInfo(wineInfo, "wine", MINUTE * 40, MINUTE * 40, MINUTE * 30, config);
             readTickInfo(riceWineInfo, "riceWine", MINUTE * 40, MINUTE * 40, MINUTE * 30, config);
+            readTickInfo(meadInfo, "mead", MINUTE * 40, MINUTE * 20, MINUTE * 30, config);
 
             readTickInfo(vodkaInfo, "vodka", MINUTE * 30, MINUTE * 10, MINUTE * 90, config);
             readTickInfo(jeneverInfo, "jenever", MINUTE * 30, MINUTE * 10, config);

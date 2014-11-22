@@ -17,6 +17,7 @@ public class OreDictionaryConstants
 
     public static final String DC_COPPER_INGOT = "ingotCopper";
     public static final String DC_RICE = "cropRice";
+    public static final String DC_HONEY_DROP = "dropHoney";
 
     public static final String DC_GRAPE = "foodGrape";
     public static final String DC_JUNIPER_BERRIES = "foodJuniper";

@@ -58,6 +58,7 @@ public class PSCrafting
         addMashTubRecipe(new FluidStack(beer, TileEntityMashTub.MASH_TUB_CAPACITY), water_bucket, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CONES_HOPS, DC_CONES_HOPS);
         addMashTubRecipe(new FluidStack(wine, TileEntityMashTub.MASH_TUB_CAPACITY), DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE);
         addMashTubRecipe(new FluidStack(riceWine, TileEntityMashTub.MASH_TUB_CAPACITY), water_bucket, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE);
+        addMashTubRecipe(new FluidStack(mead, TileEntityMashTub.MASH_TUB_CAPACITY), water_bucket, DC_HONEY_DROP, DC_HONEY_DROP, DC_HONEY_DROP, DC_HONEY_DROP, DC_HONEY_DROP, DC_HONEY_DROP, DC_HONEY_DROP);
 
         addMashTubRecipe(new FluidStack(jenever, TileEntityMashTub.MASH_TUB_CAPACITY), DC_JUNIPER_BERRIES, DC_JUNIPER_BERRIES, DC_JUNIPER_BERRIES, DC_JUNIPER_BERRIES, sugar, DC_GRAPE, DC_GRAPE, DC_CROP_WHEAT);
         FluidStack potatoVodka = new FluidStack(vodka, TileEntityMashTub.MASH_TUB_CAPACITY);

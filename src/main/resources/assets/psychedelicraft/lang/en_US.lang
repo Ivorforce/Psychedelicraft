@@ -139,6 +139,14 @@ fluid.pscRiceWine.mature3=Mature Rice Wine
 fluid.pscRiceWine.mature4=Quality Rice Wine
 fluid.pscRiceWine.mature5=Historical Rice Wine
 fluid.pscRiceWine.vinegar=Rice Vinegar
+fluid.pscMead=Mead
+fluid.pscMead.ferment0=Honey Wort
+fluid.pscMead.ferment1=Honey Half-Wash
+fluid.pscMead.ferment2=Honey Wash
+fluid.pscMead.mature1=Very Young Mead
+fluid.pscMead.mature2=Young Mead
+fluid.pscMead.mature3=Mature Mead
+fluid.pscMead.vinegar=Honey Vinegar
 
 fluid.pscJenever=Jenever
 fluid.pscJenever.distill=Jenever (%d times distilled)

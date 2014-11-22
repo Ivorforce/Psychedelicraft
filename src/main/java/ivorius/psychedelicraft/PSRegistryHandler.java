@@ -388,6 +388,14 @@ public class PSRegistryHandler
         riceWine.setFlowingIconName(modBase + "rice_wine_flow");
         FluidRegistry.registerFluid(riceWine);
 
+        mead = new FluidMaturingAlcohol("pscMead", 2, 3, 0.75, 0.3, PSConfig.meadInfo);
+        mead.setDrinkable(true);
+        mead.setColor(0xbbe9ae3b);
+        mead.setSymbolIconName(modBase + "drinkMead");
+        mead.setStillIconName(modBase + "mead_still");
+        mead.setFlowingIconName(modBase + "mead_flow");
+        FluidRegistry.registerFluid(mead);
+
         jenever = new FluidJenever("pscJenever", 2, 8, 0.5f, 1.7f, PSConfig.jeneverInfo);
         jenever.setDrinkable(true);
         jenever.setColor(0x44e8f4f8);
