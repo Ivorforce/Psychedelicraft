@@ -48,6 +48,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
     public IDrugRenderer drugRenderer;
     public DrugMessageDistorter drugMessageDistorter;
     public DrugHallucinationManager hallucinationManager;
+    public DrugMusicManager musicManager;
 
     public int ticksExisted = 0;
 
@@ -65,6 +66,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
 
         drugMessageDistorter = new DrugMessageDistorter();
         hallucinationManager = new DrugHallucinationManager();
+        musicManager = new DrugMusicManager();
 
         for (Pair<String, Drug> pair : DrugRegistry.createDrugs(entity))
             drugs.put(pair.getKey(), pair.getValue());
@@ -142,6 +144,11 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
         return drugs.values();
     }
 
+    public Set<String> getAllDrugNames()
+    {
+        return drugs.keySet();
+    }
+
     public String[] getAllVisibleDrugNames()
     {
         List<String> visibleDrugs = new ArrayList<>();
@@ -198,6 +205,7 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
         if (entity.worldObj.isRemote)
         {
             hallucinationManager.update(entity, this);
+            musicManager.update(entity, this);
 
             if (delayUntilHeartbeat > 0)
                 delayUntilHeartbeat--;

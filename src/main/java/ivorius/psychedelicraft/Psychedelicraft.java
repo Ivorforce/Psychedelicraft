@@ -89,7 +89,8 @@ public class Psychedelicraft
         config = new Configuration(event.getSuggestedConfigurationFile());
         config.load();
         PSConfig.loadConfig(null);
-        config.save();
+        if (config.hasChanged())
+            config.save();
 
         creativeTab = new CreativeTabPsyche("psychedelicraft");
         drinksTab = new CreativeTabPsyche("psycheDrinks");
@@ -139,6 +140,10 @@ public class Psychedelicraft
 
         PSCrafting.initialize();
         PSWorldGen.initWorldGen();
+
+        PSConfig.loadConfig(null); // Reload based on new config stuff, like DrugFactories
+        if (config.hasChanged())
+            config.save();
     }
 
     @EventHandler

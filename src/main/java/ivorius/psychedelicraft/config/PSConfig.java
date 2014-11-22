@@ -12,6 +12,9 @@ import ivorius.psychedelicraft.fluids.FluidDistillingMaturingAlcohol;
 import ivorius.psychedelicraft.fluids.FluidMaturingAlcohol;
 import net.minecraftforge.common.config.Configuration;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static ivorius.psychedelicraft.Psychedelicraft.config;
 
 /**
@@ -21,6 +24,7 @@ public class PSConfig
 {
     public static final String CATEGORY_BALANCING = "balancing";
     public static final String CATEGORY_VISUAL = "visual";
+    public static final String CATEGORY_AUDIO = "audio";
 
     private static final int MINUTE = 20 * 60;
 
@@ -41,6 +45,8 @@ public class PSConfig
     public static boolean farmerDrugDeals;
 
     public static int dryingTableTickDuration;
+
+    public static final Map<String, Boolean> drugBGM = new HashMap<>();
 
     public static final FluidMaturingAlcohol.TickInfo beerInfo = new FluidMaturingAlcohol.TickInfo();
     public static final FluidMaturingAlcohol.TickInfo wineInfo = new FluidMaturingAlcohol.TickInfo();
@@ -111,5 +117,16 @@ public class PSConfig
         tickInfo.ticksPerFermentation = config.get(CATEGORY_BALANCING, fluidName + "_ticksPerFermentation", defaultFermentation, String.format("Time until %s wort ferments to the next step.", fluidName)).getInt();
         tickInfo.ticksPerDistillation = config.get(CATEGORY_BALANCING, fluidName + "_ticksPerDistillation", defaultDistillation, String.format("Time until %s distills to the next step.", fluidName)).getInt();
         tickInfo.ticksPerMaturation = config.get(CATEGORY_BALANCING, fluidName + "_ticksPerMaturation", defaultMaturation, String.format("Time until %s matures to the next step.", fluidName)).getInt();
+    }
+
+    public static void readHasBGM(String drugName, Configuration config)
+    {
+        drugBGM.put(drugName, config.get(CATEGORY_AUDIO, "bgm_" + drugName, false, "Indicates if the drug is supposed to have background music when active (refer to the wiki for instructions).").getBoolean());
+    }
+
+    public static boolean hasBGM(String drugName)
+    {
+        Boolean bool = drugBGM.get(drugName);
+        return bool != null && bool;
     }
 }

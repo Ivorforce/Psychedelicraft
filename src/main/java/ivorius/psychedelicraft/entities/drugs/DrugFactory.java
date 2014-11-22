@@ -16,4 +16,6 @@ import java.util.List;
 public interface DrugFactory
 {
     void createDrugs(EntityLivingBase entity, List<Pair<String, Drug>> drugs);
+
+    void addManagedDrugNames(List<String> drugNames);
 }

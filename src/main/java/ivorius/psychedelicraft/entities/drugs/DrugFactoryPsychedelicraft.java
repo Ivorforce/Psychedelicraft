@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityLivingBase;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -34,9 +35,15 @@ public class DrugFactoryPsychedelicraft implements DrugFactory
         addDrug("Harmonium", new DrugHarmonium(1, 0.0003d), drugs);
     }
 
+    @Override
+    public void addManagedDrugNames(List<String> drugNames)
+    {
+        Collections.addAll(drugNames, "Alcohol", "Cannabis", "BrownShrooms", "RedShrooms",
+                "Tobacco", "Cocaine", "Caffeine", "Warmth", "Peyote", "Zero", "Power", "Harmonium");
+    }
+
     public void addDrug(String key, Drug drug, List<Pair<String, Drug>> drugs)
     {
-        //noinspection Convert2Diamond
-        drugs.add(new ImmutablePair<String, Drug>(key, drug));
+        drugs.add(new ImmutablePair<>(key, drug));
     }
 }

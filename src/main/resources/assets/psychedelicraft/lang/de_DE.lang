@@ -216,5 +216,7 @@ psychedelicraft.configgui.ctgy.balancing=Spielbalance
 psychedelicraft.configgui.ctgy.balancing.tooltip=Einstellungen, welche die Spielbalance beeinflussen
 psychedelicraft.configgui.ctgy.visual=Grafik
 psychedelicraft.configgui.ctgy.visual.tooltip=Visuelle Einstellungen
+psychedelicraft.configgui.ctgy.audio=Audio
+psychedelicraft.configgui.ctgy.audi.tooltip=Auditive Einstellungen
 
 recipe.action.pour=Einschenken %s

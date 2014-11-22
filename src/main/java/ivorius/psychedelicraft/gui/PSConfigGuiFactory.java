@@ -65,6 +65,7 @@ public class PSConfigGuiFactory implements IModGuiFactory
             list.add(new DummyCategoryElement("psychedelicraft.configgui.general", "psychedelicraft.configgui.ctgy.general", GeneralEntry.class).setRequiresMcRestart(true));
             list.add(new DummyCategoryElement("psychedelicraft.configgui.balancing", "psychedelicraft.configgui.ctgy.balancing", BalancingEntry.class).setRequiresMcRestart(true));
             list.add(new DummyCategoryElement("psychedelicraft.configgui.visual", "psychedelicraft.configgui.ctgy.visual", VisualEntry.class));
+            list.add(new DummyCategoryElement("psychedelicraft.configgui.audio", "psychedelicraft.configgui.ctgy.audio", AudioEntry.class));
             return list;
         }
 
@@ -117,6 +118,24 @@ public class PSConfigGuiFactory implements IModGuiFactory
                 return new GuiConfig(this.owningScreen,
                         (new ConfigElement(Psychedelicraft.config.getCategory(PSConfig.CATEGORY_VISUAL))).getChildElements(),
                         this.owningScreen.modID, PSConfig.CATEGORY_VISUAL, this.configElement.requiresWorldRestart() || this.owningScreen.allRequireWorldRestart,
+                        this.configElement.requiresMcRestart() || this.owningScreen.allRequireMcRestart,
+                        GuiConfig.getAbridgedConfigPath(Psychedelicraft.config.toString()));
+            }
+        }
+
+        public static class AudioEntry extends GuiConfigEntries.CategoryEntry
+        {
+            public AudioEntry(GuiConfig owningScreen, GuiConfigEntries owningEntryList, IConfigElement prop)
+            {
+                super(owningScreen, owningEntryList, prop);
+            }
+
+            @Override
+            protected GuiScreen buildChildScreen()
+            {
+                return new GuiConfig(this.owningScreen,
+                        (new ConfigElement(Psychedelicraft.config.getCategory(PSConfig.CATEGORY_AUDIO))).getChildElements(),
+                        this.owningScreen.modID, PSConfig.CATEGORY_AUDIO, this.configElement.requiresWorldRestart() || this.owningScreen.allRequireWorldRestart,
                         this.configElement.requiresMcRestart() || this.owningScreen.allRequireMcRestart,
                         GuiConfig.getAbridgedConfigPath(Psychedelicraft.config.toString()));
             }

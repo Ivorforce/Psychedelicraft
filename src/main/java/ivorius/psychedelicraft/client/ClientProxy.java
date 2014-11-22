@@ -21,7 +21,10 @@ import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 import ivorius.psychedelicraft.entities.EntityMolotovCocktail;
 import ivorius.psychedelicraft.entities.EntityRealityRift;
 import ivorius.psychedelicraft.entities.PSEntityList;
+import ivorius.psychedelicraft.entities.drugs.DrugFactory;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugRegistry;
+import ivorius.psychedelicraft.entities.drugs.effects.*;
 import ivorius.psychedelicraft.events.PSCoreHandlerClient;
 import ivorius.psychedelicraft.items.PSItems;
 import net.minecraft.client.particle.EntityFX;
@@ -33,8 +36,13 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.MinecraftForgeClient;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static ivorius.psychedelicraft.Psychedelicraft.*;
+import static ivorius.psychedelicraft.config.PSConfig.CATEGORY_AUDIO;
 import static ivorius.psychedelicraft.config.PSConfig.CATEGORY_VISUAL;
+import static ivorius.psychedelicraft.config.PSConfig.readHasBGM;
 
 public class ClientProxy implements PSProxy
 {
@@ -127,6 +135,16 @@ public class ClientProxy implements PSProxy
                     (float) config.get(CATEGORY_VISUAL, "digitalEffectPixelRescaleY", 0.05).getDouble()};
             DrugShaderHelper.disableDepthBuffer = config.get(CATEGORY_VISUAL, "disableDepthBuffer", false).getBoolean();
             DrugShaderHelper.bypassPingPongBuffer = config.get(CATEGORY_VISUAL, "bypassPingPongBuffer", false).getBoolean();
+        }
+
+        if (configID == null || configID.equals(CATEGORY_AUDIO))
+        {
+            List<String> names = new ArrayList<>();
+            for (DrugFactory factory : DrugRegistry.allFactories())
+                factory.addManagedDrugNames(names);
+
+            for (String s : names)
+                readHasBGM(s, config);
         }
     }
 }

@@ -1,4 +1,16 @@
 {
-   "heartBeat": {"category": "master", "sounds": [{"name": "heartBeat","stream": false}]},
-   "breath": {"category": "master", "sounds": [{"name": "breath","stream": false}]}
+   "heartBeat": {"category": "master", "sounds": [{"name": "heartBeat", "stream": false}]},
+   "breath": {"category": "master", "sounds": [{"name": "breath", "stream": false}]},
+
+   "drug.alcohol": {"category": "record", "sounds": [{"name": "drugs/alcohol", "stream": true}]},
+   "drug.cannabis": {"category": "record", "sounds": [{"name": "drugs/cannabis", "stream": true}]},
+   "drug.brownshrooms": {"category": "record", "sounds": [{"name": "drugs/brownshrooms", "stream": true}]},
+   "drug.redshrooms": {"category": "record", "sounds": [{"name": "drugs/redshrooms", "stream": true}]},
+   "drug.tobacco": {"category": "record", "sounds": [{"name": "drugs/tobacco", "stream": true}]},
+   "drug.cocaine": {"category": "record", "sounds": [{"name": "drugs/cocaine", "stream": true}]},
+   "drug.caffeine": {"category": "record", "sounds": [{"name": "drugs/caffeine", "stream": true}]},
+   "drug.warmth": {"category": "record", "sounds": [{"name": "drugs/warmth", "stream": true}]},
+   "drug.peyote": {"category": "record", "sounds": [{"name": "drugs/peyote", "stream": true}]},
+   "drug.zero": {"category": "record", "sounds": [{"name": "drugs/zero", "stream": true}]},
+   "drug.harmonium": {"category": "record", "sounds": [{"name": "drugs/harmonium", "stream": true}]}
 }

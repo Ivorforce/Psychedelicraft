@@ -6,13 +6,14 @@
 package ivorius.psychedelicraft.entities.drugs.effects;
 
 import ivorius.ivtoolkit.math.IvMathHelper;
-import ivorius.ivtoolkit.rendering.IvShaderInstance;
+import ivorius.psychedelicraft.Psychedelicraft;
+import ivorius.psychedelicraft.config.PSConfig;
 import ivorius.psychedelicraft.entities.drugs.Drug;
 import ivorius.psychedelicraft.entities.drugs.DrugHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 
 public class DrugSimple implements Drug
 {
