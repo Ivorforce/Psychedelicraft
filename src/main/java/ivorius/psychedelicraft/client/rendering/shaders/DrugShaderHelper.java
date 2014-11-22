@@ -136,15 +136,13 @@ public class DrugShaderHelper
 
                 break;
             case "Depth":
+                didDepthPass = shaderInstanceDepth.isShaderActive();
                 depthBuffer.unbind();
-                didDepthPass = true;
                 break;
             case "Shadows":
                 Minecraft mc = Minecraft.getMinecraft();
                 if (mc.renderViewEntity instanceof EntityFakeSun)
-                {
                     mc.renderViewEntity = ((EntityFakeSun) mc.renderViewEntity).prevViewEntity;
-                }
                 break;
         }
 
