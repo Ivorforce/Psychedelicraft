@@ -23,16 +23,27 @@ public class WrapperDoF extends ShaderWrapper<ShaderDoF>
         super(new ShaderDoF(Psychedelicraft.logger), getRL("shaderBasic.vert"), getRL("shaderDof.frag"), utils);
     }
 
+    public boolean isActive()
+    {
+        return (ClientProxy.dofFocalBlurFar > 0.0f || ClientProxy.dofFocalBlurNear > 0.0f)
+                && (ClientProxy.dofFocalPointNear > 0.0f || ClientProxy.dofFocalPointFar < getCurrentZFar());
+    }
+
+    protected float getCurrentZFar()
+    {
+        return (float) (Minecraft.getMinecraft().gameSettings.renderDistanceChunks * 16);
+    }
+
     @Override
     public void setShaderValues(float partialTicks, int ticks, IvDepthBuffer depthBuffer)
     {
-        if (depthBuffer != null)
+        if (depthBuffer != null && isActive())
         {
             shaderInstance.dof = 1.0f;
             shaderInstance.depthTextureIndex = depthBuffer.getDepthTextureIndex();
 
             shaderInstance.zNear = 0.05f;
-            shaderInstance.zFar = (float) (Minecraft.getMinecraft().gameSettings.renderDistanceChunks * 16);
+            shaderInstance.zFar = getCurrentZFar();
 
             shaderInstance.focalPointNear = ClientProxy.dofFocalPointNear / shaderInstance.zFar;
             shaderInstance.focalPointFar = ClientProxy.dofFocalPointFar / shaderInstance.zFar;
@@ -54,6 +65,6 @@ public class WrapperDoF extends ShaderWrapper<ShaderDoF>
     @Override
     public boolean wantsDepthBuffer(float partialTicks)
     {
-        return true;
+        return isActive();
     }
 }
