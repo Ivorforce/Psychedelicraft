@@ -20,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
@@ -37,9 +38,14 @@ import static net.minecraft.init.Items.*;
  */
 public class PSCrafting
 {
-
     public static void initialize()
     {
+        RecipeSorter.register("ConvertFluidContainer", RecipeConvertFluidContainer.class, RecipeSorter.Category.SHAPED, "");
+        RecipeSorter.register("FillDrink", RecipeFillDrink.class, RecipeSorter.Category.SHAPELESS, "");
+        RecipeSorter.register("RecipeAction", RecipeActionRepresentation.class, RecipeSorter.Category.SHAPELESS, "");
+
+        //-----
+
         addRecipe(new ItemStack(syringe), "I", "#", 'I', DC_IRON_INGOT, '#', DC_BLOCK_GLASS_CLEAR);
         addRecipe(new ItemStack(pipe), "  I", " S ", "WS ", 'I', DC_IRON_INGOT, 'S', DC_STICK_WOOD, 'W', DC_PLANK_WOOD);
         addRecipe(new ItemStack(bong, 1, 3), " P ", "G G", "GGG", 'P', DC_GLASS_PANE_CLEAR, 'G', DC_BLOCK_GLASS_CLEAR);
