@@ -116,10 +116,10 @@ public class ClientProxy implements PSProxy
 //        DrugShaderHelper.doShadows = config.get(CATEGORY_VISUAL, "doShadows", true).getBoolean(true);
             DrugShaderHelper.doShadows = false;
 
-            dofFocalPointNear = (float) config.get(CATEGORY_VISUAL, "dofFocalPointNear", 0f).getDouble();
-            dofFocalPointFar = (float) config.get(CATEGORY_VISUAL, "dofFocalPointFar", 128f).getDouble();
-            dofFocalBlurNear = (float) config.get(CATEGORY_VISUAL, "dofFocalBlurNear", 0f).getDouble();
-            dofFocalBlurFar = (float) config.get(CATEGORY_VISUAL, "dofFocalBlurFar", 1f).getDouble();
+            dofFocalPointNear = (float) config.get(CATEGORY_VISUAL, "dofFocalPointNear", 0f, "The point at which DoF starts blurring the screen, towards the player, in blocks.").getDouble();
+            dofFocalPointFar = (float) config.get(CATEGORY_VISUAL, "dofFocalPointFar", 128f, "The point at which DoF starts blurring the screen, away from the player, in blocks.").getDouble();
+            dofFocalBlurNear = (float) config.get(CATEGORY_VISUAL, "dofFocalBlurNear", 0f, "The strength of DoF blur towards the player.").getDouble();
+            dofFocalBlurFar = (float) config.get(CATEGORY_VISUAL, "dofFocalBlurFar", 1f, "The strength of DoF blur away from the player.").getDouble();
 
             DrugHelper.waterOverlayEnabled = config.get(CATEGORY_VISUAL, "waterOverlayEnabled", true).getBoolean();
             DrugHelper.hurtOverlayEnabled = config.get(CATEGORY_VISUAL, "hurtOverlayEnabled", true).getBoolean();

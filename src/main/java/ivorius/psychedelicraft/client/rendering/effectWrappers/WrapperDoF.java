@@ -39,7 +39,6 @@ public class WrapperDoF extends ShaderWrapper<ShaderDoF>
     {
         if (depthBuffer != null && isActive())
         {
-            shaderInstance.dof = 1.0f;
             shaderInstance.depthTextureIndex = depthBuffer.getDepthTextureIndex();
 
             shaderInstance.zNear = 0.05f;
@@ -52,7 +51,8 @@ public class WrapperDoF extends ShaderWrapper<ShaderDoF>
         }
         else
         {
-            shaderInstance.dof = 0.0f;
+            shaderInstance.focalBlurFar = 0.0f;
+            shaderInstance.focalBlurNear = 0.0f;
         }
     }
 

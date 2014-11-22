@@ -5,6 +5,7 @@
 
 package ivorius.psychedelicraft.client.rendering.shaders;
 
+import ivorius.ivtoolkit.math.IvMathHelper;
 import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.ivtoolkit.rendering.IvOpenGLTexturePingPong;
 import ivorius.ivtoolkit.rendering.IvShaderInstance2D;
@@ -17,8 +18,6 @@ import org.apache.logging.log4j.Logger;
  */
 public class ShaderDoF extends IvShaderInstance2D
 {
-    public float dof;
-
     public int depthTextureIndex;
 
     public float zNear;
@@ -38,7 +37,7 @@ public class ShaderDoF extends IvShaderInstance2D
     @Override
     public boolean shouldApply(float ticks)
     {
-        return depthTextureIndex > 0 && dof > 0.0f && super.shouldApply(ticks);
+        return depthTextureIndex > 0 && (focalBlurNear > 0.0f || focalBlurFar > 0.0f) && super.shouldApply(ticks);
     }
 
     @Override
@@ -57,16 +56,17 @@ public class ShaderDoF extends IvShaderInstance2D
         setUniformFloats("focalPointNear", focalPointNear);
         setUniformFloats("focalPointFar", focalPointFar);
 
-        for (int n = 0; n < MathHelper.floor_double(dof) + 1; n++)
-        {
-            float activeBlur = dof - n;
-            if (activeBlur > 1.0f)
-                activeBlur = 1.0f;
+        float maxDof = Math.max(focalBlurFar, focalBlurNear);
 
-            if (activeBlur > 0.0f)
+        for (int n = 0; n < MathHelper.ceiling_double_int(maxDof); n++)
+        {
+            float curBlurNear = IvMathHelper.clamp(0.0f, focalBlurNear - n, 1.0f);
+            float curBlurFar = IvMathHelper.clamp(0.0f, focalBlurFar - n, 1.0f);
+
+            if (curBlurNear > 0.0f || curBlurFar > 0.0f)
             {
-                setUniformFloats("focalBlurNear", focalBlurNear * activeBlur);
-                setUniformFloats("focalBlurFar", focalBlurFar * activeBlur);
+                setUniformFloats("focalBlurNear", curBlurNear);
+                setUniformFloats("focalBlurFar", curBlurFar);
 
                 for (int i = 0; i < 2; i++)
                 {
