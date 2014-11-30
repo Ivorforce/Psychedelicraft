@@ -10,6 +10,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
+import ivorius.ivtoolkit.gui.IntegerRange;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.blocks.*;
 import ivorius.psychedelicraft.config.PSConfig;
@@ -35,6 +36,7 @@ import static ivorius.psychedelicraft.Psychedelicraft.modBase;
 import static ivorius.psychedelicraft.blocks.PSBlocks.*;
 import static ivorius.psychedelicraft.crafting.OreDictionaryConstants.*;
 import static ivorius.psychedelicraft.entities.PSEntityList.*;
+import static ivorius.psychedelicraft.fluids.FluidAlcohol.NamedAlcohol;
 import static ivorius.psychedelicraft.fluids.FluidHelper.MILLIBUCKETS_PER_LITER;
 import static ivorius.psychedelicraft.fluids.PSFluids.*;
 import static ivorius.psychedelicraft.items.PSItems.*;
@@ -358,69 +360,91 @@ public class PSRegistryHandler
 
         //----------------------------------------------------------Liquids----------------------------------
 
-        slurry = new FluidSlurry("pscSlurry");
+        slurry = new FluidSlurry("psc_slurry");
         slurry.setColor(0xcc704E21);
         slurry.setStillIconName(modBase + "slurry_still");
         slurry.setFlowingIconName(modBase + "slurry_flow");
         FluidRegistry.registerFluid(slurry);
 
-        beer = new FluidMaturingAlcohol("pscBeer", 2, 2, 0.25, 0.08, PSConfig.beerInfo);
-        beer.setDrinkable(true);
-        beer.setColor(0xaafeaa08);
-        beer.setSymbolIconName(modBase + "drinkBeer");
-        beer.setStillIconName(modBase + "beer_still");
-        beer.setFlowingIconName(modBase + "beer_flow");
-        FluidRegistry.registerFluid(beer);
+        alcWheatHop = new FluidAlcohol("psc_wheat_hop", 2, 0.25, 1.7, 0.1, PSConfig.alcInfoWheatHop);
+        alcWheatHop.addName(modBase + "drinkBeer", new IntegerRange(0, -1), new IntegerRange(0, -1));
+        alcWheatHop.setColor(0xaafeaa08);
+        alcWheatHop.setStillIconName(modBase + "beer_still");
+        alcWheatHop.setFlowingIconName(modBase + "beer_flow");
+        alcWheatHop.addIcon(new IntegerRange(-1, -1), new IntegerRange(0, 3), new IntegerRange(2, -1), modBase + "clear_still", modBase + "clear_flow");
+        alcWheatHop.addIcon(new IntegerRange(-1, -1), new IntegerRange(4, 13), new IntegerRange(0, -1), modBase + "rum_semi_mature_still", modBase + "rum_semi_mature_flow");
+        alcWheatHop.addIcon(new IntegerRange(-1, -1), new IntegerRange(14, -1), new IntegerRange(0, -1), modBase + "rum_mature_still", modBase + "rum_mature_flow");
+        FluidRegistry.registerFluid(alcWheatHop);
 
-        wine = new FluidMaturingAlcohol("pscWine", 2, 5, 0.55, 0.2, PSConfig.wineInfo);
-        wine.setDrinkable(true);
-        wine.setColor(0xee3f0822);
-        wine.setSymbolIconName(modBase + "drinkWine");
-        wine.setStillIconName(modBase + "wine_still");
-        wine.setFlowingIconName(modBase + "wine_flow");
-        FluidRegistry.registerFluid(wine);
+        alcWheat = new FluidAlcohol("psc_wheat", 2, 0.25, 1.7, 0.1, PSConfig.alcInfoWheat);
+        alcWheat.addName(modBase + "drinkVodka", new IntegerRange(0, 0), new IntegerRange(1, -1));
+        alcWheat.addName(modBase + "drinkWhisky", new IntegerRange(0, -1), new IntegerRange(1, -1));
+        alcWheat.setColor(0xaafeaa08);
+        alcWheat.setStillIconName(modBase + "beer_still");
+        alcWheat.setFlowingIconName(modBase + "beer_flow");
+        alcWheat.addIcon(new IntegerRange(-1, -1), new IntegerRange(0, 3), new IntegerRange(2, -1), modBase + "clear_still", modBase + "clear_flow");
+        alcWheat.addIcon(new IntegerRange(-1, -1), new IntegerRange(4, 13), new IntegerRange(0, -1), modBase + "rum_semi_mature_still", modBase + "rum_semi_mature_flow");
+        alcWheat.addIcon(new IntegerRange(-1, -1), new IntegerRange(14, -1), new IntegerRange(0, -1), modBase + "rum_mature_still", modBase + "rum_mature_flow");
+        FluidRegistry.registerFluid(alcWheat);
 
-        riceWine = new FluidMaturingAlcohol("pscRiceWine", 2, 5, 0.7, 0.25, PSConfig.riceWineInfo);
-        riceWine.setDrinkable(true);
-        riceWine.setColor(0xeecac4b2);
-        riceWine.setSymbolIconName(modBase + "drinkRiceWine");
-        riceWine.setStillIconName(modBase + "rice_wine_still");
-        riceWine.setFlowingIconName(modBase + "rice_wine_flow");
-        FluidRegistry.registerFluid(riceWine);
+        alcPotato = new FluidAlcohol("psc_potato", 2, 0.45, 1.9, 0.15, PSConfig.alcInfoPotato);
+        alcPotato.addName(modBase + "drinkBeer", new IntegerRange(0, -1), new IntegerRange(0, 0));
+        alcPotato.addName(modBase + "drinkVodka", new IntegerRange(0, 0), new IntegerRange(1, -1));
+        alcPotato.addName(modBase + "drinkWhisky", new IntegerRange(0, -1), new IntegerRange(1, -1));
+        alcPotato.setColor(0xaafeaa08);
+        alcPotato.setStillIconName(modBase + "beer_still");
+        alcPotato.setFlowingIconName(modBase + "beer_flow");
+        alcPotato.addIcon(new IntegerRange(-1, -1), new IntegerRange(0, 3), new IntegerRange(2, -1), modBase + "clear_still", modBase + "clear_flow");
+        alcPotato.addIcon(new IntegerRange(-1, -1), new IntegerRange(4, 13), new IntegerRange(0, -1), modBase + "rum_semi_mature_still", modBase + "rum_semi_mature_flow");
+        alcPotato.addIcon(new IntegerRange(-1, -1), new IntegerRange(14, -1), new IntegerRange(0, -1), modBase + "rum_mature_still", modBase + "rum_mature_flow");
+        FluidRegistry.registerFluid(alcPotato);
 
-        mead = new FluidMaturingAlcohol("pscMead", 2, 3, 0.75, 0.3, PSConfig.meadInfo);
-        mead.setDrinkable(true);
-        mead.setColor(0xbbe9ae3b);
-        mead.setSymbolIconName(modBase + "drinkMead");
-        mead.setStillIconName(modBase + "mead_still");
-        mead.setFlowingIconName(modBase + "mead_flow");
-        FluidRegistry.registerFluid(mead);
+        alcRedGrapes = new FluidAlcohol("psc_red_grapes", 2, 0.55, 1.7, 0.2, PSConfig.alcInfoRedGrapes);
+        alcRedGrapes.addName(modBase + "drinkWine", new IntegerRange(0, -1), new IntegerRange(0, -1));
+        alcRedGrapes.setColor(0xee3f0822);
+        alcRedGrapes.setDistilledColor(0x993f0822);
+        alcRedGrapes.setMatureColor(0xee3f0822);
+        alcRedGrapes.setStillIconName(modBase + "wine_still");
+        alcRedGrapes.setFlowingIconName(modBase + "wine_flow");
+        FluidRegistry.registerFluid(alcRedGrapes);
 
-        jenever = new FluidJenever("pscJenever", 2, 8, 0.5f, 1.7f, PSConfig.jeneverInfo);
-        jenever.setDrinkable(true);
-        jenever.setColor(0x44e8f4f8);
-        jenever.setSymbolIconName(modBase + "drinkJenever");
-        jenever.setStillIconName(modBase + "clear_still");
-        jenever.setFlowingIconName(modBase + "clear_flow");
-        FluidRegistry.registerFluid(jenever);
+        alcRice = new FluidAlcohol("psc_rice", 2, 0.25, 1.7, 0.1, PSConfig.alcInfoRice);
+        alcRice.addName(modBase + "drinkRiceWine", new IntegerRange(0, -1), new IntegerRange(0, -1));
+        alcRice.setColor(0xeecac4b2);
+        alcRice.setMatureColor(0x88D6BC90);
+        alcRice.setStillIconName(modBase + "rice_wine_still");
+        alcRice.setFlowingIconName(modBase + "rice_wine_flow");
+        alcRice.addIcon(new IntegerRange(-1, -1), new IntegerRange(0, -1), new IntegerRange(2, -1), modBase + "clear_still", modBase + "clear_flow");
+        FluidRegistry.registerFluid(alcRice);
 
-        vodka = new FluidVodka("pscVodka", 2, 8, 5, 0.55f, 1.7f, 0.2f, PSConfig.vodkaInfo);
-        vodka.setDrinkable(true);
-        vodka.setColor(0x44e8f4f8);
-        vodka.setSymbolIconName(modBase + "drinkVodka");
-        vodka.setStillIconName(modBase + "clear_still");
-        vodka.setFlowingIconName(modBase + "clear_flow");
-        FluidRegistry.registerFluid(vodka);
+        alcHoney = new FluidAlcohol("psc_honey", 2, 0.35, 1.7, 0.1, PSConfig.alcInfoHoney);
+        alcHoney.addName(modBase + "drinkMead", new IntegerRange(0, -1), new IntegerRange(0, -1));
+        alcHoney.setColor(0xbbe9ae3b);
+        alcHoney.setDistilledColor(0x99e9ae3b);
+        alcHoney.setMatureColor(0x88D1984D);
+        alcHoney.setStillIconName(modBase + "mead_still");
+        alcHoney.setFlowingIconName(modBase + "mead_flow");
+        FluidRegistry.registerFluid(alcHoney);
 
-        rum = new FluidRum("pscRum", 2, 8, 5, 0.35f, 1.7f, 0.2f, PSConfig.rumInfo);
-        rum.setDrinkable(true);
-        rum.setColor(0x44e8f4f8);
-        rum.setSymbolIconName(modBase + "drinkRum");
-        rum.setStillIconName(modBase + "clear_still");
-        rum.setFlowingIconName(modBase + "clear_flow");
-        FluidRegistry.registerFluid(rum);
+        alcJuniper = new FluidAlcohol("psc_juniper", 2, 0.4, 1.7, 0.1, PSConfig.alcInfoJuniper);
+        alcJuniper.addName(modBase + "drinkJenever", new IntegerRange(0, -1), new IntegerRange(0, -1));
+        alcJuniper.setColor(0xcc704E21);
+        alcJuniper.addIcon(new IntegerRange(-1, -1), new IntegerRange(0, 3), new IntegerRange(2, -1), modBase + "clear_still", modBase + "clear_flow");
+        alcJuniper.addIcon(new IntegerRange(-1, -1), new IntegerRange(4, 13), new IntegerRange(0, -1), modBase + "rum_semi_mature_still", modBase + "rum_semi_mature_flow");
+        alcJuniper.addIcon(new IntegerRange(-1, -1), new IntegerRange(14, -1), new IntegerRange(0, -1), modBase + "rum_mature_still", modBase + "rum_mature_flow");
+        FluidRegistry.registerFluid(alcJuniper);
 
-        coffee = new FluidCoffee("pscCoffee");
+        alcSugarCane = new FluidAlcohol("psc_sugar_cane", 2, 0.35, 1.7, 0.1, PSConfig.alcInfoSugarCane);
+        alcSugarCane.addName(modBase + "drinkRum", new IntegerRange(0, -1), new IntegerRange(0, -1));
+        alcSugarCane.setColor(0xcc704E21);
+        alcSugarCane.setStillIconName(modBase + "clear_still");
+        alcSugarCane.setFlowingIconName(modBase + "clear_flow");
+        alcSugarCane.addIcon(new IntegerRange(-1, -1), new IntegerRange(0, 3), new IntegerRange(2, -1), modBase + "clear_still", modBase + "clear_flow");
+        alcSugarCane.addIcon(new IntegerRange(-1, -1), new IntegerRange(4, 13), new IntegerRange(0, -1), modBase + "rum_semi_mature_still", modBase + "rum_semi_mature_flow");
+        alcSugarCane.addIcon(new IntegerRange(-1, -1), new IntegerRange(14, -1), new IntegerRange(0, -1), modBase + "rum_mature_still", modBase + "rum_mature_flow");
+        FluidRegistry.registerFluid(alcSugarCane);
+
+        coffee = new FluidCoffee("psc_coffee");
         coffee.setDrinkable(true);
         coffee.setColor(0xffa77d55);
         coffee.setSymbolIconName(modBase + "drinkCoffee");
@@ -428,7 +452,7 @@ public class PSRegistryHandler
         coffee.setFlowingIconName(modBase + "coffee_flow");
         FluidRegistry.registerFluid(coffee);
 
-        peyoteJuice = new FluidDrug("pscPeyoteJuice", new DrugInfluence("Peyote", 15, 0.005, 0.003, 2.0f));
+        peyoteJuice = new FluidDrug("psc_peyote_juice", new DrugInfluence("Peyote", 15, 0.005, 0.003, 2.0f));
         peyoteJuice.setDrinkable(true);
         peyoteJuice.setColor(0x779bab62);
         peyoteJuice.setSymbolIconName(modBase + "drinkPeyote");
@@ -436,7 +460,7 @@ public class PSRegistryHandler
         peyoteJuice.setFlowingIconName(modBase + "tea_flow");
         FluidRegistry.registerFluid(peyoteJuice);
 
-        cocaTea = new FluidDrug("pscCocaTea", new DrugInfluence("Cocaine", 60, 0.005, 0.002, 0.2f));
+        cocaTea = new FluidDrug("psc_coca_tea", new DrugInfluence("Cocaine", 60, 0.005, 0.002, 0.2f));
         cocaTea.setDrinkable(true);
         cocaTea.setColor(0x44787a36);
         cocaTea.setSymbolIconName(modBase + "drinkCocaTea");
@@ -444,7 +468,7 @@ public class PSRegistryHandler
         cocaTea.setFlowingIconName(modBase + "tea_flow");
         FluidRegistry.registerFluid(cocaTea);
 
-        cannabisTea = new FluidDrug("pscCannabisTea", new DrugInfluence("Cannabis", 60, 0.005, 0.002, 0.25f));
+        cannabisTea = new FluidDrug("psc_cannabis_tea", new DrugInfluence("Cannabis", 60, 0.005, 0.002, 0.25f));
         cannabisTea.setDrinkable(true);
         cannabisTea.setColor(0x446d6f3c);
         cannabisTea.setSymbolIconName(modBase + "drinkCannabisTea");
@@ -452,14 +476,14 @@ public class PSRegistryHandler
         cannabisTea.setFlowingIconName(modBase + "tea_flow");
         FluidRegistry.registerFluid(cannabisTea);
 
-        cocaineFluid = new FluidDrug("pscCocaineFluid", new DrugInfluence("Cocaine", 0, 0.005, 0.01, 50.0f));
+        cocaineFluid = new FluidDrug("psc_cocaine_fluid", new DrugInfluence("Cocaine", 0, 0.005, 0.01, 50.0f));
         cocaineFluid.setInjectable(true);
         cocaineFluid.setColor(0x44e8f4f8);
         cocaineFluid.setStillIconName(modBase + "clear_still");
         cocaineFluid.setFlowingIconName(modBase + "clear_flow");
         FluidRegistry.registerFluid(cocaineFluid);
 
-        caffeineFluid = new FluidDrug("pscCaffeineFluid", new DrugInfluence("Caffeine", 0, 0.005, 0.01, 85.0f));
+        caffeineFluid = new FluidDrug("psc_caffeine_fluid", new DrugInfluence("Caffeine", 0, 0.005, 0.01, 85.0f));
         caffeineFluid.setInjectable(true);
         caffeineFluid.setColor(0x66eee2d3);
         caffeineFluid.setStillIconName(modBase + "clear_still");

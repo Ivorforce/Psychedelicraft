@@ -83,15 +83,13 @@ public class FluidSimple extends Fluid implements FluidWithIconSymbolRegistering
     @Override
     public void registerIcons(IIconRegister iconRegister, int textureType)
     {
-        if (textureType == TEXTURE_TYPE_ITEM && symbolIconName != null)
-            symbolIcon = iconRegister.registerIcon(symbolIconName);
+        if (textureType == TEXTURE_TYPE_ITEM)
+            symbolIcon =  symbolIconName != null ? iconRegister.registerIcon(symbolIconName) : null;
 
         if (textureType == TEXTURE_TYPE_BLOCK)
         {
-            if (flowingIconName != null)
-                flowingIcon = iconRegister.registerIcon(flowingIconName);
-            if (stillIconName != null)
-                stillIcon = iconRegister.registerIcon(stillIconName);
+            flowingIcon = flowingIconName != null ? iconRegister.registerIcon(flowingIconName) : null;
+            stillIcon = stillIconName != null ? iconRegister.registerIcon(stillIconName) : null;
         }
     }
 }

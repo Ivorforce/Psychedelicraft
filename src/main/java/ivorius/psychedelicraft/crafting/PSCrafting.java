@@ -27,6 +27,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 import java.util.List;
 
 import static ivorius.psychedelicraft.blocks.PSBlocks.*;
+import static ivorius.psychedelicraft.blocks.TileEntityMashTub.MASH_TUB_CAPACITY;
 import static ivorius.psychedelicraft.crafting.OreDictionaryConstants.*;
 import static ivorius.psychedelicraft.fluids.PSFluids.*;
 import static ivorius.psychedelicraft.items.PSItems.*;
@@ -61,17 +62,14 @@ public class PSCrafting
         addRecipe(new ItemStack(itemFlask), " # ", "#G#", "###", 'G', DC_BLOCK_GLASS_CLEAR, '#', flaskIngotItem);
         addRecipe(new ItemStack(itemDistillery), "##", "D ", 'D', itemFlask, '#', flaskIngotItem);
 
-        addMashTubRecipe(new FluidStack(beer, TileEntityMashTub.MASH_TUB_CAPACITY), water_bucket, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CONES_HOPS, DC_CONES_HOPS);
-        addMashTubRecipe(new FluidStack(wine, TileEntityMashTub.MASH_TUB_CAPACITY), DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE);
-        addMashTubRecipe(new FluidStack(riceWine, TileEntityMashTub.MASH_TUB_CAPACITY), water_bucket, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE);
-        addMashTubRecipe(new FluidStack(mead, TileEntityMashTub.MASH_TUB_CAPACITY), water_bucket, DC_HONEY_DROP, DC_HONEY_DROP, DC_HONEY_DROP, DC_HONEY_DROP, DC_HONEY_DROP, DC_HONEY_DROP, DC_HONEY_DROP);
-
-        addMashTubRecipe(new FluidStack(jenever, TileEntityMashTub.MASH_TUB_CAPACITY), DC_JUNIPER_BERRIES, DC_JUNIPER_BERRIES, DC_JUNIPER_BERRIES, DC_JUNIPER_BERRIES, sugar, DC_GRAPE, DC_GRAPE, DC_CROP_WHEAT);
-        FluidStack potatoVodka = new FluidStack(vodka, TileEntityMashTub.MASH_TUB_CAPACITY);
-        vodka.setMadeFromPotato(potatoVodka, true);
-        addMashTubRecipe(potatoVodka, water_bucket, DC_POTATO, DC_POTATO, DC_POTATO, DC_POTATO, DC_POTATO, DC_POTATO, DC_POTATO);
-        addMashTubRecipe(new FluidStack(vodka, TileEntityMashTub.MASH_TUB_CAPACITY), water_bucket, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT);
-        addMashTubRecipe(new FluidStack(rum, TileEntityMashTub.MASH_TUB_CAPACITY), water_bucket, Items.reeds, Items.reeds, Items.reeds, Items.reeds, Items.reeds, Items.reeds, Items.reeds);
+        addMashTubRecipe(new FluidStack(alcWheatHop, MASH_TUB_CAPACITY), water_bucket, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CONES_HOPS, DC_CONES_HOPS);
+        addMashTubRecipe(new FluidStack(alcRedGrapes, MASH_TUB_CAPACITY), DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE);
+        addMashTubRecipe(new FluidStack(alcRice, MASH_TUB_CAPACITY), water_bucket, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE);
+        addMashTubRecipe(new FluidStack(alcHoney, MASH_TUB_CAPACITY), water_bucket, DC_HONEY_DROP, DC_HONEY_DROP, DC_HONEY_DROP, DC_HONEY_DROP, DC_HONEY_DROP, DC_HONEY_DROP, DC_HONEY_DROP);
+        addMashTubRecipe(new FluidStack(alcJuniper, MASH_TUB_CAPACITY), DC_JUNIPER_BERRIES, DC_JUNIPER_BERRIES, DC_JUNIPER_BERRIES, DC_JUNIPER_BERRIES, sugar, DC_GRAPE, DC_GRAPE, DC_CROP_WHEAT);
+        addMashTubRecipe(new FluidStack(alcPotato, MASH_TUB_CAPACITY), water_bucket, DC_POTATO, DC_POTATO, DC_POTATO, DC_POTATO, DC_POTATO, DC_POTATO, DC_POTATO);
+        addMashTubRecipe(new FluidStack(alcWheat, MASH_TUB_CAPACITY), water_bucket, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT);
+        addMashTubRecipe(new FluidStack(alcSugarCane, MASH_TUB_CAPACITY), water_bucket, Items.reeds, Items.reeds, Items.reeds, Items.reeds, Items.reeds, Items.reeds, Items.reeds);
 
         addRecipe(new ItemStack(glassChalice, 4), "# #", " # ", " # ", '#', DC_BLOCK_GLASS_CLEAR);
         addRecipe(new ItemStack(wineGrapeLattice), "###", "###", "O#O", '#', DC_STICK_WOOD, 'O', DC_PLANK_WOOD);

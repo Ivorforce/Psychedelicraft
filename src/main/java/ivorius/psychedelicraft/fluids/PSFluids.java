@@ -10,13 +10,14 @@ package ivorius.psychedelicraft.fluids;
  */
 public class PSFluids
 {
-    public static FluidMaturingAlcohol beer;
-    public static FluidMaturingAlcohol wine;
-    public static FluidMaturingAlcohol riceWine;
-    public static FluidMaturingAlcohol mead;
-    public static FluidJenever jenever;
-    public static FluidVodka vodka;
-    public static FluidRum rum;
+    public static FluidAlcohol alcWheatHop;
+    public static FluidAlcohol alcWheat;
+    public static FluidAlcohol alcPotato;
+    public static FluidAlcohol alcRedGrapes;
+    public static FluidAlcohol alcRice;
+    public static FluidAlcohol alcJuniper;
+    public static FluidAlcohol alcHoney;
+    public static FluidAlcohol alcSugarCane;
 
     public static FluidDrug coffee;
     public static FluidDrug cocaTea;

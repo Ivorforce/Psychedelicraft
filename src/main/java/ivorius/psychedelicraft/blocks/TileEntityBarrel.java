@@ -159,15 +159,15 @@ public class TileEntityBarrel extends TileFluidHandler
             {
                 case 1:
                     barrelWoodType = 5;
-                    containedFluid = PSFluids.wine;
+                    containedFluid = PSFluids.alcRedGrapes;
                     break;
                 case 2:
                     barrelWoodType = 1;
-                    containedFluid = PSFluids.jenever;
+                    containedFluid = PSFluids.alcJuniper;
                     break;
                 default:
                     barrelWoodType = 0;
-                    containedFluid = PSFluids.beer;
+                    containedFluid = PSFluids.alcWheatHop;
                     break;
             }
 
