@@ -18,6 +18,11 @@ public class PSFluids
     public static FluidAlcohol alcJuniper;
     public static FluidAlcohol alcHoney;
     public static FluidAlcohol alcSugarCane;
+    public static FluidAlcohol alcCorn;
+    public static FluidAlcohol alcApple;
+    public static FluidAlcohol alcPineapple;
+    public static FluidAlcohol alcBanana;
+    public static FluidAlcohol alcMilk;
 
     public static FluidDrug coffee;
     public static FluidDrug cocaTea;

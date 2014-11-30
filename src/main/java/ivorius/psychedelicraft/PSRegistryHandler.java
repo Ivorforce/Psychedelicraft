@@ -387,6 +387,18 @@ public class PSRegistryHandler
         alcWheat.addIcon(new IntegerRange(-1, -1), new IntegerRange(14, -1), new IntegerRange(0, -1), modBase + "rum_mature_still", modBase + "rum_mature_flow");
         FluidRegistry.registerFluid(alcWheat);
 
+        alcCorn = new FluidAlcohol("psc_corn", 2, 0.25, 1.7, 0.1, PSConfig.alcInfoCorn);
+        alcCorn.addName(modBase + "drinkBeer", new IntegerRange(0, -1), new IntegerRange(0, 0));
+        alcCorn.addName(modBase + "drinkVodka", new IntegerRange(0, 0), new IntegerRange(1, -1));
+        alcCorn.addName(modBase + "drinkWhisky", new IntegerRange(1, -1), new IntegerRange(1, -1));
+        alcCorn.setColor(0xaafeaa08);
+        alcCorn.setStillIconName(modBase + "beer_still");
+        alcCorn.setFlowingIconName(modBase + "beer_flow");
+        alcCorn.addIcon(new IntegerRange(-1, -1), new IntegerRange(0, 3), new IntegerRange(2, -1), modBase + "clear_still", modBase + "clear_flow");
+        alcCorn.addIcon(new IntegerRange(-1, -1), new IntegerRange(4, 13), new IntegerRange(0, -1), modBase + "rum_semi_mature_still", modBase + "rum_semi_mature_flow");
+        alcCorn.addIcon(new IntegerRange(-1, -1), new IntegerRange(14, -1), new IntegerRange(0, -1), modBase + "rum_mature_still", modBase + "rum_mature_flow");
+        FluidRegistry.registerFluid(alcCorn);
+
         alcPotato = new FluidAlcohol("psc_potato", 2, 0.45, 1.9, 0.15, PSConfig.alcInfoPotato);
         alcPotato.addName(modBase + "drinkBeer", new IntegerRange(0, -1), new IntegerRange(0, 0));
         alcPotato.addName(modBase + "drinkVodka", new IntegerRange(0, 0), new IntegerRange(1, -1));
@@ -421,7 +433,7 @@ public class PSRegistryHandler
         alcHoney.addName(modBase + "drinkMead", new IntegerRange(0, -1), new IntegerRange(0, -1));
         alcHoney.setColor(0xbbe9ae3b);
         alcHoney.setDistilledColor(0x99e9ae3b);
-        alcHoney.setMatureColor(0x88D1984D);
+        alcHoney.setMatureColor(0xaaD1984D);
         alcHoney.setStillIconName(modBase + "mead_still");
         alcHoney.setFlowingIconName(modBase + "mead_flow");
         FluidRegistry.registerFluid(alcHoney);
@@ -443,6 +455,42 @@ public class PSRegistryHandler
         alcSugarCane.addIcon(new IntegerRange(-1, -1), new IntegerRange(4, 13), new IntegerRange(0, -1), modBase + "rum_semi_mature_still", modBase + "rum_semi_mature_flow");
         alcSugarCane.addIcon(new IntegerRange(-1, -1), new IntegerRange(14, -1), new IntegerRange(0, -1), modBase + "rum_mature_still", modBase + "rum_mature_flow");
         FluidRegistry.registerFluid(alcSugarCane);
+
+        alcApple = new FluidAlcohol("psc_apple", 2, 0.35, 1.7, 0.1, PSConfig.alcInfoApple);
+        alcApple.addName(modBase + "drinkApple", new IntegerRange(0, -1), new IntegerRange(0, -1));
+        alcApple.setColor(0x99EDC13B);
+        alcApple.setDistilledColor(0x66EDC13B);
+        alcApple.setMatureColor(0x88EDC13B);
+        alcApple.setStillIconName(modBase + "cider_still");
+        alcApple.setFlowingIconName(modBase + "cider_flow");
+        FluidRegistry.registerFluid(alcApple);
+
+        alcPineapple = new FluidAlcohol("psc_pineapple", 2, 0.35, 1.7, 0.1, PSConfig.alcInfoPineapple);
+        alcPineapple.addName(modBase + "drinkPineapple", new IntegerRange(0, -1), new IntegerRange(0, -1));
+        alcPineapple.setColor(0x99EDC13B);
+        alcPineapple.setDistilledColor(0x66EDC13B);
+        alcPineapple.setMatureColor(0x88EDC13B);
+        alcPineapple.setStillIconName(modBase + "cider_still");
+        alcPineapple.setFlowingIconName(modBase + "cider_flow");
+        FluidRegistry.registerFluid(alcPineapple);
+
+        alcBanana = new FluidAlcohol("psc_banana", 2, 0.35, 1.7, 0.1, PSConfig.alcInfoBanana);
+        alcBanana.addName(modBase + "drinkBanana", new IntegerRange(0, -1), new IntegerRange(0, -1));
+        alcBanana.setColor(0xbbe9ae3b);
+        alcBanana.setDistilledColor(0x99e9ae3b);
+        alcBanana.setMatureColor(0xaaD1984D);
+        alcBanana.setStillIconName(modBase + "mead_still");
+        alcBanana.setFlowingIconName(modBase + "mead_flow");
+        FluidRegistry.registerFluid(alcBanana);
+
+        alcMilk = new FluidAlcohol("psc_milk", 2, 0.35, 1.7, 0.1, PSConfig.alcInfoMilk);
+        alcMilk.addName(modBase + "drinkMilk", new IntegerRange(0, -1), new IntegerRange(0, -1));
+        alcMilk.setColor(0xeecac4b2);
+        alcMilk.setColor(0x77cac4b2);
+        alcMilk.setMatureColor(0x88D6BC90);
+        alcMilk.setStillIconName(modBase + "rice_wine_still");
+        alcMilk.setFlowingIconName(modBase + "rice_wine_flow");
+        FluidRegistry.registerFluid(alcMilk);
 
         coffee = new FluidCoffee("psc_coffee");
         coffee.setDrinkable(true);

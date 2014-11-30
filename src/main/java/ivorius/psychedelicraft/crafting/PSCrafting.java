@@ -63,13 +63,18 @@ public class PSCrafting
         addRecipe(new ItemStack(itemDistillery), "##", "D ", 'D', itemFlask, '#', flaskIngotItem);
 
         addMashTubRecipe(new FluidStack(alcWheatHop, MASH_TUB_CAPACITY), water_bucket, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CONES_HOPS, DC_CONES_HOPS);
+        addMashTubRecipe(new FluidStack(alcWheat, MASH_TUB_CAPACITY), water_bucket, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT);
+        addMashTubRecipe(new FluidStack(alcCorn, MASH_TUB_CAPACITY), water_bucket, DC_CORN, DC_CORN, DC_CORN, DC_CORN, DC_CORN, DC_CORN, DC_CORN);
         addMashTubRecipe(new FluidStack(alcRedGrapes, MASH_TUB_CAPACITY), DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE, DC_GRAPE);
         addMashTubRecipe(new FluidStack(alcRice, MASH_TUB_CAPACITY), water_bucket, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE, DC_RICE);
         addMashTubRecipe(new FluidStack(alcHoney, MASH_TUB_CAPACITY), water_bucket, DC_HONEY_DROP, DC_HONEY_DROP, DC_HONEY_DROP, DC_HONEY_DROP, DC_HONEY_DROP, DC_HONEY_DROP, DC_HONEY_DROP);
         addMashTubRecipe(new FluidStack(alcJuniper, MASH_TUB_CAPACITY), DC_JUNIPER_BERRIES, DC_JUNIPER_BERRIES, DC_JUNIPER_BERRIES, DC_JUNIPER_BERRIES, sugar, DC_GRAPE, DC_GRAPE, DC_CROP_WHEAT);
         addMashTubRecipe(new FluidStack(alcPotato, MASH_TUB_CAPACITY), water_bucket, DC_POTATO, DC_POTATO, DC_POTATO, DC_POTATO, DC_POTATO, DC_POTATO, DC_POTATO);
-        addMashTubRecipe(new FluidStack(alcWheat, MASH_TUB_CAPACITY), water_bucket, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT, DC_CROP_WHEAT);
         addMashTubRecipe(new FluidStack(alcSugarCane, MASH_TUB_CAPACITY), water_bucket, Items.reeds, Items.reeds, Items.reeds, Items.reeds, Items.reeds, Items.reeds, Items.reeds);
+        addMashTubRecipe(new FluidStack(alcApple, MASH_TUB_CAPACITY), apple, apple, apple, apple, apple, apple, apple, apple);
+        addMashTubRecipe(new FluidStack(alcPineapple, MASH_TUB_CAPACITY), DC_PINEAPPLE, DC_PINEAPPLE, DC_PINEAPPLE, DC_PINEAPPLE, DC_PINEAPPLE, DC_PINEAPPLE, DC_PINEAPPLE, DC_PINEAPPLE);
+        addMashTubRecipe(new FluidStack(alcBanana, MASH_TUB_CAPACITY), DC_BANANA, DC_BANANA, DC_BANANA, DC_BANANA, DC_BANANA, DC_BANANA, DC_BANANA, DC_BANANA);
+        addMashTubRecipe(new FluidStack(alcMilk, MASH_TUB_CAPACITY), milk_bucket, milk_bucket, milk_bucket, milk_bucket, milk_bucket, milk_bucket, milk_bucket, milk_bucket);
 
         addRecipe(new ItemStack(glassChalice, 4), "# #", " # ", " # ", '#', DC_BLOCK_GLASS_CLEAR);
         addRecipe(new ItemStack(wineGrapeLattice), "###", "###", "O#O", '#', DC_STICK_WOOD, 'O', DC_PLANK_WOOD);

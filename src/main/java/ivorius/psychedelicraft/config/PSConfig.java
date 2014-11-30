@@ -48,12 +48,17 @@ public class PSConfig
 
     public static final FluidAlcohol.TickInfo alcInfoWheatHop = new FluidAlcohol.TickInfo();
     public static final FluidAlcohol.TickInfo alcInfoWheat = new FluidAlcohol.TickInfo();
+    public static final FluidAlcohol.TickInfo alcInfoCorn = new FluidAlcohol.TickInfo();
     public static final FluidAlcohol.TickInfo alcInfoPotato = new FluidAlcohol.TickInfo();
     public static final FluidAlcohol.TickInfo alcInfoRedGrapes = new FluidAlcohol.TickInfo();
     public static final FluidAlcohol.TickInfo alcInfoRice = new FluidAlcohol.TickInfo();
     public static final FluidAlcohol.TickInfo alcInfoJuniper = new FluidAlcohol.TickInfo();
     public static final FluidAlcohol.TickInfo alcInfoSugarCane = new FluidAlcohol.TickInfo();
     public static final FluidAlcohol.TickInfo alcInfoHoney = new FluidAlcohol.TickInfo();
+    public static final FluidAlcohol.TickInfo alcInfoApple = new FluidAlcohol.TickInfo();
+    public static final FluidAlcohol.TickInfo alcInfoPineapple = new FluidAlcohol.TickInfo();
+    public static final FluidAlcohol.TickInfo alcInfoBanana = new FluidAlcohol.TickInfo();
+    public static final FluidAlcohol.TickInfo alcInfoMilk = new FluidAlcohol.TickInfo();
 
     public static void loadConfig(String configID)
     {
@@ -85,12 +90,17 @@ public class PSConfig
 
             readTickInfo(alcInfoWheatHop, "wheatHop", MINUTE * 30, MINUTE * 60, MINUTE * 100, MINUTE * 30, config);
             readTickInfo(alcInfoWheat, "wheat", MINUTE * 40, MINUTE * 40, MINUTE * 30, MINUTE * 30, config);
+            readTickInfo(alcInfoCorn, "corn", MINUTE * 40, MINUTE * 40, MINUTE * 30, MINUTE * 30, config);
             readTickInfo(alcInfoPotato, "potato", MINUTE * 40, MINUTE * 40, MINUTE * 30, MINUTE * 30, config);
             readTickInfo(alcInfoRedGrapes, "redGrapes", MINUTE * 40, MINUTE * 40, MINUTE * 30, MINUTE * 30, config);
             readTickInfo(alcInfoRice, "rice", MINUTE * 40, MINUTE * 40, MINUTE * 30, MINUTE * 30, config);
             readTickInfo(alcInfoJuniper, "juniper", MINUTE * 40, MINUTE * 40, MINUTE * 30, MINUTE * 30, config);
             readTickInfo(alcInfoSugarCane, "sugarCane", MINUTE * 40, MINUTE * 40, MINUTE * 30, MINUTE * 30, config);
             readTickInfo(alcInfoHoney, "honey", MINUTE * 40, MINUTE * 40, MINUTE * 30, MINUTE * 30, config);
+            readTickInfo(alcInfoApple, "apple", MINUTE * 40, MINUTE * 40, MINUTE * 30, MINUTE * 30, config);
+            readTickInfo(alcInfoPineapple, "pineapple", MINUTE * 40, MINUTE * 40, MINUTE * 30, MINUTE * 30, config);
+            readTickInfo(alcInfoBanana, "banana", MINUTE * 40, MINUTE * 40, MINUTE * 30, MINUTE * 30, config);
+            readTickInfo(alcInfoMilk, "milk", MINUTE * 40, MINUTE * 40, MINUTE * 30, MINUTE * 30, config);
         }
 
         Psychedelicraft.proxy.loadConfig(configID);
