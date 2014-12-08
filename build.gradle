@@ -108,6 +108,11 @@ targetCompatibility = 1.7
 task sourceJar(type: Jar) {
     from sourceSets.main.allSource
     classifier = 'sources'
+
+    manifest {
+        attributes 'FMLCorePlugin': 'ivorius.psychedelicraftcore.PsychedelicraftLoadingPlugin',
+                'FMLCorePluginContainsFMLMod': 'true'
+    }
 }
 
 task deobfJar(type: Jar) {
@@ -115,6 +120,8 @@ task deobfJar(type: Jar) {
     classifier = 'dev'
 
     manifest {
+        attributes 'FMLCorePlugin': 'ivorius.psychedelicraftcore.PsychedelicraftLoadingPlugin',
+                'FMLCorePluginContainsFMLMod': 'true'
     }
 }
 
