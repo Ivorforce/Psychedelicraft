@@ -64,7 +64,7 @@ public class PSRegistryHandler
         GameRegistry.registerItem(woodenMug, "woodenMug", Psychedelicraft.MODID);
         woodenMug.setCreativeTab(Psychedelicraft.drinksTab);
 
-        glassChalice = (ItemCup) new ItemCupWithLiquid(MILLIBUCKETS_PER_LITER / 10).setUnlocalizedName("glassChalice").setTextureName(modBase + "glassChalice");
+        glassChalice = (ItemCup) new ItemCupWithLiquid(MILLIBUCKETS_PER_LITER / 5).setUnlocalizedName("glassChalice").setTextureName(modBase + "glassChalice");
         GameRegistry.registerItem(glassChalice, "glassChalice", Psychedelicraft.MODID);
         glassChalice.setCreativeTab(Psychedelicraft.drinksTab);
 
