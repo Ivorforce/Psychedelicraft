@@ -20,9 +20,14 @@ public class ItemFlask extends ItemBlockFluidContainer
     public ItemFlask(Block block)
     {
         super(block, TileEntityFlask.FLASK_CAPACITY);
-        setMaxStackSize(1);
         setHasSubtypes(true);
         setMaxDamage(0);
+    }
+
+    @Override
+    public int getItemStackLimit(ItemStack stack)
+    {
+        return getFluid(stack) == null ? maxStackSize : 1;
     }
 
     @Override

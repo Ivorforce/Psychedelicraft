@@ -32,9 +32,15 @@ public class ItemBarrel extends ItemBlockFluidContainer
     public ItemBarrel(Block block)
     {
         super(block, TileEntityBarrel.BARREL_CAPACITY);
-        setMaxStackSize(1);
+        setMaxStackSize(16);
         setHasSubtypes(true);
         setMaxDamage(0);
+    }
+
+    @Override
+    public int getItemStackLimit(ItemStack stack)
+    {
+        return getFluid(stack) == null ? maxStackSize : 1;
     }
 
     @Override

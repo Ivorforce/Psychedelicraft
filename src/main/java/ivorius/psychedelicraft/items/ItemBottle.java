@@ -27,9 +27,15 @@ public class ItemBottle extends ItemFluidContainer implements RenderPassesCustom
     public ItemBottle(int capacity)
     {
         super(0, capacity);
-        setMaxStackSize(1);
+        setMaxStackSize(16);
         setHasSubtypes(true);
         setMaxDamage(0);
+    }
+
+    @Override
+    public int getItemStackLimit(ItemStack stack)
+    {
+        return getFluid(stack) == null ? maxStackSize : 1;
     }
 
     @Override

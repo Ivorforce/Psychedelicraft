@@ -35,7 +35,12 @@ public class ItemInjectable extends ItemFluidContainer implements RenderPassesCu
 
         this.setHasSubtypes(true);
         setMaxDamage(0);
-        setMaxStackSize(1);
+    }
+
+    @Override
+    public int getItemStackLimit(ItemStack stack)
+    {
+        return getFluid(stack) == null ? maxStackSize : 1;
     }
 
     @Override

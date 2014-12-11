@@ -30,7 +30,12 @@ public class ItemCup extends ItemFluidContainer implements ItemPouring
     public ItemCup(int capacity)
     {
         super(0, capacity);
-        setMaxStackSize(1);
+    }
+
+    @Override
+    public int getItemStackLimit(ItemStack stack)
+    {
+        return getFluid(stack) == null ? maxStackSize : 1;
     }
 
     @Override

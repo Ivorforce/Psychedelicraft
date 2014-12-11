@@ -29,9 +29,15 @@ public class ItemMashTub extends ItemBlockFluidContainer
     public ItemMashTub(Block block)
     {
         super(block, TileEntityMashTub.MASH_TUB_CAPACITY);
-        setMaxStackSize(1);
+        setMaxStackSize(16);
         setHasSubtypes(true);
         setMaxDamage(0);
+    }
+
+    @Override
+    public int getItemStackLimit(ItemStack stack)
+    {
+        return getFluid(stack) == null ? maxStackSize : 1;
     }
 
     @Override

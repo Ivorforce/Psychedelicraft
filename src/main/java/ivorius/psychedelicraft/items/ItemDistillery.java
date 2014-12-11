@@ -20,9 +20,15 @@ public class ItemDistillery extends ItemBlockFluidContainer
     public ItemDistillery(Block block)
     {
         super(block, TileEntityDistillery.DISTILLERY_CAPACITY);
-        setMaxStackSize(1);
+        setMaxStackSize(16);
         setHasSubtypes(true);
         setMaxDamage(0);
+    }
+
+    @Override
+    public int getItemStackLimit(ItemStack stack)
+    {
+        return getFluid(stack) == null ? maxStackSize : 1;
     }
 
     @Override
