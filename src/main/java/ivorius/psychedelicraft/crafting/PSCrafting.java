@@ -10,6 +10,7 @@ import ivorius.psychedelicraft.blocks.TileEntityMashTub;
 import ivorius.psychedelicraft.config.PSConfig;
 import ivorius.psychedelicraft.entities.drugs.DrugInfluence;
 import ivorius.psychedelicraft.entities.drugs.DrugInfluenceHarmonium;
+import ivorius.psychedelicraft.fluids.FluidHelper;
 import ivorius.psychedelicraft.items.ItemBong;
 import ivorius.psychedelicraft.items.ItemSmokingPipe;
 import net.minecraft.block.BlockWood;
@@ -134,12 +135,12 @@ public class PSCrafting
 
         RecipeActionRegistry.addRecipe("ps_pourDrink", new RecipePourDrink());
 
-        GameRegistry.addRecipe(new RecipeFillDrink(new FluidStack(peyoteJuice, 100), water_bucket, DC_PEYOTE_DRIED, DC_PEYOTE_DRIED));
-        GameRegistry.addRecipe(new RecipeFillDrink(new FluidStack(coffee, 100), water_bucket, DC_COFFEE_BEANS, DC_COFFEE_BEANS));
-        GameRegistry.addRecipe(new RecipeFillDrink(new FluidStack(cocaTea, 100), water_bucket, DC_LEAF_COCA, DC_LEAF_COCA));
-        GameRegistry.addRecipe(new RecipeFillDrink(new FluidStack(cannabisTea, 100), water_bucket, DC_LEAF_CANNABIS, DC_LEAF_CANNABIS));
-        GameRegistry.addRecipe(new RecipeFillDrink(new FluidStack(cocaineFluid, 10), water_bucket, DC_COCAINE_POWDER));
-        GameRegistry.addRecipe(new RecipeFillDrink(new FluidStack(caffeineFluid, 10), DC_COFFEE_BEANS, DC_COFFEE_BEANS));
+        GameRegistry.addRecipe(new RecipeFillDrink(new FluidStack(peyoteJuice, FluidHelper.MILLIBUCKETS_PER_LITER / 2), water_bucket, DC_PEYOTE_DRIED, DC_PEYOTE_DRIED));
+        GameRegistry.addRecipe(new RecipeFillDrink(new FluidStack(coffee, FluidHelper.MILLIBUCKETS_PER_LITER / 2), water_bucket, DC_COFFEE_BEANS, DC_COFFEE_BEANS));
+        GameRegistry.addRecipe(new RecipeFillDrink(new FluidStack(cocaTea, FluidHelper.MILLIBUCKETS_PER_LITER / 2), water_bucket, DC_LEAF_COCA, DC_LEAF_COCA));
+        GameRegistry.addRecipe(new RecipeFillDrink(new FluidStack(cannabisTea, FluidHelper.MILLIBUCKETS_PER_LITER / 2), water_bucket, DC_LEAF_CANNABIS, DC_LEAF_CANNABIS));
+        GameRegistry.addRecipe(new RecipeFillDrink(new FluidStack(cocaineFluid, FluidHelper.MILLIBUCKETS_PER_LITER / 100), water_bucket, DC_COCAINE_POWDER));
+        GameRegistry.addRecipe(new RecipeFillDrink(new FluidStack(caffeineFluid, FluidHelper.MILLIBUCKETS_PER_LITER / 100), DC_COFFEE_BEANS, DC_COFFEE_BEANS));
 
         //TODO Add when Forge fixes smelting with NBT
 //                GameRegistry.addSmelting(DrinkRegistry.createDrinkStack(itemDrinkHolder, 1, "coldCoffee"), new ItemStack(emptyContainer, 1, 3), 0.2f);
