@@ -119,9 +119,7 @@ public class PSEventForgeHandler
     public void onEntityConstruction(EntityEvent.EntityConstructing event)
     {
         if (event.entity instanceof EntityPlayer)
-        {
             DrugProperties.initInEntity(event.entity);
-        }
     }
 
     @SubscribeEvent

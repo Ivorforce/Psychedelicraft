@@ -10,6 +10,7 @@ import io.netty.buffer.ByteBuf;
 import ivorius.ivtoolkit.network.PartialUpdateHandler;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.IDrugRenderer;
+import ivorius.psychedelicraft.entities.PSAccessHelperEntity;
 import ivorius.psychedelicraft.network.PSNetworkHelperServer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -254,10 +255,7 @@ public class DrugProperties implements IExtendedEntityProperties, PartialUpdateH
                     jumpChance += drug.randomJumpChance();
 
                 if (random.nextFloat() < jumpChance)
-                {
-                    if (entity instanceof EntityPlayer)
-                        ((EntityPlayer) entity).jump(); // TODO Also do this with EntityLivingBase, but that has protected access
-                }
+                    PSAccessHelperEntity.jump(entity);
             }
 
             if (!entity.isSwingInProgress)

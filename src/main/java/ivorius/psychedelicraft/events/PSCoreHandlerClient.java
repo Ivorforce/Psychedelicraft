@@ -42,22 +42,22 @@ public class PSCoreHandlerClient
         Minecraft mc = Minecraft.getMinecraft();
 
         float partialTicks = event.partialTicks;
-        float ticks = partialTicks + mc.ingameGUI.getUpdateCounter();
+        int rendererUpdateCount = mc.ingameGUI.getUpdateCounter();
+        float ticks = partialTicks + rendererUpdateCount;
 
         if (event instanceof RenderWorldEvent.Pre)
         {
 //            setPlayerAngles(partialTicks);
 
-            int rendererUpdateCount = Minecraft.getMinecraft().ingameGUI.getUpdateCounter();
-            PSRenderStates.preRender(partialTicks + rendererUpdateCount);
+            PSRenderStates.preRender(ticks);
 
-            for (String s : PSRenderStates.getRenderPasses(partialTicks))
+            for (String pass : PSRenderStates.getRenderPasses(partialTicks))
             {
-                if (!s.equals("Default"))
+                if (!pass.equals("Default"))
                 {
-                    if (PSRenderStates.startRenderPass(s, partialTicks, ticks))
+                    if (PSRenderStates.startRenderPass(pass, partialTicks, ticks))
                     {
-                        Minecraft.getMinecraft().entityRenderer.renderWorld(partialTicks, 0L);
+                        mc.entityRenderer.renderWorld(partialTicks, 0L);
                         PSRenderStates.endRenderPass();
                     }
                 }
@@ -73,9 +73,7 @@ public class PSCoreHandlerClient
             DrugProperties drugProperties = DrugProperties.getDrugProperties(mc.renderViewEntity);
 
             if (drugProperties != null && drugProperties.renderer != null)
-            {
-                drugProperties.renderer.renderOverlaysBeforeShaders(event.partialTicks, mc.renderViewEntity, mc.ingameGUI.getUpdateCounter(), mc.displayWidth, mc.displayHeight, drugProperties);
-            }
+                drugProperties.renderer.renderOverlaysBeforeShaders(event.partialTicks, mc.renderViewEntity, rendererUpdateCount, mc.displayWidth, mc.displayHeight, drugProperties);
 
             PSRenderStates.postRender(ticks, partialTicks);
         }
@@ -90,9 +88,7 @@ public class PSCoreHandlerClient
         int rendererUpdateCount = renderEntity.ticksExisted;
 
         if (drugProperties != null && drugProperties.renderer != null)
-        {
             drugProperties.renderer.distortScreen(event.partialTicks, renderEntity, rendererUpdateCount, drugProperties);
-        }
     }
 
     @SubscribeEvent
@@ -123,8 +119,8 @@ public class PSCoreHandlerClient
             float var2 = 0.0F;
 
             PSRenderStates.setGLLightEnabled(true);
-            PSRenderStates.setGLLight(0, (float) field_82884_b.xCoord, (float) field_82884_b.yCoord, (float) field_82884_b.zCoord, var1, var2); //Psyche
-            PSRenderStates.setGLLight(1, (float) field_82885_c.xCoord, (float) field_82885_c.yCoord, (float) field_82885_c.zCoord, var1, var2); //Psyche
+            PSRenderStates.setGLLight(0, (float) field_82884_b.xCoord, (float) field_82884_b.yCoord, (float) field_82884_b.zCoord, var1, var2);
+            PSRenderStates.setGLLight(1, (float) field_82885_c.xCoord, (float) field_82885_c.yCoord, (float) field_82885_c.zCoord, var1, var2);
             PSRenderStates.setGLLightAmbient(var0);
         }
         else
@@ -141,17 +137,13 @@ public class PSCoreHandlerClient
         Minecraft mc = Minecraft.getMinecraft();
         int rendererUpdateCount = mc.ingameGUI.getUpdateCounter();
 
-        if (mc.renderViewEntity instanceof EntityPlayer)  //Psyche
-        {
-            EntityPlayer player = (EntityPlayer) mc.renderViewEntity;
-            DrugProperties drugProperties = DrugProperties.getDrugProperties(player);
+        DrugProperties drugProperties = DrugProperties.getDrugProperties(mc.renderViewEntity);
 
-            if (drugProperties != null)
-            {
-                float shiftX = DrugEffectInterpreter.getHandShiftX(drugProperties, (float) rendererUpdateCount + partialTicks);
-                float shiftY = DrugEffectInterpreter.getHandShiftY(drugProperties, (float) rendererUpdateCount + partialTicks);
-                GL11.glTranslatef(shiftX, shiftY, 0.0f);
-            }
+        if (drugProperties != null)
+        {
+            float shiftX = DrugEffectInterpreter.getHandShiftX(drugProperties, (float) rendererUpdateCount + partialTicks);
+            float shiftY = DrugEffectInterpreter.getHandShiftY(drugProperties, (float) rendererUpdateCount + partialTicks);
+            GL11.glTranslatef(shiftX, shiftY, 0.0f);
         }
     }
 
