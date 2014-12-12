@@ -12,7 +12,7 @@ import ivorius.ivtoolkit.rendering.IvRenderHelper;
 import ivorius.ivtoolkit.tools.IvStringHelper;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.blocks.TileEntityRiftJar;
-import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
+import ivorius.psychedelicraft.client.rendering.shaders.PSRenderStates;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -177,15 +177,15 @@ public class TileEntityRendererRiftJar extends TileEntitySpecialRenderer
         int textureChosen = MathHelper.floor_double(ticks * 0.5f);
         Random thisTextureMov = new Random(textureChosen);
         bindTexture(zeroScreenTexture[textureChosen % 8]);
-        DrugShaderHelper.setUseScreenTexCoords(true);
+        PSRenderStates.setUseScreenTexCoords(true);
         float pixelsX = 140.0f / 2.0f;
         float pixelsY = 224.0f / 2.0f;
-        DrugShaderHelper.setPixelSize(1.0f / pixelsX, -1.0f / pixelsY);
+        PSRenderStates.setPixelSize(1.0f / pixelsX, -1.0f / pixelsY);
         GL11.glTexCoord2f(thisTextureMov.nextInt(10) * 0.1f * pixelsX, thisTextureMov.nextInt(8) * 0.125f * pixelsY);
         GL11.glColor4f(1.0f, 1.0f, 1.0f, alpha);
         renderJarInside(partialTicks, alpha);
-        DrugShaderHelper.setScreenSizeDefault();
-        DrugShaderHelper.setUseScreenTexCoords(false);
+        PSRenderStates.setScreenSizeDefault();
+        PSRenderStates.setUseScreenTexCoords(false);
     }
 
     public void renderJarInside(float partialTicks, float alpha)

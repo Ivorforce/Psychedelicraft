@@ -10,8 +10,8 @@ import ivorius.pscoreutils.events.*;
 import ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
 import ivorius.psychedelicraft.client.rendering.GLStateProxy;
 import ivorius.psychedelicraft.client.rendering.SmoothCameraHelper;
-import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.client.rendering.shaders.PSRenderStates;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import ivorius.psychedelicraftcore.PsycheCoreBusCommon;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -49,35 +49,35 @@ public class PSCoreHandlerClient
 //            setPlayerAngles(partialTicks);
 
             int rendererUpdateCount = Minecraft.getMinecraft().ingameGUI.getUpdateCounter();
-            DrugShaderHelper.preRender(partialTicks + rendererUpdateCount);
+            PSRenderStates.preRender(partialTicks + rendererUpdateCount);
 
-            for (String s : DrugShaderHelper.getRenderPasses(partialTicks))
+            for (String s : PSRenderStates.getRenderPasses(partialTicks))
             {
                 if (!s.equals("Default"))
                 {
-                    if (DrugShaderHelper.startRenderPass(s, partialTicks, ticks))
+                    if (PSRenderStates.startRenderPass(s, partialTicks, ticks))
                     {
                         Minecraft.getMinecraft().entityRenderer.renderWorld(partialTicks, 0L);
-                        DrugShaderHelper.endRenderPass();
+                        PSRenderStates.endRenderPass();
                     }
                 }
             }
 
-            DrugShaderHelper.startRenderPass("Default", partialTicks, ticks);
-            DrugShaderHelper.preRender3D(ticks);
+            PSRenderStates.startRenderPass("Default", partialTicks, ticks);
+            PSRenderStates.preRender3D(ticks);
         }
         else if (event instanceof RenderWorldEvent.Post)
         {
-            DrugShaderHelper.endRenderPass();
+            PSRenderStates.endRenderPass();
 
-            DrugHelper drugHelper = DrugHelper.getDrugHelper(mc.renderViewEntity);
+            DrugProperties drugProperties = DrugProperties.getDrugProperties(mc.renderViewEntity);
 
-            if (drugHelper != null && drugHelper.drugRenderer != null)
+            if (drugProperties != null && drugProperties.renderer != null)
             {
-                drugHelper.drugRenderer.renderOverlaysBeforeShaders(event.partialTicks, mc.renderViewEntity, mc.ingameGUI.getUpdateCounter(), mc.displayWidth, mc.displayHeight, drugHelper);
+                drugProperties.renderer.renderOverlaysBeforeShaders(event.partialTicks, mc.renderViewEntity, mc.ingameGUI.getUpdateCounter(), mc.displayWidth, mc.displayHeight, drugProperties);
             }
 
-            DrugShaderHelper.postRender(ticks, partialTicks);
+            PSRenderStates.postRender(ticks, partialTicks);
         }
     }
 
@@ -86,25 +86,25 @@ public class PSCoreHandlerClient
     {
         Minecraft mc = Minecraft.getMinecraft();
         EntityLivingBase renderEntity = mc.renderViewEntity;
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
+        DrugProperties drugProperties = DrugProperties.getDrugProperties(renderEntity);
         int rendererUpdateCount = renderEntity.ticksExisted;
 
-        if (drugHelper != null && drugHelper.drugRenderer != null)
+        if (drugProperties != null && drugProperties.renderer != null)
         {
-            drugHelper.drugRenderer.distortScreen(event.partialTicks, renderEntity, rendererUpdateCount, drugHelper);
+            drugProperties.renderer.distortScreen(event.partialTicks, renderEntity, rendererUpdateCount, drugProperties);
         }
     }
 
     @SubscribeEvent
     public void psycheGLEnable(GLSwitchEvent event)
     {
-        DrugShaderHelper.setEnabled(event.cap, event.enable);
+        PSRenderStates.setEnabled(event.cap, event.enable);
     }
 
     @SubscribeEvent
     public void psycheGLBlendFunc(GLBlendFuncEvent event)
     {
-        DrugShaderHelper.setBlendFunc(event.sFactor, event.dFactor, event.dfactorAlpha, event.dfactorAlpha);
+        PSRenderStates.setBlendFunc(event.sFactor, event.dFactor, event.dfactorAlpha, event.dfactorAlpha);
     }
 
     @SubscribeEvent
@@ -122,14 +122,14 @@ public class PSCoreHandlerClient
             float var1 = 0.6F;
             float var2 = 0.0F;
 
-            DrugShaderHelper.setGLLightEnabled(true);
-            DrugShaderHelper.setGLLight(0, (float) field_82884_b.xCoord, (float) field_82884_b.yCoord, (float) field_82884_b.zCoord, var1, var2); //Psyche
-            DrugShaderHelper.setGLLight(1, (float) field_82885_c.xCoord, (float) field_82885_c.yCoord, (float) field_82885_c.zCoord, var1, var2); //Psyche
-            DrugShaderHelper.setGLLightAmbient(var0);
+            PSRenderStates.setGLLightEnabled(true);
+            PSRenderStates.setGLLight(0, (float) field_82884_b.xCoord, (float) field_82884_b.yCoord, (float) field_82884_b.zCoord, var1, var2); //Psyche
+            PSRenderStates.setGLLight(1, (float) field_82885_c.xCoord, (float) field_82885_c.yCoord, (float) field_82885_c.zCoord, var1, var2); //Psyche
+            PSRenderStates.setGLLightAmbient(var0);
         }
         else
         {
-            DrugShaderHelper.setGLLightEnabled(false);
+            PSRenderStates.setGLLightEnabled(false);
         }
     }
 
@@ -144,12 +144,12 @@ public class PSCoreHandlerClient
         if (mc.renderViewEntity instanceof EntityPlayer)  //Psyche
         {
             EntityPlayer player = (EntityPlayer) mc.renderViewEntity;
-            DrugHelper drugHelper = DrugHelper.getDrugHelper(player);
+            DrugProperties drugProperties = DrugProperties.getDrugProperties(player);
 
-            if (drugHelper != null)
+            if (drugProperties != null)
             {
-                float shiftX = DrugEffectInterpreter.getHandShiftX(drugHelper, (float) rendererUpdateCount + partialTicks);
-                float shiftY = DrugEffectInterpreter.getHandShiftY(drugHelper, (float) rendererUpdateCount + partialTicks);
+                float shiftX = DrugEffectInterpreter.getHandShiftX(drugProperties, (float) rendererUpdateCount + partialTicks);
+                float shiftY = DrugEffectInterpreter.getHandShiftY(drugProperties, (float) rendererUpdateCount + partialTicks);
                 GL11.glTranslatef(shiftX, shiftY, 0.0f);
             }
         }
@@ -164,11 +164,11 @@ public class PSCoreHandlerClient
         {
             Minecraft mc = Minecraft.getMinecraft();
             EntityLivingBase renderEntity = mc.renderViewEntity;
-            DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
+            DrugProperties drugProperties = DrugProperties.getDrugProperties(renderEntity);
 
-            if (drugHelper != null && drugHelper.drugRenderer != null)
+            if (drugProperties != null && drugProperties.renderer != null)
             {
-                drugHelper.drugRenderer.renderAllHallucinations(event.partialTicks, drugHelper);
+                drugProperties.renderer.renderAllHallucinations(event.partialTicks, drugProperties);
             }
         }
     }
@@ -178,17 +178,17 @@ public class PSCoreHandlerClient
     {
         if (event instanceof RenderHandEvent.Pre)
         {
-            if (!"Default".equals(DrugShaderHelper.currentRenderPass))
+            if (!"Default".equals(PSRenderStates.currentRenderPass))
             {
-                DrugShaderHelper.setDepthMultiplier(0.0f);
+                PSRenderStates.setDepthMultiplier(0.0f);
                 event.setCanceled(true);
             }
         }
         else if (event instanceof RenderHandEvent.Post)
         {
-            if (!"Default".equals(DrugShaderHelper.currentRenderPass))
+            if (!"Default".equals(PSRenderStates.currentRenderPass))
             {
-                DrugShaderHelper.setDepthMultiplier(1.0f);
+                PSRenderStates.setDepthMultiplier(1.0f);
             }
         }
     }
@@ -200,11 +200,11 @@ public class PSCoreHandlerClient
 
         Minecraft mc = Minecraft.getMinecraft();
         EntityLivingBase renderEntity = mc.renderViewEntity;
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
+        DrugProperties drugProperties = DrugProperties.getDrugProperties(renderEntity);
 
-        if (drugHelper != null)
+        if (drugProperties != null)
         {
-            float smoothness = DrugEffectInterpreter.getSmoothVision(drugHelper);
+            float smoothness = DrugEffectInterpreter.getSmoothVision(drugProperties);
             if (smoothness < 1.0f && mc.inGameHasFocus)
             {
                 float deltaX = mc.mouseHelper.deltaX;
@@ -230,7 +230,7 @@ public class PSCoreHandlerClient
     {
         if (event.pname == GL11.GL_FOG_MODE)
         {
-            DrugShaderHelper.setFogMode(event.param);
+            PSRenderStates.setFogMode(event.param);
         }
     }
 
@@ -238,18 +238,18 @@ public class PSCoreHandlerClient
     public void getSoundVolume(GetSoundVolumeEvent event)
     {
         Minecraft mc = Minecraft.getMinecraft();
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(mc.renderViewEntity);
+        DrugProperties drugProperties = DrugProperties.getDrugProperties(mc.renderViewEntity);
 
-        if (drugHelper != null)
+        if (drugProperties != null)
         {
-            event.volume = MathHelper.clamp_float(event.volume * drugHelper.getSoundMultiplier(), 0.0f, 1.0f);
+            event.volume = MathHelper.clamp_float(event.volume * drugProperties.getSoundMultiplier(), 0.0f, 1.0f);
         }
     }
 
     @SubscribeEvent
     public void setupCameraTransform(SetupCameraTransformEvent event)
     {
-        if (DrugShaderHelper.setupCameraTransform())
+        if (PSRenderStates.setupCameraTransform())
         {
             event.setCanceled(true);
         }
@@ -258,7 +258,7 @@ public class PSCoreHandlerClient
     @SubscribeEvent
     public void renderBlockOverlay(RenderBlockOverlayEvent event)
     {
-        if (!"Default".equals(DrugShaderHelper.currentRenderPass))
+        if (!"Default".equals(PSRenderStates.currentRenderPass))
         {
             event.setCanceled(true);
         }
@@ -267,19 +267,19 @@ public class PSCoreHandlerClient
     @SubscribeEvent
     public void fixGLState(GLStateFixEvent event)
     {
-        DrugShaderHelper.setUseScreenTexCoords(false);
-        DrugShaderHelper.setTexture2DEnabled(OpenGlHelper.defaultTexUnit, true);
+        PSRenderStates.setUseScreenTexCoords(false);
+        PSRenderStates.setTexture2DEnabled(OpenGlHelper.defaultTexUnit, true);
     }
 
     @SubscribeEvent
     public void glClear(GLClearEvent event)
     {
-        event.currentMask = event.currentMask & DrugShaderHelper.getCurrentAllowedGLDataMask();
+        event.currentMask = event.currentMask & PSRenderStates.getCurrentAllowedGLDataMask();
     }
 
     @SubscribeEvent
     public void renderSkyPre(RenderSkyEvent.Pre event)
     {
-        DrugShaderHelper.preRenderSky(event.partialTicks);
+        PSRenderStates.preRenderSky(event.partialTicks);
     }
 }

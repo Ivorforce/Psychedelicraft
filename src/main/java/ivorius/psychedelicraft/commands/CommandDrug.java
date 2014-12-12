@@ -6,7 +6,7 @@
 package ivorius.psychedelicraft.commands;
 
 import ivorius.psychedelicraft.entities.drugs.Drug;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -44,20 +44,20 @@ public class CommandDrug extends CommandBase
 
         String drugName = arguments[1];
 
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(player);
-        if (drugHelper == null)
+        DrugProperties drugProperties = DrugProperties.getDrugProperties(player);
+        if (drugProperties == null)
             return;
 
-        Drug singleDrug = drugHelper.getDrug(drugName);
+        Drug singleDrug = drugProperties.getDrug(drugName);
         boolean modifyAllDrugs = drugName.equalsIgnoreCase("all");
-        Collection<Drug> drugs = singleDrug != null ? Arrays.asList(singleDrug) : modifyAllDrugs ? drugHelper.getAllDrugs() : null;
+        Collection<Drug> drugs = singleDrug != null ? Arrays.asList(singleDrug) : modifyAllDrugs ? drugProperties.getAllDrugs() : null;
         if (drugs != null)
         {
             int lock = getLockMode(arguments[2], commandSender);
             if (modifyAllDrugs)
                 drugName = "Drugs";
 
-            drugHelper.hasChanges = true;
+            drugProperties.hasChanges = true;
 
             if (lock != 0)
             {
@@ -81,9 +81,9 @@ public class CommandDrug extends CommandBase
             else if (lock == 0)
                 throw new CommandException(getCommandUsage(commandSender), drugName); // Didn't actually do anything
             else if (lock == 1)
-                commandSender.addChatMessage(new ChatComponentTranslation("commands.drug.success.lock", player.getCommandSenderName(), drugName, drugHelper.getDrugValue(drugName)));
+                commandSender.addChatMessage(new ChatComponentTranslation("commands.drug.success.lock", player.getCommandSenderName(), drugName, drugProperties.getDrugValue(drugName)));
             else if (lock == 2)
-                commandSender.addChatMessage(new ChatComponentTranslation("commands.drug.success.unlock", player.getCommandSenderName(), drugName, drugHelper.getDrugValue(drugName)));
+                commandSender.addChatMessage(new ChatComponentTranslation("commands.drug.success.unlock", player.getCommandSenderName(), drugName, drugProperties.getDrugValue(drugName)));
         }
         else
         {
@@ -100,10 +100,10 @@ public class CommandDrug extends CommandBase
         {
             try
             {
-                DrugHelper drugHelper = DrugHelper.getDrugHelper(getPlayer(par1ICommandSender, arguments[0]));
-                if (drugHelper != null)
+                DrugProperties drugProperties = DrugProperties.getDrugProperties(getPlayer(par1ICommandSender, arguments[0]));
+                if (drugProperties != null)
                 {
-                    String[] drugNames = drugHelper.getAllVisibleDrugNames();
+                    String[] drugNames = drugProperties.getAllVisibleDrugNames();
                     String[] drugNamesPlusAll = new String[drugNames.length + 1];
                     drugNamesPlusAll[0] = "All";
                     System.arraycopy(drugNames, 0, drugNamesPlusAll, 1, drugNames.length);

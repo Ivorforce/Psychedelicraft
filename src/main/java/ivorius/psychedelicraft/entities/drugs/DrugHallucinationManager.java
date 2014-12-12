@@ -59,10 +59,10 @@ public class DrugHallucinationManager
         HallucinationType colorHallucinationType = new HallucinationType()
         {
             @Override
-            public float getDesiredValue(DrugHelper drugHelper)
+            public float getDesiredValue(DrugProperties drugProperties)
             {
                 float val = 0.0f;
-                for (Drug drug : drugHelper.getAllDrugs())
+                for (Drug drug : drugProperties.getAllDrugs())
                     val += drug.colorHallucinationStrength();
                 return val;
             }
@@ -73,10 +73,10 @@ public class DrugHallucinationManager
         HallucinationType movementHallucinationType = new HallucinationType()
         {
             @Override
-            public float getDesiredValue(DrugHelper drugHelper)
+            public float getDesiredValue(DrugProperties drugProperties)
             {
                 float val = 0.0f;
-                for (Drug drug : drugHelper.getAllDrugs())
+                for (Drug drug : drugProperties.getAllDrugs())
                     val += drug.movementHallucinationStrength();
                 return val;
             }
@@ -87,10 +87,10 @@ public class DrugHallucinationManager
         HallucinationType contextualHallucinationType = new HallucinationType()
         {
             @Override
-            public float getDesiredValue(DrugHelper drugHelper)
+            public float getDesiredValue(DrugProperties drugProperties)
             {
                 float val = 0.0f;
-                for (Drug drug : drugHelper.getAllDrugs())
+                for (Drug drug : drugProperties.getAllDrugs())
                     val += drug.contextualHallucinationStrength();
                 return val;
             }
@@ -114,16 +114,16 @@ public class DrugHallucinationManager
         hallucinationValues.put(HALLUCATION_COLOR_CONTRAST, 0.0f);
     }
 
-    public void update(EntityLivingBase entity, DrugHelper drugHelper)
+    public void update(EntityLivingBase entity, DrugProperties drugProperties)
     {
         Random random = entity.getRNG();
 
-        updateEntities(entity, drugHelper, random);
+        updateEntities(entity, drugProperties, random);
 
         float totalHallucinationValue = 0.0f;
         for (HallucinationType type : hallucinationTypes)
         {
-            float desiredValue = type.getDesiredValue(drugHelper);
+            float desiredValue = type.getDesiredValue(drugProperties);
             type.currentValue = IvMathHelper.nearValue(type.currentValue, desiredValue, 0.01f, 0.01f);
             totalHallucinationValue += type.currentValue;
         }
@@ -153,7 +153,7 @@ public class DrugHallucinationManager
 
             if (activeHallucinations.contains(hKey))
             {
-                float desiredValue = randomColor(random, drugHelper.ticksExisted, getHallucinationMultiplier(hKey), 0.5f, 0.00121f, 0.0019318f);
+                float desiredValue = randomColor(random, drugProperties.ticksExisted, getHallucinationMultiplier(hKey), 0.5f, 0.00121f, 0.0019318f);
 
                 val = IvMathHelper.nearValue(val, desiredValue, 0.002f, 0.002f);
                 hallucinationValues.put(hKey, val);
@@ -165,21 +165,21 @@ public class DrugHallucinationManager
             }
         }
 
-        currentMindColor[0] = IvMathHelper.nearValue(currentMindColor[0], randomColor(random, drugHelper.ticksExisted, 0.5f, 0.5f, 0.0012371f, 0.0017412f), 0.002f, 0.002f);
-        currentMindColor[1] = IvMathHelper.nearValue(currentMindColor[1], randomColor(random, drugHelper.ticksExisted, 0.5f, 0.5f, 0.0011239f, 0.0019321f), 0.002f, 0.002f);
-        currentMindColor[2] = IvMathHelper.nearValue(currentMindColor[2], randomColor(random, drugHelper.ticksExisted, 0.5f, 0.5f, 0.0011541f, 0.0018682f), 0.002f, 0.002f);
+        currentMindColor[0] = IvMathHelper.nearValue(currentMindColor[0], randomColor(random, drugProperties.ticksExisted, 0.5f, 0.5f, 0.0012371f, 0.0017412f), 0.002f, 0.002f);
+        currentMindColor[1] = IvMathHelper.nearValue(currentMindColor[1], randomColor(random, drugProperties.ticksExisted, 0.5f, 0.5f, 0.0011239f, 0.0019321f), 0.002f, 0.002f);
+        currentMindColor[2] = IvMathHelper.nearValue(currentMindColor[2], randomColor(random, drugProperties.ticksExisted, 0.5f, 0.5f, 0.0011541f, 0.0018682f), 0.002f, 0.002f);
     }
 
-    public void updateEntities(EntityLivingBase entity, DrugHelper drugHelper, Random random)
+    public void updateEntities(EntityLivingBase entity, DrugProperties drugProperties, Random random)
     {
-        float hallucinationChance = getHallucinationStrength(drugHelper, 1.0f) * 0.05f;
+        float hallucinationChance = getHallucinationStrength(drugProperties, 1.0f) * 0.05f;
         if (hallucinationChance > 0.0f)
         {
             if (random.nextInt((int) (1F / hallucinationChance)) == 0)
             {
                 if (entity instanceof EntityPlayer)
                 {
-                    addRandomEntityHallucination((EntityPlayer) entity, drugHelper, random);
+                    addRandomEntityHallucination((EntityPlayer) entity, drugProperties, random);
                 }
             }
         }
@@ -194,14 +194,14 @@ public class DrugHallucinationManager
         }
     }
 
-    public void addRandomEntityHallucination(EntityPlayer player, DrugHelper drugHelper, Random random)
+    public void addRandomEntityHallucination(EntityPlayer player, DrugProperties drugProperties, Random random)
     {
         if (!player.worldObj.isRemote)
         {
             return;
         }
 
-        if (getNumberOfHallucinations(DrugHallucinationRastaHead.class) == 0 && (random.nextFloat() < 0.1f && drugHelper.getDrugValue("Cannabis") > 0.4f))
+        if (getNumberOfHallucinations(DrugHallucinationRastaHead.class) == 0 && (random.nextFloat() < 0.1f && drugProperties.getDrugValue("Cannabis") > 0.4f))
         {
             entities.add(new DrugHallucinationRastaHead(player));
         }
@@ -271,63 +271,63 @@ public class DrugHallucinationManager
         }
     }
 
-    public float getHallucinationStrength(DrugHelper drugHelper, float partialTicks)
+    public float getHallucinationStrength(DrugProperties drugProperties, float partialTicks)
     {
         return 0.4f * getHallucinationMultiplier(HALLUCATION_ENTITIES) * hallucinationValues.get(HALLUCATION_ENTITIES);
     }
 
-    public float getDesaturation(DrugHelper drugHelper, float partialTicks)
+    public float getDesaturation(DrugProperties drugProperties, float partialTicks)
     {
         float value = getHallucinationMultiplier(HALLUCATION_DESATURATION) * hallucinationValues.get(HALLUCATION_DESATURATION);
-        for (Drug drug : drugHelper.getAllDrugs())
+        for (Drug drug : drugProperties.getAllDrugs())
             value += (1.0f - value) * drug.desaturationHallucinationStrength();
         return value;
     }
 
-    public float getColorIntensification(DrugHelper drugHelper, float partialTicks)
+    public float getColorIntensification(DrugProperties drugProperties, float partialTicks)
     {
         float value = getHallucinationMultiplier(HALLUCATION_SUPER_SATURATION) * hallucinationValues.get(HALLUCATION_SUPER_SATURATION);
-        for (Drug drug : drugHelper.getAllDrugs())
+        for (Drug drug : drugProperties.getAllDrugs())
             value += (1.0f - value) * drug.superSaturationHallucinationStrength();
         return value;
     }
 
-    public float getSlowColorRotation(DrugHelper drugHelper, float partialTicks)
+    public float getSlowColorRotation(DrugProperties drugProperties, float partialTicks)
     {
         return getHallucinationMultiplier(HALLUCATION_SLOW_COLOR_ROTATION) * hallucinationValues.get(HALLUCATION_SLOW_COLOR_ROTATION);
     }
 
-    public float getQuickColorRotation(DrugHelper drugHelper, float partialTicks)
+    public float getQuickColorRotation(DrugProperties drugProperties, float partialTicks)
     {
         return getHallucinationMultiplier(HALLUCATION_QUICK_COLOR_ROTATION) * hallucinationValues.get(HALLUCATION_QUICK_COLOR_ROTATION);
     }
 
-    public float getBigWaveStrength(DrugHelper drugHelper, float partialTicks)
+    public float getBigWaveStrength(DrugProperties drugProperties, float partialTicks)
     {
         return 0.6f * getHallucinationMultiplier(HALLUCATION_BIG_WAVES) * hallucinationValues.get(HALLUCATION_BIG_WAVES);
     }
 
-    public float getSmallWaveStrength(DrugHelper drugHelper, float partialTicks)
+    public float getSmallWaveStrength(DrugProperties drugProperties, float partialTicks)
     {
         return 0.5f * getHallucinationMultiplier(HALLUCATION_SMALL_WAVES) * hallucinationValues.get(HALLUCATION_SMALL_WAVES);
     }
 
-    public float getWiggleWaveStrength(DrugHelper drugHelper, float partialTicks)
+    public float getWiggleWaveStrength(DrugProperties drugProperties, float partialTicks)
     {
         return 0.7f * getHallucinationMultiplier(HALLUCATION_WIGGLE_WAVES) * hallucinationValues.get(HALLUCATION_WIGGLE_WAVES);
     }
 
-    public float getSurfaceFractalStrength(DrugHelper drugHelper, float partialTicks)
+    public float getSurfaceFractalStrength(DrugProperties drugProperties, float partialTicks)
     {
         return getHallucinationMultiplier(HALLUCATION_SURFACE_FRACTALS) * hallucinationValues.get(HALLUCATION_SURFACE_FRACTALS);
     }
 
-    public float getDistantWorldDeformationStrength(DrugHelper drugHelper, float partialTicks)
+    public float getDistantWorldDeformationStrength(DrugProperties drugProperties, float partialTicks)
     {
         return getHallucinationMultiplier(HALLUCATION_DISTANT_WORLD_DEFORMATION) * hallucinationValues.get(HALLUCATION_DISTANT_WORLD_DEFORMATION);
     }
 
-    public void applyPulseColor(DrugHelper drugHelper, float[] pulseColor, float partialTicks)
+    public void applyPulseColor(DrugProperties drugProperties, float[] pulseColor, float partialTicks)
     {
         float val = getHallucinationMultiplier(HALLUCATION_PULSES) * hallucinationValues.get(HALLUCATION_PULSES);
         pulseColor[0] = currentMindColor[0];
@@ -336,36 +336,36 @@ public class DrugHallucinationManager
         pulseColor[3] = val;
     }
 
-    public void applyColorBloom(DrugHelper drugHelper, float[] bloomColor, float partialTicks)
+    public void applyColorBloom(DrugProperties drugProperties, float[] bloomColor, float partialTicks)
     {
-        for (Drug drug : drugHelper.getAllDrugs())
+        for (Drug drug : drugProperties.getAllDrugs())
             drug.applyColorBloom(bloomColor);
 
         float val = 1.5f * getHallucinationMultiplier(HALLUCATION_COLOR_BLOOM) * hallucinationValues.get(HALLUCATION_COLOR_BLOOM);
         mixColorsDynamic(currentMindColor, bloomColor, IvMathHelper.clamp(0.0f, val, 1.0f));
     }
 
-    public void applyContrastColorization(DrugHelper drugHelper, float[] contrastColor, float partialTicks)
+    public void applyContrastColorization(DrugProperties drugProperties, float[] contrastColor, float partialTicks)
     {
-        for (Drug drug : drugHelper.getAllDrugs())
+        for (Drug drug : drugProperties.getAllDrugs())
             drug.applyContrastColorization(contrastColor);
 
         float val = getHallucinationMultiplier(HALLUCATION_COLOR_CONTRAST) * hallucinationValues.get(HALLUCATION_COLOR_CONTRAST);
         mixColorsDynamic(currentMindColor, contrastColor, IvMathHelper.clamp(0.0f, val, 1.0f));
     }
 
-    public float getBloom(DrugHelper drugHelper, float partialTicks)
+    public float getBloom(DrugProperties drugProperties, float partialTicks)
     {
         float value = getHallucinationMultiplier(HALLUCATION_BLOOM) * hallucinationValues.get(HALLUCATION_BLOOM);
-        for (Drug drug : drugHelper.getAllDrugs())
+        for (Drug drug : drugProperties.getAllDrugs())
             value += drug.bloomHallucinationStrength();
         return value;
     }
 
-    public float getMotionBlur(DrugHelper drugHelper, float partialTicks)
+    public float getMotionBlur(DrugProperties drugProperties, float partialTicks)
     {
         float value = 0.0f;
-        for (Drug drug : drugHelper.getAllDrugs())
+        for (Drug drug : drugProperties.getAllDrugs())
             value += (1.0f - value) * drug.motionBlur();
         return value;
     }
@@ -375,6 +375,6 @@ public class DrugHallucinationManager
         public final List<Integer> hallucinations = new ArrayList<>();
         public float currentValue;
 
-        public abstract float getDesiredValue(DrugHelper drugHelper);
+        public abstract float getDesiredValue(DrugProperties drugProperties);
     }
 }

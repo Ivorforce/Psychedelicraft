@@ -7,7 +7,7 @@ package ivorius.psychedelicraft.entities;
 
 import ivorius.ivtoolkit.math.IvMathHelper;
 import ivorius.psychedelicraft.blocks.PSBlocks;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -98,17 +98,17 @@ public class EntityRealityRift extends Entity
         List<EntityLivingBase> entityList = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, boundingBox.expand(searchDistance, searchDistance, searchDistance));
         for (EntityLivingBase entityLivingBase : entityList)
         {
-            DrugHelper drugHelper = DrugHelper.getDrugHelper(entityLivingBase);
+            DrugProperties drugProperties = DrugProperties.getDrugProperties(entityLivingBase);
             double dist = entityLivingBase.getDistanceToEntity(this);
 
             double effect = (searchDistance - dist) * 0.0005 * getRiftSize();
 
             if (effect > 0.0)
             {
-                if (drugHelper != null)
+                if (drugProperties != null)
                 {
-                    drugHelper.addToDrug("Zero", effect * 20.0f);
-                    drugHelper.addToDrug("Power", effect * 200.0f);
+                    drugProperties.addToDrug("Zero", effect * 20.0f);
+                    drugProperties.addToDrug("Power", effect * 200.0f);
                 }
                 else if (critical)
                 {

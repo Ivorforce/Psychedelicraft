@@ -5,7 +5,7 @@
 
 package ivorius.psychedelicraft.fluids;
 
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import ivorius.psychedelicraft.entities.drugs.DrugInfluence;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -109,15 +109,15 @@ public class FluidDrug extends FluidSimple implements FluidWithTypes, DrinkableF
     @Override
     public void drink(FluidStack fluidStack, EntityLivingBase entity)
     {
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(entity);
+        DrugProperties drugProperties = DrugProperties.getDrugProperties(entity);
 
-        if (drugHelper != null)
+        if (drugProperties != null)
         {
             List<DrugInfluence> drugInfluences = new ArrayList<>();
             getDrugInfluences(fluidStack, drugInfluences);
 
             for (DrugInfluence influence : drugInfluences)
-                drugHelper.addToDrug(influence);
+                drugProperties.addToDrug(influence);
         }
 
         if (foodLevel != null && entity instanceof EntityPlayer)
@@ -133,15 +133,15 @@ public class FluidDrug extends FluidSimple implements FluidWithTypes, DrinkableF
     @Override
     public void inject(FluidStack fluidStack, EntityLivingBase entity)
     {
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(entity);
+        DrugProperties drugProperties = DrugProperties.getDrugProperties(entity);
 
-        if (drugHelper != null)
+        if (drugProperties != null)
         {
             List<DrugInfluence> drugInfluences = new ArrayList<>();
             getDrugInfluences(fluidStack, drugInfluences);
 
             for (DrugInfluence influence : drugInfluences)
-                drugHelper.addToDrug(influence);
+                drugProperties.addToDrug(influence);
         }
     }
 

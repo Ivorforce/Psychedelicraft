@@ -7,7 +7,7 @@ package ivorius.psychedelicraft.server;
 
 import ivorius.psychedelicraft.PSProxy;
 import ivorius.psychedelicraft.Psychedelicraft;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import ivorius.psychedelicraft.events.PSCoreHandlerServer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Vec3;
@@ -34,7 +34,7 @@ public class ServerProxy implements PSProxy
     }
 
     @Override
-    public void createDrugRenderer(DrugHelper drugHelper)
+    public void createDrugRenderer(DrugProperties drugProperties)
     {
 
     }

@@ -8,7 +8,7 @@ package ivorius.psychedelicraft.client.rendering.effectWrappers;
 import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.shaders.ShaderSimpleEffects;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import net.minecraft.client.Minecraft;
 
 /**
@@ -24,14 +24,14 @@ public class WrapperSimpleEffects extends ShaderWrapper<ShaderSimpleEffects>
     @Override
     public void setShaderValues(float partialTicks, int ticks, IvDepthBuffer depthBuffer)
     {
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(Minecraft.getMinecraft().renderViewEntity);
+        DrugProperties drugProperties = DrugProperties.getDrugProperties(Minecraft.getMinecraft().renderViewEntity);
 
-        if (drugHelper != null)
+        if (drugProperties != null)
         {
-            shaderInstance.quickColorRotation = drugHelper.hallucinationManager.getQuickColorRotation(drugHelper, partialTicks);
-            shaderInstance.slowColorRotation = drugHelper.hallucinationManager.getSlowColorRotation(drugHelper, partialTicks);
-            shaderInstance.desaturation = drugHelper.hallucinationManager.getDesaturation(drugHelper, partialTicks);
-            shaderInstance.colorIntensification = drugHelper.hallucinationManager.getColorIntensification(drugHelper, partialTicks);
+            shaderInstance.quickColorRotation = drugProperties.hallucinationManager.getQuickColorRotation(drugProperties, partialTicks);
+            shaderInstance.slowColorRotation = drugProperties.hallucinationManager.getSlowColorRotation(drugProperties, partialTicks);
+            shaderInstance.desaturation = drugProperties.hallucinationManager.getDesaturation(drugProperties, partialTicks);
+            shaderInstance.colorIntensification = drugProperties.hallucinationManager.getColorIntensification(drugProperties, partialTicks);
         }
         else
         {

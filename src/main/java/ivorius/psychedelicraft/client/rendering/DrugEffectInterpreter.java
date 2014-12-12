@@ -6,7 +6,7 @@
 package ivorius.psychedelicraft.client.rendering;
 
 import ivorius.psychedelicraft.entities.drugs.Drug;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import net.minecraft.util.MathHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -18,19 +18,19 @@ import java.util.Random;
 @ParametersAreNonnullByDefault
 public class DrugEffectInterpreter
 {
-    public static float getSmoothVision(DrugHelper drugHelper)
+    public static float getSmoothVision(DrugProperties drugProperties)
     {
         float smoothVision = 0.0f;
-        for (Drug drug : drugHelper.getAllDrugs())
+        for (Drug drug : drugProperties.getAllDrugs())
             smoothVision += drug.headMotionInertness();
         return  1.0f / (1.0f + smoothVision);
     }
 
-    public static float getCameraShiftY(DrugHelper drugHelper, float ticks)
+    public static float getCameraShiftY(DrugProperties drugProperties, float ticks)
     {
         float amplitude = 0.0f;
 
-        for (Drug drug : drugHelper.getAllDrugs())
+        for (Drug drug : drugProperties.getAllDrugs())
             amplitude += (1.0f - amplitude) * drug.viewTrembleStrength();
 
         if (amplitude > 0.0f)
@@ -39,11 +39,11 @@ public class DrugEffectInterpreter
         return 0.0f;
     }
 
-    public static float getCameraShiftX(DrugHelper drugHelper, float ticks)
+    public static float getCameraShiftX(DrugProperties drugProperties, float ticks)
     {
         float amplitude = 0.0f;
 
-        for (Drug drug : drugHelper.getAllDrugs())
+        for (Drug drug : drugProperties.getAllDrugs())
             amplitude += (1.0f - amplitude) * drug.viewTrembleStrength();
 
         if (amplitude > 0.0f)
@@ -52,16 +52,16 @@ public class DrugEffectInterpreter
         return 0.0f;
     }
 
-    public static float getHandShiftY(DrugHelper drugHelper, float ticks)
+    public static float getHandShiftY(DrugProperties drugProperties, float ticks)
     {
-        return getCameraShiftY(drugHelper, ticks) * 0.3f;
+        return getCameraShiftY(drugProperties, ticks) * 0.3f;
     }
 
-    public static float getHandShiftX(DrugHelper drugHelper, float ticks)
+    public static float getHandShiftX(DrugProperties drugProperties, float ticks)
     {
         float amplitude = 0.0f;
 
-        for (Drug drug : drugHelper.getAllDrugs())
+        for (Drug drug : drugProperties.getAllDrugs())
             amplitude += (1.0f - amplitude) * drug.handTrembleStrength();
 
         if (amplitude > 0.0f)

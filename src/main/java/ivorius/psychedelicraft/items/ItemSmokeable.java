@@ -5,7 +5,7 @@
 
 package ivorius.psychedelicraft.items;
 
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import ivorius.psychedelicraft.entities.drugs.DrugInfluence;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -51,14 +51,14 @@ public class ItemSmokeable extends Item
     @Override
     public ItemStack onEaten(ItemStack stack, World world, EntityPlayer player)
     {
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(player);
+        DrugProperties drugProperties = DrugProperties.getDrugProperties(player);
 
-        if (drugHelper != null)
+        if (drugProperties != null)
         {
             for (DrugInfluence drugInfluence : drugEffects)
-                drugHelper.addToDrug(drugInfluence.clone());
+                drugProperties.addToDrug(drugInfluence.clone());
 
-            drugHelper.startBreathingSmoke(10 + world.rand.nextInt(10), smokeColor);
+            drugProperties.startBreathingSmoke(10 + world.rand.nextInt(10), smokeColor);
         }
 
         if (stack.getItemDamage() < textures.length - 1)
@@ -72,7 +72,7 @@ public class ItemSmokeable extends Item
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (DrugHelper.getDrugHelper(player).timeBreathingSmoke == 0)
+        if (DrugProperties.getDrugProperties(player).timeBreathingSmoke == 0)
         {
             player.setItemInUse(stack, getMaxItemUseDuration(stack));
         }

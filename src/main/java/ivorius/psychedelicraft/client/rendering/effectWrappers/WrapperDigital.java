@@ -7,12 +7,11 @@ package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
 import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.ivtoolkit.rendering.IvOpenGLTexturePingPong;
-import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
 
 /**
  * Created by lukas on 26.04.14.
  */
-public class WrapperDigital implements IEffectWrapper
+public class WrapperDigital implements EffectWrapper
 {
     public WrapperDigitalMD digitalMD;
     public WrapperDigitalPD digitalPD;

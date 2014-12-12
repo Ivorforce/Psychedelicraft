@@ -7,7 +7,7 @@ package ivorius.psychedelicraft.client.rendering;
 
 import ivorius.ivtoolkit.rendering.IvRenderHelper;
 import ivorius.psychedelicraft.Psychedelicraft;
-import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
+import ivorius.psychedelicraft.client.rendering.shaders.PSRenderStates;
 import ivorius.psychedelicraft.entities.EntityRealityRift;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
@@ -80,14 +80,14 @@ public class RenderRealityRift extends Render
         int textureChosen = MathHelper.floor_double(ticks * 0.5f);
         Random thisTextureMov = new Random(textureChosen);
         bindTexture(zeroScreenTexture[textureChosen % 8]);
-        DrugShaderHelper.setUseScreenTexCoords(true);
+        PSRenderStates.setUseScreenTexCoords(true);
         float pixelsX = 140.0f / 2.0f;
         float pixelsY = 224.0f / 2.0f;
-        DrugShaderHelper.setPixelSize(1.0f / pixelsX, -1.0f / pixelsY);
+        PSRenderStates.setPixelSize(1.0f / pixelsX, -1.0f / pixelsY);
         GL11.glTexCoord2f(thisTextureMov.nextInt(10) * 0.1f * pixelsX, thisTextureMov.nextInt(8) * 0.125f * pixelsY);
         renderLightsScreen(ticks, 1.0f, 0xffffffff, 20);
-        DrugShaderHelper.setScreenSizeDefault();
-        DrugShaderHelper.setUseScreenTexCoords(false);
+        PSRenderStates.setScreenSizeDefault();
+        PSRenderStates.setUseScreenTexCoords(false);
     }
 
     public static void renderLightsScreen(float ticks, float alpha, int color, int number)

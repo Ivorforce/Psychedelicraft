@@ -11,7 +11,7 @@ import ivorius.ivtoolkit.rendering.IvOpenGLTexturePingPong;
 /**
  * Created by lukas on 26.04.14.
  */
-public interface IEffectWrapper
+public interface EffectWrapper
 {
     public void alloc();
 

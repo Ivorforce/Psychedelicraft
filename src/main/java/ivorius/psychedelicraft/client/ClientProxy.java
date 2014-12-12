@@ -17,14 +17,13 @@ import ivorius.psychedelicraft.client.rendering.ItemRendererModelCustom;
 import ivorius.psychedelicraft.client.rendering.ItemRendererThatMakesFuckingSense;
 import ivorius.psychedelicraft.client.rendering.RenderRealityRift;
 import ivorius.psychedelicraft.client.rendering.blocks.*;
-import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
+import ivorius.psychedelicraft.client.rendering.shaders.PSRenderStates;
 import ivorius.psychedelicraft.entities.EntityMolotovCocktail;
 import ivorius.psychedelicraft.entities.EntityRealityRift;
 import ivorius.psychedelicraft.entities.PSEntityList;
 import ivorius.psychedelicraft.entities.drugs.DrugFactory;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import ivorius.psychedelicraft.entities.drugs.DrugRegistry;
-import ivorius.psychedelicraft.entities.drugs.effects.*;
 import ivorius.psychedelicraft.events.PSCoreHandlerClient;
 import ivorius.psychedelicraft.items.PSItems;
 import net.minecraft.client.particle.EntityFX;
@@ -92,8 +91,8 @@ public class ClientProxy implements PSProxy
         if (PSEntityList.villagerDealerProfessionID >= 0)
             VillagerRegistry.instance().registerVillagerSkin(PSEntityList.villagerDealerProfessionID, new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "villagerDealer.png"));
 
-        DrugShaderHelper.allocate();
-        DrugShaderHelper.outputShaderInfo();
+        PSRenderStates.allocate();
+        PSRenderStates.outputShaderInfo();
     }
 
     @Override
@@ -105,9 +104,9 @@ public class ClientProxy implements PSProxy
     }
 
     @Override
-    public void createDrugRenderer(DrugHelper drugHelper)
+    public void createDrugRenderer(DrugProperties drugProperties)
     {
-        drugHelper.drugRenderer = new DrugRenderer();
+        drugProperties.renderer = new DrugRenderer();
     }
 
     @Override
@@ -115,26 +114,26 @@ public class ClientProxy implements PSProxy
     {
         if (configID == null || configID.equals(CATEGORY_VISUAL))
         {
-            DrugShaderHelper.setShaderEnabled(config.get(CATEGORY_VISUAL, "shaderEnabled", true).getBoolean());
-            DrugShaderHelper.setShader2DEnabled(config.get(CATEGORY_VISUAL, "shader2DEnabled", true).getBoolean());
-            DrugShaderHelper.sunFlareIntensity = (float) config.get(CATEGORY_VISUAL, "sunFlareIntensity", 0.25).getDouble();
-            DrugShaderHelper.doHeatDistortion = config.get(CATEGORY_VISUAL, "biomeHeatDistortion", true).getBoolean();
-            DrugShaderHelper.doWaterDistortion = config.get(CATEGORY_VISUAL, "waterDistortion", true).getBoolean();
-            DrugShaderHelper.doMotionBlur = config.get(CATEGORY_VISUAL, "motionBlur", true).getBoolean();
+            PSRenderStates.setShaderEnabled(config.get(CATEGORY_VISUAL, "shaderEnabled", true).getBoolean());
+            PSRenderStates.setShader2DEnabled(config.get(CATEGORY_VISUAL, "shader2DEnabled", true).getBoolean());
+            PSRenderStates.sunFlareIntensity = (float) config.get(CATEGORY_VISUAL, "sunFlareIntensity", 0.25).getDouble();
+            PSRenderStates.doHeatDistortion = config.get(CATEGORY_VISUAL, "biomeHeatDistortion", true).getBoolean();
+            PSRenderStates.doWaterDistortion = config.get(CATEGORY_VISUAL, "waterDistortion", true).getBoolean();
+            PSRenderStates.doMotionBlur = config.get(CATEGORY_VISUAL, "motionBlur", true).getBoolean();
 //        DrugShaderHelper.doShadows = config.get(CATEGORY_VISUAL, "doShadows", true).getBoolean(true);
-            DrugShaderHelper.doShadows = false;
+            PSRenderStates.doShadows = false;
 
             dofFocalPointNear = (float) config.get(CATEGORY_VISUAL, "dofFocalPointNear", 0f, "The point at which DoF starts blurring the screen, towards the player, in blocks.").getDouble();
             dofFocalPointFar = (float) config.get(CATEGORY_VISUAL, "dofFocalPointFar", 128f, "The point at which DoF starts blurring the screen, away from the player, in blocks.").getDouble();
             dofFocalBlurNear = (float) config.get(CATEGORY_VISUAL, "dofFocalBlurNear", 0f, "The strength of DoF blur towards the player.").getDouble();
             dofFocalBlurFar = (float) config.get(CATEGORY_VISUAL, "dofFocalBlurFar", 1f, "The strength of DoF blur away from the player.").getDouble();
 
-            DrugHelper.waterOverlayEnabled = config.get(CATEGORY_VISUAL, "waterOverlayEnabled", true).getBoolean();
-            DrugHelper.hurtOverlayEnabled = config.get(CATEGORY_VISUAL, "hurtOverlayEnabled", true).getBoolean();
-            DrugHelper.digitalEffectPixelRescale = new float[]{(float) config.get(CATEGORY_VISUAL, "digitalEffectPixelRescaleX", 0.05).getDouble(),
+            DrugProperties.waterOverlayEnabled = config.get(CATEGORY_VISUAL, "waterOverlayEnabled", true).getBoolean();
+            DrugProperties.hurtOverlayEnabled = config.get(CATEGORY_VISUAL, "hurtOverlayEnabled", true).getBoolean();
+            DrugProperties.digitalEffectPixelRescale = new float[]{(float) config.get(CATEGORY_VISUAL, "digitalEffectPixelRescaleX", 0.05).getDouble(),
                     (float) config.get(CATEGORY_VISUAL, "digitalEffectPixelRescaleY", 0.05).getDouble()};
-            DrugShaderHelper.disableDepthBuffer = config.get(CATEGORY_VISUAL, "disableDepthBuffer", false).getBoolean();
-            DrugShaderHelper.bypassPingPongBuffer = config.get(CATEGORY_VISUAL, "bypassPingPongBuffer", false).getBoolean();
+            PSRenderStates.disableDepthBuffer = config.get(CATEGORY_VISUAL, "disableDepthBuffer", false).getBoolean();
+            PSRenderStates.bypassPingPongBuffer = config.get(CATEGORY_VISUAL, "bypassPingPongBuffer", false).getBoolean();
         }
 
         if (configID == null || configID.equals(CATEGORY_AUDIO))

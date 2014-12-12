@@ -8,7 +8,7 @@ package ivorius.psychedelicraft.client.rendering.effectWrappers;
 import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.shaders.ShaderColorBloom;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import net.minecraft.client.Minecraft;
 
 /**
@@ -24,11 +24,11 @@ public class WrapperColorBloom extends ShaderWrapper<ShaderColorBloom>
     @Override
     public void setShaderValues(float partialTicks, int ticks, IvDepthBuffer depthBuffer)
     {
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(Minecraft.getMinecraft().renderViewEntity);
+        DrugProperties drugProperties = DrugProperties.getDrugProperties(Minecraft.getMinecraft().renderViewEntity);
 
         shaderInstance.coloredBloom = new float[]{1f, 1f, 1f, 0f};
-        if (drugHelper != null)
-            drugHelper.hallucinationManager.applyColorBloom(drugHelper, shaderInstance.coloredBloom, partialTicks);
+        if (drugProperties != null)
+            drugProperties.hallucinationManager.applyColorBloom(drugProperties, shaderInstance.coloredBloom, partialTicks);
     }
 
     @Override

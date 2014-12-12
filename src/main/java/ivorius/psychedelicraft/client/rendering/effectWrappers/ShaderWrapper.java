@@ -10,14 +10,14 @@ import ivorius.ivtoolkit.rendering.IvOpenGLTexturePingPong;
 import ivorius.ivtoolkit.rendering.IvShaderInstance2D;
 import ivorius.ivtoolkit.rendering.IvShaderInstanceMC;
 import ivorius.psychedelicraft.Psychedelicraft;
-import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
+import ivorius.psychedelicraft.client.rendering.shaders.PSRenderStates;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
 /**
  * Created by lukas on 26.04.14.
  */
-public abstract class ShaderWrapper<ShaderInstance extends IvShaderInstance2D> implements IEffectWrapper
+public abstract class ShaderWrapper<ShaderInstance extends IvShaderInstance2D> implements EffectWrapper
 {
     public ShaderInstance shaderInstance;
 
@@ -42,7 +42,7 @@ public abstract class ShaderWrapper<ShaderInstance extends IvShaderInstance2D> i
     @Override
     public void alloc()
     {
-        if (DrugShaderHelper.shader2DEnabled)
+        if (PSRenderStates.shader2DEnabled)
         {
             IvShaderInstanceMC.trySettingUpShader(shaderInstance, vertexShaderFile, fragmentShaderFile, utils);
         }
@@ -57,7 +57,7 @@ public abstract class ShaderWrapper<ShaderInstance extends IvShaderInstance2D> i
     @Override
     public void apply(float partialTicks, IvOpenGLTexturePingPong pingPong, IvDepthBuffer depthBuffer)
     {
-        if (DrugShaderHelper.shader2DEnabled)
+        if (PSRenderStates.shader2DEnabled)
         {
             Minecraft mc = Minecraft.getMinecraft();
             int ticks = mc.renderViewEntity.ticksExisted;

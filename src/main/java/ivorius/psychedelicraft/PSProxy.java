@@ -5,7 +5,7 @@
 
 package ivorius.psychedelicraft;
 
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Vec3;
 
@@ -20,7 +20,7 @@ public interface PSProxy
 
     void spawnColoredParticle(Entity entity, float[] color, Vec3 direction, float speed, float size);
 
-    void createDrugRenderer(DrugHelper drugHelper);
+    void createDrugRenderer(DrugProperties drugProperties);
 
     void loadConfig(String configID);
 }

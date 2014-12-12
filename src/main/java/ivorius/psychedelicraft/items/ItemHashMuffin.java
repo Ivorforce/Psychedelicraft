@@ -5,7 +5,7 @@
 
 package ivorius.psychedelicraft.items;
 
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import ivorius.psychedelicraft.entities.drugs.DrugInfluence;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
@@ -22,8 +22,8 @@ public class ItemHashMuffin extends ItemFood
     @Override
     protected void onFoodEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(par3EntityPlayer);
-        if (drugHelper != null)
-            drugHelper.addToDrug(new DrugInfluence("Cannabis", 60, 0.004, 0.002, 0.7f));
+        DrugProperties drugProperties = DrugProperties.getDrugProperties(par3EntityPlayer);
+        if (drugProperties != null)
+            drugProperties.addToDrug(new DrugInfluence("Cannabis", 60, 0.004, 0.002, 0.7f));
     }
 }

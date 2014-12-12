@@ -7,9 +7,9 @@ package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
 import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.psychedelicraft.Psychedelicraft;
-import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
+import ivorius.psychedelicraft.client.rendering.shaders.PSRenderStates;
 import ivorius.psychedelicraft.client.rendering.shaders.ShaderHeatDistortions;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
@@ -30,14 +30,14 @@ public class WrapperUnderwaterDistortion extends ShaderWrapper<ShaderHeatDistort
     @Override
     public void setShaderValues(float partialTicks, int ticks, IvDepthBuffer depthBuffer)
     {
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(Minecraft.getMinecraft().renderViewEntity);
+        DrugProperties drugProperties = DrugProperties.getDrugProperties(Minecraft.getMinecraft().renderViewEntity);
 
-        if (DrugShaderHelper.doWaterDistortion && drugHelper != null && depthBuffer != null)
+        if (PSRenderStates.doWaterDistortion && drugProperties != null && depthBuffer != null)
         {
-            float waterDistortion = drugHelper.drugRenderer.getCurrentWaterDistortion();
+            float waterDistortion = drugProperties.renderer.getCurrentWaterDistortion();
 
             shaderInstance.depthTextureIndex = depthBuffer.getDepthTextureIndex();
-            shaderInstance.noiseTextureIndex = DrugShaderHelper.getTextureIndex(heatDistortionNoiseTexture);
+            shaderInstance.noiseTextureIndex = PSRenderStates.getTextureIndex(heatDistortionNoiseTexture);
 
             shaderInstance.strength = waterDistortion;
             shaderInstance.wobbleSpeed = 0.03f;
@@ -57,11 +57,11 @@ public class WrapperUnderwaterDistortion extends ShaderWrapper<ShaderHeatDistort
     @Override
     public boolean wantsDepthBuffer(float partialTicks)
     {
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(Minecraft.getMinecraft().renderViewEntity);
+        DrugProperties drugProperties = DrugProperties.getDrugProperties(Minecraft.getMinecraft().renderViewEntity);
 
-        if (drugHelper != null)
+        if (drugProperties != null)
         {
-            float waterDistortion = DrugShaderHelper.doWaterDistortion ? drugHelper.drugRenderer.getCurrentWaterDistortion() : 0.0f;
+            float waterDistortion = PSRenderStates.doWaterDistortion ? drugProperties.renderer.getCurrentWaterDistortion() : 0.0f;
 
             return waterDistortion > 0.0f;
         }

@@ -14,13 +14,13 @@ public class DrugMusicManager
     private String activeDrug;
     private float volume;
 
-    public void update(EntityLivingBase entity, DrugHelper drugHelper)
+    public void update(EntityLivingBase entity, DrugProperties drugProperties)
     {
         if (activeDrug == null)
         {
-            for (String drugName : drugHelper.getAllDrugNames())
+            for (String drugName : drugProperties.getAllDrugNames())
             {
-                if (PSConfig.hasBGM(drugName) && drugHelper.getDrugValue(drugName) >= PLAY_THRESHOLD)
+                if (PSConfig.hasBGM(drugName) && drugProperties.getDrugValue(drugName) >= PLAY_THRESHOLD)
                     activeDrug = drugName;
             }
         }
@@ -29,7 +29,7 @@ public class DrugMusicManager
 
         if (activeDrug != null)
         {
-            Drug drug = drugHelper.getDrug(activeDrug);
+            Drug drug = drugProperties.getDrug(activeDrug);
             if (drug != null)
                 destVolume = IvMathHelper.zeroToOne((float) drug.getActiveValue(), 0.0f, 0.2f);
         }

@@ -6,9 +6,8 @@
 package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
 import ivorius.psychedelicraft.client.rendering.EffectMotionBlur;
-import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
-import ivorius.psychedelicraft.entities.drugs.Drug;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.client.rendering.shaders.PSRenderStates;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import net.minecraft.client.Minecraft;
 
 /**
@@ -24,10 +23,10 @@ public class WrapperMotionBlur extends ScreenEffectWrapper<EffectMotionBlur>
     @Override
     public void setScreenEffectValues(float partialTicks, int ticks)
     {
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(Minecraft.getMinecraft().renderViewEntity);
+        DrugProperties drugProperties = DrugProperties.getDrugProperties(Minecraft.getMinecraft().renderViewEntity);
 
-        if (DrugShaderHelper.doMotionBlur && drugHelper != null)
-            screenEffect.motionBlur = drugHelper.hallucinationManager.getMotionBlur(drugHelper, partialTicks);
+        if (PSRenderStates.doMotionBlur && drugProperties != null)
+            screenEffect.motionBlur = drugProperties.hallucinationManager.getMotionBlur(drugProperties, partialTicks);
         else
             screenEffect.motionBlur = 0.0f;
     }

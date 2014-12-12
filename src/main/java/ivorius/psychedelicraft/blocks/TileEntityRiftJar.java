@@ -13,7 +13,7 @@ import ivorius.ivtoolkit.network.IvNetworkHelperServer;
 import ivorius.ivtoolkit.network.PartialUpdateHandler;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.entities.EntityRealityRift;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -93,12 +93,12 @@ public class TileEntityRiftJar extends TileEntity implements PartialUpdateHandle
                 for (EntityLivingBase entity : entities)
                 {
                     double effect = (5.0f - entity.getDistance(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5)) * 0.2f * minus;
-                    DrugHelper drugHelper = DrugHelper.getDrugHelper(entity);
+                    DrugProperties drugProperties = DrugProperties.getDrugProperties(entity);
 
-                    if (drugHelper != null)
+                    if (drugProperties != null)
                     {
-                        drugHelper.addToDrug("Zero", effect * 5.0f);
-                        drugHelper.addToDrug("Power", effect * 35.0f);
+                        drugProperties.addToDrug("Zero", effect * 5.0f);
+                        drugProperties.addToDrug("Power", effect * 35.0f);
                     }
                 }
 

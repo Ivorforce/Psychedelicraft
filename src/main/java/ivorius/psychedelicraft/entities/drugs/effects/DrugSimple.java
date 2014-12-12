@@ -6,14 +6,11 @@
 package ivorius.psychedelicraft.entities.drugs.effects;
 
 import ivorius.ivtoolkit.math.IvMathHelper;
-import ivorius.psychedelicraft.Psychedelicraft;
-import ivorius.psychedelicraft.config.PSConfig;
 import ivorius.psychedelicraft.entities.drugs.Drug;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ResourceLocation;
 
 public class DrugSimple implements Drug
 {
@@ -88,7 +85,7 @@ public class DrugSimple implements Drug
     }
 
     @Override
-    public void update(EntityLivingBase entity, DrugHelper drugHelper)
+    public void update(EntityLivingBase entity, DrugProperties drugProperties)
     {
         if (!locked)
         {
@@ -102,7 +99,7 @@ public class DrugSimple implements Drug
     }
 
     @Override
-    public void reset(EntityLivingBase entity, DrugHelper drugHelper)
+    public void reset(EntityLivingBase entity, DrugProperties drugProperties)
     {
         if (!locked)
             effect = 0.0;
@@ -263,7 +260,7 @@ public class DrugSimple implements Drug
     }
 
     @Override
-    public void drawOverlays(float partialTicks, EntityLivingBase entity, int updateCounter, int width, int height, DrugHelper drugHelper)
+    public void drawOverlays(float partialTicks, EntityLivingBase entity, int updateCounter, int width, int height, DrugProperties drugProperties)
     {
 
     }

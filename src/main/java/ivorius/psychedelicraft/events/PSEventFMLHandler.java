@@ -15,26 +15,16 @@ import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.blocks.PSBlocks;
 import ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
 import ivorius.psychedelicraft.client.rendering.SmoothCameraHelper;
-import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
+import ivorius.psychedelicraft.client.rendering.shaders.PSRenderStates;
 import ivorius.psychedelicraft.config.PSConfig;
-import ivorius.psychedelicraft.crafting.RecipeAction;
 import ivorius.psychedelicraft.crafting.RecipeActionRegistry;
-import ivorius.psychedelicraft.crafting.RecipeActionRepresentation;
 import ivorius.psychedelicraft.entities.EntityRealityRift;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import ivorius.psychedelicraft.gui.UpdatableContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
-import org.apache.commons.lang3.tuple.Pair;
-
-import java.util.List;
 
 /**
  * Created by lukas on 18.02.14.
@@ -59,7 +49,7 @@ public class PSEventFMLHandler
 
         if (event.type == TickEvent.Type.CLIENT && event.phase == TickEvent.Phase.START)
         {
-            DrugShaderHelper.update();
+            PSRenderStates.update();
         }
 
         if (event.type == TickEvent.Type.RENDER && event.phase == TickEvent.Phase.START)
@@ -73,11 +63,11 @@ public class PSEventFMLHandler
     {
         if (event.phase == TickEvent.Phase.END)
         {
-            DrugHelper drugHelper = DrugHelper.getDrugHelper(event.player);
+            DrugProperties drugProperties = DrugProperties.getDrugProperties(event.player);
 
-            if (drugHelper != null)
+            if (drugProperties != null)
             {
-                drugHelper.updateDrugEffects(event.player);
+                drugProperties.updateDrugEffects(event.player);
 
                 if (!event.player.getEntityWorld().isRemote && PSConfig.randomTicksUntilRiftSpawn > 0)
                 {
@@ -115,11 +105,11 @@ public class PSEventFMLHandler
 
             if (mc != null && !mc.isGamePaused())
             {
-                DrugHelper drugHelper = DrugHelper.getDrugHelper(mc.renderViewEntity);
+                DrugProperties drugProperties = DrugProperties.getDrugProperties(mc.renderViewEntity);
 
-                if (drugHelper != null)
+                if (drugProperties != null)
                 {
-                    SmoothCameraHelper.instance.update(mc.gameSettings.mouseSensitivity, DrugEffectInterpreter.getSmoothVision(drugHelper));
+                    SmoothCameraHelper.instance.update(mc.gameSettings.mouseSensitivity, DrugEffectInterpreter.getSmoothVision(drugProperties));
                 }
             }
         }

@@ -11,8 +11,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.audio.MovingSoundDrug;
 import ivorius.psychedelicraft.config.PSConfig;
-import ivorius.psychedelicraft.entities.drugs.Drug;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import ivorius.psychedelicraft.fluids.FluidWithIconSymbolRegistering;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
@@ -51,11 +50,11 @@ public class PSEventForgeHandler
 
         if (args.length > 1)
         {
-            DrugHelper drugHelper = DrugHelper.getDrugHelper(event.player);
+            DrugProperties drugProperties = DrugProperties.getDrugProperties(event.player);
 
-            if (drugHelper != null)
+            if (drugProperties != null)
             {
-                String modified = drugHelper.drugMessageDistorter.distortOutgoingMessage(drugHelper, event.player, event.player.getRNG(), event.message);
+                String modified = drugProperties.messageDistorter.distortOutgoingMessage(drugProperties, event.player, event.player.getRNG(), event.message);
                 args[1] = modified;
             }
         }
@@ -69,13 +68,13 @@ public class PSEventForgeHandler
             ChatComponentText text = (ChatComponentText) event.message;
 
             EntityLivingBase renderEntity = Minecraft.getMinecraft().renderViewEntity;
-            DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
+            DrugProperties drugProperties = DrugProperties.getDrugProperties(renderEntity);
 
-            if (drugHelper != null)
+            if (drugProperties != null)
             {
                 String message = text.getUnformattedTextForChat();
-                drugHelper.receiveChatMessage(renderEntity, message);
-                String modified = drugHelper.drugMessageDistorter.distortIncomingMessage(drugHelper, renderEntity, renderEntity.getRNG(), message);
+                drugProperties.receiveChatMessage(renderEntity, message);
+                String modified = drugProperties.messageDistorter.distortIncomingMessage(drugProperties, renderEntity, renderEntity.getRNG(), message);
 
                 event.message = new ChatComponentText(modified);
             }
@@ -85,11 +84,11 @@ public class PSEventForgeHandler
     @SubscribeEvent
     public void onPlayerSleep(PlayerSleepInBedEvent event)
     {
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(event.entityLiving);
+        DrugProperties drugProperties = DrugProperties.getDrugProperties(event.entityLiving);
 
-        if (drugHelper != null)
+        if (drugProperties != null)
         {
-            EntityPlayer.EnumStatus status = drugHelper.getDrugSleepStatus();
+            EntityPlayer.EnumStatus status = drugProperties.getDrugSleepStatus();
 
             if (status != null)
                 event.result = status;
@@ -99,20 +98,20 @@ public class PSEventForgeHandler
     @SubscribeEvent
     public void onEntityJoinWorld(EntityJoinWorldEvent event)
     {
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(event.entity); // Initialize drug helper
+        DrugProperties drugProperties = DrugProperties.getDrugProperties(event.entity); // Initialize drug helper
 
-        if (event.world.isRemote && drugHelper != null)
-            initializeMovingSoundDrug(event.entity, drugHelper);
+        if (event.world.isRemote && drugProperties != null)
+            initializeMovingSoundDrug(event.entity, drugProperties);
     }
 
     @SideOnly(Side.CLIENT)
-    public void initializeMovingSoundDrug(Entity entity, DrugHelper drugHelper)
+    public void initializeMovingSoundDrug(Entity entity, DrugProperties drugProperties)
     {
         SoundHandler soundHandler = Minecraft.getMinecraft().getSoundHandler();
-        for (String drugName : drugHelper.getAllDrugNames())
+        for (String drugName : drugProperties.getAllDrugNames())
         {
             if (PSConfig.hasBGM(drugName))
-                soundHandler.playSound(new MovingSoundDrug(new ResourceLocation(Psychedelicraft.MODID, "drug." + drugName), entity, drugHelper, drugName));
+                soundHandler.playSound(new MovingSoundDrug(new ResourceLocation(Psychedelicraft.MODID, "drug." + drugName), entity, drugProperties, drugName));
         }
     }
 
@@ -121,18 +120,18 @@ public class PSEventForgeHandler
     {
         if (event.entity instanceof EntityPlayer)
         {
-            DrugHelper.initInEntity(event.entity);
+            DrugProperties.initInEntity(event.entity);
         }
     }
 
     @SubscribeEvent
     public void getBreakSpeed(PlayerEvent.BreakSpeed event)
     {
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(event.entity);
+        DrugProperties drugProperties = DrugProperties.getDrugProperties(event.entity);
 
-        if (drugHelper != null)
+        if (drugProperties != null)
         {
-            event.newSpeed = event.newSpeed * drugHelper.getDigSpeedModifier(event.entityLiving);
+            event.newSpeed = event.newSpeed * drugProperties.getDigSpeedModifier(event.entityLiving);
         }
     }
 
@@ -143,11 +142,11 @@ public class PSEventForgeHandler
         {
             Minecraft mc = Minecraft.getMinecraft();
             EntityLivingBase renderEntity = mc.renderViewEntity;
-            DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
+            DrugProperties drugProperties = DrugProperties.getDrugProperties(renderEntity);
 
-            if (drugHelper != null && drugHelper.drugRenderer != null)
+            if (drugProperties != null && drugProperties.renderer != null)
             {
-                drugHelper.drugRenderer.renderOverlaysAfterShaders(event.partialTicks, renderEntity, renderEntity.ticksExisted, event.resolution.getScaledWidth(), event.resolution.getScaledHeight(), drugHelper);
+                drugProperties.renderer.renderOverlaysAfterShaders(event.partialTicks, renderEntity, renderEntity.ticksExisted, event.resolution.getScaledWidth(), event.resolution.getScaledHeight(), drugProperties);
             }
         }
     }

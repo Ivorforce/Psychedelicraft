@@ -27,14 +27,14 @@ import org.lwjgl.opengl.GL11;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DrugShaderHelper
+public class PSRenderStates
 {
     public static ShaderWorld currentShader;
     public static ShaderMain shaderInstance;
     public static ShaderMainDepth shaderInstanceDepth;
     public static ShaderShadows shaderInstanceShadows;
 
-    public static List<IEffectWrapper> effectWrappers = new ArrayList<>();
+    public static List<EffectWrapper> effectWrappers = new ArrayList<>();
 
     public static IvOpenGLTexturePingPong realtimePingPong;
 
@@ -76,7 +76,7 @@ public class DrugShaderHelper
         {
             boolean addDepth = false;
 
-            for (IEffectWrapper wrapper : effectWrappers)
+            for (EffectWrapper wrapper : effectWrappers)
             {
                 if (wrapper.wantsDepthBuffer(partialTicks))
                 {
@@ -223,7 +223,7 @@ public class DrugShaderHelper
         effectWrappers.add(new WrapperBlurNoise(utils));
         effectWrappers.add(new WrapperDigital(utils));
 
-        for (IEffectWrapper effectWrapper : effectWrappers)
+        for (EffectWrapper effectWrapper : effectWrappers)
             effectWrapper.alloc();
 
         IvOpenGLHelper.checkGLError(Psychedelicraft.logger, "Allocation-Effects");
@@ -254,7 +254,7 @@ public class DrugShaderHelper
     {
         if (Minecraft.getMinecraft().theWorld != null)
         {
-            for (IEffectWrapper effectWrapper : effectWrappers)
+            for (EffectWrapper effectWrapper : effectWrappers)
                 effectWrapper.update();
         }
     }
@@ -445,7 +445,7 @@ public class DrugShaderHelper
         realtimePingPong.setParentFrameBuffer(getMCFBO());
         realtimePingPong.preTick(screenWidth, screenHeight);
 
-        for (IEffectWrapper effectWrapper : effectWrappers)
+        for (EffectWrapper effectWrapper : effectWrappers)
             effectWrapper.apply(partialTicks, realtimePingPong, didDepthPass ? depthBuffer : null);
 
         realtimePingPong.postTick();
@@ -488,7 +488,7 @@ public class DrugShaderHelper
         delete3DShaders();
         deleteRealtimeCacheTexture();
 
-        for (IEffectWrapper effectWrapper : effectWrappers)
+        for (EffectWrapper effectWrapper : effectWrappers)
             effectWrapper.dealloc();
         effectWrappers.clear();
 

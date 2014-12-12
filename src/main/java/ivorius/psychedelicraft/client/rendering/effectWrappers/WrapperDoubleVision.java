@@ -9,7 +9,7 @@ import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.shaders.ShaderDoubleVision;
 import ivorius.psychedelicraft.entities.drugs.Drug;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.MathHelper;
 
@@ -26,13 +26,13 @@ public class WrapperDoubleVision extends ShaderWrapper<ShaderDoubleVision>
     @Override
     public void setShaderValues(float partialTicks, int ticks, IvDepthBuffer depthBuffer)
     {
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(Minecraft.getMinecraft().renderViewEntity);
+        DrugProperties drugProperties = DrugProperties.getDrugProperties(Minecraft.getMinecraft().renderViewEntity);
 
         shaderInstance.doubleVision = 0.0f;
 
-        if (drugHelper != null)
+        if (drugProperties != null)
         {
-            for (Drug drug : drugHelper.getAllDrugs())
+            for (Drug drug : drugProperties.getAllDrugs())
                 shaderInstance.doubleVision += (1.0f - shaderInstance.doubleVision) * drug.doubleVision();
 
             shaderInstance.doubleVisionDistance = MathHelper.sin((ticks + partialTicks) / 20.0f) * 0.05f * shaderInstance.doubleVision;

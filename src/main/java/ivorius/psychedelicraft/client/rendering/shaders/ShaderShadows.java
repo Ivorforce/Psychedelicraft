@@ -58,7 +58,7 @@ public class ShaderShadows extends IvShaderInstance3D implements ShaderWorld
             setUniformInts("useScreenTexCoords", 0);
             setOverrideColor(null);
 
-            depthBuffer.setParentFB(DrugShaderHelper.getMCFBO());
+            depthBuffer.setParentFB(PSRenderStates.getMCFBO());
             depthBuffer.bind();
 
             return true;
@@ -177,6 +177,6 @@ public class ShaderShadows extends IvShaderInstance3D implements ShaderWorld
 
     public static int getShadowPixels()
     {
-        return Minecraft.getMinecraft().gameSettings.renderDistanceChunks * DrugShaderHelper.shadowPixelsPerChunk;
+        return Minecraft.getMinecraft().gameSettings.renderDistanceChunks * PSRenderStates.shadowPixelsPerChunk;
     }
 }

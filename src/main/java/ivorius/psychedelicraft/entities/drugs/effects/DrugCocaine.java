@@ -7,7 +7,7 @@ package ivorius.psychedelicraft.entities.drugs.effects;
 
 import ivorius.ivtoolkit.math.IvMathHelper;
 import ivorius.psychedelicraft.Psychedelicraft;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
@@ -25,14 +25,14 @@ public class DrugCocaine extends DrugSimple
     }
 
     @Override
-    public void update(EntityLivingBase entity, DrugHelper drugHelper)
+    public void update(EntityLivingBase entity, DrugProperties drugProperties)
     {
-        super.update(entity, drugHelper);
+        super.update(entity, drugProperties);
 
         if (getActiveValue() > 0.0)
         {
             Random random = entity.getRNG();
-            int ticksExisted = drugHelper.ticksExisted;
+            int ticksExisted = drugProperties.ticksExisted;
 
             if (!entity.worldObj.isRemote)
             {

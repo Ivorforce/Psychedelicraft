@@ -7,18 +7,15 @@ package ivorius.psychedelicraft.entities.drugs;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ivorius.ivtoolkit.rendering.IvShaderInstance;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ResourceLocation;
 
 public interface Drug
 {
-    void update(EntityLivingBase entity, DrugHelper drugHelper);
+    void update(EntityLivingBase entity, DrugProperties drugProperties);
 
-    void reset(EntityLivingBase entity, DrugHelper drugHelper);
+    void reset(EntityLivingBase entity, DrugProperties drugProperties);
 
     void writeToNBT(NBTTagCompound compound);
 
@@ -83,7 +80,7 @@ public interface Drug
     float doubleVision();
 
     @SideOnly(Side.CLIENT)
-    void drawOverlays(float partialTicks, EntityLivingBase entity, int updateCounter, int width, int height, DrugHelper drugHelper);
+    void drawOverlays(float partialTicks, EntityLivingBase entity, int updateCounter, int width, int height, DrugProperties drugProperties);
 
     float motionBlur();
 }

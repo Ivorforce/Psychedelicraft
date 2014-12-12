@@ -31,11 +31,11 @@ public class DrugInfluenceHarmonium extends DrugInfluence
     }
 
     @Override
-    public void addToDrug(DrugHelper drugHelper, double value)
+    public void addToDrug(DrugProperties drugProperties, double value)
     {
-        super.addToDrug(drugHelper, value);
+        super.addToDrug(drugProperties, value);
 
-        Drug drug = drugHelper.getDrug(getDrugName());
+        Drug drug = drugProperties.getDrug(getDrugName());
 
         if (drug instanceof DrugHarmonium)
         {

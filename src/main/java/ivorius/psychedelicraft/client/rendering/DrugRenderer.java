@@ -8,11 +8,10 @@ package ivorius.psychedelicraft.client.rendering;
 import ivorius.ivtoolkit.math.IvMathHelper;
 import ivorius.ivtoolkit.rendering.IvOpenGLHelper;
 import ivorius.psychedelicraft.Psychedelicraft;
-import ivorius.psychedelicraft.client.rendering.shaders.DrugShaderHelper;
+import ivorius.psychedelicraft.client.rendering.shaders.PSRenderStates;
 import ivorius.psychedelicraft.entities.drugs.Drug;
 import ivorius.psychedelicraft.entities.drugs.DrugHallucination;
-import ivorius.psychedelicraft.entities.drugs.DrugHallucinationManager;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -78,14 +77,14 @@ public class DrugRenderer implements IDrugRenderer
     }
 
     @Override
-    public void update(DrugHelper drugHelper, EntityLivingBase entity)
+    public void update(DrugProperties drugProperties, EntityLivingBase entity)
     {
-        if (DrugHelper.hurtOverlayEnabled)
+        if (DrugProperties.hurtOverlayEnabled)
         {
             experiencedHealth = IvMathHelper.nearValue(experiencedHealth, entity.getHealth(), 0.01f, 0.01f);
         }
 
-        if (DrugShaderHelper.sunFlareIntensity > 0.0f)
+        if (PSRenderStates.sunFlareIntensity > 0.0f)
         {
             effectLensFlare.updateLensFlares();
         }
@@ -94,7 +93,7 @@ public class DrugRenderer implements IDrugRenderer
         wasInWater = bID.getMaterial() == Material.water;
         //wasInRain = player.worldObj.getRainStrength(1.0f) > 0.0f && player.worldObj.getPrecipitationHeight(MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY)) <= player.posY; //Client can't handle rain
 
-        if (DrugHelper.waterOverlayEnabled)
+        if (DrugProperties.waterOverlayEnabled)
         {
             timeScreenWet--;
 
@@ -120,10 +119,10 @@ public class DrugRenderer implements IDrugRenderer
 
     @ParametersAreNonnullByDefault
     @Override
-    public void distortScreen(float partialTicks, EntityLivingBase entity, int rendererUpdateCount, DrugHelper drugHelper)
+    public void distortScreen(float partialTicks, EntityLivingBase entity, int rendererUpdateCount, DrugProperties drugProperties)
     {
         float wobblyness = 0.0f;
-        for (Drug drug : drugHelper.getAllDrugs())
+        for (Drug drug : drugProperties.getAllDrugs())
             wobblyness += drug.viewWobblyness();
 
         if (wobblyness > 0.0F)
@@ -143,16 +142,16 @@ public class DrugRenderer implements IDrugRenderer
             GL11.glRotatef(-(rendererUpdateCount + partialTicks) * 3F, 0.0F, 1.0F, 1.0F);
         }
 
-        float shiftX = DrugEffectInterpreter.getCameraShiftX(drugHelper, (float) rendererUpdateCount + partialTicks);
-        float shiftY = DrugEffectInterpreter.getCameraShiftY(drugHelper, (float) rendererUpdateCount + partialTicks);
+        float shiftX = DrugEffectInterpreter.getCameraShiftX(drugProperties, (float) rendererUpdateCount + partialTicks);
+        float shiftY = DrugEffectInterpreter.getCameraShiftY(drugProperties, (float) rendererUpdateCount + partialTicks);
         GL11.glTranslatef(shiftX, shiftY, 0.0f);
     }
 
-    public void renderOverlaysBeforeShaders(float partialTicks, EntityLivingBase entity, int updateCounter, int width, int height, DrugHelper drugHelper)
+    public void renderOverlaysBeforeShaders(float partialTicks, EntityLivingBase entity, int updateCounter, int width, int height, DrugProperties drugProperties)
     {
         IvOpenGLHelper.setUpOpenGLStandard2D(width, height);
 
-        effectLensFlare.sunFlareIntensity = DrugShaderHelper.sunFlareIntensity;
+        effectLensFlare.sunFlareIntensity = PSRenderStates.sunFlareIntensity;
 
         if (effectLensFlare.shouldApply(updateCounter + partialTicks))
         {
@@ -161,7 +160,7 @@ public class DrugRenderer implements IDrugRenderer
     }
 
     @Override
-    public void renderOverlaysAfterShaders(float partialTicks, EntityLivingBase entity, int updateCounter, int width, int height, DrugHelper drugHelper)
+    public void renderOverlaysAfterShaders(float partialTicks, EntityLivingBase entity, int updateCounter, int width, int height, DrugProperties drugProperties)
     {
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_ALPHA_TEST);
@@ -169,10 +168,10 @@ public class DrugRenderer implements IDrugRenderer
         GL11.glDepthMask(false);
         OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
 
-        for (Drug drug : drugHelper.getAllDrugs())
-            drug.drawOverlays(partialTicks, entity, updateCounter, width, height, drugHelper);
+        for (Drug drug : drugProperties.getAllDrugs())
+            drug.drawOverlays(partialTicks, entity, updateCounter, width, height, drugProperties);
 
-        if (DrugHelper.hurtOverlayEnabled)
+        if (DrugProperties.hurtOverlayEnabled)
         {
             if (entity.hurtTime > 0 || experiencedHealth < 5F)
             {
@@ -190,11 +189,11 @@ public class DrugRenderer implements IDrugRenderer
     }
 
     @Override
-    public void renderAllHallucinations(float par1, DrugHelper drugHelper)
+    public void renderAllHallucinations(float par1, DrugProperties drugProperties)
     {
-        for (DrugHallucination h : drugHelper.hallucinationManager.entities)
+        for (DrugHallucination h : drugProperties.hallucinationManager.entities)
         {
-            h.render(par1, MathHelper.clamp_float(0.0f, drugHelper.hallucinationManager.getHallucinationStrength(drugHelper, par1) * 15.0f, 1.0f));
+            h.render(par1, MathHelper.clamp_float(0.0f, drugProperties.hallucinationManager.getHallucinationStrength(drugProperties, par1) * 15.0f, 1.0f));
         }
     }
 

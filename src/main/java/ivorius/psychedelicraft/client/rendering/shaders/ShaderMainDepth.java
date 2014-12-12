@@ -7,7 +7,7 @@ package ivorius.psychedelicraft.client.rendering.shaders;
 
 import ivorius.ivtoolkit.rendering.IvShaderInstance3D;
 import ivorius.psychedelicraft.client.rendering.GLStateProxy;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -31,7 +31,7 @@ public class ShaderMainDepth extends IvShaderInstance3D implements ShaderWorld
             Minecraft mc = Minecraft.getMinecraft();
 
             EntityLivingBase renderEntity = mc.renderViewEntity;
-            DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
+            DrugProperties drugProperties = DrugProperties.getDrugProperties(renderEntity);
 
             setUniformFloats("ticks", ticks);
             setUniformInts("worldTime", (int) mc.theWorld.getWorldTime());
@@ -47,12 +47,12 @@ public class ShaderMainDepth extends IvShaderInstance3D implements ShaderWorld
             float smallWaveStrength = 0.0f;
             float wiggleWaveStrength = 0.0f;
             float distantWorldDeformationStrength = 0.0f;
-            if (drugHelper != null)
+            if (drugProperties != null)
             {
-                bigWaveStrength = drugHelper.hallucinationManager.getBigWaveStrength(drugHelper, partialTicks);
-                smallWaveStrength = drugHelper.hallucinationManager.getSmallWaveStrength(drugHelper, partialTicks);
-                wiggleWaveStrength = drugHelper.hallucinationManager.getWiggleWaveStrength(drugHelper, partialTicks);
-                distantWorldDeformationStrength = drugHelper.hallucinationManager.getDistantWorldDeformationStrength(drugHelper, partialTicks);
+                bigWaveStrength = drugProperties.hallucinationManager.getBigWaveStrength(drugProperties, partialTicks);
+                smallWaveStrength = drugProperties.hallucinationManager.getSmallWaveStrength(drugProperties, partialTicks);
+                wiggleWaveStrength = drugProperties.hallucinationManager.getWiggleWaveStrength(drugProperties, partialTicks);
+                distantWorldDeformationStrength = drugProperties.hallucinationManager.getDistantWorldDeformationStrength(drugProperties, partialTicks);
             }
             setUniformFloats("bigWaves", bigWaveStrength);
             setUniformFloats("smallWaves", smallWaveStrength);

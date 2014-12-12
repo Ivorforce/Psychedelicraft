@@ -5,10 +5,6 @@
 
 package ivorius.psychedelicraft.entities.drugs.effects;
 
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-
 /**
  * Created by lukas on 01.11.14.
  */

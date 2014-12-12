@@ -7,7 +7,7 @@ package ivorius.psychedelicraft.events;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import ivorius.pscoreutils.events.WakeUpPlayerEvent;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import ivorius.psychedelicraftcore.PsycheCoreBusCommon;
 
 /**
@@ -25,11 +25,11 @@ public class PSCoreHandlerCommon
     {
         if (!event.unsuccessful)
         {
-            DrugHelper drugHelper = DrugHelper.getDrugHelper(event.player);
+            DrugProperties drugProperties = DrugProperties.getDrugProperties(event.player);
 
-            if (drugHelper != null)
+            if (drugProperties != null)
             {
-                drugHelper.wakeUp(event.player);
+                drugProperties.wakeUp(event.player);
             }
         }
     }

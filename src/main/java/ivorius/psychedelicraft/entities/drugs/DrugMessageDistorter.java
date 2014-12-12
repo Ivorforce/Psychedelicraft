@@ -18,21 +18,21 @@ public class DrugMessageDistorter
     public static String[] fillerWords = {", like, ", "... like, ", ", uhm, ", ", uhhhh, "};
     public static String[] startFillerWords = {"Dude, ", "Dood, ", "Dewd, ", "Dude, like, ", "Dood, like, ", "Dewd, like, ", "Yeah... ", "And, "};
 
-    public String distortIncomingMessage(DrugHelper drugHelper, Entity entity, Random random, String message)
+    public String distortIncomingMessage(DrugProperties drugProperties, Entity entity, Random random, String message)
     {
         return message;
     }
 
-    public String distortOutgoingMessage(DrugHelper drugHelper, Entity entity, Random random, String message)
+    public String distortOutgoingMessage(DrugProperties drugProperties, Entity entity, Random random, String message)
     {
         if (message.indexOf("/") == 0)
         {
             return message;
         }
 
-        float alcohol = drugHelper.getDrugValue("Alcohol");
-        float zero = drugHelper.getDrugValue("Zero");
-        float cannabis = drugHelper.getDrugValue("Cannabis");
+        float alcohol = drugProperties.getDrugValue("Alcohol");
+        float zero = drugProperties.getDrugValue("Zero");
+        float cannabis = drugProperties.getDrugValue("Cannabis");
         if (alcohol > 0.0f || zero > 0.0f || cannabis > 0.0f)
             return distortIncomingMessage(message, random, alcohol, zero, cannabis);
 

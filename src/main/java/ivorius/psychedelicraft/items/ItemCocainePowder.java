@@ -1,6 +1,6 @@
 package ivorius.psychedelicraft.items;
 
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import ivorius.psychedelicraft.entities.drugs.DrugInfluence;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
@@ -25,10 +25,10 @@ public class ItemCocainePowder extends Item
         if (!player.capabilities.isCreativeMode)
             stack.stackSize--;
 
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(player);
+        DrugProperties drugProperties = DrugProperties.getDrugProperties(player);
 
-        if (drugHelper != null)
-            drugHelper.addToDrug(new DrugInfluence("Cocaine", 0, 0.002, 0.003, 0.35f));
+        if (drugProperties != null)
+            drugProperties.addToDrug(new DrugInfluence("Cocaine", 0, 0.002, 0.003, 0.35f));
 
         return super.onEaten(stack, world, player);
     }

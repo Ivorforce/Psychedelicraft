@@ -8,7 +8,7 @@ package ivorius.psychedelicraft;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import ivorius.ivtoolkit.tools.IvFMLIntercommHandler;
 import ivorius.psychedelicraft.entities.drugs.Drug;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import ivorius.psychedelicraft.entities.drugs.DrugInfluence;
 import net.minecraft.nbt.NBTTagCompound;
 import org.apache.logging.log4j.Logger;
@@ -36,35 +36,35 @@ public class PSCommunicationHandler extends IvFMLIntercommHandler
         if (isMessage("drugAddValue", message, NBTTagCompound.class))
         {
             NBTTagCompound cmp = message.getNBTValue();
-            DrugHelper drugHelper = getDrugHelper(cmp, server);
-            if (drugHelper != null)
-                drugHelper.addToDrug(cmp.getString("drugName"), cmp.getFloat("drugValue"));
+            DrugProperties drugProperties = getDrugProperties(cmp, server);
+            if (drugProperties != null)
+                drugProperties.addToDrug(cmp.getString("drugName"), cmp.getFloat("drugValue"));
             return true;
         }
         else if (isMessage("drugAddInfluence", message, NBTTagCompound.class))
         {
             NBTTagCompound cmp = message.getNBTValue();
             DrugInfluence influence = new DrugInfluence(cmp.getString("drugName"), cmp.getInteger("drugInfluenceDelay"), cmp.getDouble("drugInfluenceSpeed"), cmp.getDouble("drugInfluenceSpeedAdd"), cmp.getDouble("drugTotalEffect"));
-            DrugHelper drugHelper = getDrugHelper(cmp, server);
-            if (drugHelper != null)
-                drugHelper.addToDrug(influence);
+            DrugProperties drugProperties = getDrugProperties(cmp, server);
+            if (drugProperties != null)
+                drugProperties.addToDrug(influence);
             return true;
         }
         else if (isMessage("drugSetValue", message, NBTTagCompound.class))
         {
             NBTTagCompound cmp = message.getNBTValue();
-            DrugHelper drugHelper = getDrugHelper(cmp, server);
-            if (drugHelper != null)
-                drugHelper.setDrugValue(cmp.getString("drugName"), cmp.getFloat("drugValue"));
+            DrugProperties drugProperties = getDrugProperties(cmp, server);
+            if (drugProperties != null)
+                drugProperties.setDrugValue(cmp.getString("drugName"), cmp.getFloat("drugValue"));
             return true;
         }
         else if (isMessage("drugSetLocked", message, NBTTagCompound.class))
         {
             NBTTagCompound cmp = message.getNBTValue();
-            DrugHelper drugHelper = getDrugHelper(cmp, server);
-            if (drugHelper != null)
+            DrugProperties drugProperties = getDrugProperties(cmp, server);
+            if (drugProperties != null)
             {
-                Drug drug = drugHelper.getDrug(cmp.getString("drugName"));
+                Drug drug = drugProperties.getDrug(cmp.getString("drugName"));
                 if (drug != null)
                     drug.setLocked(cmp.getBoolean("drugLocked"));
             }
@@ -73,23 +73,23 @@ public class PSCommunicationHandler extends IvFMLIntercommHandler
         else if (isMessage("drugGetValue", message, NBTTagCompound.class))
         {
             NBTTagCompound cmp = message.getNBTValue();
-            DrugHelper drugHelper = getDrugHelper(cmp, server);
+            DrugProperties drugProperties = getDrugProperties(cmp, server);
 
             NBTTagCompound response = (NBTTagCompound) cmp.copy();
-            if(drugHelper != null)
-                response.setFloat("drugValue", drugHelper.getDrugValue(cmp.getString("drugName")));
+            if(drugProperties != null)
+                response.setFloat("drugValue", drugProperties.getDrugValue(cmp.getString("drugName")));
             sendReply(message, response);
             return true;
         }
         else if (isMessage("drugIsLocked", message, NBTTagCompound.class))
         {
             NBTTagCompound cmp = message.getNBTValue();
-            DrugHelper drugHelper = getDrugHelper(cmp, server);
+            DrugProperties drugProperties = getDrugProperties(cmp, server);
 
             NBTTagCompound response = (NBTTagCompound) cmp.copy();
-            if (drugHelper != null)
+            if (drugProperties != null)
             {
-                Drug drug = drugHelper.getDrug(cmp.getString("drugName"));
+                Drug drug = drugProperties.getDrug(cmp.getString("drugName"));
                 if (drug != null)
                     response.setBoolean("drugLocked", drug.isLocked());
             }
@@ -101,8 +101,8 @@ public class PSCommunicationHandler extends IvFMLIntercommHandler
     }
 
     @Nullable
-    private DrugHelper getDrugHelper(NBTTagCompound compound, boolean server)
+    private DrugProperties getDrugProperties(NBTTagCompound compound, boolean server)
     {
-        return DrugHelper.getDrugHelper(getEntity(compound, server));
+        return DrugProperties.getDrugProperties(getEntity(compound, server));
     }
 }

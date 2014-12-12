@@ -13,7 +13,7 @@ import net.minecraft.client.Minecraft;
 /**
  * Created by lukas on 26.04.14.
  */
-public abstract class ScreenEffectWrapper<ScreenEffect extends Iv2DScreenEffect> implements IEffectWrapper
+public abstract class ScreenEffectWrapper<ScreenEffect extends Iv2DScreenEffect> implements EffectWrapper
 {
     public ScreenEffect screenEffect;
 

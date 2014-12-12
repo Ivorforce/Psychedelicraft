@@ -82,7 +82,7 @@ public class DrugInfluence
         this.maxInfluence = maxInfluence;
     }
 
-    public void update(DrugHelper drugHelper)
+    public void update(DrugProperties drugProperties)
     {
         if (delay > 0)
         {
@@ -93,14 +93,14 @@ public class DrugInfluence
         {
             double addition = Math.min(maxInfluence, influenceSpeedPlus + maxInfluence * influenceSpeed);
 
-            addToDrug(drugHelper, addition);
+            addToDrug(drugProperties, addition);
             maxInfluence -= addition;
         }
     }
 
-    public void addToDrug(DrugHelper drugHelper, double value)
+    public void addToDrug(DrugProperties drugProperties, double value)
     {
-        drugHelper.addToDrug(drugName, value);
+        drugProperties.addToDrug(drugName, value);
     }
 
     public boolean isDone()

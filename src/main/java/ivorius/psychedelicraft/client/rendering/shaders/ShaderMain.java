@@ -10,7 +10,7 @@ import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.ivtoolkit.rendering.IvShaderInstance3D;
 import ivorius.psychedelicraft.client.rendering.GLStateProxy;
 import ivorius.psychedelicraft.client.rendering.PsycheShadowHelper;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -22,7 +22,6 @@ import org.lwjgl.opengl.GL11;
 
 import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.GL_FOG;
-import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
 
 /**
  * Created by lukas on 26.02.14.
@@ -48,14 +47,14 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
             Minecraft mc = Minecraft.getMinecraft();
 
             EntityLivingBase renderEntity = mc.renderViewEntity;
-            DrugHelper drugHelper = DrugHelper.getDrugHelper(renderEntity);
+            DrugProperties drugProperties = DrugProperties.getDrugProperties(renderEntity);
 
             setUniformInts("texture", 0);
             setUniformInts("lightmapTex", 1);
 
             setUniformFloats("ticks", ticks);
             setUniformInts("worldTime", (int) mc.theWorld.getWorldTime());
-            setUniformInts("uses2DShaders", DrugShaderHelper.shader2DEnabled ? 1 : 0);
+            setUniformInts("uses2DShaders", PSRenderStates.shader2DEnabled ? 1 : 0);
 
             setUniformFloats("playerPos", (float) renderEntity.posX, (float) renderEntity.posY, (float) renderEntity.posZ);
 
@@ -81,19 +80,19 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
             float distantWorldDeformationStrength = 0.0f;
             float[] contrastColorization = new float[]{1f, 1f, 1f, 0f};
             float[] pulseColor = new float[]{1f, 1f, 1f, 0f};
-            if (drugHelper != null)
+            if (drugProperties != null)
             {
-                desaturation = drugHelper.hallucinationManager.getDesaturation(drugHelper, partialTicks);
-                colorIntensification = drugHelper.hallucinationManager.getColorIntensification(drugHelper, partialTicks);
-                quickColorRotationStrength = drugHelper.hallucinationManager.getQuickColorRotation(drugHelper, partialTicks);
-                slowColorRotationStrength = drugHelper.hallucinationManager.getSlowColorRotation(drugHelper, partialTicks);
-                bigWaveStrength = drugHelper.hallucinationManager.getBigWaveStrength(drugHelper, partialTicks);
-                smallWaveStrength = drugHelper.hallucinationManager.getSmallWaveStrength(drugHelper, partialTicks);
-                wiggleWaveStrength = drugHelper.hallucinationManager.getWiggleWaveStrength(drugHelper, partialTicks);
-                surfaceFractalStrength = drugHelper.hallucinationManager.getSurfaceFractalStrength(drugHelper, partialTicks);
-                distantWorldDeformationStrength = drugHelper.hallucinationManager.getDistantWorldDeformationStrength(drugHelper, partialTicks);
-                drugHelper.hallucinationManager.applyContrastColorization(drugHelper, contrastColorization, partialTicks);
-                drugHelper.hallucinationManager.applyPulseColor(drugHelper, pulseColor, partialTicks);
+                desaturation = drugProperties.hallucinationManager.getDesaturation(drugProperties, partialTicks);
+                colorIntensification = drugProperties.hallucinationManager.getColorIntensification(drugProperties, partialTicks);
+                quickColorRotationStrength = drugProperties.hallucinationManager.getQuickColorRotation(drugProperties, partialTicks);
+                slowColorRotationStrength = drugProperties.hallucinationManager.getSlowColorRotation(drugProperties, partialTicks);
+                bigWaveStrength = drugProperties.hallucinationManager.getBigWaveStrength(drugProperties, partialTicks);
+                smallWaveStrength = drugProperties.hallucinationManager.getSmallWaveStrength(drugProperties, partialTicks);
+                wiggleWaveStrength = drugProperties.hallucinationManager.getWiggleWaveStrength(drugProperties, partialTicks);
+                surfaceFractalStrength = drugProperties.hallucinationManager.getSurfaceFractalStrength(drugProperties, partialTicks);
+                distantWorldDeformationStrength = drugProperties.hallucinationManager.getDistantWorldDeformationStrength(drugProperties, partialTicks);
+                drugProperties.hallucinationManager.applyContrastColorization(drugProperties, contrastColorization, partialTicks);
+                drugProperties.hallucinationManager.applyPulseColor(drugProperties, pulseColor, partialTicks);
             }
             setUniformFloats("desaturation", desaturation);
             setUniformFloats("quickColorRotation", quickColorRotationStrength);

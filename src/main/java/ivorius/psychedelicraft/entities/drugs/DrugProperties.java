@@ -9,7 +9,6 @@ import cpw.mods.fml.common.network.ByteBufUtils;
 import io.netty.buffer.ByteBuf;
 import ivorius.ivtoolkit.network.PartialUpdateHandler;
 import ivorius.psychedelicraft.Psychedelicraft;
-import ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
 import ivorius.psychedelicraft.client.rendering.IDrugRenderer;
 import ivorius.psychedelicraft.network.PSNetworkHelperServer;
 import net.minecraft.entity.Entity;
@@ -31,7 +30,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandler
+public class DrugProperties implements IExtendedEntityProperties, PartialUpdateHandler
 {
     public static final UUID drugUUID = UUID.fromString("2da054e7-0fe0-4fb4-bf2c-a185a5f72aa1"); // Randomly gen'd
     public static final String EEP_KEY = "DrugHelper";
@@ -45,8 +44,8 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
 
     public boolean hasChanges;
 
-    public IDrugRenderer drugRenderer;
-    public DrugMessageDistorter drugMessageDistorter;
+    public IDrugRenderer renderer;
+    public DrugMessageDistorter messageDistorter;
     public DrugHallucinationManager hallucinationManager;
     public DrugMusicManager musicManager;
 
@@ -59,12 +58,12 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
     public int delayUntilBreath;
     public boolean lastBreathWasIn;
 
-    public DrugHelper(EntityLivingBase entity)
+    public DrugProperties(EntityLivingBase entity)
     {
         drugs = new HashMap<>();
         influences = new ArrayList<>();
 
-        drugMessageDistorter = new DrugMessageDistorter();
+        messageDistorter = new DrugMessageDistorter();
         hallucinationManager = new DrugHallucinationManager();
         musicManager = new DrugMusicManager();
 
@@ -73,10 +72,10 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
     }
 
     @Nullable
-    public static DrugHelper getDrugHelper(Entity entity)
+    public static DrugProperties getDrugProperties(Entity entity)
     {
         if (entity != null)
-            return (DrugHelper) entity.getExtendedProperties(EEP_KEY);
+            return (DrugProperties) entity.getExtendedProperties(EEP_KEY);
 
         return null;
     }
@@ -85,11 +84,11 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
     {
         if (entity instanceof EntityLivingBase)
         {
-            entity.registerExtendedProperties(EEP_KEY, new DrugHelper((EntityLivingBase) entity));
-            DrugHelper drugHelper = getDrugHelper(entity);
+            entity.registerExtendedProperties(EEP_KEY, new DrugProperties((EntityLivingBase) entity));
+            DrugProperties drugProperties = getDrugProperties(entity);
 
-            if (drugHelper != null)
-                Psychedelicraft.proxy.createDrugRenderer(drugHelper);
+            if (drugProperties != null)
+                Psychedelicraft.proxy.createDrugRenderer(drugProperties);
         }
     }
 
@@ -293,8 +292,8 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
             }
         }
 
-        if (drugRenderer != null && entity.worldObj.isRemote)
-            drugRenderer.update(this, entity);
+        if (renderer != null && entity.worldObj.isRemote)
+            renderer.update(this, entity);
 
         changeDrugModifierMultiply(entity, SharedMonsterAttributes.movementSpeed, getSpeedModifier(entity));
 
@@ -449,12 +448,12 @@ public class DrugHelper implements IExtendedEntityProperties, PartialUpdateHandl
     public void changeDrugModifier(EntityLivingBase entity, IAttribute attribute, double value, int mode)
     {
         IAttributeInstance speedInstance = entity.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
-        AttributeModifier oldModifier = speedInstance.getModifier(DrugHelper.drugUUID);
+        AttributeModifier oldModifier = speedInstance.getModifier(DrugProperties.drugUUID);
 
         if (oldModifier != null)
             speedInstance.removeModifier(oldModifier);
 
-        AttributeModifier newModifier = new AttributeModifier(DrugHelper.drugUUID, "Drug Effects", value, mode);
+        AttributeModifier newModifier = new AttributeModifier(DrugProperties.drugUUID, "Drug Effects", value, mode);
         speedInstance.applyModifier(newModifier);
     }
 

@@ -5,7 +5,7 @@
 
 package ivorius.psychedelicraft.client.rendering;
 
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import net.minecraft.entity.EntityLivingBase;
 
 /**
@@ -13,15 +13,15 @@ import net.minecraft.entity.EntityLivingBase;
  */
 public interface IDrugRenderer
 {
-    public void update(DrugHelper drugHelper, EntityLivingBase entity);
+    public void update(DrugProperties drugProperties, EntityLivingBase entity);
 
-    public void distortScreen(float par1, EntityLivingBase entity, int rendererUpdateCount, DrugHelper drugHelper);
+    public void distortScreen(float par1, EntityLivingBase entity, int rendererUpdateCount, DrugProperties drugProperties);
 
-    public void renderOverlaysAfterShaders(float par1, EntityLivingBase entity, int updateCounter, int width, int height, DrugHelper drugHelper);
+    public void renderOverlaysAfterShaders(float par1, EntityLivingBase entity, int updateCounter, int width, int height, DrugProperties drugProperties);
 
-    public void renderOverlaysBeforeShaders(float par1, EntityLivingBase entity, int updateCounter, int width, int height, DrugHelper drugHelper);
+    public void renderOverlaysBeforeShaders(float par1, EntityLivingBase entity, int updateCounter, int width, int height, DrugProperties drugProperties);
 
-    public void renderAllHallucinations(float par1, DrugHelper drugHelper);
+    public void renderAllHallucinations(float par1, DrugProperties drugProperties);
 
     public float getCurrentHeatDistortion();
 

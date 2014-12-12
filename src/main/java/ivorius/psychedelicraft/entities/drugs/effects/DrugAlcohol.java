@@ -8,7 +8,7 @@ package ivorius.psychedelicraft.entities.drugs.effects;
 import ivorius.ivtoolkit.math.IvMathHelper;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.DrugRenderer;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -45,13 +45,13 @@ public class DrugAlcohol extends DrugSimple
     }
 
     @Override
-    public void update(EntityLivingBase entity, DrugHelper drugHelper)
+    public void update(EntityLivingBase entity, DrugProperties drugProperties)
     {
-        super.update(entity, drugHelper);
+        super.update(entity, drugProperties);
 
         if (getActiveValue() > 0.0)
         {
-            int ticksExisted = drugHelper.ticksExisted;
+            int ticksExisted = drugProperties.ticksExisted;
             Random random = entity.getRNG();
 
             double activeValue = getActiveValue();
@@ -90,7 +90,7 @@ public class DrugAlcohol extends DrugSimple
     }
 
     @Override
-    public void drawOverlays(float partialTicks, EntityLivingBase entity, int updateCounter, int width, int height, DrugHelper drugHelper)
+    public void drawOverlays(float partialTicks, EntityLivingBase entity, int updateCounter, int width, int height, DrugProperties drugProperties)
     {
         float alcohol = (float)getActiveValue();
         if (alcohol > 0)

@@ -5,7 +5,7 @@
 
 package ivorius.psychedelicraft.items;
 
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import ivorius.psychedelicraft.entities.drugs.DrugInfluence;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
@@ -32,9 +32,9 @@ public class ItemEdibleDrug extends Item
     @Override
     public ItemStack onEaten(ItemStack itemStack, World world, EntityPlayer player)
     {
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(player);
-        if (drugHelper != null)
-            drugHelper.addToDrug(influence.clone());
+        DrugProperties drugProperties = DrugProperties.getDrugProperties(player);
+        if (drugProperties != null)
+            drugProperties.addToDrug(influence.clone());
 
         itemStack.stackSize--;
 

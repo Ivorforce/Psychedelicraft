@@ -1,9 +1,6 @@
 package ivorius.psychedelicraft.client.audio;
 
-import ivorius.ivtoolkit.math.IvMathHelper;
-import ivorius.psychedelicraft.Psychedelicraft;
-import ivorius.psychedelicraft.entities.drugs.Drug;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import ivorius.psychedelicraft.entities.drugs.DrugMusicManager;
 import net.minecraft.client.audio.MovingSound;
 import net.minecraft.entity.Entity;
@@ -15,14 +12,14 @@ import net.minecraft.util.ResourceLocation;
 public class MovingSoundDrug extends MovingSound
 {
     private final Entity entity;
-    private final DrugHelper drugHelper;
+    private final DrugProperties drugProperties;
     private String drugName;
 
-    public MovingSoundDrug(ResourceLocation resourceLocation, Entity entity, DrugHelper drugHelper, String drugName)
+    public MovingSoundDrug(ResourceLocation resourceLocation, Entity entity, DrugProperties drugProperties, String drugName)
     {
         super(resourceLocation);
         this.entity = entity;
-        this.drugHelper = drugHelper;
+        this.drugProperties = drugProperties;
         this.drugName = drugName;
     }
 
@@ -39,7 +36,7 @@ public class MovingSoundDrug extends MovingSound
             this.yPosF = (float) this.entity.posY;
             this.zPosF = (float) this.entity.posZ;
 
-            DrugMusicManager musicManager = drugHelper.musicManager;
+            DrugMusicManager musicManager = drugProperties.musicManager;
             if (drugName.equals(musicManager.getActiveDrug()))
                 volume = musicManager.getVolume();
             else

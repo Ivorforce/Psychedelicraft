@@ -6,7 +6,7 @@
 package ivorius.psychedelicraft.items;
 
 import ivorius.ivtoolkit.tools.IvInventoryHelper;
-import ivorius.psychedelicraft.entities.drugs.DrugHelper;
+import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import ivorius.psychedelicraft.entities.drugs.DrugInfluence;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -55,18 +55,18 @@ public class ItemBong extends Item
         {
             if (IvInventoryHelper.consumeInventoryItem(player.inventory, usedConsumable.consumedItem))
             {
-                DrugHelper drugHelper = DrugHelper.getDrugHelper(player);
+                DrugProperties drugProperties = DrugProperties.getDrugProperties(player);
 
-                if (drugHelper != null)
+                if (drugProperties != null)
                 {
                     for (DrugInfluence influence : usedConsumable.drugInfluences)
                     {
-                        drugHelper.addToDrug(influence.clone());
+                        drugProperties.addToDrug(influence.clone());
                     }
 
                     stack.damageItem(1, player);
 
-                    drugHelper.startBreathingSmoke(10 + world.rand.nextInt(10), usedConsumable.smokeColor);
+                    drugProperties.startBreathingSmoke(10 + world.rand.nextInt(10), usedConsumable.smokeColor);
                 }
             }
         }
@@ -77,9 +77,9 @@ public class ItemBong extends Item
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        DrugHelper drugHelper = DrugHelper.getDrugHelper(player);
+        DrugProperties drugProperties = DrugProperties.getDrugProperties(player);
 
-        if (drugHelper != null && drugHelper.timeBreathingSmoke <= 0)
+        if (drugProperties != null && drugProperties.timeBreathingSmoke <= 0)
         {
             if (getUsedConsumable(player) != null)
             {
