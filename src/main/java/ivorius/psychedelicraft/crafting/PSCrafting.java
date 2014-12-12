@@ -6,19 +6,18 @@
 package ivorius.psychedelicraft.crafting;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import ivorius.psychedelicraft.blocks.TileEntityMashTub;
 import ivorius.psychedelicraft.config.PSConfig;
 import ivorius.psychedelicraft.entities.drugs.DrugInfluence;
 import ivorius.psychedelicraft.entities.drugs.DrugInfluenceHarmonium;
 import ivorius.psychedelicraft.fluids.FluidHelper;
 import ivorius.psychedelicraft.items.ItemBong;
 import ivorius.psychedelicraft.items.ItemSmokingPipe;
+import ivorius.psychedelicraft.mods.YeGamolChattels;
 import net.minecraft.block.BlockWood;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
@@ -78,10 +77,13 @@ public class PSCrafting
         addMashTubRecipe(new FluidStack(alcMilk, MASH_TUB_CAPACITY), milk_bucket, milk_bucket, milk_bucket, milk_bucket, milk_bucket, milk_bucket, milk_bucket, milk_bucket);
 
         addRecipe(new ItemStack(glassChalice, 4), "# #", " # ", " # ", '#', DC_BLOCK_GLASS_CLEAR);
-        addRecipe(new ItemStack(wineGrapeLattice), "###", "###", "O#O", '#', DC_STICK_WOOD, 'O', DC_PLANK_WOOD);
-
         addRecipe(new ItemStack(woodenMug, 8), "# #", "# #", "###", '#', DC_PLANK_WOOD);
         addRecipe(new ItemStack(stoneCup, 8), "# #", "# #", "###", '#', clay_ball);
+
+        if (!YeGamolChattels.isLoaded())
+            addRecipe(new ItemStack(wineGrapeLattice), "I#I", "I#I", "L#L", '#', DC_PLANK_WOOD, 'I', DC_STICK_WOOD, 'L', DC_LOG_WOOD);
+
+        addRecipe(new ItemStack(wineGrapeLattice), "I#I", "I#I", "I#I", '#', DC_SINGLE_PLANK_WOOD_REFINED, 'I', DC_STICK_WOOD);
 
 //        for (int color = 0; color < ItemDye.field_150922_c.length; color++)
 //            addRecipe(new ItemStack(molotovCocktail, 4, color), "P", "#", '#', new ItemStack(stained_glass, 1, 15 - color), 'P', paper);

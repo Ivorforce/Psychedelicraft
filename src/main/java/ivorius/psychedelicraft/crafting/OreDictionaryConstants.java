@@ -21,6 +21,7 @@ public class OreDictionaryConstants
     public static final String DC_CORN = "cropCorn";
     public static final String DC_PINEAPPLE = "foodPineapple";
     public static final String DC_BANANA = "foodBanana";
+    public static final String DC_SINGLE_PLANK_WOOD_REFINED = "singlePlankWoodRefined";
 
     public static final String DC_GRAPE = "foodGrape";
     public static final String DC_JUNIPER_BERRIES = "foodJuniper";
