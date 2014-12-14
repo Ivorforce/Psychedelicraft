@@ -32,6 +32,7 @@ public class PSConfig
 
     public static boolean genJuniper;
     public static boolean genCannabis;
+    public static boolean genHop;
     public static boolean genTobacco;
     public static boolean genCoffea;
     public static boolean genCoca;
@@ -76,6 +77,7 @@ public class PSConfig
 
             genJuniper = config.get(CATEGORY_BALANCING, "generateJuniper", true).getBoolean();
             genCannabis = config.get(CATEGORY_BALANCING, "generateCannabis", true).getBoolean();
+            genHop = config.get(CATEGORY_BALANCING, "genHop", true).getBoolean();
             genTobacco = config.get(CATEGORY_BALANCING, "generateTobacco", true).getBoolean();
             genCoffea = config.get(CATEGORY_BALANCING, "generateCoffea", true).getBoolean();
             genCoca = config.get(CATEGORY_BALANCING, "generateCoca", true).getBoolean();

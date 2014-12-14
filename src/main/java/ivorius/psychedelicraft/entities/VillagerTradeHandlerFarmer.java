@@ -21,6 +21,8 @@ public class VillagerTradeHandlerFarmer implements VillagerRegistry.IVillageTrad
     public void manipulateTradesForVillager(EntityVillager villager, MerchantRecipeList recipeList, Random random)
     {
         VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.wineGrapes, 0.5f, 1, 1);
+        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.hopCones, 0.6f, 1, 1);
+        VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.hopSeeds, 0.4f, 1, 1);
         VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.woodenMug, 0.5f, 1, 1);
         VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.driedTobacco, 0.3f, 1, 1);
         VillagerRegistry.addEmeraldSellRecipe(villager, recipeList, random, PSItems.cigarette, 0.8f, -6, -2);

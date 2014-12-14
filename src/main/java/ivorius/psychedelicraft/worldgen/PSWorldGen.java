@@ -14,6 +14,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.fluids.FluidStack;
 
 import static cpw.mods.fml.common.registry.GameRegistry.registerWorldGenerator;
+import static ivorius.psychedelicraft.blocks.PSBlocks.*;
 import static ivorius.psychedelicraft.items.PSItems.*;
 import static ivorius.psychedelicraft.worldgen.GeneratorGeneric.EntryDefault;
 import static net.minecraftforge.common.ChestGenHooks.*;
@@ -36,25 +37,31 @@ public class PSWorldGen
                     new EntryDefault(BiomeGenBase.iceMountains, 0.05f)), 10);
 
         if (PSConfig.genCannabis)
-            registerWorldGenerator(new GeneratorGeneric(new WorldGenTilledPatch(false, false, PSBlocks.cannabisPlant),
+            registerWorldGenerator(new GeneratorGeneric(new WorldGenTilledPatch(false, false, cannabisPlant),
                     new EntryDefault(BiomeGenBase.plains, 0.04f),
                     new EntryDefault(BiomeGenBase.forest, 0.04f),
                     new EntryDefault(BiomeGenBase.savanna, 0.04f)), 10);
 
+        if (PSConfig.genHop)
+            registerWorldGenerator(new GeneratorGeneric(new WorldGenTilledPatch(false, false, hopPlant),
+                    new EntryDefault(BiomeGenBase.plains, 0.06f),
+                    new EntryDefault(BiomeGenBase.forest, 0.06f),
+                    new EntryDefault(BiomeGenBase.savanna, 0.06f)), 10);
+
         if (PSConfig.genTobacco)
-            registerWorldGenerator(new GeneratorGeneric(new WorldGenTilledPatch(false, false, PSBlocks.tobaccoPlant),
+            registerWorldGenerator(new GeneratorGeneric(new WorldGenTilledPatch(false, false, tobaccoPlant),
                     new EntryDefault(BiomeGenBase.plains, 0.04f),
                     new EntryDefault(BiomeGenBase.forest, 0.04f),
                     new EntryDefault(BiomeGenBase.savanna, 0.04f)), 10);
 
         if (PSConfig.genCoffea)
-            registerWorldGenerator(new GeneratorGeneric(new WorldGenTilledPatch(false, false, PSBlocks.coffea),
+            registerWorldGenerator(new GeneratorGeneric(new WorldGenTilledPatch(false, false, coffea),
                     new EntryDefault(BiomeGenBase.plains, 0.05f),
                     new EntryDefault(BiomeGenBase.forest, 0.05f),
                     new EntryDefault(BiomeGenBase.savanna, 0.05f)), 10);
 
         if (PSConfig.genCoca)
-            registerWorldGenerator(new GeneratorGeneric(new WorldGenTilledPatch(false, true, PSBlocks.cocaPlant),
+            registerWorldGenerator(new GeneratorGeneric(new WorldGenTilledPatch(false, true, cocaPlant),
                     new EntryDefault(BiomeGenBase.plains, 0.4f, 5),
                     new EntryDefault(BiomeGenBase.forest, 0.4f, 5),
                     new EntryDefault(BiomeGenBase.river, 0.4f, 5),
