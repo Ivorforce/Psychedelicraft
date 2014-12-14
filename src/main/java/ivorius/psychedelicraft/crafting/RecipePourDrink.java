@@ -88,7 +88,7 @@ public class RecipePourDrink implements RecipeAction
             {
                 ItemStack rowStack = items.get(0);
 
-                if (!(rowStack.getItem() instanceof ItemPouring))
+                if (!(rowStack.getItem() instanceof ItemPouring) || rowStack.stackSize != 1)
                     return null;
 
                 if (first == null)
