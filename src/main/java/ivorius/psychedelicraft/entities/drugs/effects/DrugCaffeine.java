@@ -90,4 +90,22 @@ public class DrugCaffeine extends DrugSimple
     {
         return IvMathHelper.zeroToOne((float)getActiveValue(), 0.8f, 1.0f);
     }
+
+    @Override
+    public float colorHallucinationStrength()
+    {
+        return IvMathHelper.zeroToOne((float) getActiveValue() * 1.3f, 0.7f, 1.0f) * 0.03f;
+    }
+
+    @Override
+    public float movementHallucinationStrength()
+    {
+        return IvMathHelper.zeroToOne((float) getActiveValue() * 1.3f, 0.7f, 1.0f) * 0.03f;
+    }
+
+    @Override
+    public float contextualHallucinationStrength()
+    {
+        return IvMathHelper.zeroToOne((float) getActiveValue() * 1.3f, 0.7f, 1.0f) * 0.05f;
+    }
 }

@@ -5,6 +5,7 @@
 
 package ivorius.psychedelicraft.entities.drugs.effects;
 
+import ivorius.ivtoolkit.math.IvMathHelper;
 import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -46,7 +47,25 @@ public class DrugCannabis extends DrugSimple
     @Override
     public float superSaturationHallucinationStrength()
     {
-        return (float)getActiveValue() * 0.5f;
+        return IvMathHelper.zeroToOne((float)getActiveValue(), 0.0f, 0.5f) * 0.3f;
+    }
+
+    @Override
+    public float colorHallucinationStrength()
+    {
+        return IvMathHelper.zeroToOne((float) getActiveValue() * 1.3f, 0.5f, 1.0f) * 0.1f;
+    }
+
+    @Override
+    public float movementHallucinationStrength()
+    {
+        return IvMathHelper.zeroToOne((float) getActiveValue() * 1.3f, 0.5f, 1.0f) * 0.1f;
+    }
+
+    @Override
+    public float contextualHallucinationStrength()
+    {
+        return IvMathHelper.zeroToOne((float) getActiveValue() * 1.3f, 0.5f, 1.0f) * 0.1f;
     }
 
     @Override
