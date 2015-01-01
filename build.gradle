@@ -49,7 +49,10 @@ configurations {
 }
 
 sourceSets {
-    main { compileClasspath += [configurations.provided] }
+    main {
+        compileClasspath += [configurations.provided]
+        output.resourcesDir = output.classesDir
+    }
 }
 
 idea {
