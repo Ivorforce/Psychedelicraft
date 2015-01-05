@@ -10,10 +10,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraftforge.common.BiomeDictionary;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by lukas on 11.03.14.
@@ -35,11 +34,13 @@ public class GeneratorGeneric implements IWorldGenerator
     {
         BiomeGenBase biomeGen = world.getBiomeGenForCoords(chunkX * 16 + 8, chunkZ * 16 + 8);
 
-        int generate = 0;
+        int generate = -1;
 
         for (Entry biomeEntry : biomeEntries)
         {
-            generate += biomeEntry.numberGenerated(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider, biomeGen);
+            generate = biomeEntry.numberGenerated(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider, biomeGen);
+            if (generate >= 0)
+                break;
         }
 
         for (int i = 0; i < generate; i++)
@@ -58,7 +59,7 @@ public class GeneratorGeneric implements IWorldGenerator
 
         for (int i = 0; i < list.length; i++)
         {
-            list[i] = new EntryDefault(biomes[i], chance, number);
+            list[i] = new EntryBiome(biomes[i], chance, number);
         }
 
         return list;
@@ -69,18 +70,18 @@ public class GeneratorGeneric implements IWorldGenerator
         public int numberGenerated(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider, BiomeGenBase biomeGen);
     }
 
-    public static class EntryDefault implements Entry
+    public static class EntryBiome implements Entry
     {
         private BiomeGenBase biome;
         private float chance;
         public int number;
 
-        public EntryDefault(BiomeGenBase biome, float chance)
+        public EntryBiome(BiomeGenBase biome, float chance)
         {
             this(biome, chance, 1);
         }
 
-        public EntryDefault(BiomeGenBase biome, float chance, int number)
+        public EntryBiome(BiomeGenBase biome, float chance, int number)
         {
             this.biome = biome;
             this.chance = chance;
@@ -89,7 +90,10 @@ public class GeneratorGeneric implements IWorldGenerator
 
         public int numberGenerated(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider, BiomeGenBase biomeGen)
         {
-            return (getBiome() == biomeGen && random.nextFloat() < getChance()) ? number : 0;
+            if (getBiome() != biomeGen)
+                return -1;
+
+            return (random.nextFloat() < getChance()) ? number : 0;
         }
 
         public float getChance()
@@ -100,6 +104,36 @@ public class GeneratorGeneric implements IWorldGenerator
         public BiomeGenBase getBiome()
         {
             return biome;
+        }
+    }
+
+    public static class EntryBiomeTypes implements Entry
+    {
+        private final List<BiomeDictionary.Type> biomeTypes = new ArrayList<>();
+        private float chance;
+        public int number;
+
+        public EntryBiomeTypes(float chance, int number, BiomeDictionary.Type... types)
+        {
+            this.chance = chance;
+            this.number = number;
+            Collections.addAll(biomeTypes, types);
+        }
+
+        public int numberGenerated(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider, BiomeGenBase biomeGen)
+        {
+            for (BiomeDictionary.Type type : biomeTypes)
+            {
+                if (!BiomeDictionary.isBiomeOfType(biomeGen, type))
+                    return -1;
+            }
+
+            return random.nextFloat() < getChance() ? number : 0;
+        }
+
+        public float getChance()
+        {
+            return chance;
         }
     }
 }
