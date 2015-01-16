@@ -61,6 +61,8 @@ public class PSConfig
     public static final FluidAlcohol.TickInfo alcInfoBanana = new FluidAlcohol.TickInfo();
     public static final FluidAlcohol.TickInfo alcInfoMilk = new FluidAlcohol.TickInfo();
 
+    public static int slurryHardeningTime;
+
     public static void loadConfig(String configID)
     {
         if (configID == null || configID.equals(Configuration.CATEGORY_GENERAL))
@@ -103,6 +105,8 @@ public class PSConfig
             readTickInfo(alcInfoPineapple, "pineapple", MINUTE * 40, MINUTE * 40, MINUTE * 30, MINUTE * 30, config);
             readTickInfo(alcInfoBanana, "banana", MINUTE * 40, MINUTE * 40, MINUTE * 30, MINUTE * 30, config);
             readTickInfo(alcInfoMilk, "milk", MINUTE * 40, MINUTE * 40, MINUTE * 30, MINUTE * 30, config);
+
+            slurryHardeningTime = config.get(CATEGORY_BALANCING, "slurryHardeningTime", MINUTE * 30, "The amount of ticks slurry needs to sit in a vat to harden to dirt.").getInt();
         }
 
         Psychedelicraft.proxy.loadConfig(configID);

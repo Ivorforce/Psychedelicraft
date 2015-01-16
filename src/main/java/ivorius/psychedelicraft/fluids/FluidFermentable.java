@@ -5,6 +5,7 @@
 
 package ivorius.psychedelicraft.fluids;
 
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 /**
@@ -41,6 +42,7 @@ public interface FluidFermentable
      *
      * @param stack         The fluid currently fermenting.
      * @param openContainer True if the fluid is exposed to oxygen.
+     * @return A stack if the fluid should be replaced with a solid.
      */
-    void fermentStep(FluidStack stack, boolean openContainer);
+    ItemStack fermentStep(FluidStack stack, boolean openContainer);
 }

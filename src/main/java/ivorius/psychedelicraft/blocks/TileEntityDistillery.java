@@ -179,6 +179,7 @@ public class TileEntityDistillery extends TileFluidHandler
     @Override
     public void writeToNBT(NBTTagCompound nbttagcompound)
     {
+        tank.setFluid(null); // Doesn't override if empty >.>
         super.writeToNBT(nbttagcompound);
 
         nbttagcompound.setInteger("direction", direction);

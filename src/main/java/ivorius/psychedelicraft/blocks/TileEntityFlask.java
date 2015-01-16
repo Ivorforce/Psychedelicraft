@@ -6,6 +6,7 @@
 package ivorius.psychedelicraft.blocks;
 
 import ivorius.ivtoolkit.blocks.IvTileEntityHelper;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
@@ -68,6 +69,13 @@ public class TileEntityFlask extends TileFluidHandler
         }
 
         return drain;
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound tag)
+    {
+        tank.setFluid(null); // Doesn't override if empty >.>
+        super.readFromNBT(tag);
     }
 
     public FluidStack containedFluid()

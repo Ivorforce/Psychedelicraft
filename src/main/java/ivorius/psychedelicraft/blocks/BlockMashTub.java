@@ -14,6 +14,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -86,7 +87,19 @@ public class BlockMashTub extends IvBlockMultiblock
         if (tileEntity instanceof TileEntityMashTub)
         {
             if (!world.isRemote)
-                player.openGui(Psychedelicraft.instance, PSGuiHandler.woodenVatContainerID, world, tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
+            {
+                TileEntityMashTub tileEntityMashTub = (TileEntityMashTub) tileEntity;
+                if (tileEntityMashTub.solidContents != null)
+                {
+                    dropBlockAsItem(world, x, y, z, tileEntityMashTub.solidContents);
+                    tileEntityMashTub.solidContents = null;
+
+                    world.markBlockForUpdate(tileEntityMashTub.xCoord, tileEntityMashTub.yCoord, tileEntityMashTub.zCoord);
+                    tileEntity.markDirty();
+                }
+                else
+                    player.openGui(Psychedelicraft.instance, PSGuiHandler.woodenVatContainerID, world, tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
+            }
 
             return true;
         }

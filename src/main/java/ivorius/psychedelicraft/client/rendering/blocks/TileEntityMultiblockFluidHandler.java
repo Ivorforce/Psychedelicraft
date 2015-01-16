@@ -21,6 +21,7 @@ public class TileEntityMultiblockFluidHandler extends IvTileEntityMultiBlock imp
     public void readFromNBT(NBTTagCompound tag)
     {
         super.readFromNBT(tag);
+        tank.setFluid(null); // Doesn't override if empty >.>
         tank.readFromNBT(tag);
     }
 

@@ -8,6 +8,7 @@ import ivorius.psychedelicraft.client.rendering.MCColorHelper;
 import ivorius.psychedelicraft.entities.drugs.DrugInfluence;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.fluids.FluidStack;
@@ -176,7 +177,7 @@ public class FluidAlcohol extends FluidDrug implements FluidFermentable, FluidDi
     }
 
     @Override
-    public void fermentStep(FluidStack stack, boolean openContainer)
+    public ItemStack fermentStep(FluidStack stack, boolean openContainer)
     {
         int fermentation = getFermentation(stack);
 
@@ -189,6 +190,8 @@ public class FluidAlcohol extends FluidDrug implements FluidFermentable, FluidDi
         }
         else
             setMaturation(stack, getMaturation(stack) + 1);
+
+        return null;
     }
 
     @Override

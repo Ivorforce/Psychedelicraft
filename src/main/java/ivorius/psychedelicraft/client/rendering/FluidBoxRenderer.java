@@ -6,10 +6,13 @@
 package ivorius.psychedelicraft.client.rendering;
 
 import ivorius.psychedelicraft.fluids.TranslucentFluid;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -110,6 +113,22 @@ public class FluidBoxRenderer
             Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
             prepareTranslucency();
         }
+
+        Tessellator.instance.startDrawingQuads();
+    }
+
+    public void prepare(ItemStack itemStack)
+    {
+        Block block = ((ItemBlock) itemStack.getItem()).field_150939_a;
+        IIcon icon = block.getIcon(ForgeDirection.UP.ordinal(), itemStack.getItemDamage() % 16);
+
+        GL11.glColor3f(1.0f, 1.0f, 1.0f);
+        texX0 = icon.getMinU();
+        texX1 = icon.getMaxU();
+        texY0 = icon.getMinV();
+        texY1 = icon.getMaxV();
+        Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+        prepareTranslucency();
 
         Tessellator.instance.startDrawingQuads();
     }

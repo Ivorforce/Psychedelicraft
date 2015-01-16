@@ -10,7 +10,9 @@ import ivorius.ivtoolkit.math.IvMathHelper;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.blocks.TileEntityMashTub;
 import ivorius.psychedelicraft.client.rendering.FluidBoxRenderer;
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
@@ -23,6 +25,10 @@ public class TileEntityRendererMashTub extends TileEntitySpecialRenderer
 {
     public static IModelCustom modelWoodenVat = AdvancedModelLoader.loadModel(new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathModels + "woodenVat.obj"));
     public static ResourceLocation textureMashTub = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "woodenVat.png");
+
+    public static final float MODEL_SIZE = 15.0f / 16.0f;
+    public static final float MODEL_BORDER_WIDTH = 1.0f / 16.0f;
+    public static final float MODEL_HEIGHT = 12.0f / 16.0f;
 
     private IModelCustom model;
     private ResourceLocation texture;
@@ -58,16 +64,23 @@ public class TileEntityRendererMashTub extends TileEntitySpecialRenderer
             FluidStack fluidStack = tileEntity.tank.getFluid();
             if (fluidStack != null)
             {
-                float size = 15.0f / 16.0f;
-                float borderWidth = 1.0f / 16.0f;
-                float height = 12.0f / 16.0f;
-
-                float fluidHeight = (height - borderWidth - 1.0f / 16.0f) * IvMathHelper.clamp(0.0f, (float) fluidStack.amount / (float) tileEntity.tank.getCapacity(), 1.0f);
+                float fluidHeight = (MODEL_HEIGHT - MODEL_BORDER_WIDTH - 1.0f / 16.0f) * IvMathHelper.clamp(0.0f, (float) fluidStack.amount / (float) tileEntity.tank.getCapacity(), 1.0f);
 
                 FluidBoxRenderer fluidBoxRenderer = new FluidBoxRenderer(1.0f);
                 fluidBoxRenderer.prepare(fluidStack);
 
-                fluidBoxRenderer.renderFluid(-size, -.5f + borderWidth, -size, size * 2, fluidHeight, size * 2, ForgeDirection.UP);
+                fluidBoxRenderer.renderFluid(-MODEL_SIZE, -.5f + MODEL_BORDER_WIDTH, -MODEL_SIZE, MODEL_SIZE * 2, fluidHeight, MODEL_SIZE * 2, ForgeDirection.UP);
+
+                fluidBoxRenderer.cleanUp();
+            }
+            else if (tileEntity.solidContents != null && tileEntity.solidContents.getItem() instanceof ItemBlock)
+            {
+                float fluidHeight = (MODEL_HEIGHT - MODEL_BORDER_WIDTH - 1.0f / 16.0f);
+
+                FluidBoxRenderer fluidBoxRenderer = new FluidBoxRenderer(1.0f);
+                fluidBoxRenderer.prepare(tileEntity.solidContents);
+
+                fluidBoxRenderer.renderFluid(-MODEL_SIZE, -.5f + MODEL_BORDER_WIDTH, -MODEL_SIZE, MODEL_SIZE * 2, fluidHeight, MODEL_SIZE * 2, ForgeDirection.UP);
 
                 fluidBoxRenderer.cleanUp();
             }

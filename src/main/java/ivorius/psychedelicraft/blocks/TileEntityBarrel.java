@@ -146,6 +146,7 @@ public class TileEntityBarrel extends TileFluidHandler
     @Override
     public void readFromNBT(NBTTagCompound nbttagcompound)
     {
+        tank.setFluid(null); // Doesn't override if empty >.>
         super.readFromNBT(nbttagcompound);
 
         if (nbttagcompound.hasKey("barrelType")) // Legacy
