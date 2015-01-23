@@ -218,9 +218,7 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
                 var3 = this.dryingTableItems[par1].splitStack(par2);
 
                 if (this.dryingTableItems[par1].stackSize == 0)
-                {
                     this.dryingTableItems[par1] = null;
-                }
 
                 onInventoryChanged();
                 return var3;
@@ -279,7 +277,7 @@ public class TileEntityDryingTable extends TileEntity implements ISidedInventory
     @Override
     public boolean isItemValidForSlot(int var1, ItemStack var2)
     {
-        return dryingTableItems[var1] == null;
+        return true;
     }
 
     @Override

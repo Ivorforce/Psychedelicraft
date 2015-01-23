@@ -46,7 +46,7 @@ public class DryingRegistry
 
     public static ItemStack dryingResult(Object source)
     {
-        return dryingRecipes.get(source);
+        return dryingRecipes.get(source).copy();
     }
 
     public static Set<Object> allDryingSources()
