@@ -41,7 +41,7 @@ public class Psychedelicraft
 {
     public static final String MODID = "psychedelicraft";
     public static final String NAME = "Psychedelicraft";
-    public static final String VERSION = "1.5.1";
+    public static final String VERSION = "1.5.1.1";
 
     @Instance(value = "psychedelicraft")
     public static Psychedelicraft instance;
