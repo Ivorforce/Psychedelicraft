@@ -7,7 +7,6 @@ package ivorius.psychedelicraft.blocks;
 
 import ivorius.psychedelicraft.items.ItemRiftJar;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -16,7 +15,7 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockRiftJar extends BlockContainer
+public class BlockRiftJar extends Block
 {
     public BlockRiftJar()
     {
@@ -95,7 +94,13 @@ public class BlockRiftJar extends BlockContainer
     }
 
     @Override
-    public TileEntity createNewTileEntity(World var1, int var2)
+    public boolean hasTileEntity(int metadata)
+    {
+        return true;
+    }
+
+    @Override
+    public TileEntity createTileEntity(World var1, int var2)
     {
         return new TileEntityRiftJar();
     }

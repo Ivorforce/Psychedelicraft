@@ -18,7 +18,7 @@ import net.minecraftforge.common.EnumPlantType;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class BlockPeyote extends BlockBush implements IGrowable, ITileEntityProvider
+public class BlockPeyote extends BlockBush implements IGrowable
 {
     public BlockPeyote()
     {
@@ -54,7 +54,13 @@ public class BlockPeyote extends BlockBush implements IGrowable, ITileEntityProv
     }
 
     @Override
-    public TileEntity createNewTileEntity(World var1, int var2)
+    public boolean hasTileEntity(int metadata)
+    {
+        return true;
+    }
+
+    @Override
+    public TileEntity createTileEntity(World var1, int var2)
     {
         return new TileEntityPeyote();
     }

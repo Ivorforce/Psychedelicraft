@@ -7,7 +7,7 @@ package ivorius.psychedelicraft.blocks;
 
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.gui.PSGuiHandler;
-import net.minecraft.block.BlockContainer;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
@@ -25,7 +25,7 @@ import net.minecraftforge.fluids.IFluidContainerItem;
 /**
  * Created by lukas on 25.10.14.
  */
-public class BlockDistillery extends BlockContainer
+public class BlockDistillery extends Block
 {
     public BlockDistillery()
     {
@@ -125,7 +125,13 @@ public class BlockDistillery extends BlockContainer
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int meta)
+    public boolean hasTileEntity(int metadata)
+    {
+        return true;
+    }
+
+    @Override
+    public TileEntity createTileEntity(World world, int meta)
     {
         return new TileEntityDistillery();
     }
