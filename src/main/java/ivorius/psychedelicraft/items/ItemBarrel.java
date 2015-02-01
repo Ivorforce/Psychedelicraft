@@ -12,11 +12,11 @@ import ivorius.psychedelicraft.fluids.FluidWithIconSymbol;
 import ivorius.psychedelicraft.fluids.FluidWithIconSymbolRegistering;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.List;
@@ -51,7 +51,7 @@ public class ItemBarrel extends ItemBlockFluidContainer
         if (fluidStack != null)
         {
             String fluidName = fluidStack.getLocalizedName();
-            return I18n.format(this.getUnlocalizedNameInefficiently(stack) + ".full.name", fluidName);
+            return StatCollector.translateToLocalFormatted(this.getUnlocalizedNameInefficiently(stack) + ".full.name", fluidName);
         }
 
         return super.getItemStackDisplayName(stack);

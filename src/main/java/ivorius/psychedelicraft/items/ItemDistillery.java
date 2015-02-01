@@ -8,8 +8,8 @@ package ivorius.psychedelicraft.items;
 import ivorius.psychedelicraft.blocks.TileEntityDistillery;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
 
 /**
@@ -39,7 +39,7 @@ public class ItemDistillery extends ItemBlockFluidContainer
         if (fluidStack != null)
         {
             String fluidName = fluidStack.getLocalizedName();
-            return I18n.format(this.getUnlocalizedNameInefficiently(stack) + ".full.name", fluidName);
+            return StatCollector.translateToLocalFormatted(this.getUnlocalizedNameInefficiently(stack) + ".full.name", fluidName);
         }
 
         return super.getItemStackDisplayName(stack);

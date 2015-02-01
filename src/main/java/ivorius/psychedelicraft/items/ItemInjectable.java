@@ -9,7 +9,6 @@ import ivorius.psychedelicraft.client.rendering.RenderPassesCustom;
 import ivorius.psychedelicraft.fluids.FluidHelper;
 import ivorius.psychedelicraft.fluids.InjectableFluid;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,6 +16,7 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.ItemFluidContainer;
@@ -88,10 +88,10 @@ public class ItemInjectable extends ItemFluidContainer implements RenderPassesCu
         if (fluidStack != null)
         {
             String fluidName = fluidStack.getLocalizedName();
-            return I18n.format(this.getUnlocalizedNameInefficiently(stack) + ".full.name", fluidName);
+            return StatCollector.translateToLocalFormatted(this.getUnlocalizedNameInefficiently(stack) + ".full.name", fluidName);
         }
 
-        return I18n.format(this.getUnlocalizedNameInefficiently(stack) + ".name");
+        return StatCollector.translateToLocalFormatted(this.getUnlocalizedNameInefficiently(stack) + ".name");
     }
 
     @Override

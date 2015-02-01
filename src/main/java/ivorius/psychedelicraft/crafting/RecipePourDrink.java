@@ -6,11 +6,10 @@
 package ivorius.psychedelicraft.crafting;
 
 import ivorius.psychedelicraft.items.PSItems;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidContainerItem;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -42,7 +41,7 @@ public class RecipePourDrink implements RecipeAction
 
                 if (maxFill > 0)
                 {
-                    dst.setStackDisplayName(I18n.format("recipe.action.pour", drainSim.getFluid().getLocalizedName(drainSim)));
+                    dst.setStackDisplayName(StatCollector.translateToLocalFormatted("recipe.action.pour", drainSim.getFluid().getLocalizedName(drainSim)));
                     return dst;
                 }
             }

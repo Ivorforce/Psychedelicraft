@@ -2,13 +2,11 @@ package ivorius.psychedelicraft.gui;
 
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.blocks.TileEntityMashTub;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.FluidTankInfo;
-import org.lwjgl.opengl.GL11;
 
 import java.util.Arrays;
 import java.util.List;
@@ -46,6 +44,6 @@ public class GuiWoodenVat extends GuiFluidHandler
     @Override
     protected List<String> getAdditionalTankText()
     {
-        return tileEntityMashTub.isFermenting() ? Arrays.asList(EnumChatFormatting.GREEN + I18n.format("fluid.status.fermenting")) : null;
+        return tileEntityMashTub.isFermenting() ? Arrays.asList(EnumChatFormatting.GREEN + StatCollector.translateToLocalFormatted("fluid.status.fermenting")) : null;
     }
 }

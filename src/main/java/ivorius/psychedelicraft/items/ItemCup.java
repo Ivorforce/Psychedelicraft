@@ -8,12 +8,12 @@ package ivorius.psychedelicraft.items;
 import ivorius.psychedelicraft.crafting.ItemPouring;
 import ivorius.psychedelicraft.fluids.DrinkableFluid;
 import ivorius.psychedelicraft.fluids.FluidHelper;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.ItemFluidContainer;
@@ -75,10 +75,10 @@ public class ItemCup extends ItemFluidContainer implements ItemPouring
         if (fluidStack != null)
         {
             String fluidName = fluidStack.getLocalizedName();
-            return I18n.format(this.getUnlocalizedNameInefficiently(stack) + ".full.name", fluidName);
+            return StatCollector.translateToLocalFormatted(this.getUnlocalizedNameInefficiently(stack) + ".full.name", fluidName);
         }
 
-        return I18n.format(this.getUnlocalizedNameInefficiently(stack) + ".name");
+        return super.getItemStackDisplayName(stack);
     }
 
     @Override

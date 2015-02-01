@@ -7,10 +7,10 @@ import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.client.rendering.MCColorHelper;
 import ivorius.psychedelicraft.entities.drugs.DrugInfluence;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
@@ -278,7 +278,7 @@ public class FluidAlcohol extends FluidDrug implements FluidFermentable, FluidDi
         String baseName = this.getUnlocalizedName(stack);
 
         if (isVinegar(stack))
-            return I18n.format(String.format("%s.vinegar", baseName));
+            return StatCollector.translateToLocalFormatted(String.format("%s.vinegar", baseName));
 
         int fermentation = this.getFermentation(stack);
         int distillation = this.getDistillation(stack);
@@ -287,18 +287,18 @@ public class FluidAlcohol extends FluidDrug implements FluidFermentable, FluidDi
         if (distillation == 0)
         {
             if (maturation > 0)
-                return I18n.format(String.format("%s.mature", baseName), maturation);
+                return StatCollector.translateToLocalFormatted(String.format("%s.mature", baseName), maturation);
             else if (fermentation > 0)
-                return I18n.format(String.format("%s.ferment.%d", baseName, fermentation));
+                return StatCollector.translateToLocalFormatted(String.format("%s.ferment.%d", baseName, fermentation));
             else
-                return I18n.format(baseName);
+                return StatCollector.translateToLocalFormatted(baseName);
         }
         else
         {
             if (maturation > 0)
-                return I18n.format(String.format("%s.dmature", baseName), maturation, distillation);
+                return StatCollector.translateToLocalFormatted(String.format("%s.dmature", baseName), maturation, distillation);
             else
-                return I18n.format(String.format("%s.distill", baseName), distillation);
+                return StatCollector.translateToLocalFormatted(String.format("%s.distill", baseName), distillation);
         }
     }
 

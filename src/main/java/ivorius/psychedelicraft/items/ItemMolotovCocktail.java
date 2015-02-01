@@ -8,13 +8,13 @@ package ivorius.psychedelicraft.items;
 import ivorius.psychedelicraft.entities.EntityMolotovCocktail;
 import ivorius.psychedelicraft.fluids.ExplodingFluid;
 import ivorius.psychedelicraft.fluids.FluidHelper;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidContainerItem;
@@ -104,10 +104,10 @@ public class ItemMolotovCocktail extends ItemBottle
                 quality = MathHelper.clamp_int(MathHelper.floor_float((fireStr + explStr) + 0.5f), 0, 7);
             }
 
-            return I18n.format(this.getUnlocalizedNameInefficiently(stack) + ".quality" + quality + ".name");
+            return StatCollector.translateToLocalFormatted(this.getUnlocalizedNameInefficiently(stack) + ".quality" + quality + ".name");
         }
 
-        return I18n.format(this.getUnlocalizedNameInefficiently(stack) + ".empty.name");
+        return StatCollector.translateToLocalFormatted(this.getUnlocalizedNameInefficiently(stack) + ".empty.name");
     }
 
     @Override

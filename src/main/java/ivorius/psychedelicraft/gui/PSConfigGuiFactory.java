@@ -13,7 +13,7 @@ import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.config.PSConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.config.Configuration;
 
@@ -56,7 +56,7 @@ public class PSConfigGuiFactory implements IModGuiFactory
     {
         public ConfigGui(GuiScreen parentScreen)
         {
-            super(parentScreen, getConfigElements(), Psychedelicraft.MODID, false, false, I18n.format("psychedelicraft.configgui.title"));
+            super(parentScreen, getConfigElements(), Psychedelicraft.MODID, false, false, StatCollector.translateToLocalFormatted("psychedelicraft.configgui.title"));
         }
 
         private static List<IConfigElement> getConfigElements()

@@ -12,11 +12,11 @@ import ivorius.psychedelicraft.fluids.FluidFermentable;
 import ivorius.psychedelicraft.fluids.FluidHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
@@ -82,7 +82,7 @@ public class ItemMashTub extends ItemBlockFluidContainer
         if (fluidStack != null)
         {
             String fluidName = fluidStack.getLocalizedName();
-            return I18n.format(this.getUnlocalizedNameInefficiently(stack) + ".full.name", fluidName);
+            return StatCollector.translateToLocalFormatted(this.getUnlocalizedNameInefficiently(stack) + ".full.name", fluidName);
         }
 
         return super.getItemStackDisplayName(stack);
