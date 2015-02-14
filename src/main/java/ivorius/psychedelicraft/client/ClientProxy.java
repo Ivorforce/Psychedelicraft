@@ -134,6 +134,8 @@ public class ClientProxy implements PSProxy
                     (float) config.get(CATEGORY_VISUAL, "digitalEffectPixelRescaleY", 0.05).getDouble()};
             PSRenderStates.disableDepthBuffer = config.get(CATEGORY_VISUAL, "disableDepthBuffer", false).getBoolean();
             PSRenderStates.bypassPingPongBuffer = config.get(CATEGORY_VISUAL, "bypassPingPongBuffer", false).getBoolean();
+
+            PSRenderStates.renderFakeSkybox = config.get(CATEGORY_VISUAL, "renderFakeSkybox", true, "If a fake skybox should be rendered to make shaders affect the fog line.").getBoolean();
         }
 
         if (configID == null || configID.equals(CATEGORY_AUDIO))

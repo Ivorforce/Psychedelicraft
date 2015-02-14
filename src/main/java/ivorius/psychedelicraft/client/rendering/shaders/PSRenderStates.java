@@ -56,6 +56,8 @@ public class PSRenderStates
     public static String currentRenderPass;
     public static float currentRenderPassTicks;
 
+    public static boolean renderFakeSkybox = true;
+
     public static void preRender(float ticks)
     {
         didDepthPass = false;
@@ -280,18 +282,21 @@ public class PSRenderStates
 
     public static void preRenderSky(float partialTicks)
     {
-        setForceColorSafeMode(true);
-        float boxSize = Minecraft.getMinecraft().gameSettings.renderDistanceChunks * 16 * 0.75f;
-        float[] fogColor = PSAccessHelperClient.getFogColor();
+        if (renderFakeSkybox)
+        {
+            setForceColorSafeMode(true);
+            float boxSize = Minecraft.getMinecraft().gameSettings.renderDistanceChunks * 16 * 0.75f;
+            float[] fogColor = PSAccessHelperClient.getFogColor();
 
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
-        GL11.glColor3f(fogColor[0], fogColor[1], fogColor[2]);
-        Tessellator.instance.startDrawingQuads();
-        IvRenderHelper.renderCuboid(Tessellator.instance, -boxSize, -boxSize, -boxSize, 1.0f);
-        Tessellator.instance.draw();
-        GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
-        setForceColorSafeMode(false);
+            GL11.glDisable(GL11.GL_TEXTURE_2D);
+            GL11.glColor3f(fogColor[0], fogColor[1], fogColor[2]);
+            Tessellator.instance.startDrawingQuads();
+            IvRenderHelper.renderCuboid(Tessellator.instance, -boxSize, -boxSize, -boxSize, 1.0f);
+            Tessellator.instance.draw();
+            GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
+            GL11.glEnable(GL11.GL_TEXTURE_2D);
+            setForceColorSafeMode(false);
+        }
     }
 
     public static void setEnabled(int cap, boolean enabled)
