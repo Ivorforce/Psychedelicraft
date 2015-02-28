@@ -237,6 +237,6 @@ psychedelicraft.configgui.ctgy.balancing.tooltip=Settings affecting the mod's ba
 psychedelicraft.configgui.ctgy.visual=Visual
 psychedelicraft.configgui.ctgy.visual.tooltip=Settings that are purely visual
 psychedelicraft.configgui.ctgy.audio=Audio
-psychedelicraft.configgui.ctgy.audioj.tooltip=Settings that are purely autitive
+psychedelicraft.configgui.ctgy.audio.tooltip=Settings that are purely autitive
 
 recipe.action.pour=Pour %s

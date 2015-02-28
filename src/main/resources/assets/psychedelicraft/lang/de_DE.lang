@@ -205,15 +205,15 @@ fluid.psc_milk.distill=Arkhi (%d MD)
 fluid.psc_milk.dmature=Arkhi (%d TR, %d MD)
 fluid.psc_milk.vinegar=Milchessig
 
-fluid.pscCoffee=Kaffee
-fluid.pscCoffee.temperature0=Kalter Kaffee
-fluid.pscCoffee.temperature1=Warmer Kaffee
-fluid.pscCoffee.temperature2=Heißer Kaffee
-fluid.pscPeyoteJuice=Peyotesaft
-fluid.pscCocaTea=Mate de Coca
-fluid.pscCannabisTea=Cannabistee
-fluid.pscCocaineFluid=Kokain
-fluid.pscCaffeineFluid=Koffein
+fluid.psc_coffee=Kaffee
+fluid.psc_coffee.temperature0=Kalter Kaffee
+fluid.psc_coffee.temperature1=Warmer Kaffee
+fluid.psc_coffee.temperature2=Heißer Kaffee
+fluid.psc_peyote_juice=Peyotesaft
+fluid.psc_coca_tea=Mate de Coca
+fluid.psc_cannabis_tea=Cannabistee
+fluid.psc_cocaine_fluid=Kokain
+fluid.psc_caffeine_fluid=Koffein
 
 fluid.status.maturing=Reifend
 fluid.status.fermenting=Gärend
@@ -237,6 +237,6 @@ psychedelicraft.configgui.ctgy.balancing.tooltip=Einstellungen, welche die Spiel
 psychedelicraft.configgui.ctgy.visual=Grafik
 psychedelicraft.configgui.ctgy.visual.tooltip=Visuelle Einstellungen
 psychedelicraft.configgui.ctgy.audio=Audio
-psychedelicraft.configgui.ctgy.audi.tooltip=Auditive Einstellungen
+psychedelicraft.configgui.ctgy.audio.tooltip=Auditive Einstellungen
 
 recipe.action.pour=Einschenken %s
