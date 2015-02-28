@@ -117,7 +117,6 @@ public class PSRegistryHandler
 
         hopPlant = new BlockHopPlant().setHardness(0.5f).setBlockName("hopPlant").setBlockTextureName(modBase + "hopPlant");
         GameRegistry.registerBlock(hopPlant, ItemBlock.class, "hop_plant");
-        OreDictionary.registerOre(DC_CROP_HOPS, hopPlant);
 
         hopSeeds = new ItemSeeds(hopPlant, Blocks.farmland).setUnlocalizedName("hopSeeds").setTextureName(modBase + "hopSeeds");
         GameRegistry.registerItem(hopSeeds, "hop_seeds", Psychedelicraft.MODID);
@@ -128,6 +127,7 @@ public class PSRegistryHandler
         GameRegistry.registerItem(hopCones, "hop_cones", Psychedelicraft.MODID);
         hopCones.setCreativeTab(Psychedelicraft.creativeTab);
         OreDictionary.registerOre(DC_CONES_HOPS, hopCones);
+        OreDictionary.registerOre(DC_CROP_HOPS, hopCones);
 
         //----------------------------------------------------------Wine----------------------------------
 
@@ -139,6 +139,7 @@ public class PSRegistryHandler
         GameRegistry.registerItem(wineGrapes, "wineGrapes", Psychedelicraft.MODID);
         wineGrapes.setCreativeTab(Psychedelicraft.creativeTab);
         OreDictionary.registerOre(DC_GRAPE, wineGrapes);
+        OreDictionary.registerOre(DC_GRAPE_CROP, wineGrapes);
 
         //----------------------------------------------------------Molotov Cocktail----------------------------------
 
@@ -150,7 +151,6 @@ public class PSRegistryHandler
 
         cannabisPlant = new BlockCannabisPlant().setHardness(0.5f).setBlockName("cannabisPlant").setBlockTextureName(modBase + "cannabisPlant");
         GameRegistry.registerBlock(cannabisPlant, ItemBlock.class, "cannabisPlant");
-        OreDictionary.registerOre(DC_CROP_CANNABIS, cannabisPlant);
 
         cannabisSeeds = new ItemSeeds(cannabisPlant, Blocks.farmland).setUnlocalizedName("cannabisSeeds").setTextureName(modBase + "cannabisSeeds");
         GameRegistry.registerItem(cannabisSeeds, "cannabisSeeds", Psychedelicraft.MODID);
@@ -161,11 +161,13 @@ public class PSRegistryHandler
         GameRegistry.registerItem(cannabisLeaf, "cannabisLeaf", Psychedelicraft.MODID);
         cannabisLeaf.setCreativeTab(Psychedelicraft.creativeTab);
         OreDictionary.registerOre(DC_LEAF_CANNABIS, cannabisLeaf);
+        OreDictionary.registerOre(DC_CROP_CANNABIS, cannabisLeaf);
 
         cannabisBuds = new Item().setUnlocalizedName("cannabisBuds").setTextureName(modBase + "cannabisBuds");
         GameRegistry.registerItem(cannabisBuds, "cannabisBuds", Psychedelicraft.MODID);
         cannabisBuds.setCreativeTab(Psychedelicraft.creativeTab);
         OreDictionary.registerOre(DC_BUD_CANNABIS, cannabisBuds);
+        OreDictionary.registerOre(DC_CROP_CANNABIS, cannabisBuds);
 
         driedCannabisBuds = new Item().setUnlocalizedName("driedCannabisBuds").setTextureName(modBase + "driedCannabisBuds");
         GameRegistry.registerItem(driedCannabisBuds, "driedCannabisBuds", Psychedelicraft.MODID);
@@ -199,7 +201,6 @@ public class PSRegistryHandler
         tobaccoPlant = new BlockTobaccoPlant().setHardness(0.5f).setBlockName("tobaccoPlant").setBlockTextureName(modBase + "tobaccoPlant");
         tobaccoPlant.setCreativeTab(null);
         GameRegistry.registerBlock(tobaccoPlant, "tobaccoPlant");
-        OreDictionary.registerOre(DC_CROP_TOBACCO, tobaccoPlant);
 
         tobaccoSeeds = new ItemSeeds(tobaccoPlant, Blocks.farmland).setUnlocalizedName("tobaccoSeeds").setTextureName(modBase + "tobaccoSeeds");
         GameRegistry.registerItem(tobaccoSeeds, "tobaccoSeeds", Psychedelicraft.MODID);
@@ -210,6 +211,7 @@ public class PSRegistryHandler
         GameRegistry.registerItem(tobaccoLeaf, "tobaccoLeaf", Psychedelicraft.MODID);
         tobaccoLeaf.setCreativeTab(Psychedelicraft.creativeTab);
         OreDictionary.registerOre(DC_LEAF_TOBACCO, tobaccoLeaf);
+        OreDictionary.registerOre(DC_CROP_TOBACCO, tobaccoLeaf);
 
         driedTobacco = new Item().setUnlocalizedName("driedTobacco").setTextureName(modBase + "driedTobacco");
         GameRegistry.registerItem(driedTobacco, "driedTobacco", Psychedelicraft.MODID);
@@ -236,7 +238,6 @@ public class PSRegistryHandler
         cocaPlant = new BlockCocaPlant().setHardness(0.5f).setBlockName("cocaPlant").setBlockTextureName(modBase + "cocaPlant");
         cocaPlant.setCreativeTab(null);
         GameRegistry.registerBlock(cocaPlant, ItemBlock.class, "cocaPlant");
-        OreDictionary.registerOre(DC_CROP_COCA, cocaPlant);
 
         cocaSeeds = new ItemSeeds(cocaPlant, Blocks.farmland).setUnlocalizedName("cocaSeeds").setTextureName(modBase + "cocaSeeds");
         GameRegistry.registerItem(cocaSeeds, "cocaSeeds", Psychedelicraft.MODID);
@@ -247,6 +248,7 @@ public class PSRegistryHandler
         GameRegistry.registerItem(cocaLeaf, "cocaLeaf", Psychedelicraft.MODID);
         cocaLeaf.setCreativeTab(Psychedelicraft.creativeTab);
         OreDictionary.registerOre(DC_LEAF_COCA, cocaLeaf);
+        OreDictionary.registerOre(DC_CROP_COCA, cocaLeaf);
 
         driedCocaLeaves = new Item().setUnlocalizedName("driedCocaLeaves").setTextureName(modBase + "driedCocaLeaves");
         GameRegistry.registerItem(driedCocaLeaves, "driedCocaLeaves", Psychedelicraft.MODID);
@@ -285,12 +287,12 @@ public class PSRegistryHandler
         coffea = new BlockCoffea().setHardness(0.5f).setBlockName("coffea").setBlockTextureName(modBase + "coffea");
         coffea.setCreativeTab(null);
         GameRegistry.registerBlock(coffea, ItemBlock.class, "coffea");
-        OreDictionary.registerOre(DC_CROP_COFFEA, coffea);
 
         coffeaCherries = new ItemSeeds(coffea, Blocks.farmland).setUnlocalizedName("coffeaCherries").setTextureName(modBase + "coffeaCherries");
         GameRegistry.registerItem(coffeaCherries, "coffeaCherries", Psychedelicraft.MODID);
         coffeaCherries.setCreativeTab(Psychedelicraft.creativeTab);
         OreDictionary.registerOre(DC_SEED_COFFEA, coffeaCherries);
+        OreDictionary.registerOre(DC_CROP_COFFEA, coffeaCherries);
 
         coffeeBeans = new Item().setUnlocalizedName("coffeeBeans").setTextureName(modBase + "coffeeBeans");
         GameRegistry.registerItem(coffeeBeans, "coffeeBeans", Psychedelicraft.MODID);
