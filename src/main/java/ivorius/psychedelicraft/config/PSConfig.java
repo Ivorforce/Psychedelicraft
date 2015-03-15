@@ -63,6 +63,9 @@ public class PSConfig
 
     public static int slurryHardeningTime;
 
+    public static boolean distortIncomingMessages;
+    public static boolean distortOutgoingMessages;
+
     public static void loadConfig(String configID)
     {
         if (configID == null || configID.equals(Configuration.CATEGORY_GENERAL))
@@ -107,6 +110,8 @@ public class PSConfig
             readTickInfo(alcInfoMilk, "milk", MINUTE * 40, MINUTE * 40, MINUTE * 30, MINUTE * 30, config);
 
             slurryHardeningTime = config.get(CATEGORY_BALANCING, "slurryHardeningTime", MINUTE * 30, "The amount of ticks slurry needs to sit in a vat to harden to dirt.").getInt();
+
+            distortOutgoingMessages = config.getBoolean("distortOutgoingMessages", CATEGORY_BALANCING, true, "Whether the mod should distort chat messages when drugs have been consumed ('slurred speech').");
         }
 
         Psychedelicraft.proxy.loadConfig(configID);

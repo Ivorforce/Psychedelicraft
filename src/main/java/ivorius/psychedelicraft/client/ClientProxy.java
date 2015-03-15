@@ -39,9 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static ivorius.psychedelicraft.Psychedelicraft.*;
-import static ivorius.psychedelicraft.config.PSConfig.CATEGORY_AUDIO;
-import static ivorius.psychedelicraft.config.PSConfig.CATEGORY_VISUAL;
-import static ivorius.psychedelicraft.config.PSConfig.readHasBGM;
+import static ivorius.psychedelicraft.config.PSConfig.*;
 
 public class ClientProxy implements PSProxy
 {
@@ -112,6 +110,11 @@ public class ClientProxy implements PSProxy
     @Override
     public void loadConfig(String configID)
     {
+        if (configID == null || configID.equals(CATEGORY_BALANCING))
+        {
+            distortIncomingMessages = config.getBoolean("distortIncomingMessages", CATEGORY_BALANCING, true, "Whether the mod should distort received chat messages when drugs have been consumed ('confusion').");
+        }
+
         if (configID == null || configID.equals(CATEGORY_VISUAL))
         {
             PSRenderStates.setShaderEnabled(config.get(CATEGORY_VISUAL, "shaderEnabled", true).getBoolean());
