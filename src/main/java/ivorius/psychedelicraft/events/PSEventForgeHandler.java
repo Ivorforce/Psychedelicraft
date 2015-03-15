@@ -46,16 +46,19 @@ public class PSEventForgeHandler
     @SubscribeEvent
     public void onServerChat(ServerChatEvent event)
     {
-        Object[] args = event.component.getFormatArgs();
-
-        if (args.length > 1)
+        if (PSConfig.distortOutgoingMessages)
         {
-            DrugProperties drugProperties = DrugProperties.getDrugProperties(event.player);
+            Object[] args = event.component.getFormatArgs();
 
-            if (drugProperties != null)
+            if (args.length > 1)
             {
-                String modified = drugProperties.messageDistorter.distortOutgoingMessage(drugProperties, event.player, event.player.getRNG(), event.message);
-                args[1] = modified;
+                DrugProperties drugProperties = DrugProperties.getDrugProperties(event.player);
+
+                if (drugProperties != null)
+                {
+                    String modified = drugProperties.messageDistorter.distortOutgoingMessage(drugProperties, event.player, event.player.getRNG(), event.message);
+                    args[1] = modified;
+                }
             }
         }
     }
@@ -63,7 +66,7 @@ public class PSEventForgeHandler
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent event)
     {
-        if (event.message instanceof ChatComponentText)
+        if (PSConfig.distortIncomingMessages && event.message instanceof ChatComponentText)
         {
             ChatComponentText text = (ChatComponentText) event.message;
 
