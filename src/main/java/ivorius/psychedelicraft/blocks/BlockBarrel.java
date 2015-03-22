@@ -12,6 +12,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -117,19 +118,27 @@ public class BlockBarrel extends Block
 
             if (heldItem != null && heldItem.getItem() instanceof IFluidContainerItem)
             {
-                IFluidContainerItem fluidContainerItem = (IFluidContainerItem) heldItem.getItem();
+                boolean split = heldItem.stackSize > 1;
+                ItemStack stack = split ? heldItem.splitStack(1) : heldItem;
 
-                int maxFill = fluidContainerItem.fill(heldItem, tileEntityBarrel.drain(ForgeDirection.DOWN, MAX_TAP_AMOUNT, false), false);
+                IFluidContainerItem fluidContainerItem = (IFluidContainerItem) stack.getItem();
+
+                int maxFill = fluidContainerItem.fill(stack, tileEntityBarrel.drain(ForgeDirection.DOWN, MAX_TAP_AMOUNT, false), false);
                 if (maxFill > 0)
                 {
                     if (!world.isRemote)
                     {
                         FluidStack drained = tileEntityBarrel.drain(ForgeDirection.DOWN, maxFill, true);
-                        fluidContainerItem.fill(heldItem, drained, true);
+                        fluidContainerItem.fill(stack, drained, true);
                     }
                 }
 
                 tileEntityBarrel.timeLeftTapOpen = 20;
+
+                if (split && !player.inventory.addItemStackToInventory(stack))
+                    world.spawnEntityInWorld(new EntityItem(world, player.posX, player.posY, player.posZ, stack));
+
+                player.openContainer.detectAndSendChanges();
 
                 return true;
             }
