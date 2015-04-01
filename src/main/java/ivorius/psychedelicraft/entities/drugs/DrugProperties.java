@@ -35,6 +35,7 @@ public class DrugProperties implements IExtendedEntityProperties, PartialUpdateH
 {
     public static final UUID drugUUID = UUID.fromString("2da054e7-0fe0-4fb4-bf2c-a185a5f72aa1"); // Randomly gen'd
     public static final String EEP_KEY = "DrugHelper";
+    public static final String EEP_CMP_KEY = "drugData";
 
     public static boolean waterOverlayEnabled;
     public static boolean hurtOverlayEnabled;
@@ -460,13 +461,13 @@ public class DrugProperties implements IExtendedEntityProperties, PartialUpdateH
     @Override
     public void saveNBTData(NBTTagCompound compound)
     {
-        compound.setTag("drugData", createNBTTagCompound());
+        compound.setTag(EEP_CMP_KEY, createNBTTagCompound());
     }
 
     @Override
     public void loadNBTData(NBTTagCompound compound)
     {
-        readFromNBT(compound.getCompoundTag("drugData"), true);
+        readFromNBT(compound.getCompoundTag(EEP_CMP_KEY), true);
     }
 
     @Override
