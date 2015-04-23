@@ -114,7 +114,7 @@ public class PSEventForgeHandler
         for (String drugName : drugProperties.getAllDrugNames())
         {
             if (PSConfig.hasBGM(drugName))
-                soundHandler.playSound(new MovingSoundDrug(new ResourceLocation(Psychedelicraft.MODID, "drug." + drugName), entity, drugProperties, drugName));
+                soundHandler.playSound(new MovingSoundDrug(new ResourceLocation(Psychedelicraft.MODID, "drug." + drugName.toLowerCase()), entity, drugProperties, drugName));
         }
     }
 
