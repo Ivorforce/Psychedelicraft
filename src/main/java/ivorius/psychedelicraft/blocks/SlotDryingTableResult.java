@@ -5,12 +5,14 @@
 
 package ivorius.psychedelicraft.blocks;
 
+import ivorius.psychedelicraft.events.ItemDriedEvent;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
+import net.minecraftforge.common.MinecraftForge;
 
 public class SlotDryingTableResult extends Slot
 {
@@ -58,6 +60,7 @@ public class SlotDryingTableResult extends Slot
     protected void onCrafting(ItemStack par1ItemStack)
     {
         par1ItemStack.onCrafting(this.thePlayer.worldObj, this.thePlayer, this.field_75228_b);
+        MinecraftForge.EVENT_BUS.post(new ItemDriedEvent(thePlayer, par1ItemStack));
 
         if (!this.thePlayer.worldObj.isRemote)
         {

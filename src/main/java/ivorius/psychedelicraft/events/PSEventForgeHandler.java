@@ -10,18 +10,21 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ivorius.psychedelicraft.Psychedelicraft;
 import ivorius.psychedelicraft.achievements.PSAchievementList;
+import ivorius.psychedelicraft.blocks.PSBlocks;
 import ivorius.psychedelicraft.client.audio.MovingSoundDrug;
 import ivorius.psychedelicraft.config.PSConfig;
 import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import ivorius.psychedelicraft.fluids.FluidAlcohol;
 import ivorius.psychedelicraft.fluids.FluidWithIconSymbolRegistering;
 import ivorius.psychedelicraft.fluids.PSFluids;
+import ivorius.psychedelicraft.items.PSItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -209,6 +212,23 @@ public class PSEventForgeHandler
             {
                 player.triggerAchievement(PSAchievementList.drankRum);
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void fluidDrinkEvent(ItemDriedEvent event)
+    {
+        if (event.dried.isItemEqual(new ItemStack(PSItems.driedCannabisBuds)))
+        {
+            event.entityPlayer.triggerAchievement(PSAchievementList.driedCannabisBuds);
+        }
+        if (event.dried.isItemEqual(new ItemStack(PSItems.magicMushroomsRed)))
+        {
+            event.entityPlayer.triggerAchievement(PSAchievementList.driedRedShrooms);
+        }
+        if (event.dried.isItemEqual(new ItemStack(PSItems.magicMushroomsBrown)))
+        {
+            event.entityPlayer.triggerAchievement(PSAchievementList.driedBrownShrooms);
         }
     }
 }

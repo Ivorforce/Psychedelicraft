@@ -40,8 +40,12 @@ public class PSAchievementList
     public static Achievement madeDryingTable;
 
     public static Achievement cannabisBuds;
+    public static Achievement driedCannabisBuds;
     public static Achievement madeJoint;
     public static Achievement madeHashMuffin;
+
+    public static Achievement driedBrownShrooms;
+    public static Achievement driedRedShrooms;
 
 
     public static void init()
@@ -85,12 +89,17 @@ public class PSAchievementList
 
         cannabisBuds = new Achievement("achievement.cannabisBuds", "cannabisBuds", -4, -4, new ItemStack(PSItems.cannabisBuds), madeDryingTable).registerStat();
         achievements.add(cannabisBuds);
-
-        madeJoint = new Achievement("achievement.madeJoint", "madeJoint", -5, -5, new ItemStack(PSItems.joint), cannabisBuds).registerStat();
+        driedCannabisBuds = new Achievement("achievement.driedCannabisBuds", "driedCannabisBuds", -4, -6, new ItemStack(PSItems.driedCannabisBuds), cannabisBuds).registerStat();
+        achievements.add(driedCannabisBuds);
+        madeJoint = new Achievement("achievement.madeJoint", "madeJoint", -5, -7, new ItemStack(PSItems.joint), driedCannabisBuds).registerStat();
         achievements.add(madeJoint);
-
-        madeHashMuffin = new Achievement("achievement.madeHashMuffin", "madeHashMuffin", -3, -5, new ItemStack(PSItems.hashMuffin), cannabisBuds).registerStat();
+        madeHashMuffin = new Achievement("achievement.madeHashMuffin", "madeHashMuffin", -3, -7, new ItemStack(PSItems.hashMuffin), driedCannabisBuds).registerStat();
         achievements.add(madeHashMuffin);
+
+        driedBrownShrooms = new Achievement("achievement.driedBrownShrooms", "driedBrownShrooms", -7, -4, new ItemStack(PSItems.magicMushroomsBrown), madeDryingTable).registerStat();
+        achievements.add(driedBrownShrooms);
+        driedRedShrooms = new Achievement("achievement.driedRedShrooms", "driedRedShrooms", -7, -2, new ItemStack(PSItems.magicMushroomsRed), madeDryingTable).registerStat();
+        achievements.add(driedRedShrooms);
 
         page = new AchievementPage(Psychedelicraft.NAME, achievements.toArray(new Achievement[achievements.size()]));
         AchievementPage.registerAchievementPage(page);
