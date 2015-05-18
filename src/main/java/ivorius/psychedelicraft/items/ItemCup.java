@@ -8,6 +8,7 @@ package ivorius.psychedelicraft.items;
 import ivorius.psychedelicraft.crafting.ItemPouring;
 import ivorius.psychedelicraft.fluids.DrinkableFluid;
 import ivorius.psychedelicraft.fluids.FluidHelper;
+import ivorius.psychedelicraft.fluids.PSFluids;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
@@ -87,11 +88,7 @@ public class ItemCup extends ItemFluidContainer implements ItemPouring
         super.getSubItems(item, tab, list);
 
         for (FluidStack fluidStack : FluidHelper.allFluids(DrinkableFluid.SUBTYPE, capacity))
-        {
-            ItemStack stack = new ItemStack(item);
-            fill(stack, fluidStack, true);
-            list.add(stack);
-        }
+            list.add(PSFluids.filledStack(this, fluidStack));
     }
 
     @Override

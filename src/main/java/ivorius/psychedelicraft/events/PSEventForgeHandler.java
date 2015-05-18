@@ -9,16 +9,20 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ivorius.psychedelicraft.Psychedelicraft;
+import ivorius.psychedelicraft.achievements.PSAchievementList;
 import ivorius.psychedelicraft.client.audio.MovingSoundDrug;
 import ivorius.psychedelicraft.config.PSConfig;
 import ivorius.psychedelicraft.entities.drugs.DrugProperties;
+import ivorius.psychedelicraft.fluids.FluidAlcohol;
 import ivorius.psychedelicraft.fluids.FluidWithIconSymbolRegistering;
+import ivorius.psychedelicraft.fluids.PSFluids;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -32,6 +36,8 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidContainerItem;
 
 /**
  * Created by lukas on 18.02.14.
@@ -41,6 +47,14 @@ public class PSEventForgeHandler
     public void register()
     {
         MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    public static boolean containsAlcohol(FluidStack fluidStack, FluidAlcohol fluid, Boolean distilled, int minMatured)
+    {
+        return fluidStack != null
+                && fluidStack.getFluid() == fluid
+                && (distilled == null || (fluid.getDistillation(fluidStack) > 0) == distilled)
+                && fluid.getMaturation(fluidStack) >= minMatured;
     }
 
     @SubscribeEvent
@@ -161,6 +175,42 @@ public class PSEventForgeHandler
         {
             if (fluid instanceof FluidWithIconSymbolRegistering)
                 ((FluidWithIconSymbolRegistering) fluid).registerIcons(iconRegister, event.map.getTextureType());
+        }
+    }
+
+    @SubscribeEvent
+    public void fluidDrinkEvent(FluidDrinkEvent event)
+    {
+        if (event.entityLiving instanceof EntityPlayer)
+        {
+            EntityPlayer player = (EntityPlayer) event.entityLiving;
+
+            if (containsAlcohol(event.drunken, PSFluids.alcWheatHop, false, 0))
+            {
+                player.triggerAchievement(PSAchievementList.drankBeer);
+            }
+            if (containsAlcohol(event.drunken, PSFluids.alcWheatHop, false, 7))
+            {
+                player.triggerAchievement(PSAchievementList.drankMatureBeer);
+            }
+
+            if (containsAlcohol(event.drunken, PSFluids.alcRedGrapes, false, 0))
+            {
+                player.triggerAchievement(PSAchievementList.drankWine);
+            }
+            if (containsAlcohol(event.drunken, PSFluids.alcRedGrapes, true, 0))
+            {
+                player.triggerAchievement(PSAchievementList.drankWineBrandy);
+            }
+
+            if (containsAlcohol(event.drunken, PSFluids.alcSugarCane, false, 0))
+            {
+                player.triggerAchievement(PSAchievementList.drankBasi);
+            }
+            if (containsAlcohol(event.drunken, PSFluids.alcSugarCane, true, 0))
+            {
+                player.triggerAchievement(PSAchievementList.drankRum);
+            }
         }
     }
 }

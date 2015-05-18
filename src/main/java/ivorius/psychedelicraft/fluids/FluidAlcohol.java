@@ -108,6 +108,22 @@ public class FluidAlcohol extends FluidDrug implements FluidFermentable, FluidDi
         return getMatchedValue(stack, alcIcons);
     }
 
+    public FluidStack fermentedFluidStack(int amount, int distillation, int maturation)
+    {
+        FluidStack fluidStack = new FluidStack(this, amount);
+        setFermentation(fluidStack, fermentationSteps);
+        setDistillation(fluidStack, distillation);
+        setMaturation(fluidStack, maturation);
+        return fluidStack;
+    }
+
+    public FluidStack fermentingFluidStack(int amount, int fermentation)
+    {
+        FluidStack fluidStack = new FluidStack(this, amount);
+        setFermentation(fluidStack, fermentation);
+        return fluidStack;
+    }
+
     @Override
     public void getDrugInfluencesPerLiter(FluidStack fluidStack, List<DrugInfluence> list)
     {
@@ -130,39 +146,21 @@ public class FluidAlcohol extends FluidDrug implements FluidFermentable, FluidDi
         if (listType.equals(FluidFermentable.SUBTYPE_OPEN))
         {
             for (int fermentation = 0; fermentation <= fermentationSteps; fermentation++)
-            {
-                FluidStack fluidStack = new FluidStack(this, 1);
-                setFermentation(fluidStack, fermentation);
-                list.add(fluidStack);
-            }
+                list.add(fermentingFluidStack(1, fermentation));
         }
 
         if (listType.equals(DrinkableFluid.SUBTYPE) || listType.equals(FluidFermentable.SUBTYPE_CLOSED))
         {
             for (int maturation = 0; maturation <= 1; maturation++)
-            {
-                FluidStack fluidStack = new FluidStack(this, 1);
-                setFermentation(fluidStack, fermentationSteps);
-                setMaturation(fluidStack, maturation);
-                list.add(fluidStack);
-            }
+                list.add(fermentedFluidStack(1, 0, maturation));
 
             for (int maturationW = 0; maturationW <= 2; maturationW++)
-            {
-                FluidStack fluidStack = new FluidStack(this, 1);
-                setFermentation(fluidStack, fermentationSteps);
-                setDistillation(fluidStack, 2);
-                setMaturation(fluidStack, maturationW * 7);
-                list.add(fluidStack);
-            }
+                list.add(fermentedFluidStack(1, 2, maturationW * 7));
         }
 
         if (listType.equals(ExplodingFluid.SUBTYPE))
         {
-            FluidStack fluidStack = new FluidStack(this, 1);
-            setFermentation(fluidStack, fermentationSteps);
-            setDistillation(fluidStack, 2);
-            setMaturation(fluidStack, 3);
+            FluidStack fluidStack = fermentedFluidStack(1, 2, 3);
             list.add(fluidStack);
         }
     }
@@ -244,10 +242,10 @@ public class FluidAlcohol extends FluidDrug implements FluidFermentable, FluidDi
         return stack.tag != null ? Math.max(stack.tag.getInteger("distillation"), 0) : 0;
     }
 
-    public void setDistillation(FluidStack stack, int maturation)
+    public void setDistillation(FluidStack stack, int distillation)
     {
         FluidHelper.ensureTag(stack);
-        stack.tag.setInteger("distillation", maturation);
+        stack.tag.setInteger("distillation", distillation);
     }
 
     public int getMaturation(FluidStack stack)

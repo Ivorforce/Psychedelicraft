@@ -12,6 +12,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import ivorius.psychedelicraft.Psychedelicraft;
+import ivorius.psychedelicraft.achievements.PSAchievementList;
 import ivorius.psychedelicraft.blocks.PSBlocks;
 import ivorius.psychedelicraft.client.rendering.DrugEffectInterpreter;
 import ivorius.psychedelicraft.client.rendering.SmoothCameraHelper;
@@ -20,17 +21,41 @@ import ivorius.psychedelicraft.config.PSConfig;
 import ivorius.psychedelicraft.crafting.RecipeActionRegistry;
 import ivorius.psychedelicraft.entities.EntityRealityRift;
 import ivorius.psychedelicraft.entities.drugs.DrugProperties;
+import ivorius.psychedelicraft.fluids.PSFluids;
 import ivorius.psychedelicraft.gui.UpdatableContainer;
+import ivorius.psychedelicraft.items.PSItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * Created by lukas on 18.02.14.
  */
 public class PSEventFMLHandler
 {
+    public static void spawnRiftAtPlayer(EntityPlayer player)
+    {
+        EntityRealityRift rift = new EntityRealityRift(player.getEntityWorld());
+
+        double xP = (player.getRNG().nextDouble() - 0.5) * 100.0;
+        double yP = (player.getRNG().nextDouble() - 0.5) * 100.0;
+        double zP = (player.getRNG().nextDouble() - 0.5) * 100.0;
+
+        rift.setPosition(player.posX + xP, player.posY + yP, player.posZ + zP);
+        player.getEntityWorld().spawnEntityInWorld(rift);
+    }
+
+    public static boolean isFluidStack(ItemStack stack, ItemStack container, Fluid fluid)
+    {
+        return stack.getItem()== container.getItem()
+                && (container.getItemDamage() == OreDictionary.WILDCARD_VALUE || container.getItemDamage() == stack.getItemDamage())
+                && PSFluids.containsFluid(stack, fluid);
+    }
+
     public void register()
     {
         FMLCommonHandler.instance().bus().register(this);
@@ -84,18 +109,6 @@ public class PSEventFMLHandler
         }
     }
 
-    public static void spawnRiftAtPlayer(EntityPlayer player)
-    {
-        EntityRealityRift rift = new EntityRealityRift(player.getEntityWorld());
-
-        double xP = (player.getRNG().nextDouble() - 0.5) * 100.0;
-        double yP = (player.getRNG().nextDouble() - 0.5) * 100.0;
-        double zP = (player.getRNG().nextDouble() - 0.5) * 100.0;
-
-        rift.setPosition(player.posX + xP, player.posY + yP, player.posZ + zP);
-        player.getEntityWorld().spawnEntityInWorld(rift);
-    }
-
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event)
     {
@@ -132,5 +145,39 @@ public class PSEventFMLHandler
     {
         if (event.craftMatrix instanceof InventoryCrafting)
             RecipeActionRegistry.finalizeCrafting(event.crafting, (InventoryCrafting) event.craftMatrix, event.player);
+
+        if (event.crafting.isItemEqual(new ItemStack(PSBlocks.mashTub)))
+        {
+            event.player.triggerAchievement(PSAchievementList.madeMashTub);
+        }
+        if (event.crafting.isItemEqual(new ItemStack(PSBlocks.distillery)))
+        {
+            event.player.triggerAchievement(PSAchievementList.madeDistillery);
+        }
+        if (isFluidStack(event.crafting, new ItemStack(PSItems.itemMashTub, 1, OreDictionary.WILDCARD_VALUE), PSFluids.alcWheatHop))
+        {
+            event.player.triggerAchievement(PSAchievementList.beerWash);
+        }
+        if (isFluidStack(event.crafting, new ItemStack(PSItems.itemMashTub, 1, OreDictionary.WILDCARD_VALUE), PSFluids.alcRedGrapes))
+        {
+            event.player.triggerAchievement(PSAchievementList.grapeWash);
+        }
+        if (isFluidStack(event.crafting, new ItemStack(PSItems.itemMashTub, 1, OreDictionary.WILDCARD_VALUE), PSFluids.alcSugarCane))
+        {
+            event.player.triggerAchievement(PSAchievementList.sugarcaneWash);
+        }
+    }
+
+    @SubscribeEvent
+    public void onItemPickup(PlayerEvent.ItemPickupEvent event)
+    {
+        if (event.pickedUp.getEntityItem().isItemEqual(new ItemStack(PSItems.hopCones)))
+        {
+            event.player.triggerAchievement(PSAchievementList.hopCones);
+        }
+        else if (event.pickedUp.getEntityItem().isItemEqual(new ItemStack(PSItems.wineGrapes)))
+        {
+            event.player.triggerAchievement(PSAchievementList.grapes);
+        }
     }
 }

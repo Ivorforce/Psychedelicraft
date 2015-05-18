@@ -5,9 +5,11 @@
 
 package ivorius.psychedelicraft.fluids;
 
+import ivorius.psychedelicraft.events.FluidDrinkEvent;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -79,7 +81,10 @@ public class FluidHelper
                 {
                     FluidStack drained = container.drain(stack, maxDrunk, doDrink);
                     if (doDrink)
+                    {
                         ((DrinkableFluid) fluid).drink(drained, entity);
+                        MinecraftForge.EVENT_BUS.post(new FluidDrinkEvent(entity, drained));
+                    }
                     return drained;
                 }
             }

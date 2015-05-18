@@ -240,3 +240,33 @@ psychedelicraft.configgui.ctgy.audio=Audio
 psychedelicraft.configgui.ctgy.audio.tooltip=Settings that are purely autitive
 
 recipe.action.pour=Pour %s
+
+achievement.madeMashTub=Get mashin'
+achievement.madeMashTub.desc=Make a mash tub
+achievement.madeDistillery=Time to... distill
+achievement.madeDistillery.desc=Make a distilery
+
+achievement.hopCones=Where it begins
+achievement.hopCones.desc=Acquire some hop cones
+achievement.beerWash=Promising
+achievement.beerWash.desc=Mash up bitter wheat wash
+achievement.drankBeer=The real stuff
+achievement.drankBeer.desc=Drink beer
+achievement.drankMatureBeer=The good stuff
+achievement.drankMatureBeer.desc=Drink beer of at least 7 DM.
+
+achievement.grapes=Tasty
+achievement.grapes.desc=Find some grapes
+achievement.grapeWash=Great Juice
+achievement.grapeWash.desc=Mash up grape juice
+achievement.drankWine=Classy
+achievement.drankWine.desc=Drink wine
+achievement.drankWineBrandy=Groggy
+achievement.drankWineBrandy.desc=Drink wine brandy
+
+achievement.sugarcaneWash=Better than books
+achievement.sugarcaneWash.desc=Mash up sugarcane wash
+achievement.drankBasi=Belong to us
+achievement.drankBasi.desc=Drink some basi
+achievement.drankRum=Yo ho ho
+achievement.drankRum.desc=Drink some rum
