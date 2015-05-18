@@ -17,6 +17,7 @@ import ivorius.ivtoolkit.network.PacketExtendedEntityPropertiesData;
 import ivorius.ivtoolkit.network.PacketExtendedEntityPropertiesDataHandler;
 import ivorius.ivtoolkit.network.PacketTileEntityData;
 import ivorius.ivtoolkit.network.PacketTileEntityDataHandler;
+import ivorius.psychedelicraft.achievements.PSAchievementList;
 import ivorius.psychedelicraft.commands.CommandDrug;
 import ivorius.psychedelicraft.commands.CommandPsyche;
 import ivorius.psychedelicraft.config.PSConfig;
@@ -139,6 +140,7 @@ public class Psychedelicraft
         PSRegistryHandler.load(event, this);
 
         PSCrafting.initialize();
+        PSAchievementList.init();
         PSWorldGen.initWorldGen();
 
         PSConfig.loadConfig(null); // Reload based on new config stuff, like DrugFactories
