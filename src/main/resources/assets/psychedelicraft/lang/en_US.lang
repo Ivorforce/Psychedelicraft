@@ -276,7 +276,14 @@ achievement.madeDryingTable.desc=Make a drying table
 
 achievement.cannabisBuds=Only the finest
 achievement.cannabisBuds.desc=Acquire some cannabis buds
+achievement.driedCannabisBuds=Mary Jane
+achievement.driedCannabisBuds.desc=Dry some cannabis buds
 achievement.madeJoint=That's just, like, your joint, man
 achievement.madeJoint.desc=Roll a joint
 achievement.madeHashMuffin=Through the stomach
 achievement.madeHashMuffin.desc=Bake a hash muffin
+
+achievement.driedBrownShrooms=Taste the magic
+achievement.driedBrownShrooms.desc=Dry some red mushrooms
+achievement.driedRedShrooms=Feel the magic
+achievement.driedRedShrooms.desc=Dry some brown mushrooms
