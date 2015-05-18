@@ -22,7 +22,6 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -37,24 +36,23 @@ import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidContainerItem;
 
 /**
  * Created by lukas on 18.02.14.
  */
 public class PSEventForgeHandler
 {
-    public void register()
-    {
-        MinecraftForge.EVENT_BUS.register(this);
-    }
-
     public static boolean containsAlcohol(FluidStack fluidStack, FluidAlcohol fluid, Boolean distilled, int minMatured)
     {
         return fluidStack != null
                 && fluidStack.getFluid() == fluid
                 && (distilled == null || (fluid.getDistillation(fluidStack) > 0) == distilled)
                 && fluid.getMaturation(fluidStack) >= minMatured;
+    }
+
+    public void register()
+    {
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent

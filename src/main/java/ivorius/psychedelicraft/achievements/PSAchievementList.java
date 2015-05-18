@@ -1,6 +1,7 @@
 package ivorius.psychedelicraft.achievements;
 
 import ivorius.psychedelicraft.Psychedelicraft;
+import ivorius.psychedelicraft.blocks.PSBlocks;
 import ivorius.psychedelicraft.fluids.PSFluids;
 import ivorius.psychedelicraft.items.PSItems;
 import net.minecraft.init.Items;
@@ -34,6 +35,14 @@ public class PSAchievementList
     public static Achievement sugarcaneWash;
     public static Achievement drankBasi;
     public static Achievement drankRum;
+
+
+    public static Achievement madeDryingTable;
+
+    public static Achievement cannabisBuds;
+    public static Achievement madeJoint;
+    public static Achievement madeHashMuffin;
+
 
     public static void init()
     {
@@ -69,6 +78,19 @@ public class PSAchievementList
         achievements.add(drankBasi);
         drankRum = new Achievement("achievement.drankRum", "drankRum", 0, -3, PSFluids.filledStack(PSItems.woodenMug, PSFluids.alcSugarCane.fermentedFluidStack(1, 1, 7)), sugarcaneWash).registerStat();
         achievements.add(drankRum);
+
+
+        madeDryingTable = new Achievement("achievement.madeDryingTable", "madeDryingTable", -5, -3, new ItemStack(PSBlocks.dryingTable), null).registerStat();
+        achievements.add(madeDryingTable);
+
+        cannabisBuds = new Achievement("achievement.cannabisBuds", "cannabisBuds", -4, -4, new ItemStack(PSItems.cannabisBuds), madeDryingTable).registerStat();
+        achievements.add(cannabisBuds);
+
+        madeJoint = new Achievement("achievement.madeJoint", "madeJoint", -5, -5, new ItemStack(PSItems.joint), cannabisBuds).registerStat();
+        achievements.add(madeJoint);
+
+        madeHashMuffin = new Achievement("achievement.madeHashMuffin", "madeHashMuffin", -3, -5, new ItemStack(PSItems.hashMuffin), cannabisBuds).registerStat();
+        achievements.add(madeHashMuffin);
 
         page = new AchievementPage(Psychedelicraft.NAME, achievements.toArray(new Achievement[achievements.size()]));
         AchievementPage.registerAchievementPage(page);

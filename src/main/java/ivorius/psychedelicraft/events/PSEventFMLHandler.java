@@ -166,6 +166,19 @@ public class PSEventFMLHandler
         {
             event.player.triggerAchievement(PSAchievementList.sugarcaneWash);
         }
+
+        if (event.crafting.isItemEqual(new ItemStack(PSBlocks.dryingTable)))
+        {
+            event.player.triggerAchievement(PSAchievementList.madeDryingTable);
+        }
+        if (event.crafting.isItemEqual(new ItemStack(PSItems.joint)))
+        {
+            event.player.triggerAchievement(PSAchievementList.madeJoint);
+        }
+        if (event.crafting.isItemEqual(new ItemStack(PSItems.hashMuffin)))
+        {
+            event.player.triggerAchievement(PSAchievementList.madeHashMuffin);
+        }
     }
 
     @SubscribeEvent
@@ -178,6 +191,10 @@ public class PSEventFMLHandler
         else if (event.pickedUp.getEntityItem().isItemEqual(new ItemStack(PSItems.wineGrapes)))
         {
             event.player.triggerAchievement(PSAchievementList.grapes);
+        }
+        else if (event.pickedUp.getEntityItem().isItemEqual(new ItemStack(PSItems.cannabisBuds)))
+        {
+            event.player.triggerAchievement(PSAchievementList.cannabisBuds);
         }
     }
 }
