@@ -8,6 +8,7 @@ package ivorius.psychedelicraft.crafting;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import cpw.mods.fml.common.registry.GameRegistry;
+import ivorius.psychedelicraft.Psychedelicraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
@@ -63,36 +64,48 @@ public class RecipeActionRegistry
         if (result.hasTagCompound() && result.getTagCompound().hasKey(RecipeActionRepresentation.ACTION_TAG_ID, Constants.NBT.TAG_STRING))
         {
             String actionID = result.getTagCompound().getString(RecipeActionRepresentation.ACTION_TAG_ID);
-
             RecipeAction recipe = RecipeActionRegistry.actionForID(actionID);
-            Pair<ItemStack, List<ItemStack>> actionResult = recipe.craftingResult(inventoryCrafting);
 
-            ItemStack actionResultPickup = actionResult.getLeft();
-            List<ItemStack> actionResultPickups = actionResult.getRight();
+            if (recipe != null)
+            {
+                Pair<ItemStack, List<ItemStack>> actionResult = recipe.craftingResult(inventoryCrafting);
 
-            NBTTagCompound resultCompound = new NBTTagCompound();
-            actionResultPickup.writeToNBT(resultCompound);
-            result.stackTagCompound = null; // Doesn't necessarily get overwritten
-            result.readFromNBT(resultCompound);
+                if (actionResult != null)
+                {
+                    ItemStack actionResultPickup = actionResult.getLeft();
+                    List<ItemStack> actionResultPickups = actionResult.getRight();
+
+                    NBTTagCompound resultCompound = new NBTTagCompound();
+                    actionResultPickup.writeToNBT(resultCompound);
+                    result.stackTagCompound = null; // Doesn't necessarily get overwritten
+                    result.readFromNBT(resultCompound);
 
 //            for (int i = 0; i < inventoryCrafting.getSizeInventory(); i++)
 //                inventoryCrafting.setInventorySlotContents(i, null);
 
-            for (ItemStack resultPickup : actionResultPickups)
-            {
-                if (resultPickup != null && resultPickup.isItemStackDamageable() && resultPickup.getItemDamage() > resultPickup.getMaxDamage())
-                {
-                    MinecraftForge.EVENT_BUS.post(new PlayerDestroyItemEvent(player, resultPickup));
-                    continue;
-                }
+                    for (ItemStack resultPickup : actionResultPickups)
+                    {
+                        if (resultPickup != null && resultPickup.isItemStackDamageable() && resultPickup.getItemDamage() > resultPickup.getMaxDamage())
+                        {
+                            MinecraftForge.EVENT_BUS.post(new PlayerDestroyItemEvent(player, resultPickup));
+                            continue;
+                        }
 
-                if (!player.inventory.addItemStackToInventory(resultPickup))
+                        if (!player.inventory.addItemStackToInventory(resultPickup))
+                            player.dropPlayerItemWithRandomChoice(resultPickup, false);
+                    }
+
+                    return true;
+                }
+                else
                 {
-                    player.dropPlayerItemWithRandomChoice(resultPickup, false);
+                    Psychedelicraft.logger.error(String.format("Recipe with ID '%s' did not handle crafting", actionID));
                 }
             }
-
-            return true;
+            else
+            {
+                Psychedelicraft.logger.error(String.format("Did not find action recipe for ID '%s'", actionID));
+            }
         }
 
         return false;

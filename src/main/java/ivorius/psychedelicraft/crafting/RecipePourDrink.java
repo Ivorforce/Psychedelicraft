@@ -15,6 +15,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -54,6 +55,7 @@ public class RecipePourDrink implements RecipeAction
     public Pair<ItemStack, List<ItemStack>> craftingResult(InventoryCrafting inventoryCrafting)
     {
         Pair<ItemStack, ItemStack> pouringPair = getPouringPair(inventoryCrafting);
+
         if (pouringPair != null)
         {
             ItemStack src = pouringPair.getLeft().copy();
@@ -66,7 +68,7 @@ public class RecipePourDrink implements RecipeAction
             int maxFill = dstItem.fill(dst, drainSim, true);
             srcItem.drain(src, maxFill, true);
 
-            return new ImmutablePair<>(dst, Arrays.asList(src));
+            return new ImmutablePair<>(dst, Collections.singletonList(src));
         }
 
         return null;
