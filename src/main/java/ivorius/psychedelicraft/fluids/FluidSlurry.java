@@ -13,11 +13,15 @@ import net.minecraftforge.fluids.FluidStack;
 import java.util.List;
 import java.util.Objects;
 
+import static ivorius.psychedelicraft.fluids.FluidHelper.MILLIBUCKETS_PER_LITER;
+
 /**
  * Created by lukas on 27.10.14.
  */
 public class FluidSlurry extends FluidSimple implements FluidFermentable, FluidWithTypes
 {
+    public static final int FLUID_PER_DIRT = MILLIBUCKETS_PER_LITER * 4;
+
     public FluidSlurry(String fluidName)
     {
         super(fluidName);
@@ -26,13 +30,13 @@ public class FluidSlurry extends FluidSimple implements FluidFermentable, FluidW
     @Override
     public int fermentationTime(FluidStack stack, boolean openContainer)
     {
-        return PSConfig.slurryHardeningTime;
+        return stack.amount >= FLUID_PER_DIRT ? PSConfig.slurryHardeningTime : UNFERMENTABLE;
     }
 
     @Override
     public ItemStack fermentStep(FluidStack stack, boolean openContainer)
     {
-        return new ItemStack(Blocks.dirt, 4);
+        return new ItemStack(Blocks.dirt, stack.amount / FLUID_PER_DIRT); // Round down
     }
 
     @Override
