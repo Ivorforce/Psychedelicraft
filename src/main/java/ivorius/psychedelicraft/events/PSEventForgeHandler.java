@@ -36,6 +36,7 @@ import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
+import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -229,6 +230,18 @@ public class PSEventForgeHandler
         if (event.dried.isItemEqual(new ItemStack(PSItems.magicMushroomsBrown)))
         {
             event.entityPlayer.triggerAchievement(PSAchievementList.driedBrownShrooms);
+        }
+    }
+
+    @SubscribeEvent
+    public void wakeUpPlayer(PlayerWakeUpEvent event)
+    {
+        if (!event.wakeImmediatly)
+        {
+            DrugProperties drugProperties = DrugProperties.getDrugProperties(event.entityPlayer);
+
+            if (drugProperties != null)
+                drugProperties.wakeUp(event.entityPlayer);
         }
     }
 }

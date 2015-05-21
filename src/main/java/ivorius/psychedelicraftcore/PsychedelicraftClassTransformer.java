@@ -23,7 +23,6 @@ public class PsychedelicraftClassTransformer extends IvClassTransformerManager
         registerTransformer("net.minecraft.client.renderer.RenderGlobal", new RenderGlobalTransformer(logger));
         registerTransformer("net.minecraft.client.renderer.OpenGlHelper", new OpenGLHelperTransformer(logger));
         registerTransformer("net.minecraft.client.renderer.RenderHelper", new RenderHelperTransformer(logger));
-        registerTransformer("net.minecraft.entity.player.EntityPlayer", new EntityPlayerTransformer(logger));
         registerTransformer("net.minecraft.client.audio.SoundManager", new SoundManagerTransformer(logger));
 
         registerTransformer(new OpenGLTransfomer(logger));
