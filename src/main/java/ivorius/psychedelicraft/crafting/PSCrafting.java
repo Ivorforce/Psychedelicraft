@@ -84,7 +84,7 @@ public class PSCrafting
 
         if (!YeGamolChattels.isLoaded())
             addRecipe(new ItemStack(bottleRack), "I#I", "I#I", "LIL", '#', DC_PLANK_WOOD, 'I', DC_STICK_WOOD, 'L', DC_LOG_WOOD);
-        addRecipe(newItemStack(bottleRack), "I#I", "#I#", "I#I", '#', DC_SINGLE_PLANK_WOOD_REFINED, 'I', DC_STICK_WOOD);
+        addRecipe(new ItemStack(bottleRack), "I#I", "#I#", "I#I", '#', DC_SINGLE_PLANK_WOOD_REFINED, 'I', DC_STICK_WOOD);
 
 //        for (int color = 0; color < ItemDye.field_150922_c.length; color++)
 //            addRecipe(new ItemStack(molotovCocktail, 4, color), "P", "#", '#', new ItemStack(stained_glass, 1, 15 - color), 'P', paper);
