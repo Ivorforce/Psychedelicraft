@@ -52,22 +52,51 @@ public class MineFactoryReloaded extends ModRepresentation
         FMLInterModComms.sendMessage(MOD_ID, "registerHarvestable_Log", id(block));
     }
 
-    public static void registerFertilizableCrop(Block crop, int targetMeta, Integer fertilizationType)
+    public static void registerFertilizableCrop(Block crop, int targetMeta, FertilizerType fertilizationType)
     {
         NBTTagCompound tag = new NBTTagCompound();
         tag.setString("plant", id(crop));
         tag.setInteger("meta", targetMeta);
         if (fertilizationType != null)
-            tag.setInteger("type", fertilizationType);
+            tag.setInteger("type", fertilizationType.ordinal());
         FMLInterModComms.sendMessage(MOD_ID, "registerFertilizable_Crop", tag);
     }
 
-    public static void registerFertilizableStandard(Block plant, Integer fertilizationType)
+    public static void registerFertilizableStandard(Block plant, FertilizerType fertilizationType)
     {
         NBTTagCompound tag = new NBTTagCompound();
         tag.setString("plant", id(plant));
         if (fertilizationType != null)
-            tag.setInteger("type", fertilizationType);
+            tag.setInteger("type", fertilizationType.ordinal());
         FMLInterModComms.sendMessage(MOD_ID, "registerFertilizable_Standard", tag);
+    }
+
+    /**
+     * Determines what kind of action a given fertilizer can perform. Your
+     * IFactoryFertilizable instances should check this before performing any action
+     * to maintain future compatibility.
+     *
+     * See https://github.com/skyboy/MineFactoryReloaded/blob/master/src/powercrystals/minefactoryreloaded/api/FertilizerType.java
+     *
+     * @author PowerCrystals
+     */
+    public enum FertilizerType
+    {
+        /**
+         * The fertilizer will fertilize nothing.
+         */
+        None,
+        /**
+         * The fertilizer will fertilize grass.
+         */
+        Grass,
+        /**
+         * The fertilizer will grow a plant.
+         */
+        GrowPlant,
+        /**
+         * The fertilizer will grow magical crops.
+         */
+        GrowMagicalCrop,
     }
 }
