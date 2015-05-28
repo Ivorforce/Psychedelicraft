@@ -126,10 +126,10 @@ public class ClientProxy implements PSProxy
 //        DrugShaderHelper.doShadows = config.get(CATEGORY_VISUAL, "doShadows", true).getBoolean(true);
             PSRenderStates.doShadows = false;
 
-            dofFocalPointNear = (float) config.get(CATEGORY_VISUAL, "dofFocalPointNear", 0f, "The point at which DoF starts blurring the screen, towards the player, in blocks.").getDouble();
-            dofFocalPointFar = (float) config.get(CATEGORY_VISUAL, "dofFocalPointFar", 128f, "The point at which DoF starts blurring the screen, away from the player, in blocks.").getDouble();
-            dofFocalBlurNear = (float) config.get(CATEGORY_VISUAL, "dofFocalBlurNear", 0f, "The strength of DoF blur towards the player.").getDouble();
-            dofFocalBlurFar = (float) config.get(CATEGORY_VISUAL, "dofFocalBlurFar", 1f, "The strength of DoF blur away from the player.").getDouble();
+            dofFocalPointNear = (float) config.get(CATEGORY_VISUAL, "dofFocalPointNear", 0f, "The point at which DoF starts blurring the screen, towards the player, in blocks. (Usually 0 to 1)").getDouble();
+            dofFocalPointFar = (float) config.get(CATEGORY_VISUAL, "dofFocalPointFar", 0f, "The point at which DoF starts blurring the screen, away from the player, in blocks. (Usually about 128)").getDouble();
+            dofFocalBlurNear = (float) config.get(CATEGORY_VISUAL, "dofFocalBlurNear", 0f, "The strength of DoF blur towards the player. (Usually 0 to 1)").getDouble();
+            dofFocalBlurFar = (float) config.get(CATEGORY_VISUAL, "dofFocalBlurFar", 0f, "The strength of DoF blur away from the player. (Usually 0 to 1)").getDouble();
 
             DrugProperties.waterOverlayEnabled = config.get(CATEGORY_VISUAL, "waterOverlayEnabled", true).getBoolean();
             DrugProperties.hurtOverlayEnabled = config.get(CATEGORY_VISUAL, "hurtOverlayEnabled", true).getBoolean();
