@@ -223,6 +223,8 @@ itemGroup.psychedelicraft=Psychedelicraft
 itemGroup.psycheDrinks=Drinks
 itemGroup.psycheWeapons=Psychedelicraft Weapons
 
+commands.psyche.usage=/psyche spawnRift [x] [y] [z]
+
 commands.drug.usage=/drug <player> <drug> <set|lock|unlock> [value]
 commands.drug.success=%s's %s set to %s
 commands.drug.success.lock=%s's %s locked to %s
