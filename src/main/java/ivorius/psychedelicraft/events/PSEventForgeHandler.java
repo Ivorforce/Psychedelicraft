@@ -30,6 +30,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.EntityEvent;
@@ -40,6 +41,8 @@ import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+
+import java.util.Arrays;
 
 /**
  * Created by lukas on 18.02.14.
@@ -66,39 +69,46 @@ public class PSEventForgeHandler
         {
             Object[] args = event.component.getFormatArgs();
 
-            if (args.length > 1)
+            if (args.length >= 2 && args[1] instanceof ChatComponentText)
             {
                 DrugProperties drugProperties = DrugProperties.getDrugProperties(event.player);
 
                 if (drugProperties != null)
                 {
-                    String modified = drugProperties.messageDistorter.distortOutgoingMessage(drugProperties, event.player, event.player.getRNG(), event.message);
-                    args[1] = modified;
+                    String message = event.message;
+                    String modified = drugProperties.messageDistorter.distortOutgoingMessage(drugProperties, event.player, event.player.getRNG(), message);
+                    if (!modified.equals(message))
+                        args[1] = ForgeHooks.newChatWithLinks(modified); // See NetHandlerPlayServer
                 }
             }
-        }
-    }
-
-    @SubscribeEvent
-    public void onClientChatReceived(ClientChatReceivedEvent event)
-    {
-        if (PSConfig.distortIncomingMessages && event.message instanceof ChatComponentText)
-        {
-            ChatComponentText text = (ChatComponentText) event.message;
-
-            EntityLivingBase renderEntity = Minecraft.getMinecraft().renderViewEntity;
-            DrugProperties drugProperties = DrugProperties.getDrugProperties(renderEntity);
-
-            if (drugProperties != null)
+            else
             {
-                String message = text.getUnformattedTextForChat();
-                drugProperties.receiveChatMessage(renderEntity, message);
-                String modified = drugProperties.messageDistorter.distortIncomingMessage(drugProperties, renderEntity, renderEntity.getRNG(), message);
-
-                event.message = new ChatComponentText(modified);
+                Psychedelicraft.logger.warn("Failed distorting outgoing text message! Args: " + Arrays.toString(args));
             }
         }
     }
+
+//    @SubscribeEvent
+//    public void onClientChatReceived(ClientChatReceivedEvent event)
+//    {
+//        // Doesn't work, but is not used yet anyway
+//        if (PSConfig.distortIncomingMessages && event.message instanceof ChatComponentText)
+//        {
+//            ChatComponentText text = (ChatComponentText) event.message;
+//
+//            EntityLivingBase renderEntity = Minecraft.getMinecraft().renderViewEntity;
+//            DrugProperties drugProperties = DrugProperties.getDrugProperties(renderEntity);
+//
+//            if (drugProperties != null)
+//            {
+//                String message = text.getUnformattedTextForChat();
+//                drugProperties.receiveChatMessage(renderEntity, message);
+//                String modified = drugProperties.messageDistorter.distortIncomingMessage(drugProperties, renderEntity, renderEntity.getRNG(), message);
+//
+//                event.message = new ChatComponentText(modified);
+//            }
+//        }
+//    }
 
     @SubscribeEvent
     public void onPlayerSleep(PlayerSleepInBedEvent event)
