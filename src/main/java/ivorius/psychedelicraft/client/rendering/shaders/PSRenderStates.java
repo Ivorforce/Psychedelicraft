@@ -43,7 +43,7 @@ public class PSRenderStates
 
     public static boolean disableDepthBuffer = false;
     public static boolean bypassPingPongBuffer = false;
-    public static boolean shaderEnabled = true;
+    public static boolean shader3DEnabled = true;
     public static boolean shader2DEnabled = true;
     public static boolean doShadows = false;
     public static boolean doHeatDistortion = false;
@@ -170,9 +170,9 @@ public class PSRenderStates
         return false;
     }
 
-    public static void setShaderEnabled(boolean enabled)
+    public static void setShader3DEnabled(boolean enabled)
     {
-        shaderEnabled = enabled;
+        shader3DEnabled = enabled;
     }
 
     public static void setShader2DEnabled(boolean enabled)
@@ -265,7 +265,7 @@ public class PSRenderStates
     {
         currentShader = null;
 
-        if (shader != null && shaderEnabled)
+        if (shader != null && shader3DEnabled)
         {
             if (shader.isShaderActive())
                 return true;

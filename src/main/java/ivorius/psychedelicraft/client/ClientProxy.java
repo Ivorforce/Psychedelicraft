@@ -117,8 +117,8 @@ public class ClientProxy implements PSProxy
 
         if (configID == null || configID.equals(CATEGORY_VISUAL))
         {
-            PSRenderStates.setShaderEnabled(config.get(CATEGORY_VISUAL, "shaderEnabled", true).getBoolean());
-            PSRenderStates.setShader2DEnabled(config.get(CATEGORY_VISUAL, "shader2DEnabled", true).getBoolean());
+            PSRenderStates.setShader3DEnabled(config.get(CATEGORY_VISUAL, "shaderEnabled", true, "Whether 3D shaders are enabled - disabling them will disable drug visuals, but also fix graphical glitches.").getBoolean());
+            PSRenderStates.setShader2DEnabled(config.get(CATEGORY_VISUAL, "shader2DEnabled", true, "Whether 2D shaders are enabled - disabling them will disable drug visuals, but also fix graphical glitches.").getBoolean());
             PSRenderStates.sunFlareIntensity = (float) config.get(CATEGORY_VISUAL, "sunFlareIntensity", 0.25).getDouble();
             PSRenderStates.doHeatDistortion = config.get(CATEGORY_VISUAL, "biomeHeatDistortion", true).getBoolean();
             PSRenderStates.doWaterDistortion = config.get(CATEGORY_VISUAL, "waterDistortion", true).getBoolean();
