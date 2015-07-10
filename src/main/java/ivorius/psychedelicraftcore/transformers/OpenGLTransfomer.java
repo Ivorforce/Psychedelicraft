@@ -170,7 +170,7 @@ public class OpenGLTransfomer extends IvClassTransformerGeneral
         {
             InsnList list = new InsnList();
 
-            list.add(new LdcInsnNode(((MethodInsnNode) node).name));
+            list.add(new LdcInsnNode(String.format("%s.%s", ((MethodInsnNode) node).owner, ((MethodInsnNode) node).name)));
             list.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PSErrors", "printGlErrors", getMethodDescriptor(Type.VOID_TYPE, String.class), false));
 
             methodNode.instructions.insert(node, list);
