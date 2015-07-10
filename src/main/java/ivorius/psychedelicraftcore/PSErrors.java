@@ -20,7 +20,7 @@ public class PSErrors
         inDirectDraw = false;
     }
 
-    public static void printGlErrors()
+    public static void printGlErrors(String context)
     {
         if (!inDirectDraw)
         {
@@ -28,6 +28,7 @@ public class PSErrors
             while ((i = GL11.glGetError()) != 0)
             {
                 PsychedelicraftCoreContainer.logger.error("########## GL ERROR ##########");
+                PsychedelicraftCoreContainer.logger.error("@" + context);
                 PsychedelicraftCoreContainer.logger.error(i + ": " + GLU.gluErrorString(i));
                 Thread.dumpStack();
             }
