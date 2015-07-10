@@ -63,6 +63,8 @@ idea {
 
 // Provided - Stop
 
+idea.module.inheritOutputDirs = true
+
 dependencies {
     provided 'ivorius.ivtoolkit:IvToolkit:1.0:dev'
 }
