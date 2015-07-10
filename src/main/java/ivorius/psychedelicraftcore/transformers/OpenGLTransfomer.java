@@ -5,10 +5,13 @@
 
 package ivorius.psychedelicraftcore.transformers;
 
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 import ivorius.ivtoolkit.asm.IvClassTransformerGeneral;
 import ivorius.ivtoolkit.asm.IvInsnHelper;
 import ivorius.ivtoolkit.asm.IvNodeFinder;
 import ivorius.ivtoolkit.asm.IvNodeMatcherMethodSRG;
+import ivorius.psychedelicraftcore.PsychedelicraftLoadingPlugin;
 import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.*;
@@ -35,6 +38,9 @@ public class OpenGLTransfomer extends IvClassTransformerGeneral
 
         transformed += proxyGLSwitchMethods(methodNode);
         transformed += proxyGLClearMethods(methodNode);
+
+        if (PsychedelicraftLoadingPlugin.debugGlErrorTraceDumps)
+            transformed += addGLErrorTraceDumps(methodNode);
 
         return transformed > 0;
     }
@@ -122,6 +128,47 @@ public class OpenGLTransfomer extends IvClassTransformerGeneral
             listBefore.add(new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PsycheCoreBusClient", "psycheGLScalef", getMethodDescriptor(Type.VOID_TYPE, Type.FLOAT_TYPE, Type.FLOAT_TYPE, Type.FLOAT_TYPE), false));
             methodNode.instructions.insertBefore(callListNode, listBefore);
 
+            caught++;
+        }
+
+        return caught;
+    }
+
+    public static int addGLErrorTraceDumps(MethodNode methodNode)
+    {
+        int caught = 0;
+
+        for (AbstractInsnNode node : IvNodeFinder.findNodes(new IvNodeMatcherMethodSRG(INVOKESTATIC, "glBegin", "org/lwjgl/opengl/GL11", null), methodNode))
+        {
+            methodNode.instructions.insert(node, new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PSErrors", "glBegan", getMethodDescriptor(Type.VOID_TYPE), false));
+            caught++;
+        }
+
+        for (AbstractInsnNode node : IvNodeFinder.findNodes(new IvNodeMatcherMethodSRG(INVOKESTATIC, "glEnd", "org/lwjgl/opengl/GL11", null), methodNode))
+        {
+            methodNode.instructions.insert(node, new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PSErrors", "glEnded", getMethodDescriptor(Type.VOID_TYPE), false));
+            caught++;
+        }
+
+        List<AbstractInsnNode> nodes = IvNodeFinder.findNodes(new NodeMatcherSRGPredicate(Predicates.equalTo(INVOKESTATIC), new Predicate<String>()
+        {
+            @Override
+            public boolean apply(String input)
+            {
+                return !input.equals("glGetError") && !input.equals("glBegin");
+            }
+        }, new Predicate<String>()
+        {
+            @Override
+            public boolean apply(String prefix)
+            {
+                return prefix.startsWith("org/lwjgl/opengl/GL");
+            }
+        }, null), methodNode);
+
+        for (AbstractInsnNode node : nodes)
+        {
+            methodNode.instructions.insert(node, new MethodInsnNode(INVOKESTATIC, "ivorius/psychedelicraftcore/PSErrors", "printGlErrors", getMethodDescriptor(Type.VOID_TYPE), false));
             caught++;
         }
 

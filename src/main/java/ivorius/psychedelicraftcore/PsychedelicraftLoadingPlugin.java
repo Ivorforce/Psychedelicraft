@@ -28,6 +28,8 @@ public class PsychedelicraftLoadingPlugin implements IFMLLoadingPlugin
     public static final String NAME = "Psychedelicraft Core";
     public static final String MODID = "psychedelicraftcore";
 
+    public static boolean debugGlErrorTraceDumps = false;
+
     @Override
     public String[] getASMTransformerClass()
     {
@@ -44,7 +46,7 @@ public class PsychedelicraftLoadingPlugin implements IFMLLoadingPlugin
     @Override
     public String getSetupClass()
     {
-        return null;
+        return "ivorius.psychedelicraftcore.PsychedelicraftCoreSetup";
     }
 
     @Override
