@@ -40,17 +40,17 @@ public class WrapperBlur extends ShaderWrapper<ShaderBlur>
             shaderInstance.hBlur = 0.0f;
         }
 
-        shaderInstance.vBlur += ClientProxy.pauseMenuBlur * guiBackgroundBlur;
-        shaderInstance.hBlur += ClientProxy.pauseMenuBlur * guiBackgroundBlur;
+        shaderInstance.vBlur += ClientProxy.pauseMenuBlur * guiBackgroundBlur * guiBackgroundBlur * guiBackgroundBlur;
+        shaderInstance.hBlur += ClientProxy.pauseMenuBlur * guiBackgroundBlur * guiBackgroundBlur * guiBackgroundBlur;
     }
 
     @Override
     public void update()
     {
         if (Minecraft.getMinecraft().isGamePaused())
-            guiBackgroundBlur = Math.min(1, guiBackgroundBlur + 0.2f);
+            guiBackgroundBlur = Math.min(1, guiBackgroundBlur + 0.25f);
         else
-            guiBackgroundBlur = Math.max(0, guiBackgroundBlur - 0.2f);
+            guiBackgroundBlur = Math.max(0, guiBackgroundBlur - 0.25f);
     }
 
     @Override
