@@ -48,6 +48,8 @@ public class ClientProxy implements PSProxy
     public static float dofFocalPointFar;
     public static float dofFocalBlurFar;
 
+    public static double pauseMenuBlur;
+
     @Override
     public void preInit()
     {
@@ -139,6 +141,8 @@ public class ClientProxy implements PSProxy
             PSRenderStates.bypassPingPongBuffer = config.get(CATEGORY_VISUAL, "bypassPingPongBuffer", false).getBoolean();
 
             PSRenderStates.renderFakeSkybox = config.get(CATEGORY_VISUAL, "renderFakeSkybox", true, "If a fake skybox should be rendered to make shaders affect the fog line.").getBoolean();
+
+            pauseMenuBlur = config.get(CATEGORY_VISUAL, "pauseMenuBlur", 0f, "Amount of blur that should be applied to the game screen on pause.").getDouble();
         }
 
         if (configID == null || configID.equals(CATEGORY_AUDIO))

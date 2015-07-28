@@ -7,6 +7,7 @@ package ivorius.psychedelicraft.client.rendering.effectWrappers;
 
 import ivorius.ivtoolkit.rendering.IvDepthBuffer;
 import ivorius.psychedelicraft.Psychedelicraft;
+import ivorius.psychedelicraft.client.ClientProxy;
 import ivorius.psychedelicraft.client.rendering.shaders.ShaderBlur;
 import ivorius.psychedelicraft.entities.drugs.DrugProperties;
 import net.minecraft.client.Minecraft;
@@ -16,6 +17,8 @@ import net.minecraft.client.Minecraft;
  */
 public class WrapperBlur extends ShaderWrapper<ShaderBlur>
 {
+    private double guiBackgroundBlur;
+
     public WrapperBlur(String utils)
     {
         super(new ShaderBlur(Psychedelicraft.logger), getRL("shaderBasic.vert"), getRL("shaderBlur.frag"), utils);
@@ -36,12 +39,18 @@ public class WrapperBlur extends ShaderWrapper<ShaderBlur>
             shaderInstance.vBlur = 0.0f;
             shaderInstance.hBlur = 0.0f;
         }
+
+        shaderInstance.vBlur += ClientProxy.pauseMenuBlur * guiBackgroundBlur;
+        shaderInstance.hBlur += ClientProxy.pauseMenuBlur * guiBackgroundBlur;
     }
 
     @Override
     public void update()
     {
-
+        if (Minecraft.getMinecraft().isGamePaused())
+            guiBackgroundBlur = Math.min(1, guiBackgroundBlur + 0.2f);
+        else
+            guiBackgroundBlur = Math.max(0, guiBackgroundBlur - 0.2f);
     }
 
     @Override
