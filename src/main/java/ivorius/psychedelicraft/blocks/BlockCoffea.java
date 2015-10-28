@@ -158,7 +158,7 @@ public class BlockCoffea extends Block implements IGrowable, IvTilledFieldPlant
         int stage = par2 >> 1;
         boolean above = (par2 & 1) == 1;
 
-        return above ? topIcons[stage] : bottomIcons[stage];
+        return above ? topIcons[stage % topIcons.length] : bottomIcons[stage % bottomIcons.length];
     }
 
     public void growStep(World world, Random random, int x, int y, int z, boolean bonemeal)
