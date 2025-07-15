@@ -1,3 +1,6 @@
+> [!WARNING]  
+> This repository is no longer maintained. The new maintainer for Psychedelicraft is Sollace. You can find her repository here: https://github.com/Sollace/Psychedelicraft
+
 Psychedelicraft
 ============
 
